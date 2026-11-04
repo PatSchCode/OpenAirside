@@ -444,9 +444,36 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Akzeptanzkriterien:** Unit-Tests für `bench-report.mjs` (gleiches Modell, anderes Modell, Feld fehlt) grün; im CI-Lauf des PR steht das CPU-Modell des Runners in allen drei Ergebnissen und in der Job-Zusammenfassung; lokal auf dem Mac erscheint `Apple M3 Pro`; Grenzen und Bewertung der Benchmarks unverändert.
 - **Betroffene Module:** Benchmark & Leistung (`core/benches/`), Build/CI (nur `scripts/bench-report.mjs`)
 - **Reifegrad-Wirkung:** keine
+
+#### Q.7: Dokumentationslint als Pre-Commit-Hook
+
+- **Status:** ERLEDIGT am 2026-11-04
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja (Kategorie Build/CI); Optionen A und B am 2026-11-04 freigegeben, umgesetzt: B
+- **Empfohlene Klasse:** Routine – bestehendes Werkzeug lokalisieren und den Hook prüfen.
+- **Eingangskriterien:** Fehler `npm EALLOWGIT` im bisherigen externen Hook reproduziert und Ursache belegt.
+- **Stand:** Nach Freigabe Option B wird PyMarkdown 0.9.41 als alternative Markdown-Prüfung verwendet. Die Bestandsprüfung und `pre-commit run --all-files` sind mit den begründeten Ausnahmen MD013, MD022 und MD060 grün; `pip-audit` meldet für die aufgelöste Abhängigkeitskette keine bekannten Schwachstellen. PR #43, manueller CI-Lauf 41755763098, ist grün; „Dokumentation (pre-commit)“ bestand in 22 s.
+- **Zu tun:** erledigt.
+- **Akzeptanzkriterien:** `pre-commit run --all-files` läuft mit PyMarkdown grün; `pip-audit` für die aufgelöste PyMarkdown-Kette ist grün; CI nutzt dieselbe Konfiguration.
+- **Betroffene Module:** Tooling
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `.pre-commit-config.yaml`, `.pymarkdown.yaml`, `docs/project-context.md`, Tests
 - **Artefakte:** `core/benches/*.rs`, `scripts/bench-report.mjs` mit Tests, `docs/architecture.md` Abschnitt „Leistungstest in der CI“ (ein Satz)
 - **Notizen:** Der Sprung vom 2026-10-21 lässt sich damit nicht rückwirkend klären; die Angabe hilft erst ab dem ersten Lauf mit dem Feld.
 - **Belege:** lokal (Mac M3 Pro) alle drei Benchmarks bestanden mit `"cpuModel":"Apple M3 Pro"`; `scripts/bench-report.test.mjs` 12 Tests grün (3 neu), `bench-report.mjs` 95,23 % Zeilen (offen nur der Aufruf von der Kommandozeile). CI grün auf `3a2cd0e` (Lauf 40774228111, 23 Checks): Runner `AMD EPYC 9V74 80-Core Processor` in allen drei Ergebnissen und in der Zusammenfassung („letzter Lauf auf main: unbekannt“, der Vergleichslauf 40773654864 auf `394d24e` hat das Feld noch nicht); Schritt „Zusammenfassung mit Trend“ erfolgreich, Tabelle aus den Artefakten beider Läufe nachgerechnet.
+
+#### Q.8: CI-Push-Fallback für Tooling-Branches
+
+- **Status:** ERLEDIGT (2026-11-04; automatischer Push-Lauf [41817494600](https://github.com/PatSchCode/OpenAirside/actions/runs/41817494600) vollständig grün)
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** Q.5
+- **Freigabepflichtig:** ja (Kategorie Build/CI); freigegeben am 2026-11-04
+- **Zu tun:** CI bei Pushes auf `ci/**` zusätzlich zum PR-Ereignis auslösen.
+- **Akzeptanzkriterien:** erfüllt – ein Push auf `ci/q-7-pymarkdown` erzeugte den sichtbaren GitHub-Actions-Lauf 41817494600 ohne manuellen Start.
+- **Betroffene Module:** Build/CI
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `.github/workflows/ci.yml`, `docs/fahrplan.md`, `docs/logbuch.md`
 
 #### Q.5: CI-Trigger nur für `main` und PRs, Code-Jobs nicht bei reinen Doku-Änderungen
 

@@ -228,7 +228,7 @@ Pflichtkategorien nach `CLAUDE.md` Abschnitt 15. Werkzeugversionen nach derselbe
 
 #### Markdown (Dokumentation)
 
-- **Linter:** markdownlint-cli2 über pre-commit (wie im Template-Repo)
+- **Linter:** PyMarkdown 0.9.41 über pre-commit; die Konfiguration steht in `.pymarkdown.yaml` und übernimmt die bisherigen bewussten Ausnahmen für Zeilenlänge und Tabellenspalten sowie die HTML-Anker-Struktur
 
 ### Warnungs-Bestand
 
@@ -239,7 +239,7 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 | cargo-deny `bans`, doppelte Crate-Versionen | `skip` in `deny.toml` | benannte Ausnahme: `syn@2.0.119` (nur über ts-rs-macros 12.0.1 hinter dem Feature `ts`; serde nutzt syn 3) | 2026-10-13 | Q.1 (prüfen, ob ts-rs auf syn 3 umgestellt hat) |
 | cargo-deny `bans`, doppelte Crate-Versionen | `skip` in `deny.toml` | benannte Ausnahme: `miniz_oxide@0.8.9` (nur über png 0.18.1 im Werkzeug-Crate `tools/assets`, ADR-033; der Spielstand nutzt 0.9.1) | 2026-10-19 | Q.1 (prüfen, ob png auf miniz_oxide 0.9 umgestellt hat) |
 
-**Warnungsquellen ohne Schalter:** Hinweise der CI-Plattform zu Action-Versionen und Runner-Images (Annotationen im Lauf); Bündelgrößen-Warnungen von Vite; Abkündigungshinweise von electron-builder und npm (`npm warn deprecated`, Ablaufdaten-Register, Q.1). Bekannter Bestand (Stand 2026-10-13, Release-Lauf 38440601610): npm „install scripts not yet covered by allowScripts" für electron-winstaller und fsevents (Skripte laufen nicht; Bau und Tests grün; Prüfung in Q.1); electron-builder „asar usage is disabled" (Muster aus den Spikes, Entscheidung mit der Signatur in 7.1); „default Electron icon is used" behoben in 2.10 (eigenes Symbol `build/icon.png`, lokaler Paketbau ohne den Hinweis am 2026-10-19). Seit 2026-10-19 gemeldete 8 „moderate“-Schwachstellen (sprintf-js, GHSA-hp3w-g68c-fv3c, über electron-builder): am 2026-10-25 meldet `npm audit` nach Q.4 keine Schwachstelle mehr, der Eintrag entfällt.
+**Warnungsquellen ohne Schalter:** Hinweise der CI-Plattform zu Action-Versionen und Runner-Images (Annotationen im Lauf); Bündelgrößen-Warnungen von Vite; Abkündigungshinweise von electron-builder und npm (`npm warn deprecated`, Ablaufdaten-Register, Q.1). Bekannter Bestand (Stand 2026-10-13, Release-Lauf 38440601610): npm „install scripts not yet covered by allowScripts" für electron-winstaller und fsevents (Skripte laufen nicht; Bau und Tests grün; Prüfung in Q.1); electron-builder „asar usage is disabled" (Muster aus den Spikes, Entscheidung mit der Signatur in 7.1); „default Electron icon is used" behoben in 2.10 (eigenes Symbol `build/icon.png`, lokaler Paketbau ohne den Hinweis am 2026-10-19). `npm audit --audit-level=high` ist am 2026-11-04 grün; es meldet 25 moderate `minimatch`-Befunde über electron-builder und ESLint, deren vorgeschlagene Korrektur jeweils einen Breaking-Downgrade erzwingen würde.
 
 ### Durchsetzungsmechanismen
 
@@ -249,7 +249,7 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 - **Workflow-Dateien (Klasse G):** `.github/workflows/ci.yml` (Prüfungen auf Linux, Windows, macOS), `security.yml` (CodeQL, Audits, wöchentlich), `release.yml` (Builds bei Tag `v*`)
 - **Trigger:** `push` auf `main`, `pull_request` auf `main`, `workflow_dispatch` von Hand (seit Q.5, ADR-043; vorher `push` auf alle Branches). Bei reinen Doku-Änderungen (`docs/`, `*.md`) auf einem Stand mit bestandenen Checks laufen nur „Änderungsart“ und „Dokumentation“, die übrigen Jobs melden übersprungen (`scripts/ci-changes.mjs`)
 - **Verpflichtende CI-Gates (Merge-Block bei Rot):**
-  - Lint (clippy, ESLint, markdownlint)
+  - Lint (clippy, ESLint, PyMarkdown)
   - Format-Check (rustfmt, Prettier; kein Auto-Fix in CI)
   - Type-Check (Compiler, tsc)
   - Security-Scan (cargo-deny, CodeQL)

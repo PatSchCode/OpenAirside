@@ -1,0 +1,13 @@
+# PyMarkdown-Konfiguration für OpenAirside.
+#
+# Der Regelbestand bleibt weitgehend bei den Markdownlint-Standardregeln. Drei
+# Regeln sind für die bestehende handgepflegte Dokumentationsstruktur bewusst
+# ausgenommen: lange Absätze (MD013), Überschriften unmittelbar nach HTML-Ankern
+# (MD022) und nicht ausgerichtete Tabellenspalten (MD060).
+plugins:
+  MD013:
+    enabled: false
+  MD022:
+    enabled: false
+  MD060:
+    enabled: false

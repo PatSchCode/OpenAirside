@@ -24,6 +24,257 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.8 CI-Push-Fallback
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** Einen Push-Trigger für `ci/**`-Branches zusätzlich zum bestehenden PR-Trigger eingerichtet und durch den regulären Branch-Push geprüft.
+- **Erreicht:** Der Push auf `ci/q-7-pymarkdown` startete automatisch den CI-Lauf 41817494600. Alle Jobs waren grün, darunter Pre-Commit, Audit, Lint, Typprüfung, Tests, Build, Electron-Rauchtests und Rust-Coverage.
+- **Offen geblieben:** keine für Q.8. Der PR #43 bleibt zur Prüfung und zum Merge durch den Projektinhaber offen.
+- **Nächster Schritt:** PR #43 prüfen und nach Freigabe mergen.
+- **Modell-Bilanz:** GPT-5/Codex; ein Build-/Tooling-Schritt, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung.
+- **README und Drift:** README nicht betroffen; Fahrplan und Logbuch auf den bestätigten CI-Nachweis abgeglichen.
+- **Änderungsstand:** Abschlussdokumentation wird regulär committet; kein Hook-Bypass.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Q.8 CI-Push-Fallback
+
+- **Letzter Stand:** PR #43 benötigte trotz gültigem `pull_request`-Trigger einen manuellen CI-Start; der Lauf selbst war vollständig grün.
+- **Geplant für diese Session:** Nach Freigabe einen Push-Fallback für `ci/**`-Branches einrichten und durch einen regulären Push prüfen.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen; aktive Blocker: keine.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.7 PR-Nachweis korrigiert
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** PR-Zuordnung nachträglich geprüft und den Fahrplan-Nachweis auf den tatsächlich aktuellen PR #43 korrigiert.
+- **Erreicht:** CI-Lauf 41755763098 auf `ci/q-7-pymarkdown` ist vollständig grün; die Dokumentationsprüfung bestand in 22 s.
+- **Offen geblieben:** keine.
+- **Nächster Schritt:** Review und Merge von PR #43 nach Freigabe des Projektinhabers.
+- **Modell-Bilanz:** GPT-5/Codex; Dokumentationskorrektur, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung.
+- **README und Drift:** Fahrplan und Logbuch auf den aktuellen PR-Nachweis abgeglichen.
+- **Änderungsstand:** Abschlusskorrektur folgt in einem regulären Commit; kein Hook-Bypass.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Q.7 PR-Nachweis
+
+- **Letzter Stand:** PR #43 enthält Q.7; der manuelle CI-Lauf auf dem PR-Branch ist grün.
+- **Geplant für diese Session:** Den Fahrplan-Nachweis auf den tatsächlichen PR- und Laufbezug korrigieren.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.7 abgeschlossen
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** CI-Nachweis des PyMarkdown-Wechsels auf PR #38 geprüft und Q.7 abgeschlossen.
+- **Erreicht:** Vorläufiger Nachweis dokumentiert; die endgültige Zuordnung ist im nachfolgenden Eintrag auf PR #43 und Lauf 41755763098 korrigiert. Damit sind lokaler Pre-Commit, isolierter Python-Audit und CI für Q.7 nachgewiesen.
+- **Offen geblieben:** keine.
+- **Nächster Schritt:** Merge von PR #38 nach Freigabe des Projektinhabers; danach 3.2.
+- **Modell-Bilanz:** GPT-5/Codex; ein Build-/Tooling-Schritt, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung gegenüber dem vorigen Sessionende.
+- **README und Drift:** README nicht betroffen; Fahrplan, Projektkontext und Logbuch abgeglichen.
+- **Änderungsstand:** Abschlussdokumentation folgt in einem regulären Commit; kein Hook-Bypass.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Q.7 CI-Nachweis
+
+- **Letzter Stand:** Commit `c2c26f3` mit PyMarkdown ist auf PR #38 gepusht; lokaler Nachweis grün, CI-Prüfung ausstehend.
+- **Geplant für diese Session:** CI-Ergebnis prüfen und Q.7 nur bei grünem Nachweis abschließen.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.7 PyMarkdown integriert
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** Nach Freigabe Option B den Node-basierten Markdownlint-Hook und seine unbenutzte Konfiguration durch PyMarkdown 0.9.41 mit eigener Konfigurationsdatei ersetzt.
+- **Erreicht:** Der vollständige Pre-Commit-Lauf ist grün; PyMarkdown prüft den Bestand mit den begründeten Ausnahmen MD013 (Zeilenlänge), MD022 (HTML-Anker) und MD060 (Tabellenspalten). `pip-audit` meldet keine bekannten Schwachstellen für die aufgelöste PyMarkdown-Kette. `npm audit --audit-level=high` ist grün; 25 moderate `minimatch`-Befunde sind im Warnungsbestand dokumentiert.
+- **Offen geblieben:** Der CI-Nachweis für die geänderte Pre-Commit-Konfiguration fehlt noch.
+- **Nächster Schritt:** Änderungen committen, auf PR #38 pushen und den CI-Lauf prüfen; danach Q.7 abschließen.
+- **Modell-Bilanz:** GPT-5/Codex; ein Build-/Tooling-Schritt, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** PyMarkdown 0.9.41 am 2026-11-04 geprüft; keine weitere Frist angelegt.
+- **README und Drift:** README enthält keinen Werkzeugverweis; Projektkontext und CI-Bezeichnung auf PyMarkdown abgeglichen.
+- **Änderungsstand:** Änderungen uncommitted; kein Hook-Bypass.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Q.7 PyMarkdown
+
+- **Letzter Stand:** Der externe Node-basierte Markdownlint-Hook läuft technisch, sein separater Audit enthält jedoch einen hohen, nicht behebbaren Befund.
+- **Geplant für diese Session:** Nach Freigabe Option B den Hook durch PyMarkdown ersetzen; Kompatibilität mit dem Bestand und einen Python-Dependency-Audit vor der Übernahme nachweisen.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.7 externer Hook auditiert
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** Nach Freigabe den ursprünglichen externen Markdownlint-Hook mit festgelegter System-Node-Laufzeit wiederhergestellt und die lokale npm-Abhängigkeit zurückgenommen.
+- **Erreicht:** Node 26.11.1 (npm 11.20.0) ist über `fnm` vorhanden. Mit `default_language_version.node: system` installiert ein frischer Pre-Commit-Cache den Hook und `pre-commit run --all-files --show-diff-on-failure` läuft vollständig grün.
+- **Offen geblieben:** Ein isolierter Audit des frisch installierten Hook-Pakets erfasst 88 Pakete und meldet sechs Befunde, darunter einen hohen, für `markdownlint-cli2@0.23.3` nicht behebbaren Befund in `markdown-it`. Damit ist das Sicherheitsakzeptanzkriterium nicht erfüllt.
+- **Nächster Schritt:** Sicherheitsentscheidung zur Nutzung dieser externen Hook-Kette oder zu einer alternativen Lösung einholen; bis dahin kein Commit und kein PR-Update.
+- **Modell-Bilanz:** GPT-5/Codex; ein Build-/Tooling-Schritt, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung gegenüber dem letzten Sessionende.
+- **README und Drift:** Nicht betroffen; Projektstatus und Reifegrade unverändert.
+- **Änderungsstand:** Änderungen uncommitted; kein Hook-Bypass.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Q.7 externer Hook mit Node 26
+
+- **Letzter Stand:** Der ursprüngliche externe Markdownlint-Hook wurde isoliert mit Node 26.11.1 und `default_language_version.node: system` frisch installiert und erfolgreich ausgeführt.
+- **Geplant für diese Session:** Die vom Projektinhaber freigegebene lokale Toolchain-Konfiguration übernehmen, die Projektabhängigkeit zurücknehmen und den externen Hook sowie seinen Audit-Nachweis prüfen.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.7 Audit nach Major-Update
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** Nach ausdrücklicher Freigabe `markdownlint-cli2` auf 0.24.0 aktualisiert und Sperrdatei sowie lokale Entwicklungsabhängigkeiten erneuert.
+- **Erreicht:** Der vorherige hohe Befund in `markdown-it` ist nicht mehr vorhanden. `pre-commit run --all-files --show-diff-on-failure` und `git diff --check` laufen vollständig grün.
+- **Offen geblieben:** `npm audit --audit-level=high` meldet weiterhin drei hohe Befunde: `katex` und `re2js` stammen aus der neuen Markdownlint-Kette; der Audit bietet nur einen erzwungenen Downgrade auf 0.23.3 an, der wiederum den früheren hohen `markdown-it`-Befund enthält.
+- **Nächster Schritt:** Entscheidung für eine alternative, auditierbare Markdownlint-Hook-Strategie einholen; bis dahin kein Commit und kein PR-Update.
+- **Modell-Bilanz:** GPT-5/Codex; ein Build-/Tooling-Schritt, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung gegenüber dem letzten Sessionende.
+- **README und Drift:** Nicht betroffen; Projektstatus und Reifegrade unverändert.
+- **Änderungsstand:** Änderungen uncommitted; kein Hook-Bypass.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Q.7 Sicherheitskorrektur
+
+- **Letzter Stand:** Der lokale Markdownlint- und der serialisierte Vitest-Hook laufen grün; der Audit meldet eine hohe Schwachstelle aus `markdownlint-cli2@0.23.3`.
+- **Geplant für diese Session:** Die vom Projektinhaber freigegebene Audit-Korrektur auf `markdownlint-cli2@0.24.0` umsetzen und alle Nachweise wiederholen.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.7 Sicherheitsprüfung
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** Den Vitest-Pre-Commit-Hook nach Freigabe serialisiert und die Dokumentation der lokalen Markdownlint-Abhängigkeit aktualisiert.
+- **Erreicht:** `pre-commit run --all-files --show-diff-on-failure` läuft vollständig grün. Der frühere `npm EALLOWGIT`-Fehler tritt nicht mehr auf.
+- **Offen geblieben:** `npm audit --audit-level=high` meldet eine hohe Schwachstelle in der neu gepinnten Abhängigkeitskette von `markdownlint-cli2@0.23.3` (`markdown-it`); die angebotene Korrektur hebt auf 0.24.0 und ist ein Major-Update.
+- **Nächster Schritt:** Sicherheitsentscheidung zur Verwendung von 0.24.0 oder zur alternativen Hook-Strategie einholen; bis dahin kein Commit und kein PR-Update.
+- **Modell-Bilanz:** GPT-5/Codex; ein Build-/Tooling-Schritt, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung gegenüber dem letzten Sessionende.
+- **README und Drift:** Nicht betroffen; Projektstatus und Reifegrade unverändert.
+- **Änderungsstand:** Änderungen uncommitted; kein Hook-Bypass.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Q.7 Vitest-Serialisierung
+
+- **Letzter Stand:** Der lokale Markdownlint-Hook läuft grün; der vollständige Pre-Commit-Lauf scheiterte nur an parallelen Vitest-Prozessen, die denselben Cache löschen.
+- **Geplant für diese Session:** Die freigegebene Serialisierung des bestehenden Vitest-Hooks konfigurieren und die vollständige Pre-Commit-Prüfung wiederholen.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.7 erster Prüflauf
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** Q.7 nach Freigabe Option A: `markdownlint-cli2` als Dev-Dependency gepinnt, externen Pre-Commit-Hook durch lokalen Hook ersetzt und die Lockdatei aktualisiert.
+- **Erreicht:** Der Markdownlint-Hook läuft projektlokal grün; die frühere temporäre Git-Installation und `npm EALLOWGIT` treten nicht mehr auf.
+- **Offen geblieben:** Der vollständige Pre-Commit-Lauf scheitert unabhängig davon im bestehenden Hook `vitest related`: parallele Prozesse löschen zugleich `node_modules/.vitest-cache` (`ENOTEMPTY`), obwohl alle gestarteten Tests bestehen. Q.7 bleibt `[IN ARBEIT]`.
+- **Nächster Schritt:** Freigabe für die Serialisierung des bestehenden Vitest-Hooks einholen und danach `pre-commit run --all-files` wiederholen.
+- **Modell-Bilanz:** GPT-5/Codex; ein Build-/Tooling-Schritt, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung gegenüber dem letzten Sessionende.
+- **README und Drift:** nicht betroffen.
+- **Änderungsstand:** Änderungen uncommitted und staged noch nachzuziehen; kein Hook-Bypass.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Q.7
+
+- **Letzter Stand:** Codex-Arbeitsanweisung und Logbuch sind staged, aber wegen `npm EALLOWGIT` im bisherigen Markdownlint-Hook nicht committed.
+- **Geplant für diese Session:** Freigegebene Option A umsetzen: `markdownlint-cli2` als projektlokale, gepinnte Dev-Dependency und den Pre-Commit-Hook ohne temporäre Git-Installation betreiben.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Codex-Arbeitsanweisung eigenständig
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** `AGENTS.md` auf ausdrückliche Anweisung des Projektinhabers zu einer eigenständigen Codex-Arbeitsanweisung ausgebaut.
+- **Erreicht:** `AGENTS.md` enthält die vollständigen Regeln für Sessionstart, Freigaben, Stopps, Planung, Qualität, sichere Werkzeuge, Git/PRs und Sessionende. Sie verweist nicht mehr auf `CLAUDE.md`; Codex benötigt diese Datei nicht mehr.
+- **Offen geblieben:** Der Pre-Commit-Hook kann seine Markdownlint-Umgebung weiterhin nicht installieren (`npm EALLOWGIT`); daher kein Commit und kein Hook-Bypass.
+- **Nächster Schritt:** Hook-Umgebung in einem eigenen, freigegebenen Schritt reparieren; anschließend die staged Dokumentationsänderungen committen und auf PR #38 pushen.
+- **Modell-Bilanz:** GPT-5/Codex; ein Dokumentationsschritt, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung gegenüber dem letzten Sessionende.
+- **README und Drift:** nicht betroffen; die Änderung betrifft ausschließlich die Codex-Steuerung.
+- **Änderungsstand:** `AGENTS.md` und `docs/logbuch.md` bleiben staged, bis der Hook regulär erfolgreich läuft.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Codex-Arbeitsanweisung eigenständig
+
+- **Letzter Stand:** Codex-spezifisches `AGENTS.md` ist staged, aber wegen `npm EALLOWGIT` im Markdownlint-Pre-Commit-Hook nicht committed.
+- **Geplant für diese Session:** `AGENTS.md` auf ausdrücklichen Wunsch des Projektinhabers zur eigenständigen und allein maßgeblichen Codex-Anweisung ausbauen; Abhängigkeit von `CLAUDE.md` entfernen.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** GPT-5/Codex laut Systemkontext; die bisherige Claude-Modellklassenzuordnung wird durch die neue Codex-Anweisung ersetzt.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Codex-Arbeitsanweisung erstellt
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** `AGENTS.md` auf ausdrücklichen Wunsch des Projektinhabers als Codex-spezifische Arbeitsanweisung ersetzt.
+- **Erreicht:** Codex-spezifische Regeln für Quellenrangfolge, Mindestlektüre, unbestimmte Modellklasse, sichere Tool-Nutzung, Hook-Fehler und PR-Aktualisierung sind festgelegt. Fachliche Governance bleibt über `CLAUDE.md` und die Projektdokumente verlinkt.
+- **Offen geblieben:** Der Pre-Commit-Hook kann seine Markdownlint-Umgebung weiterhin nicht installieren (`npm EALLOWGIT`); daher kein Commit und kein Hook-Bypass.
+- **Nächster Schritt:** Hook-Umgebung in einem eigenen, freigegebenen Schritt reparieren; danach den bereits staged Dokumentationsstand committen und auf PR #38 pushen.
+- **Modell-Bilanz:** Modellklasse unbestimmbar; ein Dokumentationsschritt oberhalb seiner Empfehlung, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung gegenüber dem letzten Sessionende.
+- **README und Drift:** nicht betroffen; `AGENTS.md` ist ein Codex-spezifisches Steuerdokument.
+- **Änderungsstand:** `AGENTS.md` und `docs/logbuch.md` werden staged gehalten, bis der Hook regulär erfolgreich läuft.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Codex-Arbeitsanweisung erstellt
+
+- **Letzter Stand:** `AGENTS.md` und die Sessioneinträge davor sind staged, aber nicht committed, weil der Pre-Commit-Hook seine Markdownlint-Umgebung nicht installieren kann (`npm EALLOWGIT`); kein Bypass.
+- **Geplant für diese Session:** Codex-spezifisches `AGENTS.md` auf ausdrücklichen Wunsch des Projektinhabers erstellen und die bisherigen tool-neutralen Regeln ersetzen.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** eingestellt und bedient: GPT-5/Codex laut Systemkontext; Modellklasse: unbestimmbar (Zuordnung im Projektkontext nennt nur Claude-Modelle; keine Laufzeitabfrage verfügbar). Quelle: Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – AGENTS-Mindestlektüre
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** `AGENTS.md` gegen `CLAUDE.md` abgeglichen.
+- **Erreicht:** Die bedingte Mindest-Lektüre von `docs/requirements.md` ab Projektklasse G ist im werkzeugneutralen Einstiegspunkt ergänzt. `AGENTS.md` bleibt ein reiner Verweis und dupliziert keine Methodik.
+- **Offen geblieben:** keine.
+- **Nächster Schritt:** fachliche Arbeit nach Freigabe des Merges von PR #38 fortsetzen.
+- **Modell-Bilanz:** Modellklasse unbestimmbar; ein Dokumentationsschritt oberhalb seiner Empfehlung, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung gegenüber dem letzten Sessionende.
+- **README und Drift:** nicht betroffen; der Abgleich bestätigte eine zuvor fehlende bedingte Mindestlektüre in `AGENTS.md`.
+- **Änderungsstand:** `AGENTS.md` und `docs/logbuch.md` sind staged, aber nicht committed: Der aktive Pre-Commit-Hook scheitert beim Installieren von `markdownlint-cli2` mit `npm EALLOWGIT` für seine lokale Git-Abhängigkeit. Kein Hook-Bypass verwendet; Ursache und Behebung gehören in einen eigenen Fahrplan-Schritt.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – AGENTS-Mindestlektüre
+
+- **Letzter Stand:** Analyse-Session vom 2026-11-04 abgeschlossen; `docs/logbuch.md` enthält die verpflichtenden, noch uncommitted Sessioneinträge. Projektstand unverändert: Phase 3, 3.1c erledigt, Merge von PR #38 wartet auf Freigabe.
+- **Geplant für diese Session:** `AGENTS.md` als reinen Verweis auf `CLAUDE.md` gegen die aktuelle Pflichtlektüre aktualisieren.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** eingestellt und bedient: GPT-5/Codex laut Systemkontext; Modellklasse: unbestimmbar (Zuordnung im Projektkontext nennt nur Claude-Modelle; keine Laufzeitabfrage verfügbar). Quelle: Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – CLAUDE-Analyse
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** Analyse von `CLAUDE.md`; keine Umsetzung.
+- **Erreicht:** Verbindliche Abläufe, Stopps und erkennbare Regelkonflikte bewertet. README-Synchronisation gegen den dokumentierten Projektstand geprüft: kein Befund. Inter-Pflicht-Drift in den für diese Analyse berührten Ankern (Status, Blockerzahl, Reaktiv-Quote, Reifegrad-Regel) nicht festgestellt.
+- **Offen geblieben:** Die aufgezeigten Methodikprobleme sind nicht geändert; dies wäre eine Änderung des verbindlichen Regelwerks und damit außerhalb des Auftrags.
+- **Nächster Schritt:** Entscheidung des Projektinhabers, ob die Regeln in `CLAUDE.md` und die tool-spezifische Modellklassenzuordnung bereinigt werden sollen.
+- **Modell-Bilanz:** Modellklasse unbestimmbar; keine Fahrplan-Schritte bearbeitet, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung gegenüber dem letzten Sessionende.
+- **Änderungsstand:** `docs/logbuch.md` ist ausschließlich wegen der verpflichtenden Sessioneinträge uncommitted; kein Commit erstellt, da der Auftrag eine Analyse und keine Repository-Änderung verlangte.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – CLAUDE-Analyse
+
+- **Letzter Stand:** `[SESSIONENDE]` 2026-10-28 21:15 UTC; danach `[BEOBACHTUNG]` 21:45 UTC. Phase 3 läuft, 3.1c ist nach grüner CI auf PR #38 erledigt und wartet auf den Merge nach Freigabe; anschließend 3.2.
+- **Geplant für diese Session:** `CLAUDE.md` analysieren; keine Umsetzung angefordert.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** eingestellt und bedient: GPT-5/Codex laut Systemkontext; Modellklasse: unbestimmbar (die Zuordnung in `project-context.md` nennt nur Claude-Modellklassen; keine Laufzeitabfrage verfügbar). Quelle: Systemkontext.
+
+### 2026-10-28 21:45 (UTC) – [BEOBACHTUNG]
 ### 2026-10-28 23:39 (UTC) – [BEOBACHTUNG]
 
 - **Neuableitung nach ADR-046:** `docs/requirements.md` aus `docs/vision-2.md` neu abgeleitet: 68 Anforderungen (55 Muss, 9 Soll, 3 Kann, 1 verworfen); neue Spalte „Säule“ (Regel-010); neu FR-053 bis FR-068 (Bauphasen, Baustellenlogistik, Störwirkung, Raumformen, Overlays, Engpass-Diagnose, Tagesrhythmus, Umsteiger, Slots, Betriebstag mit Störung, Kennzahlen, Geschäftsmodelle, Gebühren, Frachtnacht, Bestandsflughafen, Bedienkomfort); FR-037 verworfen; FR-031, FR-033 eingeschränkt, FR-002 auf Soll, FR-048 auf Muss (Beiladefracht); FR-011 als erledigt nachgetragen (Drift seit 3.1c). Prioritäten der neuen Anforderungen sind ein Vorschlag der KI.
