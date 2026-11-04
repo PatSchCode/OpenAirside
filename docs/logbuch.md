@@ -36,7 +36,7 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 - **Ablaufdaten-Prüfung:** keine fällige Änderung.
 - **README und Drift:** README, ADR-Übersicht, Regeln, Fahrplan, Anforderungen, Referenzdokumente und Projektkontext gegengeprüft; keine Architektur- oder Quellcodeänderung.
 - **Nachweise:** `git diff --check` grün; `pre-commit 4.7.0` für alle geänderten Dateien grün (einschließlich PyMarkdown). Der zunächst nicht auflösbare Aufruf `pre-commit` (`command not found`) wurde mit der vorhandenen isolierten pipx-Installation geprüft; keine Hook-Umgehung.
-- **Commit-Status:** ausstehend; der Commit folgt nach der abschließenden Konsistenzprüfung.
+- **Commit-Status:** Commit `efd94b3` (`docs: restore comprehensive airport vision`), Branch `docs/adr-047-rueckkehr-zur-urspruenglichen-vision`, Pull Request #44.
 
 ### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – ADR-047 Rückkehr zur ursprünglichen Produktvision
 
