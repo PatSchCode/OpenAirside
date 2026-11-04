@@ -643,6 +643,11 @@ impl Simulation {
                 built.map(drop).map_err(|r| refusal(r, Some(&ty.name)))
             }
             Command::Demolish { area } => self.world.demolish(*area).map_err(|r| refusal(r, None)),
+            Command::SetStationThroughput { target, throughput } => self
+                .world
+                .build_mut()
+                .set_station_throughput(*target, *throughput)
+                .map_err(|_| rejection(code::INVALID_ARGUMENT)),
             Command::Debug { action } => self.debug(action),
         }
     }

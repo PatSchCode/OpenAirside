@@ -38,7 +38,8 @@ export const HELP = [
   "clear",
   "build <pack:entry> <x> <y> [floor] – build command with a content id (S-2, S-4)",
   "walls <floor> <x0> <y0> <x1> <y1> on|off",
-  "scenario hall|reference|furnished [persons] – furnished: floors, walls and 20,000 objects",
+  "scenario hall|small|reference|furnished [persons] – small: terminal lesson",
+  "throughput <target> <rate> – change a terminal station service rate",
   "newgame [1536|2048] – a new game with an empty world on a square map (default 1536)",
   "details on|off – draw objects also in the simplified overview",
   "table [rows 1–1000] – persons of the newest frame, sorted by y and x (S-7)",
@@ -65,6 +66,8 @@ export const TABLE_COLUMNS: readonly ColumnId[] = ["handle", "x", "y", "floor", 
 const SPEEDS: ReadonlySet<string> = new Set<Speed>(["paused", "x1", "x2", "x3"]);
 const SCENARIOS: Readonly<Record<string, Scenario>> = {
   hall: "openHall",
+  small: "smallTerminal",
+  smallterminal: "smallTerminal",
   openhall: "openHall",
   reference: "referenceTerminal",
   referenceterminal: "referenceTerminal",
@@ -147,9 +150,21 @@ export function parseConsoleLine(line: string): ConsoleResult {
       const scenario = SCENARIOS[args[0] ?? ""];
       const persons = args[1] === undefined ? 0 : integer(args[1]);
       if (scenario === undefined || persons === undefined || persons < 0) {
-        return error("scenario hall|reference|furnished [persons]");
+        return error("scenario hall|small|reference|furnished [persons]");
       }
       return command({ kind: "debug", action: { kind: "loadScenario", scenario, persons } });
+    }
+    case "throughput": {
+      const target = integer(args[0]);
+      const throughput = integer(args[1]);
+      return target !== undefined &&
+        target >= 0 &&
+        target <= 255 &&
+        throughput !== undefined &&
+        throughput > 0 &&
+        throughput <= 65_535
+        ? command({ kind: "setStationThroughput", target, throughput })
+        : error("throughput <target 0–255> <rate 1–65535>");
     }
     case "table": {
       const limit = args[0] === undefined ? 5 : integer(args[0]);

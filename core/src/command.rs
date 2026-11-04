@@ -21,12 +21,13 @@ pub const MAX_SPAWN_PER_COMMAND: u32 = 10_000;
 /// Values of `kind` of [`Command`]; a command with another `kind` is
 /// discarded and counted, one with a known `kind` but wrong fields is
 /// rejected with `invalidArgument` (S-2, "Prüfung").
-pub const COMMAND_KINDS: [&str; 6] = [
+pub const COMMAND_KINDS: [&str; 7] = [
     "setSpeed",
     "skipNight",
     "build",
     "buildArea",
     "demolish",
+    "setStationThroughput",
     "debug",
 ];
 
@@ -67,6 +68,8 @@ pub enum Command {
         /// Covered area.
         area: CellRect,
     },
+    /// Changes the service throughput of an existing terminal station (ADR-049).
+    SetStationThroughput { target: u8, throughput: u16 },
     /// Debug action of the console (FR-009, META-15).
     Debug {
         /// What to do.
@@ -190,6 +193,8 @@ pub fn rejection(code: &str) -> Reason {
 pub fn validate(command: &Command, map: MapSize) -> Result<(), Reason> {
     match command {
         Command::SetSpeed { .. } | Command::SkipNight {} => Ok(()),
+        Command::SetStationThroughput { throughput, .. } if *throughput > 0 => Ok(()),
+        Command::SetStationThroughput { .. } => Err(rejection(code::INVALID_ARGUMENT)),
         Command::Build {
             object,
             at,

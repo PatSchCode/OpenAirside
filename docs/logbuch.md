@@ -24,6 +24,33 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-04 17:05 (Europe/Berlin) – [SESSIONENDE] – 3.2 Finalisierung lokal verifiziert
+
+- **Session-Dauer:** ungefähr 34 Minuten.
+- **Bearbeitet:** ADR-049 umgesetzt: additiver S-2-Befehl für Stationsdurchsatz, erreichbares Kleinterminal, Sicherheitsengpass, FIFO-Aufnahme nur auf ausgewiesene Warteschlangenzellen und gedrosselte S-7-Overlay-Abfrage. Verträge, README, Fahrplan und erzeugter TypeScript-Typ nachgezogen.
+- **Erreicht:** Rust-Gesamttests grün (179 Kern-Unit-Tests, 77 weitere Workspace-Tests), TypeScript-Gesamttests 490 grün mit 81,35 % Lines, `cargo fmt`, Clippy, vollständiger Pre-Commit-Hook und `git diff --check` grün. `cargo-deny 0.20.2` nach Freigabe installiert; Advisories, Bans, Lizenzen und Quellen grün. `npm audit --audit-level=high` grün; 25 bekannte moderate transitive Dev-Tool-Funde ohne sicheren nicht-brechenden Fix bleiben dokumentiert. Lizenzprüfung: 546 Pakete grün.
+- **Offen geblieben:** Commit, Push und CI-Nachweis auf dem neuen Branch.
+- **Nächster Schritt:** Commit `feat: finalize terminal passenger flow`, Branch pushen, PR anlegen und CI bis zum Abschluss beobachten.
+- **Modell-Bilanz:** GPT-5/Codex; keine Delegation.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine fällige Änderung.
+- **README und Drift:** README, Fahrplan, ADR-Übersicht, Schnittstellenvertrag und Logbuch abgeglichen; keine aktiven Blocker.
+- **Commit-Status:** noch uncommitted; Commit folgt nach diesem Abschlussvermerk und erfolgreicher lokaler Prüfung.
+
+### 2026-11-04 16:40 (Europe/Berlin) – [BEOBACHTUNG] – 3.2 Finalisierung: lokaler Security-Nachweis blockiert
+
+- **Kontext:** Finalisierung von Schritt 3.2 auf Branch `feat/3-2-terminal-finalisierung` nach ADR-049.
+- **Nachweise:** `cargo test --workspace --quiet` vollständig grün (einschließlich 179 Kern-Unit-Tests und 12 Spielstandtests); vollständiger Pre-Commit-Lauf grün; Clippy grün. Der Aufruf `cargo deny check` endet mit Exit-Code 101 und `error: no such command: deny`.
+- **Folge:** Der Rust-Sicherheits- und Dependency-Audit-Nachweis fehlt lokal. Kein Hook-Bypass, kein Commit und keine Fertigmeldung; Schritt 3.2 bleibt `[IN ARBEIT]`.
+- **Benötigt:** Entscheidung des Projektinhabers über die Installation des bereits in `project-context.md` festgelegten Werkzeugs `cargo-deny` 0.20.2 oder eine andere zulässige lokale Bereitstellung.
+
+### 2026-11-04 16:31 (Europe/Berlin) – [SESSIONSTART] – 3.2 finalisieren
+
+- **Letzter Stand:** PR #45 für Schritt 3.2 ist gemergt und seine CI ist grün. Die nachträgliche Abnahme hat jedoch offene fachliche Lücken festgestellt: Stationsverbesserung nicht ausführbar, Warteschlangenkapazität nicht durchgesetzt, Szenario nicht über die Konsole erreichbar, ungedrosselte Stationsabfrage sowie Dokumentationsdrift.
+- **Geplant für diese Session:** Nach Freigabe des Projektinhabers für die minimale allgemeine Stationsverbesserung (Option B) die fachlichen Lücken schließen, Tests und Nachweise ergänzen, die Dokumentation konsistent aktualisieren und den bestehenden Schritt erst bei vollständiger Definition of Done abschließen.
+- **Vorabprüfung:** `project-context.md` vollständig, Logbuch ab letztem `[SESSIONENDE]`, Fahrplanstand und Schritt 3.2, Architektur-Überblick, Modulkarte und Reifegrade, ADR-Übersicht und Entscheidungsregeln, aktive Blocker sowie Requirements-Übersicht geprüft. Keine aktiven Blocker; die Freigabe für Datenmodell und additive Verträge liegt vor.
+- **Modell:** GPT-5/Codex laut Systemkontext; keine Delegation.
+
 ### 2026-11-04 15:52 (Europe/Berlin) – [SESSIONSTART] – Codex-Modellrollen
 
 - **Letzter Stand:** Die Codex-Ausführungsdisziplin ist als offener Dokumentations-PR #46 vorhanden. Der Projektinhaber hat zusätzlich die bewusste Trennung von Entscheidungs- und Ausführungsmodell beauftragt.

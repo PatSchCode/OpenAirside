@@ -119,6 +119,21 @@ impl Build {
         &self.stations
     }
 
+    /// Changes the service rate of an existing terminal station.
+    pub fn set_station_throughput(
+        &mut self,
+        target: u8,
+        throughput: u16,
+    ) -> Result<(), TargetError> {
+        let station = self
+            .stations
+            .iter_mut()
+            .find(|station| station.target == target)
+            .ok_or(TargetError::NoCells)?;
+        station.throughput = throughput;
+        Ok(())
+    }
+
     /// Adds a target and returns its field number. The field exists after
     /// the next recomputation.
     ///
@@ -727,6 +742,26 @@ mod tests {
         assert_eq!(build.stations().len(), 1);
         assert_eq!(build.stations()[0].target, 0);
         assert_eq!(build.stations()[0].queue_cells.len(), 2);
+    }
+
+    #[test]
+    fn station_throughput_changes_only_for_existing_stations() {
+        let mut build = Build::new(MapSize::new(64, 64).unwrap());
+        let target = build
+            .add_station(
+                TerminalStationKind::Security,
+                vec![pos(10, 10)],
+                vec![pos(9, 10)],
+                1,
+                1,
+            )
+            .unwrap();
+        assert_eq!(build.set_station_throughput(target, 3), Ok(()));
+        assert_eq!(build.stations()[0].throughput, 3);
+        assert_eq!(
+            build.set_station_throughput(99, 3),
+            Err(TargetError::NoCells)
+        );
     }
 
     #[test]
