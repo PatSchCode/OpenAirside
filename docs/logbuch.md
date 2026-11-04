@@ -24,6 +24,26 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – 3.2 Vorlage erstellt
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** Bestand für Personen, Raster, Zugangsprofile, Wegfindung und die Verträge S-1/S-2/S-7 geprüft; Entscheidungsvorlage für Schritt 3.2 erstellt.
+- **Erreicht:** Die Vorlage grenzt einen vertikalen Minimalfluss für Abflug und Ankunft mit Check-in, Kontrolle, Gate, Warteschlangen, Engpass-Overlay und Lektion ab. Sie nennt Referenzen aus Inventar und Modernisierung sowie Tests und Vertragswirkung.
+- **Offen geblieben:** Freigabe der Datenmodell- und Schnittstellenentscheidung; kein Produktionscode begonnen.
+- **Nächster Schritt:** Entscheidung zu Option A oder B in `docs/research/3.2-vorlage.md` Abschnitt 7.
+- **Modell-Bilanz:** GPT-5/Codex; keine Delegation.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung.
+- **README und Drift:** README nicht betroffen; Fahrplan, Anforderungen, Architektur und Entscheidungen gegen die Vorlage geprüft.
+- **Commit-Status:** Dokumentationscommit nach erfolgreicher Prüfung erstellt; kein Hook-Bypass.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – 3.2 Vorlage kleines Terminal
+
+- **Letzter Stand:** ADR-047 ist auf `main` gemergt; 3.2 ist der nächste offene, freigabepflichtige Schritt.
+- **Geplant für diese Session:** Die Vorlage für 3.2 mit funktionalen Referenzen, Schnittstellenwirkung, Datenmodell, Teststrategie und Entscheidungsvorlage erstellen. Kein Produktionscode vor ausdrücklicher Freigabe.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
 ### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – ADR-047 Produktvision wiederhergestellt
 
 - **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
