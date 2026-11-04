@@ -115,6 +115,9 @@ pub enum DebugAction {
 pub enum Scenario {
     /// Walkable ground floor without walls and one target.
     OpenHall,
+    /// Compact terminal with passenger stations of roadmap step 3.2
+    /// (ADR-048).
+    SmallTerminal,
     /// Reference terminal 768² × 5 with 17 gates (36 targets) in the middle
     /// of the map (spike 1.5, ADR-020).
     ReferenceTerminal,

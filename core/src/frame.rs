@@ -43,6 +43,7 @@ use std::sync::Arc;
 use serde::{Deserialize, Serialize};
 
 use crate::build::grid::floor_index;
+use crate::build::target::TerminalStationKind;
 use crate::datapack::Catalog;
 use crate::display::{WorldSender, WorldView};
 use crate::geometry::MapSize;
@@ -144,6 +145,29 @@ pub struct PersonPoint {
     pub heading: u8,
 }
 
+/// Station telemetry of the captured frame, used by S-7 and terminal
+/// overlays. The values are computed by the simulation core, never by the
+/// renderer.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS), ts(export))]
+#[serde(rename_all = "camelCase")]
+pub struct TerminalStationPoint {
+    /// Station role in the terminal flow.
+    pub kind: TerminalStationKind,
+    /// Its passenger target.
+    pub target: u8,
+    /// Current queue length.
+    pub queued: u32,
+    /// Passengers served in the latest tick.
+    pub served: u16,
+    /// Sum of waiting time of the current queue, in simulation ticks.
+    pub waiting_ticks: u64,
+    /// Maximum concurrent queue capacity.
+    pub capacity: u16,
+    /// Maximum service throughput per tick.
+    pub throughput: u16,
+}
+
 /// Visible state of one tick, captured by the simulation thread.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Snapshot {
@@ -153,6 +177,7 @@ pub struct Snapshot {
     height: u16,
     fields_revision: u32,
     persons: Vec<Packed>,
+    terminal_stations: Vec<TerminalStationPoint>,
     /// Content of the session (S-7 `catalog`); it changes only with the
     /// session, so a capture only counts a reference.
     content: Arc<Catalog>,
@@ -195,6 +220,23 @@ impl Snapshot {
                 state: p.state,
             });
         });
+        self.terminal_stations.clear();
+        self.terminal_stations
+            .extend(
+                world
+                    .build()
+                    .stations()
+                    .iter()
+                    .map(|station| TerminalStationPoint {
+                        kind: station.kind,
+                        target: station.target,
+                        queued: world.persons().queued_for(station.target),
+                        served: world.persons().served_last_tick(station.target),
+                        waiting_ticks: world.persons().waiting_ticks_for(station.target),
+                        capacity: station.capacity,
+                        throughput: station.throughput,
+                    }),
+            );
     }
 
     /// Content of the session of the snapshot; empty before the first
@@ -226,6 +268,12 @@ impl Snapshot {
     #[must_use]
     pub fn persons(&self) -> usize {
         self.persons.len()
+    }
+
+    /// Terminal stations in the snapshot, in deterministic scenario order.
+    #[must_use]
+    pub fn terminal_stations(&self) -> &[TerminalStationPoint] {
+        &self.terminal_stations
     }
 
     /// Person `index` with its position in cells (resolution 1/32 cell).

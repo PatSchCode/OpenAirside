@@ -24,6 +24,59 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – 3.2 Abschlussprüfung
+
+- **Letzter Stand:** Die Umsetzung von 3.2 ist uncommitted; alle lokalen Prüfungen außer `cargo-deny` sind grün. Das CI-gleiche Werkzeug `cargo-deny 0.20.2` liegt nun isoliert bereit.
+- **Geplant für diese Session:** Rust-Sicherheitsprüfung, DoD-Konsistenzprüfung, Commit, Push und Beobachtung des bestehenden Draft-PR #45.
+- **Vorabprüfung:** Pflichtlektüre in der vorgegebenen Reihenfolge einschließlich letztem `[SESSIONENDE]`, laufendem Fahrplan-Schritt, Architektur, Entscheidungen, aktiven Blockern und Requirements-Übersicht durchgeführt; keine aktiven Blocker.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – 3.2 Kern und Overlay umgesetzt
+
+- **Session-Dauer:** nicht verlässlich messbar.
+- **Bearbeitet:** ADR-048 umgesetzt: persistente Terminalstationen, Passagiergruppen und Zustandsfluss, FIFO mit persistierter Reihenfolge, Wartezeit, Durchsatz, Kleinflughafen-Szenario, S-7-Stationstelemetrie, Overlay und erste Engpass-Lektion; Rust- und TypeScript-Verträge sowie Dokumentation aktualisiert.
+- **Erreicht:** `cargo test -p openairside-core --lib --tests` (178 Unit-Tests und alle Integrationstests, einschließlich `pax_flow`) und Clippy grün; `npm run gen:types`, Prettier, Typprüfung, ESLint und Vitest (488 Tests) grün; Pre-Commit vollständig grün. `npm audit --audit-level=high` grün, mit 25 bekannten moderaten transitiven Entwicklungswerkzeug-Funden ohne sicheren nicht-brechenden Fix.
+- **Offen geblieben:** `cargo-deny` konnte lokal nicht gestartet werden: das Werkzeug fehlt, die isolierte Installation unter `/private/tmp` wurde nicht fertiggestellt. Damit bleiben der Rust-Sicherheitsnachweis, Commit, Push und CI offen; Schritt 3.2 bleibt `[IN ARBEIT]`.
+- **Nächster Schritt:** `cargo-deny check` mit der CI-Version 0.20.2 erfolgreich ausführen; danach DoD-Konsistenz prüfen, committen, pushen und den vorhandenen Draft-PR #45 aktualisieren.
+- **Modell-Bilanz:** GPT-5/Codex; keine Delegation.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine fällige Änderung festgestellt.
+- **Commit-Status:** kein Commit und kein Hook-Bypass; Änderungen bleiben bewusst uncommitted bis zum fehlenden Sicherheitsnachweis.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – 3.2 Codeumsetzung fortsetzen
+
+- **Letzter Stand:** Option A ist durch ADR-048 freigegeben; der Kern-Testbestand ist vor der ersten Codeänderung grün.
+- **Geplant für diese Session:** Passagierzustände und Terminalstationen im Rust-Kern implementieren, dann Warteschlangen, Statistik sowie die betroffenen Verträge und Tests.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – 3.2 Umsetzung
+
+- **Letzter Stand:** Die Entscheidungsvorlage zu 3.2 liegt als Draft-PR #45 vor; der Projektinhaber hat Option A freigegeben.
+- **Geplant für diese Session:** ADR-048 vor dem Code dokumentieren und den vertikalen Minimalfluss für Passagiere, Stationen, Warteschlangen, Statistik, Overlay und Lektion umsetzen.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – 3.2 Vorlage erstellt
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** Bestand für Personen, Raster, Zugangsprofile, Wegfindung und die Verträge S-1/S-2/S-7 geprüft; Entscheidungsvorlage für Schritt 3.2 erstellt.
+- **Erreicht:** Die Vorlage grenzt einen vertikalen Minimalfluss für Abflug und Ankunft mit Check-in, Kontrolle, Gate, Warteschlangen, Engpass-Overlay und Lektion ab. Sie nennt Referenzen aus Inventar und Modernisierung sowie Tests und Vertragswirkung.
+- **Offen geblieben:** Freigabe der Datenmodell- und Schnittstellenentscheidung; kein Produktionscode begonnen.
+- **Nächster Schritt:** Entscheidung zu Option A oder B in `docs/research/3.2-vorlage.md` Abschnitt 7.
+- **Modell-Bilanz:** GPT-5/Codex; keine Delegation.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung.
+- **README und Drift:** README nicht betroffen; Fahrplan, Anforderungen, Architektur und Entscheidungen gegen die Vorlage geprüft.
+- **Commit-Status:** Dokumentationscommit nach erfolgreicher Prüfung erstellt; kein Hook-Bypass.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – 3.2 Vorlage kleines Terminal
+
+- **Letzter Stand:** ADR-047 ist auf `main` gemergt; 3.2 ist der nächste offene, freigabepflichtige Schritt.
+- **Geplant für diese Session:** Die Vorlage für 3.2 mit funktionalen Referenzen, Schnittstellenwirkung, Datenmodell, Teststrategie und Entscheidungsvorlage erstellen. Kein Produktionscode vor ausdrücklicher Freigabe.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
 ### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – ADR-047 Produktvision wiederhergestellt
 
 - **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.

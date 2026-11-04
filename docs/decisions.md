@@ -60,6 +60,7 @@
 | 045 | 2026-10-28 | Aktiv | REAKTIV | DATENMODELL, SCHNITTSTELLE | Datenmodell, API-Verträge, Build/Deploy | Bauaufträge mit Bauarbeitern, Anlieferstelle, Gelände in neuen Karten |
 | 046 | 2026-10-29 | Überholt durch ADR-047 | STRATEGISCH | METHODIK | Methodik | Neuausrichtung als eigenes Flughafen-Aufbauspiel |
 | 047 | 2026-11-04 | Aktiv | REAKTIV | METHODIK, COMPLIANCE | Produktvision, Lizenz/Compliance | Rückkehr zur umfassenden Flughafenmanagementsimulation |
+| 048 | 2026-11-04 | Aktiv | STRATEGISCH | DATENMODELL, SCHNITTSTELLE, MODUL | Datenmodell, API-Verträge, Architektur | Minimaler Passagierfluss und Terminalstationen in Schritt 3.2 |
 
 ### Reaktiv-Quote
 
@@ -160,6 +161,7 @@ Seit 2026-10-13 liegt jeder ADR als eigene Datei in `docs/decisions/` (ADR-001: 
 - [ADR-045: Bauaufträge mit Bauarbeitern, Anlieferstelle, Gelände in neuen Karten](decisions/ADR-045.md)
 - [ADR-046: Neuausrichtung als eigenes Flughafen-Aufbauspiel](decisions/ADR-046.md)
 - [ADR-047: Rückkehr zur umfassenden Flughafenmanagementsimulation](decisions/ADR-047.md)
+- [ADR-048: Minimaler Passagierfluss und Terminalstationen in Schritt 3.2](decisions/ADR-048.md)
 
 ---
 
