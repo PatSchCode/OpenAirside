@@ -24,6 +24,27 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.7 abgeschlossen
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** CI-Nachweis des PyMarkdown-Wechsels auf PR #38 geprüft und Q.7 abgeschlossen.
+- **Erreicht:** PR #38, Lauf 40771819702, ist grün; „Dokumentation (pre-commit)“ bestand in 17 s. Damit sind lokaler Pre-Commit, isolierter Python-Audit und CI für Q.7 nachgewiesen.
+- **Offen geblieben:** keine.
+- **Nächster Schritt:** Merge von PR #38 nach Freigabe des Projektinhabers; danach 3.2.
+- **Modell-Bilanz:** GPT-5/Codex; ein Build-/Tooling-Schritt, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung gegenüber dem vorigen Sessionende.
+- **README und Drift:** README nicht betroffen; Fahrplan, Projektkontext und Logbuch abgeglichen.
+- **Änderungsstand:** Abschlussdokumentation folgt in einem regulären Commit; kein Hook-Bypass.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Q.7 CI-Nachweis
+
+- **Letzter Stand:** Commit `c2c26f3` mit PyMarkdown ist auf PR #38 gepusht; lokaler Nachweis grün, CI-Prüfung ausstehend.
+- **Geplant für diese Session:** CI-Ergebnis prüfen und Q.7 nur bei grünem Nachweis abschließen.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
 ### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.7 PyMarkdown integriert
 
 - **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.

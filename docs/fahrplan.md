@@ -441,16 +441,16 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Betroffene Module:** Benchmark & Leistung (`core/benches/`), Build/CI (nur `scripts/bench-report.mjs`)
 - **Reifegrad-Wirkung:** keine
 
-#### Q.7: Markdownlint als projektlokaler Pre-Commit-Hook
+#### Q.7: Dokumentationslint als Pre-Commit-Hook
 
-- **Status:** IN ARBEIT
+- **Status:** ERLEDIGT am 2026-11-04
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
-- **Freigabepflichtig:** ja (Kategorie Build/CI); Option A am 2026-11-04 freigegeben
+- **Freigabepflichtig:** ja (Kategorie Build/CI); Optionen A und B am 2026-11-04 freigegeben, umgesetzt: B
 - **Empfohlene Klasse:** Routine – bestehendes Werkzeug lokalisieren und den Hook prüfen.
 - **Eingangskriterien:** Fehler `npm EALLOWGIT` im bisherigen externen Hook reproduziert und Ursache belegt.
-- **Stand:** Nach Freigabe Option B wird PyMarkdown 0.9.41 als alternative Markdown-Prüfung verwendet. Die Bestandsprüfung und `pre-commit run --all-files` sind mit den begründeten Ausnahmen MD013, MD022 und MD060 grün; `pip-audit` meldet für die aufgelöste Abhängigkeitskette keine bekannten Schwachstellen. Der CI-Nachweis steht aus.
-- **Zu tun:** Änderung committen, auf den bestehenden PR pushen und den CI-Lauf prüfen; anschließend den Schritt abschließen.
+- **Stand:** Nach Freigabe Option B wird PyMarkdown 0.9.41 als alternative Markdown-Prüfung verwendet. Die Bestandsprüfung und `pre-commit run --all-files` sind mit den begründeten Ausnahmen MD013, MD022 und MD060 grün; `pip-audit` meldet für die aufgelöste Abhängigkeitskette keine bekannten Schwachstellen. PR #38, Lauf 40771819702, ist grün; „Dokumentation (pre-commit)“ bestand in 17 s.
+- **Zu tun:** erledigt.
 - **Akzeptanzkriterien:** `pre-commit run --all-files` läuft mit PyMarkdown grün; `pip-audit` für die aufgelöste PyMarkdown-Kette ist grün; CI nutzt dieselbe Konfiguration.
 - **Betroffene Module:** Tooling
 - **Reifegrad-Wirkung:** keine
