@@ -54,6 +54,11 @@ describe("parseConsoleLine", () => {
       { kind: "debug", action: { kind: "loadScenario", scenario: "openHall", persons: 0 } },
     ],
     [
+      "scenario small 80",
+      { kind: "debug", action: { kind: "loadScenario", scenario: "smallTerminal", persons: 80 } },
+    ],
+    ["throughput 1 3", { kind: "setStationThroughput", target: 1, throughput: 3 }],
+    [
       "scenario furnished 10000",
       {
         kind: "debug",

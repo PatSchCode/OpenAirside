@@ -211,7 +211,9 @@ impl Persons {
             self.pool
                 .as_slice()
                 .iter()
-                .filter(|p| p.target == target && p.state == PASSENGER_WAITING)
+                .filter(|p| {
+                    p.target == target && p.state == PASSENGER_WAITING && p.queue_order != 0
+                })
                 .count(),
         )
         .unwrap_or(u32::MAX)
@@ -232,7 +234,11 @@ impl Persons {
         self.pool
             .as_slice()
             .iter()
-            .filter(|person| person.target == target && person.state == PASSENGER_WAITING)
+            .filter(|person| {
+                person.target == target
+                    && person.state == PASSENGER_WAITING
+                    && person.queue_order != 0
+            })
             .map(|person| u64::from(person.wait_ticks))
             .sum()
     }
@@ -437,7 +443,7 @@ impl Persons {
                 .for_each(|(out, cur)| *out = step_person(*cur, main, targets));
         });
         std::mem::swap(persons, next);
-        self.enqueue_waiters();
+        self.enqueue_waiters(stations);
         self.serve_stations(stations);
         workers::advance(self.workers.items_mut(), build, fields, events);
         let workers = u32::try_from(self.workers.len()).unwrap_or(u32::MAX);
@@ -462,14 +468,35 @@ impl Persons {
     /// Assigns an order to passengers which reached a station in the last
     /// movement phase. Equal-tick arrivals retain their deterministic pool
     /// order; earlier ticks always have lower order values.
-    fn enqueue_waiters(&mut self) {
+    fn enqueue_waiters(&mut self, stations: &[TerminalStation]) {
         if self.next_queue_order == 0 {
             self.next_queue_order = 1;
         }
+        let mut admitted = stations
+            .iter()
+            .map(|station| (station.target, 0usize, station.queue_cells.len()))
+            .collect::<Vec<_>>();
+        for person in self.pool.as_slice() {
+            if person.state == PASSENGER_WAITING
+                && person.queue_order != 0
+                && let Some((_, count, _)) = admitted
+                    .iter_mut()
+                    .find(|(target, _, _)| *target == person.target)
+            {
+                *count += 1;
+            }
+        }
         for person in self.pool.items_mut() {
-            if person.state == PASSENGER_WAITING && person.queue_order == 0 {
+            if person.state == PASSENGER_WAITING
+                && person.queue_order == 0
+                && let Some((_, count, limit)) = admitted
+                    .iter_mut()
+                    .find(|(target, _, _)| *target == person.target)
+                && *count < *limit
+            {
                 person.queue_order = self.next_queue_order;
                 self.next_queue_order = self.next_queue_order.wrapping_add(1).max(1);
+                *count += 1;
             }
         }
     }
@@ -478,14 +505,16 @@ impl Persons {
     fn serve_stations(&mut self, stations: &[TerminalStation]) {
         self.station_telemetry.clear();
         for station in stations {
-            let limit = usize::from(station.capacity.min(station.throughput));
+            let limit = usize::from(station.throughput);
             let mut queued: Vec<usize> = self
                 .pool
                 .as_slice()
                 .iter()
                 .enumerate()
                 .filter_map(|(index, person)| {
-                    (person.target == station.target && person.state == PASSENGER_WAITING)
+                    (person.target == station.target
+                        && person.state == PASSENGER_WAITING
+                        && person.queue_order != 0)
                         .then_some(index)
                 })
                 .collect();
@@ -844,6 +873,42 @@ mod tests {
         assert_eq!(persons.pool.as_slice()[1].target, 7);
         assert_eq!(persons.pool.as_slice()[1].state, PASSENGER_TRAVELLING);
         assert_eq!(persons.queued_for(5), 1);
+    }
+
+    #[test]
+    fn queue_admission_is_limited_by_designated_queue_cells() {
+        let stations = [TerminalStation {
+            kind: TerminalStationKind::Security,
+            target: 5,
+            queue_cells: vec![CellPos {
+                x: 1,
+                y: 1,
+                floor: 0,
+            }],
+            capacity: 1,
+            throughput: 1,
+        }];
+        let waiting = Person {
+            group: GROUP_DEPARTING,
+            state: PASSENGER_WAITING,
+            target: 5,
+            ..person()
+        };
+        let mut persons = Persons {
+            pool: Pool::restore(
+                vec![waiting, waiting],
+                &PersonContext {
+                    map: MapSize::new(64, 64).unwrap(),
+                    targets: 8,
+                },
+            )
+            .unwrap(),
+            ..Persons::default()
+        };
+        persons.enqueue_waiters(&stations);
+        assert_eq!(persons.queued_for(5), 1);
+        assert_eq!(persons.pool.as_slice()[0].queue_order, 1);
+        assert_eq!(persons.pool.as_slice()[1].queue_order, 0);
     }
 
     #[test]

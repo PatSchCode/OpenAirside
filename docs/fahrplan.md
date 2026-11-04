@@ -252,7 +252,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** IN ARBEIT – Kernfluss, Szenario, FIFO, S-7-Overlay und erste Lektion umgesetzt; abschließende Gesamtverifikation, Sicherheitsprüfungen, Commit und CI stehen aus.
+- **Status:** IN ARBEIT – Kernfluss, Szenario, FIFO, S-7-Overlay und erste Lektion umgesetzt; ADR-049 schließt Stationsverbesserung, Queue-Grenze, erreichbares Szenario und gedrosselte Overlay-Abfrage nach. Lokale Prüfungen sind grün; Commit und CI stehen aus.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)

@@ -157,8 +157,8 @@ impl World {
                 TerminalStationKind::CheckIn,
                 vec![pos(10, 7)],
                 vec![pos(9, 7), pos(8, 7), pos(7, 7)],
-                16,
-                1,
+                3,
+                3,
             )
             .ok()?;
         world
@@ -167,8 +167,8 @@ impl World {
                 TerminalStationKind::Security,
                 vec![pos(13, 7)],
                 vec![pos(12, 7), pos(11, 7)],
-                16,
                 2,
+                1,
             )
             .ok()?;
         let gate = world
@@ -177,7 +177,7 @@ impl World {
                 TerminalStationKind::Gate,
                 vec![pos(20, 7)],
                 vec![pos(19, 7), pos(18, 7)],
-                16,
+                2,
                 3,
             )
             .ok()?;
@@ -187,7 +187,7 @@ impl World {
                 TerminalStationKind::Exit,
                 vec![pos(28, 7)],
                 vec![pos(27, 7), pos(26, 7)],
-                16,
+                2,
                 2,
             )
             .ok()?;

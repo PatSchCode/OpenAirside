@@ -81,6 +81,7 @@ async function start(): Promise<void> {
   let catalogQuery = 0;
   let buildPanel: BuildPanel | undefined;
   let terminalQuery = 0;
+  let terminalQueryAt = Number.NEGATIVE_INFINITY;
 
   const showTerminal = (stations: readonly TerminalStationPoint[]): void => {
     if (terminalBox === null) return;
@@ -144,6 +145,7 @@ async function start(): Promise<void> {
       catalogSession = 0;
       catalogQuery = 0;
       terminalQuery = 0;
+      terminalQueryAt = Number.NEGATIVE_INFINITY;
       checkBasePack();
       // The core is ready: texts of all loaded packs (S-6 `lang.texts`).
       reloadLanguage();
@@ -157,6 +159,7 @@ async function start(): Promise<void> {
       catalogSession = 0;
       catalogQuery = 0;
       terminalQuery = 0;
+      terminalQueryAt = Number.NEGATIVE_INFINITY;
       tool.reset();
       series?.onSession(session);
     },
@@ -200,8 +203,11 @@ async function start(): Promise<void> {
         catalogFor = frame.header.session;
         catalogQuery = client?.query({ kind: "catalog" }) ?? 0;
       }
-      if (terminalQuery === 0) terminalQuery = client?.query({ kind: "terminalStations" }) ?? 0;
       const now = performance.now();
+      if (terminalQuery === 0 && now - terminalQueryAt >= 500) {
+        terminalQuery = client?.query({ kind: "terminalStations" }) ?? 0;
+        terminalQueryAt = now;
+      }
       const rtt = now - requestedAt;
       perf.frame(now, rtt);
       series?.onFrame(now, frame.header, rtt);
