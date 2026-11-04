@@ -1,4 +1,6 @@
-# Modernisierungs-Kandidaten: Original (Konzeption 2015) vs. Flughafenbetrieb heute
+# Modernisierungs-Kandidaten: Flughafenbetrieb heute
+
+> **Seit ADR-047 (2026-11-04): verbindliche Referenz nach ADR-006 und Regel-004.** Sie beschreibt eigenständige Weiterentwicklungen und ist keine Übernahmevorlage.
 
 <!-- Anhang zur vision.md, ergänzt funktionsinventar.md.
      Grundsatz aus der Konzeptphase: Das Spielprinzip des Originals bleibt erhalten. Wo sich der reale

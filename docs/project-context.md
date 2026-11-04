@@ -8,7 +8,7 @@
 ## 1. Kerndaten
 
 - **Projektname:** OpenAirside
-- **Kurzbeschreibung:** Freies Flughafen-Aufbauspiel für Windows, Linux und macOS. Ein Flughafen ist ein System aus Strömen (Menschen, Gepäck, Fracht, Fahrzeuge, Flugzeuge); der Spieler baut ihn, liest seine Ströme und baut ihn im laufenden Betrieb um, für Airlines mit eigenen Zielen. Technisch ausgelegt auf sehr große Flughäfen. Vision: `docs/vision-2.md` (seit ADR-046, 2026-10-29; `docs/vision.md` historisch).
+- **Kurzbeschreibung:** Freie, umfassende Flughafenmanagementsimulation für Windows, Linux und macOS. Spieler planen, bauen und betreiben große Flughäfen mit Infrastruktur, Personen, Gepäck, Flugzeugen, Wirtschaft und Managementwerkzeugen. Technisch ist sie auf sehr große Flughäfen ausgelegt. Verbindliche Vision: `docs/vision.md` (ADR-047); die frühere Engführung in `docs/vision-2.md` ist historisch.
 - **Status:** Konzeption
 - **Version (SemVer):** v0.0.0 (vor der ersten Umsetzung)
 - **Dokumentationssprache:** Deutsch
@@ -176,7 +176,8 @@ Keine externen APIs im Spiel.
 ### Compliance und Lizenz
 
 - **Projektlizenz:** MIT für den Code; eigene Grafiken unter CC0.
-- **Audio:** freie Bibliotheken und KI-generierte Sounds erlaubt. → Regel: Audio-Dateien mit abweichenden Bedingungen liegen in einem eigenen Verzeichnis mit Lizenzhinweis-Datei.
+- **Grafiken:** Spielgrafiken werden eigenständig als skalierbare SVGs erstellt, grundsätzlich KI-gestützt und mit eigener Designsprache; die bestehende Raster-/Atlas-Pipeline bleibt maßgeblich. Keine Übernahme oder Nachzeichnung fremder Spielgrafiken.
+- **Audio:** Noch kein Anbieter entschieden. Zulässig sind nur eigene KI-Audioinhalte mit passenden Nutzungsrechten, CC0, kommerziell lizenzierte Inhalte oder eigene/beauftragte Aufnahmen und Kompositionen. Jeder später eingebundene Inhalt erhält eine nachvollziehbare Herkunfts- und Rechteangabe; Dateien mit abweichenden Bedingungen liegen in einem eigenen Verzeichnis mit Lizenzhinweis-Datei.
 - **Erlaubte Abhängigkeitslizenzen:** MIT, BSD (2- und 3-Klausel), Apache-2.0, ISC, zlib, MPL-2.0, Unicode-3.0, BlueOak-1.0.0, 0BSD, Python-2.0, WTFPL (letzte vier seit ADR-019, gelten für ausgelieferte Teile und Werkzeuge gleichermaßen). → Regel: `cargo-deny` (Rust) und Lizenzprüfung für npm in der CI.
 - **Ausgeschlossene Lizenzen:** GPL, AGPL und proprietäre Lizenzen, die Mitwirkende an ein Konto oder eine Lizenzvereinbarung binden.
 
@@ -352,10 +353,10 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 <!-- ANCHOR:glossar -->
 ## 12. Glossar (projektspezifische Begriffe)
 
-- **Säule:** einer der fünf Schwerpunkte aus `docs/vision-2.md` (S1 Umbau im Betrieb, S2 Ströme lesen, S3 Rhythmus und Fracht, S4 Störung und Erholung, S5 Airlines als Partner); jede Spielfunktion nennt ihre Säule (Regel-010).
-- **Bisheriges Vorbild (historisch, „Original“ in älteren Dokumenten):** Airport CEO von Apog Labs, Stand Version 1.1-3. Seit ADR-046 nur noch eine Ideenquelle unter mehreren.
-- **Funktionsgleichheit (historisch):** Ziel bis 2026-10-29, entfallen mit ADR-046.
-- **Kern / Kandidat (in `modernisierung.md`):** historische Einteilung; seit ADR-046 entscheidet die Säule, nicht die Einteilung.
+- **Säule:** historische Herkunftsmarkierung aus ADR-046; seit ADR-047 keine Zulassungsbedingung mehr.
+- **Funktionale Referenz:** abstrahierte Spielprinzipien in `funktionsinventar.md` und `modernisierung.md`, verbindlich für Umfang und Abgleich nach Regel-004, niemals als Implementierungs- oder Gestaltungsvorlage.
+- **Funktionsabgleich:** Prüfung auf gleichwertige, eigenständige Abdeckung der Referenzprinzipien; keine Identität mit einem fremden Werk und keine Übernahme konkreter Ausgestaltung.
+- **Kern / Kandidat (in `modernisierung.md`):** verbindliche Priorisierungskategorien nach ADR-006 und ADR-047.
 - **Referenzszenario:** der in Abschnitt 6 beschriebene große Flughafen als Maßstab für Leistung.
 - **Zielhardware / Untergrenze:** Rechner, für den optimiert wird / Rechner, auf dem das Spiel mindestens lauffähig sein muss.
 - **Simulationskern:** der Rust-Teil mit der gesamten Spiellogik.

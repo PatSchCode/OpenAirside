@@ -8,12 +8,12 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-29 (Neuausrichtung als eigenes Spiel, ADR-046: Vision `docs/vision-2.md`, Anforderungen neu abgeleitet, Phase 3 neu geplant; zuvor 2026-10-28: 3.1c und Q.6 erledigt und gemergt, PR #38 und #39)
+- **Stand vom:** 2026-11-04 (ADR-047: ursprüngliche Produktvision wiederhergestellt, ADR-046 strategisch überholt; vorhandene Technik und umgesetzte Funktionen bleiben erhalten)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
 - **Aktiver Schritt:** keiner; Q.6 `[ERLEDIGT]` 2026-10-28 (Merge mit PR #39, `df6da46`); 3.1c `[ERLEDIGT]` 2026-10-28 (Merge mit PR #38, `394d24e`); 3.1b `[ERLEDIGT]` 2026-10-26 (Merge mit PR #36), 3.1a `[ERLEDIGT]`, Q.5 `[ERLEDIGT]` (PR #37, `56bdc8c`)
-- **Nächster Schritt:** Pflichtfrage „Weiterbauen, umbauen oder neu aufsetzen?“ nach ADR-046 durch eine getrennte Instanz (`CLAUDE.md` Abschnitt 12), danach Vorlage zu 3.2 (kleines Terminal im laufenden Betrieb erweitern, erste Lektion). Offen daneben 3.1b-N1 (Grafik-Abnahme, jetzt mit `base:delivery_point`, Zeitpunkt nennt der Projektinhaber)
-- **Offene STOPP-Situationen:** keine. Reaktiv-Quote 4 / 10 (ADR-037 bis ADR-046) über dem Schwellenwert; Reflexion zu ADR-045 (neues Muster nach Regel-009) zur Kenntnis genommen am 2026-10-28, Maßnahme (13); Reflexion zu ADR-042 (neues Muster nach Regel-009) zur Kenntnis genommen am 2026-10-25, Maßnahme (12); Reflexion zu ADR-038 (neues Muster nach Regel-009) zur Kenntnis genommen am 2026-10-20, siehe „Iterations-Reflexion“
+- **Nächster Schritt:** Vorlage zu 3.2 gegen `docs/vision.md`, Funktionsinventar und Modernisierung konkretisieren; offen daneben 3.1b-N1 (Grafik-Abnahme, jetzt mit `base:delivery_point`, Zeitpunkt nennt der Projektinhaber).
+- **Offene STOPP-Situationen:** keine. Reaktiv-Quote 4 / 10 (ADR-038 bis ADR-047) über dem Schwellenwert; ADR-047 korrigiert die Produktvision, ohne Architektur oder Code zu ändern. Reflexion zu ADR-045 (neues Muster nach Regel-009) zur Kenntnis genommen am 2026-10-28, Maßnahme (13); siehe „Iterations-Reflexion".
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -88,13 +88,13 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 ### Phase 3: Vertikaler Schnitt „Kleiner Flughafen" – Typ: UMSETZUNG
 
-**Ziel:** Ein kleiner Flughafen ist von Anfang bis Ende spielbar, auf einem Kern, der mehrere Fachmodule geordnet trägt (ADR-036). Seit ADR-046 (2026-10-29) zeigt der Schnitt die Kernschleife der neuen Vision: bauen, Ströme lesen, im laufenden Betrieb umbauen, an Kennzahlen der Airlines gemessen werden.
+**Ziel:** Ein kleiner Flughafen ist von Anfang bis Ende spielbar, auf einem Kern, der mehrere Fachmodule geordnet trägt (ADR-036). Er bildet einen ersten eigenständigen, überprüfbaren Ausschnitt der umfassenden Produktvision (ADR-047).
 
-**Abschlusskriterium:** Szenario „Die Einsteigerin“ aus `docs/vision-2.md` ist spielbar (bis 2026-10-29: Szenario 2 der ersten Vision).
+**Abschlusskriterium:** Ein eigenständiges Einsteiger-Szenario mit Bau, Personenfluss, Abfertigung und Wirtschaft in Grundform ist spielbar; die betroffenen Inventar- und Modernisierungs-IDs sind nach Regel-004 dokumentiert.
 
 **Reifegrad-Erwartung am Phasenende:** Weltdarstellung im Spielfeld per ADR in 3.8 `[BELASTBAR]` (erreicht, ADR-038); Speicher der Weltdarstellung nach Nachmessung in 3.1; NFR Darstellung unter Windows nach 3.15 (erreicht 2026-10-20, Auflage 3.1); Module Personen, Wegfindung & Passagierführung, Verkehr & Verkehrssteuerung, Flugbetrieb, Abfertigung & Gepäck, Spielfeld und Oberfläche durch Umsetzung `[BELASTBAR]` im umgesetzten Umfang; NFR „Bauaktion im nächsten Bild" gemessen (3.1); Verkehr/Blockadevermeidung per ADR aus 3.12.
 
-**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-19 beim Phasenabschluss 2 (ADR-036): 3.1–3.13. Seit 2026-10-20 (ADR-038) 14 Schritte mit 3.14, seit 2026-10-20 (Ergebnis 3.14, Antwort des Projektinhabers) 15 mit 3.15; Wucherungs-Schwelle (Faktor 2 und mindestens 5 zusätzliche, also 26) nicht erreicht. **Neuplanung 2026-10-29 (ADR-046):** Inhalt der offenen Schritte 3.2, 3.3, 3.4 und 3.6 nach `docs/vision-2.md` neu gefasst, keine Schritte dazu oder weg; neuer ursprünglicher Schrittplan 15 Schritte, Schwelle 26.
+**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-19 beim Phasenabschluss 2 (ADR-036): 3.1–3.13. Seit 2026-10-20 (ADR-038) 14 Schritte mit 3.14, seit 2026-10-20 (Ergebnis 3.14, Antwort des Projektinhabers) 15 mit 3.15; Wucherungs-Schwelle (Faktor 2 und mindestens 5 zusätzliche, also 26) nicht erreicht. ADR-047 stellt für die offenen Schritte wieder Inventar und Modernisierung als Umfangsreferenz her; bereits geplante technische Verbesserungen bleiben Kandidaten und werden nicht pauschal entfernt.
 
 **Reihenfolge:** 3.7 → 3.8 → 3.14 → 3.15 → 3.9 → 3.10 → 3.1 → 3.2 → 3.11 → 3.3 → 3.12 → 3.13 → 3.4 → 3.5 → 3.6. 3.7, 3.8, 3.11, 3.12 und 3.13 sind Entwurfs- bzw. Erkundungsschritte mit Phasentyp-Kontext ERKUNDUNG (wie 2.8 und 2.9); ebenso 3.14 (seit ADR-038); sie liefern Entscheidungen oder Messungen, keinen Spielcode.
 
@@ -257,10 +257,10 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
 - **Empfohlene Klasse:** Entscheidung für die Vorlage (Vertragsfragen, Architektur), Routine für die Umsetzung danach.
-- **Eingangskriterien:** 3.1 erledigt; Pflichtfrage „Weiterbauen, umbauen oder neu aufsetzen?“ nach ADR-046 beantwortet; Vorlage freigegeben
-- **Säulen (Regel-010):** S1 Umbau im Betrieb, S2 Ströme lesen, Grundsatz „Lernen am eigenen Flughafen“
+- **Eingangskriterien:** 3.1 erledigt; Vorlage mit Referenzen aus Inventar und Modernisierung nach Regel-004 freigegeben
+- **Referenzen (Regel-004):** die betroffenen Inventar- und Modernisierungs-IDs werden vor Umsetzung in der Vorlage festgehalten
 - **Anforderungen (ab Klasse M):** FR-007, FR-012, FR-016, FR-019, FR-020, FR-022, FR-053, FR-057, FR-067
-- **Zu tun:** Kleiner Bestandsflughafen auf Gelände als Szenario mit einem lösbaren Engpass (FR-067); kleines Terminal mit Check-in, Sicherheit, Gate, Boarding und Toiletten; Zonen und Räume in Grundform; erste Stufe der Bauphasen: eine Phase sperrt Fläche vor dem Bau, Personen werden umgeleitet (FR-053); Wartezeit-Overlay (FR-057); erste Lektion am Engpass (FR-007); Passagierablauf Abflug und Ankunft mit Bedürfnissen und Zielwahl im Modul Personen (`TODO(fahrplan-ref: 3.2)` in `world.rs`); Personalzonen (ZON-02, nur verlassen für Fluggäste), Zugangsprofile der Ziele, Personal und Sicherheitsbeamte (ohne Zonenregel) an Schalter, Kontrolle und Gate, landseitige Ziele ohne Weg über die Kontrolle (ADR-037); Gruppe und Zustand der Personen im Bild (S-1 Layout 2, ADR-038); Säulen nach Regel-010.
+- **Zu tun:** Kleiner Bestandsflughafen auf Gelände als Szenario mit einem lösbaren Engpass (FR-067); kleines Terminal mit Check-in, Sicherheit, Gate, Boarding und Toiletten; Zonen und Räume in Grundform; Wartezeit-Overlay (FR-057); erste Lektion am Engpass (FR-007); Passagierablauf Abflug und Ankunft mit Bedürfnissen und Zielwahl im Modul Personen (`TODO(fahrplan-ref: 3.2)` in `world.rs`); Personalzonen (ZON-02, nur verlassen für Fluggäste), Zugangsprofile der Ziele, Personal und Sicherheitsbeamte (ohne Zonenregel) an Schalter, Kontrolle und Gate, landseitige Ziele ohne Weg über die Kontrolle (ADR-037); Gruppe und Zustand der Personen im Bild (S-1 Layout 2, ADR-038). Bauphasen und Umleitungen aus ADR-046 bleiben nur nach separater Priorisierung Kandidaten.
 - **Akzeptanzkriterien:** `core/tests/pax_flow.rs` grün; 1 h Spielzeit im Szenario ohne Stillstand im Passagierverkehr, der sich nicht selbst auflöst (FR-016, ADR-036), auch während eine Bauphase einen Teil des Terminals sperrt (`core/tests/build_phases.rs`); Wartezeit-Overlay zeigt den Engpass des Szenarios vor und nach dem Umbau; erste Lektion durchspielbar (`e2e/lessons.spec.ts`); `core/tests/zones.rs`, `checkin.rs`, `security.rs`, `gates.rs` in Grundform grün; Coverage Kern ≥ 85 %; neue Grafiken vom Projektinhaber abgenommen (`docs/stilleitfaden.md` Abschnitt 7).
 - **Betroffene Module:** Personen, Welt & Bau, Wegfindung & Passagierführung, Takt & Weltzustand, Spielfeld, Oberfläche
 - **Reifegrad-Wirkung:** Modul Personen → `[BELASTBAR]` im umgesetzten Umfang
@@ -292,7 +292,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Freigabepflichtig:** nein, sofern 3.11 ohne Architekturänderung endet
 - **Empfohlene Klasse:** Routine – Umsetzung nach dem Ergebnis von 3.11.
 - **Eingangskriterien:** 3.11 entschieden
-- **Säulen (Regel-010):** S2 Ströme lesen
+- **Referenzen (Regel-004):** Passagierführung, Beschilderung, Wegprobleme und Overlays aus Inventar und Modernisierung vor Umsetzung festlegen
 - **Anforderungen (ab Klasse M):** FR-017, FR-018, FR-043, FR-057, FR-058
 - **Zu tun:** Schilder und Bodenmarkierungen als Kostenfaktoren der Wegweiser; Suchen ohne Schilder nach 3.11; Ursache der Unerreichbarkeit (Zonenregel, eingeschlossen, fehlende Station; nach ADR-037 zusätzlich Personalzone, kein Gehweg oder keine Querung, nur über Bahn in Betrieb) für den Spieler.
 - **Akzeptanzkriterien:** `core/tests/signage.rs` (mit Beschilderung messbar kürzere Wegzeit), `core/tests/path_diagnostics.rs` und `core/tests/bottlenecks.rs` (Engpass-Diagnose mit Ursache, FR-058) grün; Overlays für Dichte, Herkunft und Ziel (FR-057); Benchmark Wegweiser unverändert in seinen Grenzen.
@@ -342,7 +342,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Freigabepflichtig:** ja, für das Schema der Inhaltsart `vehicles/` (Kategorie 5, additiv nach Regel-008 falls rückwärtskompatibel) und für S-1 Layout 2 nur, wenn es von ADR-038 abweicht
 - **Empfohlene Klasse:** Entscheidung – größter Umsetzungsschritt der Phase mit neuen Fachmodulen; Teilarbeiten Routine.
 - **Eingangskriterien:** Blockadevermeidung `[BELASTBAR]` (3.12); S-1 Layout 2 entschieden (3.8)
-- **Säulen (Regel-010):** S1 (Baustellenlogistik), Basis
+- **Referenzen (Regel-004):** Straßen, Rollwege, Vorfeld, Walk-out und Verkehrssteuerung aus Inventar und Modernisierung vor Umsetzung festlegen
 - **Anforderungen (ab Klasse M):** FR-014, FR-027, FR-028, FR-052, FR-054
 - **Zu tun:** Straßenverkehr, Bahn und Rollwege mit Knoten, Verkehrssteuerung; Vorfeld-Gehwege zu Stellplätzen ohne Fluggastbrücke und Walk-out-Boarding (ADR-020, ADR-036, FR-052); Querungen nach 3.7 (Querungszustand im Verkehr, Flugzeugtür am Ende des Gehwegs als Ziel der Fluggäste, ADR-037); Nachtsprung bei Flugzeugen in Bewegung sperren (`TODO(fahrplan-ref: 3.4)` aus 2.2, META-08); Fahrzeuge im Spielstand mit der Höchstzahl `MAX_VEHICLES` (aus 2.5); Schema der Inhaltsart `vehicles/` in Datenpaketen (aus 2.4, ADR-025); Abschnitte Fahrzeuge und Flugzeuge in S-1 Layout 2 (ADR-038).
 - **Akzeptanzkriterien:** `core/tests/road_traffic.rs`, `airside.rs`, `traffic_control.rs` und `walk_out.rs` grün; 1 h Spielzeit ohne Dauerstau; Benchmarks in ihren Grenzen; Coverage Kern ≥ 85 %; neue Grafiken vom Projektinhaber abgenommen (`docs/stilleitfaden.md` Abschnitt 7).
@@ -356,7 +356,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.4
 - **Freigabepflichtig:** nein, sofern keine neue Schnittstelle oder Abhängigkeit
-- **Empfohlene Klasse:** Routine – Umsetzung nach `docs/vision-2.md` und den Kernprozessen.
+- **Empfohlene Klasse:** Routine – Umsetzung nach `docs/vision.md`, den Kernprozessen sowie dokumentierten Referenzen nach Regel-004.
 - **Eingangskriterien:** 3.4 erledigt
 - **Anforderungen (ab Klasse M):** FR-025, FR-032
 - **Zu tun:** Turnaround-Services und Gepäckanlage in Grundform; Wege des Vorfeldpersonals nach 3.7 (ADR-037: zu Fuß über Stellplätze, Gehwege und Querungen, sonst per Servicewagen, Erklärung bei Unerreichbarkeit); Abschnitt Gepäck in S-1 Layout 2 (ADR-038); Inventar-IDs nach Regel-004.
@@ -371,9 +371,9 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.5
 - **Freigabepflichtig:** ja, für die Schemas `aircraft/` und `airlines/` (Kategorie 5, additiv nach Regel-008 falls rückwärtskompatibel) und für die Darstellung der Lackierungen (Kategorie 1 und 4: Einfärben im Spielfeld, Lackierung als Inhaltsart; Erweiterung von `docs/stilleitfaden.md` um Airline-Farben und Logos)
-- **Empfohlene Klasse:** Routine – Umsetzung nach `docs/vision-2.md`; Entscheidung bei Vertragsfragen, beim Entwurf der Verträge und Kennzahlen und beim Entwurf der Lackierungen (Architektur und Datenmodell).
+- **Empfohlene Klasse:** Routine – Umsetzung nach `docs/vision.md`; Entscheidung bei Vertragsfragen, beim Entwurf der Verträge und Kennzahlen und beim Entwurf der Lackierungen (Architektur und Datenmodell).
 - **Eingangskriterien:** 3.5 erledigt
-- **Säulen (Regel-010):** S3 Rhythmus, S5 Airlines als Partner
+- **Referenzen (Regel-004):** Flugplanung, Airlines, Wirtschaft und Flugzeugklassen aus Inventar und Modernisierung vor Umsetzung festlegen
 - **Anforderungen (ab Klasse M):** FR-030, FR-036, FR-038, FR-039, FR-044 (Airline und Flugzeugtyp aus dem Mod-Ordner), FR-059, FR-063, FR-064, FR-065
 - **Zu tun:** GA und kleine Linienflüge (Propellermaschinen, Szenario „Die Einsteigerin“), Flugplaner als große Tabelle über S-7 mit Sortierung im Kern und Wellen (FR-059), Geld in Grundform; zwei Geschäftsmodelle der Airlines (FR-064), Vertrag mit einer messbaren Zusage (FR-030, FR-038), Gebührenordnung in Grundform (FR-065), Kennzahlen statt Sterne (FR-063); Wörterbuch- und Detail-Texte als `{ key }`/`{ text }`, `tick` im Detail (ADR-032, L-6); Schema der Inhaltsarten `aircraft/` und `airlines/` (aus 2.4, ADR-025). **Lackierungen** (AIR-01, MOD-01; Antwort des Projektinhabers vom 2026-10-21): Entwurf als `ENTSCHEIDUNG ERFORDERLICH` vor dem Code. Ausgangshypothese: je Flugzeugtyp eine Grundgrafik mit markierten Flächen für Airline-Farbe 1 und 2 (Seitenleitwerk, Triebwerke, Flügelspitzen, Rumpfstreifen), je Airline Farben und ein Logo als eigene SVG-Grafik auf dem Rumpfdach, Einfärben und Logo beim Zeichnen im Spielfeld statt vorgerenderter Grafiken je Airline und Typ (Speicher der Atlanten). Mehrere Lackierungen je Typ und Airline, seltene Lackierungen. Nur erfundene Airlines und Logos im Basispaket (Markenrecht, `docs/vision.md` Risiken). Stilleitfaden: Airline-Farben außerhalb der Palette, Logos mit Schriftzug als Ausnahme von „kein Text in Grafiken“. Abnahme der Grafiken nach `docs/stilleitfaden.md` Abschnitt 7.
 - **Akzeptanzkriterien:** `core/tests/flights.rs` und `core/tests/economy.rs` in Grundform grün; `app/tables.bench.ts`: 10.000 Zeilen sortieren und filtern < 100 ms (FR-039); Rauchtest lädt Airline und Flugzeugtyp aus dem Mod-Ordner; Szenario „Einsteiger“ spielbar (Abschlusskriterium der Phase, Spieltest des Projektinhabers); Lackierungen per ADR entschieden, zwei Airlines mit unterschiedlicher Lackierung auf demselben Flugzeugtyp im Spielfeld unterscheidbar in allen drei Atlas-Stufen, Airline aus dem Mod-Ordner mit eigener Lackierung im Rauchtest; neue Grafiken vom Projektinhaber abgenommen (`docs/stilleitfaden.md` Abschnitt 7).
@@ -388,12 +388,12 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 | Schritt | Kurztitel | Anforderungen |
 |---|---|---|
 | 4.1 | Referenzszenario baubar, Leistungstest als CI-Gate; Messung auf echter 8-Kern-Hardware (Auflage ADR-014); Größe des Weltzustands im Spielstand messen und die Grenzen von S-5 (512 MB, ADR-030) prüfen; Neuberechnung der Wegweiser mit den Zielen aller Personengruppen (ADR-037); Budget des Welt-Abschnitts je Bild (1 MB) und Speicher der Weltdarstellung im Referenzszenario (ADR-038) | FR-040, FR-016 |
-| 4.2 | Coverage auf Mindestwerte, Langzeittest, erste Prüfung der umgesetzten Funktionen gegen die Säulen von `docs/vision-2.md` (Regel-010; bis 2026-10-29: Funktionsgleichheits-Prüfung, ADR-046) | – |
+| 4.2 | Coverage auf Mindestwerte, Langzeittest, erster Abgleich der umgesetzten Funktionen gegen Inventar und Modernisierung (Regel-004) | – |
 | 4.3 | Aufgegangen in 3.13 (vorgezogen vor 3.4, ADR-036) | – |
 
 ### Phase 5: Ausbau in die Breite – Typ: UMSETZUNG
 
-**Ziel:** Die fünf Säulen von `docs/vision-2.md` in der Breite (seit ADR-046; bis 2026-10-29: Funktionsumfang des Originals). Wird bei Phasenbeginn in Teilphasen oder Teil-Fahrpläne aufgeteilt; vor Verkehr und Gepäck jeweils eine Erkundung.
+**Ziel:** Die umfassende, eigenständige Flughafenmanagementsimulation der `docs/vision.md` in der Breite. Inventar und Modernisierung liefern die überprüfbaren Referenzen; die Umsetzung bleibt technisch und gestalterisch eigenständig. Wird bei Phasenbeginn in Teilphasen oder Teil-Fahrpläne aufgeteilt; vor Verkehr und Gepäck jeweils eine Erkundung.
 
 | Schritt | Kurztitel | Anforderungen |
 |---|---|---|
@@ -402,8 +402,8 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 | 5.3 | Landseite: Parken, ÖPNV, Kreuzungen mit wählbarer Vorfahrt | FR-013, FR-015 |
 | 5.4 | Terminal vollständig: Umsteiger und Umsteigebank, moderner Check-in, Kontrollspuren, Grenze, Läden, Info | FR-019 bis FR-024, FR-060 |
 | 5.5 | Airside, Gepäck mit dreistufiger Kontrolle, Flüge, Abfertigung vollständig, Startfreigabe, Beiladefracht, Slots in Verträgen | FR-025, FR-026, FR-027, FR-029, FR-030, FR-032, FR-048, FR-061 |
-| 5.6 | Personal, Wirtschaft, Zusagen gegenüber Airlines, Betriebstag mit Störung, Bedienkomfort im Großen, Notfälle, Störungen, Tutorial, Erfolge mit Vermerk der Debug-Nutzung im Spielstand (META-15, ADR-032, L-7); große Tabellen für Personal und Finanzen; Schema der Inhaltsart `research/` VERWORFEN (Forschung trägt keine Säule, ADR-046); Aufgabenfelder für wechselnde Einzelziele des Personals (Technik, Reinigung) mit Vermeiden doppelter Zuteilung (ADR-037) | FR-007, FR-008, FR-033 bis FR-036, FR-038, FR-039, FR-062, FR-068 |
-| 5.7 | Flugzeugtypen und Airlines als Daten, Klassen nach Bedarf der Säulen (ADR-046) | FR-031 |
+| 5.6 | Personal, Wirtschaft, Forschung, Ziele, Bewertungen, Notfälle, Störungen und Tutorial; große Tabellen für Personal und Finanzen; Aufgabenfelder für wechselnde Einzelziele des Personals (Technik, Reinigung) mit Vermeiden doppelter Zuteilung (ADR-037) | FR-007, FR-008, FR-033 bis FR-039, FR-062, FR-068 |
+| 5.7 | Flugzeugtypen und Airlines als Daten, vollständige im Inventar vorgesehene Klassen | FR-031 |
 | 5.8 | Benchmark mit Empfehlung, Leistungsbewusstsein (Empfehlung und Warnung nach bebauter, begehbarer Fläche und Zahl der Ziele, ADR-020); Messung auf schwacher integrierter Grafik (Auflage ADR-014) | FR-041, FR-042 |
 
 ### Phase 6: Inhalte, Mods und Atmosphäre – Typ: UMSETZUNG
@@ -414,7 +414,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 |---|---|---|
 | 6.1 | Mod-Verwaltung; davor Erkundung zu Code-Mods (`project-context.md` Abschnitt 11); Grafiken und Töne in Mods; Spielstände mit fehlenden Paketen laden unter Entfernen der betroffenen Objekte (ADR-021); aus der getrennten Prüfung 2.4: Pakete im Hintergrund laden statt auf dem JavaScript-Thread des Kern-Prozesses, neu abgelegte Pakete ohne Neustart erkennen (`docs/research/2.4-getrennte-pruefung.md`, Befunde 7 und 14); Überschreiben von Texten anderer Pakete in `lang/` (wie `replaces`, ADR-031); `lang.*` folgt der laufenden Sitzung statt der Auswahl für die nächste (ADR-032, L-10); prüfen, ob eine Gesamtgrenze für Einträge und Texte über alle Pakete nötig ist (Befund 2 der getrennten Prüfung von 2.6, `docs/research/2.6-getrennte-pruefung.md`); Kachelblatt der Weltdarstellung auf mehr als 253 Boden- und Wandtypen erweitern oder die Grenze begründen (3.1b, `world-texels.ts`) | FR-044 |
 | 6.2 | Audio, Durchsagen, Musik, ggf. Intro-Video | FR-047, FR-049 |
-| 6.3 | VERWORFEN 2026-10-29 (ADR-046): kein Abgleich der Funktionsgleichheit mehr; der Vision-Abgleich gegen `docs/vision-2.md` läuft an jeder Phasengrenze | – |
+| 6.3 | Funktionsabgleich gegen Inventar und Modernisierung; offene Referenzen, Cargo, Hangars und Tiermanagement priorisieren und als eigenständige Umsetzungen nachweisen | FR-033, FR-048 |
 
 ### Phase 7: Vorbereitung Version 1.0 – Typ: STABILISIERUNG
 
@@ -426,9 +426,17 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 |---|---|---|
 | 7.1 | Gate vor dem ersten öffentlichen Release (CLAUDE.md Abschnitt 12, `templates/gate-deployment.md`): Sicherheits-Review, Vertretung, Notfall-Handbuch, Signatur-Entscheidung; Lizenzhinweise aller ausgelieferten Abhängigkeiten im Paket (ADR-019) | – |
 | 7.2 | Referenzszenario-Nachweis auf allen Plattformen inklusive Linux-Leistungsmessung auf echter Hardware mit gängigen Treibern (ADR-011, früher gern durch Mitwirkende), Langzeitstabilität, Release-Builds v1.0.0, auch für Windows und Linux auf arm64 (`project-context.md` Abschnitt 6; 2.1 baut dort nur x64); Linux-Pakete mit funktionierender Chromium-Sandbox (z. B. deb mit SUID-`chrome-sandbox` oder AppArmor-Profil, Befund aus 1.6); ab v1.0.0 Zusage für ältere Spielstände, Spielstände aus 1.0 als Prüfdaten aufbewahren (ADR-021) | FR-040, FR-045 |
-| 7.3 | Erfolgskriterien der Vision ohne eigene Messgröße: Spieltest des Projektinhabers über mehrere Stunden („Fesselnde Kernschleife“, `docs/vision-2.md`) und Bilanz des Machbarkeitstests der KI-gestützten Entwicklung (ADR-016) | – |
+| 7.3 | Erfolgskriterien der umfassenden Vision: Spieltest des Projektinhabers über mehrere Stunden, Abgleich der Referenzprinzipien und Bilanz des Machbarkeitstests der KI-gestützten Entwicklung (ADR-016) | – |
 
 ### Querschnitt: wiederkehrende Schritte
+
+#### Q.9: ADR-047 – Produktvision und Referenzbasis wiederherstellen
+
+- **Status:** `[ERLEDIGT]` 2026-11-04
+- **Typ:** Dokumentation / strategische Korrektur
+- **Freigabe:** Projektinhaber am 2026-11-04
+- **Ergebnis:** ADR-046 als `SUPERSEDED` gekennzeichnet; ADR-047 angelegt; Vision, Kontext, Anforderungen, Referenzdokumente, Fahrplan und README auf die umfassende, rechtlich und technisch eigenständige Flughafenmanagementsimulation ausgerichtet. Bestehender Code, Architektur und Assets wurden nicht zurückgebaut.
+- **Nachweis:** `docs/decisions/ADR-047.md`; Konsistenzprüfung der ADR-046-Verweise und Dokumentationslint vor Commit.
 
 #### Q.6: CPU-Modell im Benchmark-Ergebnis
 
@@ -768,6 +776,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 ## Replanning-Historie
 
 - 2026-10-29 – Neuausrichtung als eigenes Spiel (ADR-046): Vision `docs/vision-2.md`, `docs/requirements.md` neu abgeleitet (FR-053 bis FR-068 neu, FR-037 verworfen, FR-031, FR-033 und FR-002 eingeschränkt, FR-011 als erledigt nachgetragen); Phase 3 neu geplant ohne neue Schritte (3.2 „Kleines Terminal im laufenden Betrieb erweitern“, 3.3, 3.4 und 3.6 um neue Anforderungen ergänzt), Phase 5 und 6 angepasst (6.3 verworfen); Regel-004 durch Regel-010 ersetzt
+- 2026-11-04 – Rückkehr zur ursprünglichen Produktvision (ADR-047): ADR-046 strategisch überholt; `vision.md`, ADR-006 und Regel-004 wieder verbindlich; die Einschränkungen von FR-002, FR-031, FR-033 und FR-037 aufgehoben; 6.3 wieder aktiviert. Die in ADR-046 hinzugekommenen Ideen bleiben einzeln zu priorisierende Kandidaten. Kein Code-, Architektur- oder Asset-Rückbau.
 - 2026-10-20 – Schritt 3.8 abgeschlossen (ADR-038): neuer Erkundungsschritt 3.14 (späte Bilder auf dem Referenz-PC) vor 3.9; Phase 3 jetzt 14 Schritte bei ursprünglichem Plan 13; Landeplätze in 3.1, 3.2, 3.4, 3.5, 4.1, 5.1
 - 2026-10-19 – Phasenabschluss 2 (ADR-036): Phase 2 archiviert; Phase 3 im vollen Format mit ursprünglichem Schrittplan von 13 Schritten, neu 3.9 Kernstruktur, 3.10 Aufteilung `main.ts`, 3.11 und 3.12 als Erkundungen mit eigener ID (bisher „davor Erkundung“ in 3.3 und 3.4), 3.13 aus 4.3 vorgezogen; 3.8 um S-1 Layout 2, 3.1 um Dauerbau, 3.2 um „kein Stillstand“, 3.4 um Walk-out (FR-052), 4.1 um Wiederholung von FR-016 ergänzt
 - 2026-10-14 – Phase 3 um Entwurfsschritt 3.7 „Personengruppen, Begehbarkeit und Querungen“ (vor 3.1) ergänzt; Anlass: ADR-020 regelt die Begehbarkeit des Vorfelds nur für Fluggäste, Personal und Bauarbeiter fehlen (Hinweis des Projektinhabers); 3.1, 3.4, 3.5 verweisen auf 3.7. Phase 3 hat noch keinen festgehaltenen ursprünglichen Schrittplan

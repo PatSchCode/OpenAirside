@@ -18,7 +18,7 @@
 | 003 | 2026-10-13 | Aktiv | STRATEGISCH | MODUL, SCHNITTSTELLE | Architektur | Kern/Präsentation-Trennung, feste Simulationsschritte, Inhalte als Daten |
 | 004 | 2026-10-13 | Aktiv | STRATEGISCH | PERFORMANCE, MODUL | Architektur | Wegfindung nach dem Wegweiser-Prinzip |
 | 005 | 2026-10-13 | Aktiv | STRATEGISCH | MODUL | Architektur | Verkehrsregeln, Vorrang-Rangfolge und automatische Verkehrssteuerung |
-| 006 | 2026-10-13 | Überholt durch ADR-046 | STRATEGISCH | METHODIK, DATENMODELL | Methodik | Funktionsumfang: Inventar, Modernisierung, Cargo vorbereitet |
+| 006 | 2026-10-13 | Aktiv, durch ADR-047 bestätigt | STRATEGISCH | METHODIK, DATENMODELL | Methodik | Funktionsumfang: Inventar, Modernisierung, Cargo vorbereitet |
 | 007 | 2026-10-13 | Aktiv | STRATEGISCH | DEPLOYMENT | Lizenz/Compliance, Build/Deploy | Vertrieb über GitHub, Lizenzen MIT und CC0 |
 | 008 | 2026-10-13 | Aktiv | STRATEGISCH | MODUL | Architektur | Eigene SVG-Grafiken, Rasterung im Build |
 | 009 | 2026-10-13 | Aktiv | ERKENNTNIS | STACK, SCHNITTSTELLE, PERFORMANCE | Architektur | Betriebsart des Kerns: napi-rs im Electron-Utility-Prozess |
@@ -58,11 +58,12 @@
 | 043 | 2026-10-26 | Aktiv | OPERATIV | DEPLOYMENT | Build/Deploy | CI-Trigger nur für `main` und PRs, Code-Jobs nicht bei reinen Doku-Änderungen |
 | 044 | 2026-10-26 | Aktiv | ERKENNTNIS | PERFORMANCE | Architektur | Bauaktion im nächsten Bild und Speicher der Weltdarstellung belastbar, Auflage Windows erfüllt |
 | 045 | 2026-10-28 | Aktiv | REAKTIV | DATENMODELL, SCHNITTSTELLE | Datenmodell, API-Verträge, Build/Deploy | Bauaufträge mit Bauarbeitern, Anlieferstelle, Gelände in neuen Karten |
-| 046 | 2026-10-29 | Aktiv | STRATEGISCH | METHODIK | Methodik | Neuausrichtung als eigenes Flughafen-Aufbauspiel |
+| 046 | 2026-10-29 | Überholt durch ADR-047 | STRATEGISCH | METHODIK | Methodik | Neuausrichtung als eigenes Flughafen-Aufbauspiel |
+| 047 | 2026-11-04 | Aktiv | REAKTIV | METHODIK, COMPLIANCE | Produktvision, Lizenz/Compliance | Rückkehr zur umfassenden Flughafenmanagementsimulation |
 
 ### Reaktiv-Quote
 
-- **Aktueller Wert:** 4 / 10 über die letzten 10 ADRs (ADR-037 bis ADR-046: ADR-037, ADR-038, ADR-042, ADR-045), 40 % – **über dem Schwellenwert**; gesamt 18 / 46. Reflexionen in `fahrplan.md` Abschnitt „Iterations-Reflexion" (letzte: Anlass ADR-045, 2026-10-28, neues Muster nach Regel-009); ab Phase 3 eine Reflexion je Phase bei gleichem Muster (Regel-009)
+- **Aktueller Wert:** 4 / 10 über die letzten 10 ADRs (ADR-038 bis ADR-047: ADR-038, ADR-042, ADR-045, ADR-047), 40 % – **über dem Schwellenwert**; gesamt 19 / 47. ADR-047 ist eine strategische Korrektur ohne Architektur- oder Codeänderung. Reflexionen in `fahrplan.md` Abschnitt „Iterations-Reflexion" (letzte: Anlass ADR-045, 2026-10-28, neues Muster nach Regel-009); ab Phase 3 eine Reflexion je Phase bei gleichem Muster (Regel-009)
 - **Schwellenwert (in `project-context.md` festgelegt):** maximal 20 % über die letzten 10 ADRs
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -158,6 +159,7 @@ Seit 2026-10-13 liegt jeder ADR als eigene Datei in `docs/decisions/` (ADR-001: 
 - [ADR-044: Bauaktion im nächsten Bild und Speicher der Weltdarstellung belastbar, Auflage Windows erfüllt](decisions/ADR-044.md)
 - [ADR-045: Bauaufträge mit Bauarbeitern, Anlieferstelle, Gelände in neuen Karten](decisions/ADR-045.md)
 - [ADR-046: Neuausrichtung als eigenes Flughafen-Aufbauspiel](decisions/ADR-046.md)
+- [ADR-047: Rückkehr zur umfassenden Flughafenmanagementsimulation](decisions/ADR-047.md)
 
 ---
 
@@ -204,10 +206,10 @@ Seit 2026-10-13 liegt jeder ADR als eigene Datei in `docs/decisions/` (ADR-001: 
 
 #### Regel-004: Funktionen gegen Inventar prüfen
 
-- **Status:** aufgehoben durch ADR-046 (2026-10-29), ersetzt durch Regel-010
+- **Status:** aktiv, durch ADR-047 (2026-11-04) wiederhergestellt und präzisiert
 - **Herkunft:** ADR-006
 - **Gilt für:** jeden Umsetzungsschritt, der Spielfunktionen betrifft
-- **Regel:** Der Schritt nennt die betroffenen IDs aus `funktionsinventar.md` und `modernisierung.md`; die Akzeptanzkriterien decken das dort beschriebene Spielprinzip ab.
+- **Regel:** Der Schritt nennt die betroffenen IDs aus `funktionsinventar.md` und `modernisierung.md`; die Akzeptanzkriterien decken das dort beschriebene Spielprinzip ab. Die Referenzen sind ein Umfangs- und Prüfbarkeitsmaßstab, keine Vorlage für Code, Datenmodelle, Namen, Texte, Werte, Grafiken oder sonstige geschützte Ausgestaltung.
 - **Ausnahmen:** reine Infrastruktur-Schritte
 - **Gegenbeispiel:** eine Funktion wird „nach Gefühl" umgesetzt, ohne Abgleich mit dem Inventar.
 
@@ -253,9 +255,10 @@ Seit 2026-10-13 liegt jeder ADR als eigene Datei in `docs/decisions/` (ADR-001: 
 
 #### Regel-010: Funktionen aus dem eigenen Entwurf begründen
 
+- **Status:** überholt durch ADR-047 (2026-11-04)
 - **Herkunft:** ADR-046
 - **Gilt für:** jeden Umsetzungsschritt, der Spielfunktionen betrifft
-- **Regel:** Der Schritt nennt die Säule(n) aus `docs/vision-2.md`, die er trägt, und begründet die Funktion daraus; eine Funktion, die keine Säule trägt, kommt nicht ins Spiel. Ideen aus `funktionsinventar.md` oder `modernisierung.md` sind zulässig, aber nur mit dieser Begründung.
+- **Regel (historisch, nicht mehr anzuwenden):** Der Schritt nannte die Säule(n) aus `docs/vision-2.md`, die er trug. ADR-047 ersetzt dieses Kriterium durch Regel-004.
 - **Ausnahmen:** reine Infrastruktur-Schritte
 - **Gegenbeispiel:** eine Funktion mit „das bisherige Vorbild hatte sie“ begründen oder nach Inventar-IDs abarbeiten.
 

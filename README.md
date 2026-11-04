@@ -16,7 +16,7 @@
 
 ## Über das Projekt
 
-OpenAirside ist ein freies Flughafen-Aufbauspiel. Ein Flughafen ist darin ein System aus Strömen: Menschen, Gepäck, Fracht, Fahrzeuge und Flugzeuge. Du baust ihn, liest seine Ströme und baust ihn um, während er läuft, für Airlines, die jeweils etwas anderes von dir wollen. Dazu gehören Baustellen mit Bauarbeitern und Umleitungen, Overlays für Wartezeiten und Engpässe mit ihrer Ursache, ein Flughafentag in Wellen mit Umsteigebank und Fracht, Störungen wie Gewitter oder IT-Ausfall und Verträge mit Airlines, die messbare Zusagen enthalten (Vision: [`docs/vision-2.md`](docs/vision-2.md)).
+OpenAirside ist eine freie, eigenständig entwickelte Flughafenmanagementsimulation. Du planst, baust und betreibst Infrastruktur, Personen- und Gepäckströme, Flugzeugabfertigung, Wirtschaft und Managementwerkzeuge – vom Regionalflughafen bis zum großen Drehkreuz. Der technische Kern ist auf hohe Simulationslast ausgelegt (Vision: [`docs/vision.md`](docs/vision.md)).
 
 **Was es löst:** Flughafen-Aufbauspiele brechen bei großen Flughäfen oft ein: Das Bild ruckelt, Bauaufträge brauchen Sekunden, Personen und Fahrzeuge bleiben stecken, und man sieht nicht, warum. OpenAirside ist von Anfang an für über 10.000 gleichzeitig simulierte Personen ausgelegt und erklärt, was im Betrieb passiert.
 
@@ -95,7 +95,7 @@ Sprache und Einstellungen: Die Oberfläche gibt es auf Deutsch und Englisch, bei
 
 ## Nächste Schritte
 
-- Neuausrichtung als eigenes Spiel (ADR-046): Anforderungen und Fahrplan neu ableiten
+- ADR-047 umsetzen: Anforderungen und Fahrplan gegen die wiederhergestellte Referenz ausrichten
 - 3.2 neu: kleines Terminal im laufenden Betrieb erweitern, Umleitung und Wartezeit mit Ursache, zugleich erste Lektion
 - 3.1b-N1: Abnahme der Grafiken für Boden, Wand und Sitzbank, Zeitpunkt nennt der Projektinhaber
 
@@ -114,11 +114,11 @@ Beiträge sind willkommen, sobald ein lauffähiger Stand existiert, insbesondere
 
 | Dokument | Inhalt |
 |---|---|
-| [`docs/vision-2.md`](docs/vision-2.md) | Projektvision seit ADR-046 (eigenes Spiel) |
-| [`docs/vision.md`](docs/vision.md) | Ursprüngliche Projektvision (historisch) |
+| [`docs/vision.md`](docs/vision.md) | Verbindliche Produktvision seit ADR-047 |
+| [`docs/vision-2.md`](docs/vision-2.md) | Historischer Pivot durch ADR-046 |
 | [`docs/requirements.md`](docs/requirements.md) | Beteiligte, Anwendungsfälle, Anforderungen |
-| [`docs/funktionsinventar.md`](docs/funktionsinventar.md) | Funktionen eines anderen Spiels des Genres, Ideenquelle ohne Maßstab (ADR-046) |
-| [`docs/modernisierung.md`](docs/modernisierung.md) | Ideen aus dem heutigen Flughafenbetrieb (Ideenquelle) |
+| [`docs/funktionsinventar.md`](docs/funktionsinventar.md) | Funktionale Referenz für Umfang und Abgleich, niemals Implementierungs- oder Assetvorlage |
+| [`docs/modernisierung.md`](docs/modernisierung.md) | Eigenständige Modernisierungsreferenz für Umfang und Abgleich |
 | [`docs/project-context.md`](docs/project-context.md) | Aktueller Stack, Constraints, Qualitätsziele |
 | [`docs/architecture.md`](docs/architecture.md) | Systemarchitektur, Module, Schnittstellen |
 | [`docs/architecture-schnittstellen.md`](docs/architecture-schnittstellen.md) | Schnittstellenverträge S-1 bis S-8 mit Änderungsprotokoll |

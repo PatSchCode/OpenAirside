@@ -1,8 +1,8 @@
-# Funktionsinventar: Airport CEO (Original, Stand 1.1-3)
+# Funktionsinventar: funktionale Referenz (Stand 1.1-3)
 
-> **Seit ADR-046 (2026-10-29): Ideenquelle, kein Maßstab.** OpenAirside folgt `docs/vision-2.md`.
-> Eine Idee aus diesem Inventar kommt nur ins Spiel, wenn sie eine Säule der Vision trägt, und wird
-> daraus begründet (Regel-010). Die Hinweise zu Funktionsgleichheit unten sind historisch.
+> **Seit ADR-047 (2026-11-04): verbindliche Referenz für Umfang und Abgleich.** Sie beschreibt
+> abstrahierte Spielprinzipien; sie ist niemals eine Vorlage für Implementierung, Daten, Texte,
+> Gestaltung, Audio oder Assets. Regel-004 verlangt nachvollziehbare Referenzen, nicht Nachbau.
 
 <!-- Anhang zur vision.md. Referenz für das Erfolgskriterium „Funktionsgleichheit mit dem Original".
      Erfasst WAS das Original kann (Funktionen, Regeln, Systeme), nicht WIE es aussieht oder umgesetzt ist.
