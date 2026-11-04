@@ -275,6 +275,42 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 - **Modell:** eingestellt und bedient: GPT-5/Codex laut Systemkontext; Modellklasse: unbestimmbar (die Zuordnung in `project-context.md` nennt nur Claude-Modellklassen; keine Laufzeitabfrage verfügbar). Quelle: Systemkontext.
 
 ### 2026-10-28 21:45 (UTC) – [BEOBACHTUNG]
+### 2026-10-28 23:39 (UTC) – [BEOBACHTUNG]
+
+- **Neuableitung nach ADR-046:** `docs/requirements.md` aus `docs/vision-2.md` neu abgeleitet: 68 Anforderungen (55 Muss, 9 Soll, 3 Kann, 1 verworfen); neue Spalte „Säule“ (Regel-010); neu FR-053 bis FR-068 (Bauphasen, Baustellenlogistik, Störwirkung, Raumformen, Overlays, Engpass-Diagnose, Tagesrhythmus, Umsteiger, Slots, Betriebstag mit Störung, Kennzahlen, Geschäftsmodelle, Gebühren, Frachtnacht, Bestandsflughafen, Bedienkomfort); FR-037 verworfen; FR-031, FR-033 eingeschränkt, FR-002 auf Soll, FR-048 auf Muss (Beiladefracht); FR-011 als erledigt nachgetragen (Drift seit 3.1c). Prioritäten der neuen Anforderungen sind ein Vorschlag der KI.
+- **Fahrplan:** Phase 3 neu geplant ohne neue Schritte; 3.2 heißt jetzt „Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)“ und braucht eine Vorlage vor dem Code; 3.3, 3.4, 3.6 und die Phasen 4 bis 7 angepasst, 6.3 verworfen. Drift-Prüfung per Skript: jede im Fahrplan genannte Anforderung existiert, jede Muss-Anforderung hat einen existierenden Schritt.
+- **Offen:** Pflichtfrage „Weiterbauen, umbauen oder neu aufsetzen?“ durch eine getrennte Instanz vor 3.2. Abschnitte in `docs/architecture.md`, die das bisherige Vorbild als Begründung früherer Entscheidungen nennen, bleiben als Historie stehen.
+
+### 2026-10-28 23:34 (UTC) – [ADR-ANGELEGT]
+
+- **ADR:** [ADR-046](decisions/ADR-046.md) „Neuausrichtung als eigenes Flughafen-Aufbauspiel“, `[STRATEGISCH]` `[METHODIK]`, Datum 2026-10-29 (Ortszeit des Projektinhabers).
+- **Auslöser:** Die Session für die Vorlage zu 3.2 lehnte ab, an einem Nachbau eines bestimmten Spiels mitzuarbeiten (Grundlage: `docs/vision.md` Abschnitt 1, `docs/project-context.md` Abschnitt 1); diese Session prüfte die Stellen und schloss sich an. Der Projektinhaber bat um einen Entwurf für eine Fortsetzung als eigenes Spiel, ließ die Wünsche der Community des Genres recherchieren (`docs/research/community-wuensche.md`) und beantwortete die offenen Fragen im Gespräch per Auswahl (Tabelle in `docs/research/neuausrichtung-entwurf.md` Abschnitt 9). Freigabe von ADR-046 per Auswahl „Freigeben“; Vision als neue Datei `docs/vision-2.md`; Neuableitung in dieser Session.
+- **Wirkung:** ADR-006 überholt, Regel-004 aufgehoben, neue Regel-010 (Funktionen aus den Säulen der Vision begründen). Reaktiv-Quote 4 / 10 (ADR-037 bis ADR-046), weiter über dem Schwellenwert; ADR-046 ist nicht reaktiv (Begründung im ADR). `docs/vision.md` bleibt inhaltlich unverändert und verweist auf ADR-046.
+- **Modellklasse:** Entscheidungs-Klasse aktiv (Opus 5.5, Systemkontext), wie für ein ADR `[STRATEGISCH]` vorgeschrieben (`CLAUDE.md` Abschnitt 0, Auslöser 3).
+- **Beobachtung:** Die KI hat 3.1c und Q.6 umgesetzt, ohne die Vision zu lesen (sie gehört nicht zur Mindest-Lektüre). Dass das Projekt als Nachbau angelegt war, fiel erst der getrennten Session auf. Für die Methodik: Eine KI sollte das Ziel des Projekts kennen, bevor sie daran baut.
+- **Nächster Schritt:** Anforderungen aus `docs/vision-2.md` neu ableiten, danach Phase 3 neu planen und die Pflichtfrage „Weiterbauen, umbauen oder neu aufsetzen?“ von einer getrennten Instanz bewerten lassen.
+
+### 2026-10-28 22:32 (UTC) – [SESSIONENDE]
+
+- **Session-Dauer:** Fortsetzung, 21:15 bis 22:32 UTC.
+- **Bearbeitet:** Nachmessung des Hauptsatzes (Eintrag 21:35), Merge von PR #38, Q.6 von Vorschlag bis CI.
+- **Erreicht:** PR #38 gemergt (`394d24e`). Q.6 `[ERLEDIGT]`: CI grün auf `3a2cd0e` (Lauf 40774228111, 23 Checks), Runner `AMD EPYC 9V74 80-Core Processor` steht in allen drei Ergebnissen und in der Job-Zusammenfassung; der Vergleichslauf auf `main` (40773654864) hat das Feld noch nicht und erscheint als „unbekannt“, wie vorgesehen.
+- **Befund zur Streuung des Runners:** Derselbe Code von 3.1c rechnet die Neuberechnung beider Sätze auf dem Runner in drei Läufen sehr verschieden: PR #38 auf `82be23c` 1.935 ms, `main` auf `394d24e` (Merge, Code gleich) 2.918 ms, PR #39 auf `3a2cd0e` (nur Benchmark-Ausgabe geändert) 2.255 ms; Grenze 4.000 ms. Die Abschätzung vom Eintrag 21:35 (3,0–3,3 s auf einem Runner wie früher auf `main`) wird damit gestützt: Der Abstand zur Grenze liegt bei 1,1–2,1 s, nicht bei 2 s. Das Prozessormodell der beiden früheren Läufe ist unbekannt; ab jetzt steht es im Ergebnis.
+- **Offen geblieben:** Merge von PR #39 nach Freigabe des Projektinhabers; danach Worktree `wt-q6` entfernen. 3.1b-N1.
+- **Nächster Schritt:** 3.2.
+- **Modell-Bilanz:** Entscheidungs-Klasse aktiv (Opus 5.5, Systemkontext). Ein Schritt oberhalb seiner Empfehlung: Q.6 (Routine); nichts abgegeben, Probelauf offen.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** unverändert gegenüber 18:30 UTC (Electron 44, Vorlauf ab 2027-01-02).
+- **README und Drift:** README unverändert gültig (Q-Schritte stehen nicht in „Nächste Schritte“). Architektur nennt Q.6 im Leistungstest und im Tooling-Inventar; Modulnamen von Q.6 („Benchmark & Leistung“, „Build/CI“) wie in der Modul-Karte bzw. in Q.5. Keine weitere Drift.
+- **Archivierung:** Logbuch über 800 Zeilen; Auslagerung wie am 2026-10-28 17:40 UTC festgehalten.
+
+### 2026-10-28 21:42 (UTC) – [BEOBACHTUNG]
+
+- **Merge 3.1c:** Freigabe des Projektinhabers im Gespräch („Beides“: Merge von PR #38 und Umsetzung von Q.6). PR #38 um 21:38 UTC gemergt als Merge-Commit `394d24e`, nach grüner CI auf dem letzten Commit `89f945d` (16 Checks bestanden, 7 als reine Doku-Änderung übersprungen, Q.5).
+- **Q.6 begonnen:** Branch `test/q-6-cpu-modell-im-benchmark-ergebnis` von `394d24e`, in einem eigenen Worktree, damit die Arbeitskopie der Session auf ihrem Branch bleibt. Die drei Benchmarks nutzen ein gemeinsames Hilfsmodul `core/benches/machine/` (Unterordner, damit Cargo es nicht als eigenen Benchmark erkennt); bisher hatte jeder Benchmark seine Hilfsfunktionen selbst. Lokal (Mac M3 Pro) schreiben alle drei `"cpuModel":"Apple M3 Pro"` und bestehen ihre Grenzen.
+- **Korrektur:** Der Eintrag zur Nachmessung trug zuerst die Zeit 21:45 UTC; geschrieben wurde er gegen 21:35 UTC, vor dem Merge. Zeit dort und im Fahrplan (Q.6, „Anlass“) berichtigt. Ursache: Zeit geschätzt statt abgefragt.
+
+### 2026-10-28 21:35 (UTC) – [BEOBACHTUNG]
 
 - **Anlass:** Rückfrage des Projektinhabers zum Eintrag 21:15 UTC: Der Hauptsatz lag auf dem Runner auf `main` bei 2,55–2,70 s (Läufe 39692518721 bis 40348379307, 2026-10-21 bis 26), auf PR #38 brauchen beide Sätze zusammen 1,93 s. Die Vermutung dort (eigene Topologie je Feldsatz, `9b36e7d`) war nicht gemessen. Korrektur zum Bericht davor: Die Spanne „2,4–3,2 s“ war nicht geprüft; richtig sind die Werte oben.
 - **Messung:** Mac M3 Pro, `cargo bench -p openairside-core --bench flowfield` wie in der CI (2 Simulations-, 2 Hintergrund-Threads), Worktrees auf `f438c2c` (vor `9b36e7d`), `9b36e7d` und `82be23c`, drei Runden abwechselnd. Median der Neuberechnung:
