@@ -1,7 +1,7 @@
 # OpenAirside
 
 <!-- README von OpenAirside nach templates/docs/readme-vorlage.md.
-     Aktualisierungs-Pflicht nach CLAUDE.md Abschnitt 16; Inhalte stammen aus den Pflicht-Dokumenten.
+     Aktualisierungs-Pflicht nach AGENTS.md; Inhalte stammen aus den Pflicht-Dokumenten.
      Drift zwischen README und Pflicht-Dokumenten ist ein Bug. -->
 
 ![Status](https://img.shields.io/badge/status-konzeption-lightgrey)
@@ -105,8 +105,8 @@ Sprache und Einstellungen: Die Oberfläche gibt es auf Deutsch und Englisch, bei
 
 Beiträge sind willkommen, sobald ein lauffähiger Stand existiert, insbesondere Grafiken, Airlines, Lackierungen und Übersetzungen.
 
-- **Branch-Konvention:** `<präfix>/<schritt-id>-<kurztitel>`, z. B. `erkundung/1-3-zustandsuebergabe`; Präfix nach Inhalt (`feat/`, `fix/`, `docs/`, `erkundung/` usw., Tabelle in `CLAUDE.md` Abschnitt 11); ein Branch je PR
-- **Commit-Format:** `<bereich>: <kurze beschreibung im imperativ>` mit Fahrplan-Referenz (siehe `CLAUDE.md` Abschnitt 11)
+- **Branch-Konvention:** `<präfix>/<schritt-id>-<kurztitel>`, z. B. `erkundung/1-3-zustandsuebergabe`; Präfix nach Inhalt (`feat/`, `fix/`, `docs/`, `erkundung/` usw., siehe `AGENTS.md`); ein Branch je PR
+- **Commit-Format:** `<bereich>: <kurze beschreibung im imperativ>` mit Fahrplan-Referenz (siehe `AGENTS.md`)
 - **Code-Standards:** siehe [`docs/project-context.md`](docs/project-context.md) Abschnitt 7
 - **Wichtig:** Kein Material aus Airport CEO oder dessen Mods, auch nicht als Vorlage.
 
@@ -127,12 +127,12 @@ Beiträge sind willkommen, sobald ein lauffähiger Stand existiert, insbesondere
 | [`docs/blockers.md`](docs/blockers.md) | Aktive Blocker und gelöste Probleme |
 | [`docs/logbuch.md`](docs/logbuch.md) | Chronologisches Arbeitsprotokoll |
 | [`docs/onboarding-runbook.md`](docs/onboarding-runbook.md) | Einrichtung vom Klon bis zum laufenden Spiel |
-| [`CLAUDE.md`](CLAUDE.md) | Arbeitsregeln für die KI-gestützte Entwicklung |
+| [`AGENTS.md`](AGENTS.md) | Verbindliche Arbeitsregeln für Codex und die KI-gestützte Entwicklung |
 | [`templates/`](templates/) | Methodik-Vorlagen (aus Dev-Templates) |
 | [`CHANGELOG.md`](CHANGELOG.md) | Versionshistorie (ab erster Version) |
 
 ## Lizenz
 
-Code unter der [MIT-Lizenz](LICENSE). Eigene Grafiken unter CC0. Die Methodik-Vorlagen unter `templates/` und `CLAUDE.md` stammen aus dem Template-Repo Dev-Templates (CC0). Audio-Dateien mit abweichenden Bedingungen sind in einem eigenen Verzeichnis mit Lizenzhinweis gekennzeichnet.
+Code unter der [MIT-Lizenz](LICENSE). Eigene Grafiken unter CC0. Die Methodik-Vorlagen unter `templates/` stammen aus dem Template-Repo Dev-Templates (CC0). Audio-Dateien mit abweichenden Bedingungen sind in einem eigenen Verzeichnis mit Lizenzhinweis gekennzeichnet.
 
 OpenAirside ist ein unabhängiges Projekt und steht in keiner Verbindung zu Apog Labs oder Airport CEO.

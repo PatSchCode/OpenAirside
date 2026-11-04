@@ -26,7 +26,7 @@
 <!-- ANCHOR:technischer-stack -->
 ## 3. Technischer Stack
 
-Entschieden in **ADR-002** (2026-10-13) unter der Bedingung des Leistungsnachweises in Phase 1; der Nachweis ist erbracht (ADR-014), die Stack-Bestandteile sind in `architecture.md` `[BELASTBAR]` (Grenzen nach ADR-017). Versionen nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15), von der KI gegen offizielle Quellen belegt und vom Menschen am 2026-10-13 zeilenweise bestätigt.
+Entschieden in **ADR-002** (2026-10-13) unter der Bedingung des Leistungsnachweises in Phase 1; der Nachweis ist erbracht (ADR-014), die Stack-Bestandteile sind in `architecture.md` `[BELASTBAR]` (Grenzen nach ADR-017). Versionen nach der folgenden Regel „ausgereifte Linie", von der KI gegen offizielle Quellen belegt und vom Menschen am 2026-10-13 zeilenweise bestätigt.
 
 - **Mindestreife neuer Linien:** mindestens ein Fehlerkorrektur-Release (x.y.1) **und** erste Version der Linie mindestens 1 Monat alt. Ausnahme: Projekte, die nie Patch-Releases veröffentlichen (rayon), gelten ab 3 Monaten Alter als reif.
 - **Geplante Projektdauer:** 2 Jahre (bis Ende 2028). Linien mit rollierendem Unterstützungsmodell (Electron, Rust) erreichen das nie; sie werden über wiederkehrende Update-Schritte im Fahrplan nachgezogen.
@@ -197,7 +197,7 @@ Keine externen APIs im Spiel.
 <!-- ANCHOR:code-standards-und-qualitaetsziele -->
 ## 7. Code-Standards und Qualitätsziele
 
-Pflichtkategorien nach `CLAUDE.md` Abschnitt 15. Werkzeugversionen nach derselben Versionsregel wie Abschnitt 3 (Verifiziert: 2026-10-13).
+Pflichtkategorien nach `AGENTS.md`, Abschnitt „Qualität und Nachweise". Werkzeugversionen nach derselben Versionsregel wie Abschnitt 3 (Verifiziert: 2026-10-13).
 
 ### Tool-Festlegung pro Sprache
 
@@ -269,10 +269,10 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 
 ### Commit-Lint
 
-- **Tool:** nicht aktiv, Begründung: Commit-Format nach `CLAUDE.md` Abschnitt 11 wird über die DoD geprüft.
-- **Erlaubte Typen:** Bereichs-Präfixe nach `CLAUDE.md` Abschnitt 11
-- **Branch-Präfixe:** wie `CLAUDE.md` Abschnitt 11; zusätzlich: keine
-- **Vom Werkzeug vergebene Branch-Namen:** Claude-Code-Cloud-Sessions können `claude/<zufallsname>` vergeben (so PR #1 bis #3, `claude/gracious-galileo-2reksz`); Typ und Schritt-ID stehen dann im PR-Titel
+- **Tool:** nicht aktiv, Begründung: Commit-Format nach `AGENTS.md`, Abschnitt „Git und Pull Requests", wird über die DoD geprüft.
+- **Erlaubte Typen:** Bereichs-Präfixe nach `AGENTS.md`, Abschnitt „Git und Pull Requests"
+- **Branch-Präfixe:** wie `AGENTS.md`, Abschnitt „Git und Pull Requests"; zusätzlich: keine
+- **Historischer Branch-Bestand:** Frühere Cloud-Sessions konnten Namen wie `claude/<zufallsname>` vergeben (z. B. PR #1 bis #3). Für neue Codex-Arbeit gelten ausschließlich die Branch-Regeln aus `AGENTS.md`.
 
 ### Editor-Integration (empfohlen, nicht erzwungen)
 
@@ -289,8 +289,8 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 - **macOS-Signatur:** vorerst unsigniert; Entscheidung über Signatur (Kosten im Rahmen unten) vor Phase 7
 - **Vertretung:** offen bis zum Deployment-Gate vor dem ersten öffentlichen Release (Phase 7)
 - **Notfall-Handbuch:** `docs/onboarding-runbook.md` Abschnitt „Notfall"; noch nicht erprobt
-- **KI im Betrieb:** Claude-Abo des Projektinhabers; Kontingent: rollierendes 5-Stunden-Fenster, Zurücksetz-Zeitpunkt je Session über `get_session` (geprüft 2026-10-13); Rückfallweg ohne KI: Entwicklung pausiert, das veröffentlichte Spiel ist unabhängig
-- **Zugriff der KI auf die Produktion:** kein Zugriff auf Spielerrechner; im Repository Schreibrechte über Claude Code; Releases nur nach Freigabe
+- **KI im Betrieb:** Codex-Laufzeit des Projektinhabers; Modellverfügbarkeit und Kontingente ausschließlich nach der jeweiligen Laufzeitanzeige. Rückfallweg ohne KI: Entwicklung pausiert, das veröffentlichte Spiel ist unabhängig.
+- **Zugriff der KI auf die Produktion:** kein Zugriff auf Spielerrechner; im Repository Schreibrechte über Codex im Rahmen der Laufzeitrechte; Releases nur nach Freigabe
 - **Unbeaufsichtigtes Handeln der KI:** nein
 
 ### Ablaufdaten-Register
@@ -320,14 +320,14 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 | Posten | Art (laufend / einmalig / KI-Verbrauch) | Betrag je Monat | Stand vom | Entscheidung nötig ab |
 |---|---|---|---|---|
 | GitHub (öffentliches Repo, Actions) | laufend | 0 € | 2026-10-13 | private Nutzung oder Actions-Limits |
-| Claude-Abo | KI-Verbrauch | außerhalb des Rahmens | 2026-10-13 | – |
+| Codex-/KI-Zugang | KI-Verbrauch | außerhalb des Rahmens | 2026-11-04 | – |
 
 <!-- ANCHOR:entscheidungsbefugnisse -->
 ## 9. Entscheidungsbefugnisse
 
 - **Freigabe-Entscheidungen trifft:** der Projektinhaber (GitHub: Paddel87)
-- **Rollen:** Der Projektinhaber ist Auftraggeber, Visionär und Qualitätsprüfer; der Coding-Assistent (Claude Code) trägt die technische Umsetzung und Bewertung und legt freigabepflichtige Entscheidungen vor
-- **Kommunikationskanal für Freigaben:** direkt im Chat bzw. in der Claude-Code-Session, bevorzugt mit anklickbaren Antwortoptionen (Spracheingabe)
+- **Rollen:** Der Projektinhaber ist Auftraggeber, Visionär und Qualitätsprüfer; Codex trägt die technische Umsetzung und Bewertung und legt freigabepflichtige Entscheidungen vor. Die Modellrollen stehen verbindlich in `AGENTS.md`, Abschnitt „Rollen- und Modellorchestrierung".
+- **Kommunikationskanal für Freigaben:** direkt im Chat bzw. in der Codex-Session, bevorzugt mit anklickbaren Antwortoptionen (Spracheingabe)
 - **Reaktionszeit-Erwartung:** asynchron, keine harte Antwortzeit
 
 <!-- ANCHOR:repository-regeln -->
@@ -371,4 +371,4 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 
 ---
 
-**Pflegehinweis:** Änderungen an Status, Stack oder Constraints sind freigabepflichtig (`CLAUDE.md` Abschnitt 4) und erzeugen einen ADR-Eintrag. Statuswechsel ziehen README-Badge- und CHANGELOG-Updates nach sich.
+**Pflegehinweis:** Änderungen an Status, Stack oder Constraints sind nach `AGENTS.md` freigabepflichtig und erzeugen einen ADR-Eintrag. Statuswechsel ziehen README-Badge- und CHANGELOG-Updates nach sich.
