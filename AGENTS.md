@@ -1,44 +1,186 @@
-# AGENTS.md
+# AGENTS.md – Verbindliche Codex-Arbeitsanweisung
 
-Diese Datei ist der **werkzeugneutrale Einstiegspunkt** für Coding-Agents, die
-nicht Claude Code sind (z. B. OpenAI Codex und andere `AGENTS.md`-fähige Tools).
+Diese Datei ist die vollständige Arbeitsanweisung für OpenAI Codex in diesem
+Repository. Codex liest oder befolgt keine zusätzliche Agentenmethodik.
 
-## Das verbindliche Regelwerk steht in `CLAUDE.md`
+## Vorrang und Projektquellen
 
-Die vollständige Arbeitsmethodik dieses Repos ist **kanonisch und ausschließlich**
-in [`CLAUDE.md`](CLAUDE.md) definiert. Diese Datei hier dupliziert die Regeln
-**nicht** – sie verweist nur darauf. So gibt es genau eine Quelle der Wahrheit,
-und es entsteht keine Drift zwischen zwei Regelwerken.
+1. System- und Entwickleranweisungen der Codex-Laufzeit.
+2. Explizite Anweisungen des Projektinhabers.
+3. Diese Datei.
+4. Die Dokumente unter `docs/` als Projektwahrheit.
 
-**Bevor du irgendetwas änderst:**
+Aktueller Projektstand, Architektur, Anforderungen und Entscheidungen werden
+nicht geraten, sondern aus den jeweiligen Projektdokumenten gelesen.
 
-1. Lies [`CLAUDE.md`](CLAUDE.md) **vollständig** und befolge es **exakt** –
-   unabhängig davon, welches Werkzeug oder Modell du bist.
-2. Führe die **Mindest-Lektüre zu Sessionbeginn** durch (`CLAUDE.md` Abschnitt 2):
-   `docs/project-context.md`, dann `docs/logbuch.md`, `docs/fahrplan.md`,
-   `docs/architecture.md`, `docs/decisions.md`, `docs/blockers.md` – jeweils in
-   dem dort beschriebenen, selektiven Umfang.
-3. Lege **vor jeder anderen Aktion** einen `[SESSIONSTART]`-Eintrag im Logbuch an.
+## Sessionstart
 
-## Was du besonders beachten musst
+Vor jeder Änderung liest Codex in dieser Reihenfolge:
 
-Die Methodik ist anspruchsvoll und lebt davon, dass der Agent sie diszipliniert
-befolgt – nicht davon, dass ein Harness sie erzwingt. Diese Punkte aus `CLAUDE.md`
-sind die häufigsten Stolpersteine bei werkzeug- oder modellfremder Ausführung:
+1. `docs/project-context.md` vollständig.
+2. `docs/logbuch.md`: den letzten `[SESSIONENDE]`-Eintrag und alle jüngeren
+   Einträge.
+3. `docs/fahrplan.md`: „Aktueller Stand“ sowie die laufende Phase mit ihren
+   Schritten.
+4. `docs/architecture.md`: Überblick, Modul-Karte und Reifegrad-Übersicht.
+5. `docs/decisions.md`: ADR-Übersicht, Reaktiv-Quote und Entscheidungsregeln.
+6. `docs/blockers.md`: „Aktive Blocker“.
+7. Bei Projektklasse G oder V: `docs/requirements.md`, Abschnitt „Übersicht“.
 
-- **Pflichtlektüre nicht überspringen** (Abschnitt 2) – auch bei kleinen Änderungen.
-- **Freigabepflichtige Entscheidungen nicht selbst treffen** (Abschnitt 4) – im
-  `ENTSCHEIDUNG ERFORDERLICH`-Format vorlegen und warten.
-- **Stopp-Kriterien einhalten** (Abschnitt 8) – inkl. „Architektur-Rateschluss"
-  bei niedriger Konfidenz und teurer Umkehrbarkeit.
-- **Keine Erfolgsmeldung ohne Verifikation** (Abschnitt 6) – Aussagen nur auf
-  Basis von tatsächlichem Output.
-- **Konfidenz ehrlich offenlegen** (`templates/architektur-heuristiken.md` Teil 3) –
-  besonders wichtig bei Vision-Driven Development, wo kein menschlicher Experte
-  einen selbstbewusst vorgetragenen Fehlschluss abfängt.
+Danach legt Codex vor jeder weiteren Änderung einen `[SESSIONSTART]`-Eintrag
+in `docs/logbuch.md` an. Er nennt Modell und Quelle aus dem Systemkontext.
+Ist keine verlässliche Klassenzuordnung verfügbar, wird das ehrlich als
+`unbestimmbar` dokumentiert; Codex erfindet keine Laufzeitabfragen.
 
-## Pflege dieser Datei
+## Autonomie und Freigaben
 
-`AGENTS.md` bleibt ein **reiner Verweis**. Sie wird niemals zu einer zweiten,
-abweichenden Kopie der Regeln ausgebaut. Inhaltliche Änderungen an der Methodik
-gehören in `CLAUDE.md` (bzw. als ADR in `docs/decisions.md`), nie hierher.
+Codex arbeitet eigenständig bei klar spezifizierten Fahrplan-Schritten,
+lokalen Refactorings innerhalb eines Moduls, Bugfixes ohne Architekturwirkung,
+Tests, Formatierung, Dokumentationspflege und regulären Commits.
+
+Vor der Umsetzung ist die ausdrückliche Freigabe des Projektinhabers nötig
+bei:
+
+- Architekturänderungen oder neuen Modulen;
+- neuen externen Abhängigkeiten oder Major-/Breaking-Updates;
+- Datenmodelländerungen;
+- nicht additiven Änderungen öffentlicher Verträge;
+- Sicherheit, Datenschutz, Secrets oder personenbezogenen Daten;
+- Build-, CI-, Deployment- oder Infrastrukturänderungen;
+- Lizenz- oder Compliance-Änderungen.
+
+In diesen Fällen stoppt Codex und verwendet dieses Format:
+
+```text
+ENTSCHEIDUNG ERFORDERLICH
+Kategorie: [...]
+Kontext: [...]
+Optionen:
+  A: [...] → Wirkung für das Projekt: [...]
+  B: [...] → Wirkung für das Projekt: [...]
+Empfehlung: [...]
+Trade-off: [...]
+DIE FRAGE AN DICH: [...]
+Konfidenz: [hoch/mittel/niedrig] – [...]
+Umkehrbarkeit: [billig/teuer]
+Blockiert Arbeit an: [...]
+```
+
+Nach einer Freigabe dokumentiert Codex die Entscheidung als ADR, bevor es sie
+umsetzt.
+
+## Zwingende Stopps
+
+Codex stoppt sofort und arbeitet nicht mit einer Ersatzlösung weiter, wenn:
+
+- für die Umsetzung eine Information fehlt oder Dokumente einander
+  widersprechen;
+- eine Freigabe erforderlich ist;
+- derselbe Ansatz dreimal scheitert;
+- die Änderung außerhalb des Fahrplan-Schritts in ein fremdes Modul reicht;
+- eine destruktive Operation nötig wäre;
+- keine eindeutige Teststrategie existiert;
+- eine Architekturentscheidung bei niedriger Konfidenz teuer rückgängig zu
+  machen wäre;
+- die Schrittzahl einer Phase die in `project-context.md` festgelegte
+  Wucherungsgrenze überschreitet.
+
+```text
+STOPP
+Grund: [...]
+Kontext: [...]
+Benötigt: [...]
+Vorgeschlagene Auflösung: [...]
+```
+
+Nach drei gescheiterten Versuchen dokumentiert Codex Reproduktion, die drei
+Ansätze, Fehlgründe, Hypothesen und die Klärungsfrage in `docs/blockers.md`.
+Der Fahrplan-Schritt wird `[BLOCKIERT]`.
+
+## Planung, Architektur und Anforderungen
+
+- Jede Codeänderung gehört zu genau einem `[IN ARBEIT]`-Fahrplan-Schritt.
+- Keine stillen Annahmen, keine Scope-Erweiterung, keine Platzhalter ohne
+  `TODO(fahrplan-ref: ...)` und offenen Fahrplan-Landeplatz.
+- Öffentliche Schnittstellen und Modulgrenzen werden respektiert. Rein
+  additive, rückwärtskompatible Vertragsergänzungen dürfen nur nach der
+  geltenden Entscheidungsregel erfolgen und werden im Änderungsprotokoll
+  dokumentiert.
+- Vor einem Umsetzungsschritt müssen Grundsatzentscheidungen, Datenmodell und
+  verwendete Schnittstellen `[BELASTBAR]` sein. Ein Modul darf in seiner ersten
+  Umsetzung `[VORLÄUFIG]` sein und wird dabei validiert; ein abhängiger
+  `[OFFEN]`-Bestandteil verlangt Erkundung statt Implementierung.
+- Architektur- und Reifegradänderungen werden nicht still vorgenommen.
+- Für Anforderungen und Funktionsumfang gelten `docs/requirements.md`,
+  `docs/funktionsinventar.md` und `docs/modernisierung.md`.
+- Material aus Airport CEO oder dessen Mods darf niemals übernommen,
+  nachgezeichnet oder verwechselbar nachgebildet werden.
+
+## Qualität und Nachweise
+
+Ein Fahrplan-Schritt wird erst als `[ERLEDIGT]` markiert, wenn – soweit
+anwendbar – alle folgenden Nachweise vorliegen:
+
+- Format, Lint, Typprüfung, Security-Scan und Dependency-Audit sind grün.
+- Funktions- und relevante Integrations-/Ende-zu-Ende-Tests sind grün.
+- Die Coverage der geänderten Einheit ist als konkrete Zahl dokumentiert und
+  erfüllt den Projekt-Mindestwert.
+- Dokumentation, Anforderungen, Architektur, README und Changelog sind
+  aktualisiert, wenn der Schritt sie betrifft.
+- Quick-Start-relevante Änderungen wurden in einem frischen Klon oder
+  Worktree validiert oder mit Begründung als nicht relevant festgehalten.
+- Pre-Commit-Hook und CI sind grün; Warnungen über dem erlaubten Bestand sind
+  Fehler.
+- Der zugehörige Commit ist erstellt.
+
+Keine Erfolgsmeldung ohne tatsächlichen Befehlsausgabe-Nachweis. Fehlt ein
+Nachweis, bleibt der Schritt `[IN ARBEIT]`.
+
+## Sichere Werkzeugnutzung
+
+- Suche mit `rg`; bearbeite Dateien mit `apply_patch`.
+- Secrets, Tokens, private Schlüssel und PII niemals in Code, Log, Terminal-
+  Ausgabe oder Antwort ausgeben. Gelangt ein Secret dennoch in eine Ausgabe,
+  sofort stoppen und eine Rotation mit Frist im Fahrplan anlegen.
+- Keine destruktiven Operationen (z. B. Datenlöschung, History-Umschreibung,
+  Force-Push) ohne ausdrückliche Freigabe.
+- Vor Git-Operationen den Worktree prüfen und fremde Änderungen erhalten.
+- `--no-verify` ist verboten. Scheitert ein Hook wegen Umgebung oder
+  Laufzeit, dokumentiert Codex den exakten Fehler, umgeht ihn nicht und lässt
+  Änderungen staged oder uncommitted, bis der Projektinhaber entscheidet.
+
+## Git und Pull Requests
+
+- Branches folgen `<präfix>/<schritt-id>-<kurztitel>`; zulässige Präfixe sind
+  `feat`, `fix`, `perf`, `refactor`, `test`, `docs`, `ci`, `build`, `chore`,
+  `erkundung` und `release`.
+- Commits sind atomar und folgen `<bereich>: <imperative Kurzbeschreibung>`
+  mit einer Fahrplan-Referenz im Body.
+- Ein Branch hat genau einen Pull Request. Existiert bereits ein PR für den
+  aktuellen Branch, aktualisiert ein Push diesen PR; kein zweiter PR.
+- Ein PR entsteht erst nach erfolgreicher lokaler Verifikation. Fehlen
+  GitHub-Werkzeuge oder Berechtigungen, benennt Codex den fehlenden Schritt,
+  statt einen PR zu behaupten.
+
+## Sessionende
+
+Vor der Abschlussmeldung:
+
+1. Fahrplan mit Stand und nächstem konkreten Schritt aktualisieren.
+2. README gegen Projektstand, Version, Status, Reifegrade, Blocker und nächste
+   Schritte prüfen und Drift beheben.
+3. Konsistenz zwischen ADRs, Fahrplan, Reifegraden, Modulliste,
+   Anforderungen, Blockern und Reaktiv-Quote prüfen.
+4. Ablaufdaten-Register prüfen und fällige Schritte anlegen.
+5. `[SESSIONENDE]` im Logbuch anlegen: Dauer, Arbeit, Ergebnis, Offenes,
+   nächster Schritt, Modell-/Delegationsbilanz, Kontextgröße und
+   Commit-Status.
+6. Änderungen committen, wenn alle Hooks erfolgreich sind; andernfalls den
+   unveränderten Grund sichtbar dokumentieren.
+
+An Phasengrenzen gleicht Codex die Vision direkt mit Anforderungen und
+Fahrplan ab und legt dem Projektinhaber eine getrennte Bewertung vor:
+weiterbauen, gezielt umbauen oder neu aufsetzen. Vor einem ersten öffentlichen
+Deployment sind Bedrohungsmodell, Sicherheitsniveau, Härtung, Secrets,
+Backup-Wiederherstellung, unabhängige Prüfung, Notfall-Handbuch und
+Betriebskonzept nachweislich abgeschlossen.

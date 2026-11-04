@@ -6,8 +6,8 @@
 #
 # Die lokalen Code-Hooks (language: system) greifen nur, wenn passende Dateien geändert werden;
 # sie setzen ab Fahrplan-Schritt 2.1 installierte Abhängigkeiten voraus (npm ci, rustup).
-# Versionen geprüft am 2026-10-13: pre-commit-hooks v6.0.0 (2025-08-09, Linie ohne Patches,
-# über ein Jahr alt), markdownlint-cli2 v0.23.3 (Linie 0.23 seit 2026-07).
+# Versionen geprüft am 2026-11-04: pre-commit-hooks v6.0.0 (2025-08-09, Linie ohne Patches,
+# über ein Jahr alt), PyMarkdown v0.9.41 (2026-10-13).
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -22,10 +22,11 @@ repos:
       - id: check-merge-conflict
       - id: detect-private-key
 
-  - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.23.3
+  - repo: https://github.com/jackdewinter/pymarkdown
+    rev: v0.9.41
     hooks:
-      - id: markdownlint-cli2
+      - id: pymarkdown
+        args: [--config=.pymarkdown.yaml, scan]
 
   - repo: local
     hooks:
@@ -54,6 +55,9 @@ repos:
         name: Vitest (related tests)
         entry: npx --no-install vitest related --run
         language: system
+        # pre-commit kann Dateien in mehreren Batches anbieten. Vitest teilt
+        # dabei seinen Cache; daher diesen Hook genau einmal ausführen.
+        require_serial: true
         types_or: [ts, tsx]
         pass_filenames: true
 
