@@ -402,9 +402,9 @@ fn damaged_files_are_rejected_in_the_order_of_the_contract() {
     longer.push(0);
     assert_eq!(code_of(&longer), code::CHECKSUM_MISMATCH);
 
-    assert_eq!(bytes[8], 4, "world state format 4 (ADR-045)");
+    assert_eq!(bytes[8], 5, "world state format 5 (ADR-048)");
     let mut newer = bytes.clone();
-    newer[8] = 5; // world state format 5
+    newer[8] = 6; // world state format 6
     assert_eq!(code_of(&newer), code::VERSION_TOO_NEW);
     let mut container = bytes.clone();
     container[6] = 9;
