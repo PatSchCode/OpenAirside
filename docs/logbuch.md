@@ -24,11 +24,32 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.7 PR-Nachweis korrigiert
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** PR-Zuordnung nachträglich geprüft und den Fahrplan-Nachweis auf den tatsächlich aktuellen PR #43 korrigiert.
+- **Erreicht:** CI-Lauf 41755763098 auf `ci/q-7-pymarkdown` ist vollständig grün; die Dokumentationsprüfung bestand in 22 s.
+- **Offen geblieben:** keine.
+- **Nächster Schritt:** Review und Merge von PR #43 nach Freigabe des Projektinhabers.
+- **Modell-Bilanz:** GPT-5/Codex; Dokumentationskorrektur, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung.
+- **README und Drift:** Fahrplan und Logbuch auf den aktuellen PR-Nachweis abgeglichen.
+- **Änderungsstand:** Abschlusskorrektur folgt in einem regulären Commit; kein Hook-Bypass.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Q.7 PR-Nachweis
+
+- **Letzter Stand:** PR #43 enthält Q.7; der manuelle CI-Lauf auf dem PR-Branch ist grün.
+- **Geplant für diese Session:** Den Fahrplan-Nachweis auf den tatsächlichen PR- und Laufbezug korrigieren.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modus/Werkzeug:** Codex Desktop.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
 ### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.7 abgeschlossen
 
 - **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
 - **Bearbeitet:** CI-Nachweis des PyMarkdown-Wechsels auf PR #38 geprüft und Q.7 abgeschlossen.
-- **Erreicht:** PR #38, Lauf 40771819702, ist grün; „Dokumentation (pre-commit)“ bestand in 17 s. Damit sind lokaler Pre-Commit, isolierter Python-Audit und CI für Q.7 nachgewiesen.
+- **Erreicht:** Vorläufiger Nachweis dokumentiert; die endgültige Zuordnung ist im nachfolgenden Eintrag auf PR #43 und Lauf 41755763098 korrigiert. Damit sind lokaler Pre-Commit, isolierter Python-Audit und CI für Q.7 nachgewiesen.
 - **Offen geblieben:** keine.
 - **Nächster Schritt:** Merge von PR #38 nach Freigabe des Projektinhabers; danach 3.2.
 - **Modell-Bilanz:** GPT-5/Codex; ein Build-/Tooling-Schritt, nichts abgegeben.

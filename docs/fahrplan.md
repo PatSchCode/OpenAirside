@@ -449,7 +449,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Freigabepflichtig:** ja (Kategorie Build/CI); Optionen A und B am 2026-11-04 freigegeben, umgesetzt: B
 - **Empfohlene Klasse:** Routine – bestehendes Werkzeug lokalisieren und den Hook prüfen.
 - **Eingangskriterien:** Fehler `npm EALLOWGIT` im bisherigen externen Hook reproduziert und Ursache belegt.
-- **Stand:** Nach Freigabe Option B wird PyMarkdown 0.9.41 als alternative Markdown-Prüfung verwendet. Die Bestandsprüfung und `pre-commit run --all-files` sind mit den begründeten Ausnahmen MD013, MD022 und MD060 grün; `pip-audit` meldet für die aufgelöste Abhängigkeitskette keine bekannten Schwachstellen. PR #38, Lauf 40771819702, ist grün; „Dokumentation (pre-commit)“ bestand in 17 s.
+- **Stand:** Nach Freigabe Option B wird PyMarkdown 0.9.41 als alternative Markdown-Prüfung verwendet. Die Bestandsprüfung und `pre-commit run --all-files` sind mit den begründeten Ausnahmen MD013, MD022 und MD060 grün; `pip-audit` meldet für die aufgelöste Abhängigkeitskette keine bekannten Schwachstellen. PR #43, manueller CI-Lauf 41755763098, ist grün; „Dokumentation (pre-commit)“ bestand in 22 s.
 - **Zu tun:** erledigt.
 - **Akzeptanzkriterien:** `pre-commit run --all-files` läuft mit PyMarkdown grün; `pip-audit` für die aufgelöste PyMarkdown-Kette ist grün; CI nutzt dieselbe Konfiguration.
 - **Betroffene Module:** Tooling
