@@ -24,6 +24,19 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.8 CI-Push-Fallback
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** Einen Push-Trigger für `ci/**`-Branches zusätzlich zum bestehenden PR-Trigger eingerichtet und durch den regulären Branch-Push geprüft.
+- **Erreicht:** Der Push auf `ci/q-7-pymarkdown` startete automatisch den CI-Lauf 41817494600. Alle Jobs waren grün, darunter Pre-Commit, Audit, Lint, Typprüfung, Tests, Build, Electron-Rauchtests und Rust-Coverage.
+- **Offen geblieben:** keine für Q.8. Der PR #43 bleibt zur Prüfung und zum Merge durch den Projektinhaber offen.
+- **Nächster Schritt:** PR #43 prüfen und nach Freigabe mergen.
+- **Modell-Bilanz:** GPT-5/Codex; ein Build-/Tooling-Schritt, nichts abgegeben.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine Änderung.
+- **README und Drift:** README nicht betroffen; Fahrplan und Logbuch auf den bestätigten CI-Nachweis abgeglichen.
+- **Änderungsstand:** Abschlussdokumentation wird regulär committet; kein Hook-Bypass.
+
 ### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Q.8 CI-Push-Fallback
 
 - **Letzter Stand:** PR #43 benötigte trotz gültigem `pull_request`-Trigger einen manuellen CI-Start; der Lauf selbst war vollständig grün.

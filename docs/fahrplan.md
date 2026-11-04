@@ -460,12 +460,12 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.8: CI-Push-Fallback für Tooling-Branches
 
-- **Status:** IN ARBEIT
+- **Status:** ERLEDIGT (2026-11-04; automatischer Push-Lauf [41817494600](https://github.com/PatSchCode/OpenAirside/actions/runs/41817494600) vollständig grün)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** Q.5
 - **Freigabepflichtig:** ja (Kategorie Build/CI); freigegeben am 2026-11-04
 - **Zu tun:** CI bei Pushes auf `ci/**` zusätzlich zum PR-Ereignis auslösen.
-- **Akzeptanzkriterien:** Ein Push auf den PR-Branch erzeugt einen sichtbaren GitHub-Actions-Lauf ohne manuellen Start.
+- **Akzeptanzkriterien:** erfüllt – ein Push auf `ci/q-7-pymarkdown` erzeugte den sichtbaren GitHub-Actions-Lauf 41817494600 ohne manuellen Start.
 - **Betroffene Module:** Build/CI
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** `.github/workflows/ci.yml`, `docs/fahrplan.md`, `docs/logbuch.md`
