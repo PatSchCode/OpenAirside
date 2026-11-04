@@ -24,6 +24,13 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Codex-Ausführungsdisziplin
+
+- **Letzter Stand:** Schritt 3.2 ist gemergt; die nachfolgende Rückschau auf historische Cloud-Code-Durchgänge hat konkrete Verbesserungen für die Codex-Arbeitsweise ergeben.
+- **Geplant für diese Session:** Die abgeleiteten, Codex-eigenen Regeln für Checkpoints, Staging-Prüfung, CI-Nachverfolgung und Abschlussdisziplin in `AGENTS.md` verbindlich ergänzen.
+- **Vorabprüfung:** Pflichtlektüre zu Projektkontext, letztem Sessionende, Fahrplan, Architektur, Entscheidungen, Blockern und Requirements-Übersicht durchgeführt; keine aktiven Blocker.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
 ### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – 3.2 Abschlussprüfung
 
 - **Letzter Stand:** Die Umsetzung von 3.2 ist uncommitted; alle lokalen Prüfungen außer `cargo-deny` sind grün. Das CI-gleiche Werkzeug `cargo-deny 0.20.2` liegt nun isoliert bereit.

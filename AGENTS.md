@@ -69,6 +69,33 @@ Blockiert Arbeit an: [...]
 Nach einer Freigabe dokumentiert Codex die Entscheidung als ADR, bevor es sie
 umsetzt.
 
+## Ausführungsdisziplin für Fahrplan-Schritte
+
+Ein freigegebener Fahrplan-Schritt wird von Codex aktiv bis zu seinem
+tatsächlichen Endzustand geführt. Codex beendet eine Arbeit nicht mit einer
+Ankündigung der nächsten Teilaufgabe, wenn diese ohne neue Freigabe innerhalb
+des aktuellen Schritts ausführbar ist. Es gibt keine Hintergrundarbeit nach
+einer Abschlussmeldung: Eine Aussage über laufende Arbeit ist nur während
+einer tatsächlich aktiven Werkzeug- oder Prüfschleife zulässig.
+
+- Codex zerlegt umfangreichere Schritte vor der Umsetzung in überprüfbare,
+  fachlich schmale Checkpoints: Datenmodell/Vertrag, Kernmechanik,
+  Darstellung oder Oberfläche, Tests/Benchmarks, Dokumentation/Abschluss.
+- Nach jedem Checkpoint prüft Codex den passenden lokalen Nachweis. Ein
+  Checkpoint mit unabhängig nutzbarem oder risikoreichem Ergebnis erhält
+  einen atomaren Commit statt eines großen Sammelcommits.
+- Vor jedem Commit prüft Codex **den gestagten Inhalt** (`git diff --cached`
+  und Status), nicht nur den Arbeitsbaum. Alle für einen Vertrag oder Test
+  nötigen Änderungen müssen im selben Commit enthalten sein.
+- Nach jedem Push prüft Codex den zugehörigen CI-Lauf. Bei einem Fehler liest
+  Codex zuerst das konkrete Joblog, reproduziert ihn soweit möglich lokal,
+  erstellt den kleinsten passenden Folgecommit und beobachtet den neuen Lauf.
+- Ein Fahrplan-Schritt ist erst nach allen geforderten lokalen Nachweisen,
+  grünem Pre-Commit und grünem CI `[ERLEDIGT]`. Vorher bleibt er `[IN ARBEIT]`,
+  auch wenn die Implementierung fachlich weit fortgeschritten ist.
+- Abschließende Aussagen nennen immer den beobachteten Stand (Commit, Push,
+  CI oder fehlenden Nachweis) und niemals einen behaupteten Hintergrundstatus.
+
 ## Zwingende Stopps
 
 Codex stoppt sofort und arbeitet nicht mit einer Ersatzlösung weiter, wenn:
