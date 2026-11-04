@@ -69,6 +69,50 @@ Blockiert Arbeit an: [...]
 Nach einer Freigabe dokumentiert Codex die Entscheidung als ADR, bevor es sie
 umsetzt.
 
+## Rollen- und Modellorchestrierung
+
+Der Projektinhaber ist Auftraggeber, Visionär und Qualitätsprüfer. Er legt
+Produktvision, Prioritäten, Akzeptanzmaßstab und alle freigabepflichtigen
+Entscheidungen fest. Codex verantwortet die vollständige technische Arbeit:
+Bestandsaufnahme, Lösungsentwurf, Risikoanalyse, Umsetzung, Nachweise,
+Dokumentationspflege, Commit, Push und CI-Nachverfolgung. Codex verlangt keine
+fachliche Zerlegung in technische Teilaufträge, wenn das Ziel oder ein
+Fahrplan-Schritt klar ist.
+
+Codex wählt innerhalb der von der Laufzeit tatsächlich angebotenen Modelle und
+Werkzeuge die kleinste geeignete Modellklasse. Eine Modellbezeichnung oder
+Verfügbarkeit wird nie angenommen, sondern nur aus dem Systemkontext der
+aktuellen Laufzeit übernommen.
+
+- **Entscheidungsklasse – Astra mit hoher Denktiefe:** für Architektur,
+  Datenmodell, Sicherheits- und Compliance-Fragen, teure oder schwer
+  umkehrbare Trade-offs sowie unabhängige Abschlussbewertungen. Sie liefert
+  Optionen, Risiken und eine Empfehlung; sie ersetzt niemals die Freigabe des
+  Projektinhabers.
+- **Ausführungsklasse – Sol:** für die vollständige Umsetzung freigegebener
+  Fahrplan-Schritte, Tests, Dokumentation, Commits und CI-Fehlerbehebung.
+- **Routineklasse – Luna:** nur für eng abgegrenzte, risikoarme Arbeiten wie
+  mechanische Recherche, klar begrenzte Dokumentationspflege oder einfache
+  Prüfaufgaben. Ergebnisse mit Architektur- oder Vertragswirkung werden von
+  Codex selbst geprüft.
+- **Interaktionsklasse – Terra:** nur wenn eine Aufgabe tatsächlich
+  Bildschirm-, Browser- oder visuelle UI-Prüfung verlangt; sie ist kein Ersatz
+  für Architekturentscheidung oder Kernimplementierung.
+
+Für eine freigabepflichtige Entscheidung holt Codex vor der Umsetzung eine
+unabhängige Bewertung der Entscheidungsklasse ein, sofern die Laufzeit dieses
+Modell anbietet und die Aufgabe sinnvoll teilbar ist. Danach legt Codex die
+Entscheidung im vorgeschriebenen Format dem Projektinhaber vor. Erst nach
+Freigabe führt die Ausführungsklasse die beschlossene Richtung bis zum
+nachgewiesenen Abschluss aus. Für bereits freigegebene, klare Fahrplan-Schritte
+arbeitet Codex autonom weiter und setzt keine zusätzliche Modellfreigabe voraus.
+
+Unteragenten dienen nur unabhängiger Analyse, Gegenprüfung oder klar
+abtrennbaren Routinearbeitspaketen. Sie dürfen weder gleichzeitig dieselben
+Dateien ändern noch Entscheidungen als getroffen darstellen. Codex bleibt
+Koordinator, prüft die Ergebnisse gegen den Arbeitsbaum und dokumentiert im
+Logbuch die tatsächlich eingesetzten Modellklassen und Delegationen.
+
 ## Ausführungsdisziplin für Fahrplan-Schritte
 
 Ein freigegebener Fahrplan-Schritt wird von Codex aktiv bis zu seinem

@@ -186,17 +186,13 @@ Keine externen APIs im Spiel.
 - **Reaktiv-ADR-Schwellenwert:** maximal 20 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse G).
 - **Wucherungs-Schwelle:** Faktor 2 gegenüber dem ursprünglichen Schrittplan **und** mindestens 5 zusätzliche Schritte.
 - **Vorläufig-zu-Belastbar-Verhältnis:** nach jeder UMSETZUNG-Phase soll mindestens ein `[VORLÄUFIG]`-Bestandteil der berührten Module auf `[BELASTBAR]` befördert sein, sonst Reflexion.
-- **Modellklassen-Zuordnung** (`CLAUDE.md` Abschnitt 0):
-  - **Mechanik-Klasse:** Claude Haiku 5.5 – Probelauf: offen
-  - **Routine-Klasse:** Claude Sonnet 5.5 – Probelauf: offen
-  - **Entscheidungs-Klasse:** Claude Opus 5.5 – stärkstes regulär eingesetztes Modell
-  - **Ausnahme-Klasse:** Claude Fable 5.1, falls im Abo verfügbar – nur auf Vorschlag mit Freigabe
-  - **Bezugsmodell und knappe Ressource:** Claude-Abo des Projektinhabers; knapp ist das Nutzungskontingent (rollierendes 5-Stunden-Fenster laut Laufzeitumgebung, Stand 2026-10-13)
-  - **Abgabe an Unteragenten:** Claude Code erlaubt Unteragenten mit fest eingestelltem Modell (`model` im Agenten-Aufruf bzw. in `.claude/agents/*.md`); Abgabe erst nach bestandenem Probelauf
-  - **Meldet die Laufzeitumgebung das Modell / das Kontingent?** Modell ja, über den Systemkontext und die Abfrage `get_session` (eingestelltes und bedientes Modell); Kontingent ja, über `get_session` (`rate_limit_info`: Art „five_hour“, Status, Zurücksetz-Zeitpunkt) – geprüft 2026-10-13
-  - **Preise je Klasse:** offen, beim Probelauf mit Quelle nachtragen
-  - **Grenze der Sessiongröße:** 400.000 Token Kontext
-  - **Kontingent-Warnung:** inaktiv, Begründung: erst nach Prüfung in der ersten Claude-Code-Session (`templates/werkzeuge/claude-code/`)
+- **Codex-Modellklassen-Zuordnung:** Verbindlicher Ablauf in `AGENTS.md`, Abschnitt „Rollen- und Modellorchestrierung". Die Laufzeit bestimmt, welche Modelle verfügbar sind; Codex behauptet weder Modellwahl noch Kontingentdaten ohne Systemkontext.
+  - **Routine-Klasse:** Luna für klar abgegrenzte, risikoarme Recherche- und Pflegearbeit.
+  - **Ausführungsklasse:** Sol für freigegebene Umsetzung, Tests, Dokumentation, Commits und CI-Nachverfolgung.
+  - **Entscheidungsklasse:** Astra mit hoher Denktiefe für Architektur, Datenmodell, Sicherheit, Compliance und schwer umkehrbare Trade-offs; Ergebnis ist eine Vorlage für die Freigabe des Projektinhabers.
+  - **Interaktionsklasse:** Terra für erforderliche Bildschirm-, Browser- oder visuelle Prüfungen, nicht für Architektur- oder Kernentscheidungen.
+  - **Delegation:** nur für unabhängige Analyse, Gegenprüfung oder klar getrennte Routinearbeit; keine parallele Bearbeitung derselben Dateien. Codex koordiniert und protokolliert tatsächliche Modellklassen und Delegationen im Logbuch.
+  - **Grenze der Sessiongröße und Kontingente:** ausschließlich nach verlässlicher Anzeige der jeweiligen Codex-Laufzeit dokumentieren; andernfalls `unbestimmbar`.
 
 <!-- ANCHOR:code-standards-und-qualitaetsziele -->
 ## 7. Code-Standards und Qualitätsziele

@@ -24,6 +24,13 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-04 15:52 (Europe/Berlin) – [SESSIONSTART] – Codex-Modellrollen
+
+- **Letzter Stand:** Die Codex-Ausführungsdisziplin ist als offener Dokumentations-PR #46 vorhanden. Der Projektinhaber hat zusätzlich die bewusste Trennung von Entscheidungs- und Ausführungsmodell beauftragt.
+- **Geplant für diese Session:** Die Rollen des Projektinhabers und der verfügbaren Codex-Modelle verbindlich in `AGENTS.md` und im operativen Modellklassen-Abschnitt von `project-context.md` festlegen; keine Architektur- oder Quellcodeänderung.
+- **Vorabprüfung:** Pflichtlektüre zu Projektkontext, letztem `[SESSIONENDE]` und allen jüngeren Einträgen, Fahrplan, Architektur, Entscheidungen, aktiven Blockern und Requirements-Übersicht durchgeführt. Keine aktiven Blocker.
+- **Modell:** GPT-5/Codex laut Systemkontext; die Auswahl möglicher Unteragentenmodelle wird ausschließlich aus der jeweiligen Codex-Laufzeit abgeleitet.
+
 ### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Codex-Ausführungsdisziplin
 
 - **Letzter Stand:** Schritt 3.2 ist gemergt; die nachfolgende Rückschau auf historische Cloud-Code-Durchgänge hat konkrete Verbesserungen für die Codex-Arbeitsweise ergeben.
