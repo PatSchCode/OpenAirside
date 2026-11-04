@@ -24,6 +24,13 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – 3.2 Umsetzung
+
+- **Letzter Stand:** Die Entscheidungsvorlage zu 3.2 liegt als Draft-PR #45 vor; der Projektinhaber hat Option A freigegeben.
+- **Geplant für diese Session:** ADR-048 vor dem Code dokumentieren und den vertikalen Minimalfluss für Passagiere, Stationen, Warteschlangen, Statistik, Overlay und Lektion umsetzen.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G).
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
 ### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – 3.2 Vorlage erstellt
 
 - **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
