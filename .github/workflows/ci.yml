@@ -14,9 +14,10 @@
 name: CI
 
 on:
-  # Feature-Branches laufen über ihren PR; ohne PR von Hand über „Run workflow“ (ADR-043).
+  # CI-/Tooling-Branches erhalten zusätzlich zum PR-Ereignis einen Push-Fallback.
+  # So bleibt der Nachweis sichtbar, falls GitHub ein pull_request-Ereignis nicht plant.
   push:
-    branches: [main]
+    branches: [main, "ci/**"]
   pull_request:
     branches: [main]
   workflow_dispatch:

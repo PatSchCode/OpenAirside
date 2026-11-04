@@ -24,6 +24,13 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – Q.8 CI-Push-Fallback
+
+- **Letzter Stand:** PR #43 benötigte trotz gültigem `pull_request`-Trigger einen manuellen CI-Start; der Lauf selbst war vollständig grün.
+- **Geplant für diese Session:** Nach Freigabe einen Push-Fallback für `ci/**`-Branches einrichten und durch einen regulären Push prüfen.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen; aktive Blocker: keine.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
 ### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.7 PR-Nachweis korrigiert
 
 - **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.

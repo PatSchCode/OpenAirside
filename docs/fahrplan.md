@@ -458,6 +458,18 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Artefakte:** `core/benches/*.rs`, `scripts/bench-report.mjs` mit Tests, `docs/architecture.md` Abschnitt „Leistungstest in der CI“ (ein Satz)
 - **Notizen:** Der Sprung vom 2026-10-21 lässt sich damit nicht rückwirkend klären; die Angabe hilft erst ab dem ersten Lauf mit dem Feld.
 
+#### Q.8: CI-Push-Fallback für Tooling-Branches
+
+- **Status:** IN ARBEIT
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** Q.5
+- **Freigabepflichtig:** ja (Kategorie Build/CI); freigegeben am 2026-11-04
+- **Zu tun:** CI bei Pushes auf `ci/**` zusätzlich zum PR-Ereignis auslösen.
+- **Akzeptanzkriterien:** Ein Push auf den PR-Branch erzeugt einen sichtbaren GitHub-Actions-Lauf ohne manuellen Start.
+- **Betroffene Module:** Build/CI
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `.github/workflows/ci.yml`, `docs/fahrplan.md`, `docs/logbuch.md`
+
 #### Q.5: CI-Trigger nur für `main` und PRs, Code-Jobs nicht bei reinen Doku-Änderungen
 
 - **Status:** ERLEDIGT (2026-10-26)
