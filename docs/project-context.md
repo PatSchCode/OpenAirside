@@ -26,7 +26,7 @@
 <!-- ANCHOR:technischer-stack -->
 ## 3. Technischer Stack
 
-Entschieden in **ADR-002** (2026-10-13) unter der Bedingung des Leistungsnachweises in Phase 1; der Nachweis ist erbracht (ADR-014), die Stack-Bestandteile sind in `architecture.md` `[BELASTBAR]` (Grenzen nach ADR-017). Versionen nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15), von der KI gegen offizielle Quellen belegt und vom Menschen am 2026-10-13 zeilenweise bestätigt.
+Entschieden in **ADR-002** (2026-10-13) unter der Bedingung des Leistungsnachweises in Phase 1; der Nachweis ist erbracht (ADR-014), die Stack-Bestandteile sind in `architecture.md` `[BELASTBAR]` (Grenzen nach ADR-017). Versionen nach der folgenden Regel „ausgereifte Linie", von der KI gegen offizielle Quellen belegt und vom Menschen am 2026-10-13 zeilenweise bestätigt.
 
 - **Mindestreife neuer Linien:** mindestens ein Fehlerkorrektur-Release (x.y.1) **und** erste Version der Linie mindestens 1 Monat alt. Ausnahme: Projekte, die nie Patch-Releases veröffentlichen (rayon), gelten ab 3 Monaten Alter als reif.
 - **Geplante Projektdauer:** 2 Jahre (bis Ende 2028). Linien mit rollierendem Unterstützungsmodell (Electron, Rust) erreichen das nie; sie werden über wiederkehrende Update-Schritte im Fahrplan nachgezogen.
@@ -186,22 +186,18 @@ Keine externen APIs im Spiel.
 - **Reaktiv-ADR-Schwellenwert:** maximal 20 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse G).
 - **Wucherungs-Schwelle:** Faktor 2 gegenüber dem ursprünglichen Schrittplan **und** mindestens 5 zusätzliche Schritte.
 - **Vorläufig-zu-Belastbar-Verhältnis:** nach jeder UMSETZUNG-Phase soll mindestens ein `[VORLÄUFIG]`-Bestandteil der berührten Module auf `[BELASTBAR]` befördert sein, sonst Reflexion.
-- **Modellklassen-Zuordnung** (`CLAUDE.md` Abschnitt 0):
-  - **Mechanik-Klasse:** Claude Haiku 5.5 – Probelauf: offen
-  - **Routine-Klasse:** Claude Sonnet 5.5 – Probelauf: offen
-  - **Entscheidungs-Klasse:** Claude Opus 5.5 – stärkstes regulär eingesetztes Modell
-  - **Ausnahme-Klasse:** Claude Fable 5.1, falls im Abo verfügbar – nur auf Vorschlag mit Freigabe
-  - **Bezugsmodell und knappe Ressource:** Claude-Abo des Projektinhabers; knapp ist das Nutzungskontingent (rollierendes 5-Stunden-Fenster laut Laufzeitumgebung, Stand 2026-10-13)
-  - **Abgabe an Unteragenten:** Claude Code erlaubt Unteragenten mit fest eingestelltem Modell (`model` im Agenten-Aufruf bzw. in `.claude/agents/*.md`); Abgabe erst nach bestandenem Probelauf
-  - **Meldet die Laufzeitumgebung das Modell / das Kontingent?** Modell ja, über den Systemkontext und die Abfrage `get_session` (eingestelltes und bedientes Modell); Kontingent ja, über `get_session` (`rate_limit_info`: Art „five_hour“, Status, Zurücksetz-Zeitpunkt) – geprüft 2026-10-13
-  - **Preise je Klasse:** offen, beim Probelauf mit Quelle nachtragen
-  - **Grenze der Sessiongröße:** 400.000 Token Kontext
-  - **Kontingent-Warnung:** inaktiv, Begründung: erst nach Prüfung in der ersten Claude-Code-Session (`templates/werkzeuge/claude-code/`)
+- **Codex-Modellklassen-Zuordnung:** Verbindlicher Ablauf in `AGENTS.md`, Abschnitt „Rollen- und Modellorchestrierung". Die Laufzeit bestimmt, welche Modelle verfügbar sind; Codex behauptet weder Modellwahl noch Kontingentdaten ohne Systemkontext.
+  - **Routine-Klasse:** Luna für klar abgegrenzte, risikoarme Recherche- und Pflegearbeit.
+  - **Ausführungsklasse:** Sol für freigegebene Umsetzung, Tests, Dokumentation, Commits und CI-Nachverfolgung.
+  - **Entscheidungsklasse:** Astra mit hoher Denktiefe für Architektur, Datenmodell, Sicherheit, Compliance und schwer umkehrbare Trade-offs; Ergebnis ist eine Vorlage für die Freigabe des Projektinhabers.
+  - **Interaktionsklasse:** Terra für erforderliche Bildschirm-, Browser- oder visuelle Prüfungen, nicht für Architektur- oder Kernentscheidungen.
+  - **Delegation:** nur für unabhängige Analyse, Gegenprüfung oder klar getrennte Routinearbeit; keine parallele Bearbeitung derselben Dateien. Codex koordiniert und protokolliert tatsächliche Modellklassen und Delegationen im Logbuch.
+  - **Grenze der Sessiongröße und Kontingente:** ausschließlich nach verlässlicher Anzeige der jeweiligen Codex-Laufzeit dokumentieren; andernfalls `unbestimmbar`.
 
 <!-- ANCHOR:code-standards-und-qualitaetsziele -->
 ## 7. Code-Standards und Qualitätsziele
 
-Pflichtkategorien nach `CLAUDE.md` Abschnitt 15. Werkzeugversionen nach derselben Versionsregel wie Abschnitt 3 (Verifiziert: 2026-10-13).
+Pflichtkategorien nach `AGENTS.md`, Abschnitt „Qualität und Nachweise". Werkzeugversionen nach derselben Versionsregel wie Abschnitt 3 (Verifiziert: 2026-10-13).
 
 ### Tool-Festlegung pro Sprache
 
@@ -273,10 +269,10 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 
 ### Commit-Lint
 
-- **Tool:** nicht aktiv, Begründung: Commit-Format nach `CLAUDE.md` Abschnitt 11 wird über die DoD geprüft.
-- **Erlaubte Typen:** Bereichs-Präfixe nach `CLAUDE.md` Abschnitt 11
-- **Branch-Präfixe:** wie `CLAUDE.md` Abschnitt 11; zusätzlich: keine
-- **Vom Werkzeug vergebene Branch-Namen:** Claude-Code-Cloud-Sessions können `claude/<zufallsname>` vergeben (so PR #1 bis #3, `claude/gracious-galileo-2reksz`); Typ und Schritt-ID stehen dann im PR-Titel
+- **Tool:** nicht aktiv, Begründung: Commit-Format nach `AGENTS.md`, Abschnitt „Git und Pull Requests", wird über die DoD geprüft.
+- **Erlaubte Typen:** Bereichs-Präfixe nach `AGENTS.md`, Abschnitt „Git und Pull Requests"
+- **Branch-Präfixe:** wie `AGENTS.md`, Abschnitt „Git und Pull Requests"; zusätzlich: keine
+- **Historischer Branch-Bestand:** Frühere Cloud-Sessions konnten Namen wie `claude/<zufallsname>` vergeben (z. B. PR #1 bis #3). Für neue Codex-Arbeit gelten ausschließlich die Branch-Regeln aus `AGENTS.md`.
 
 ### Editor-Integration (empfohlen, nicht erzwungen)
 
@@ -293,8 +289,8 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 - **macOS-Signatur:** vorerst unsigniert; Entscheidung über Signatur (Kosten im Rahmen unten) vor Phase 7
 - **Vertretung:** offen bis zum Deployment-Gate vor dem ersten öffentlichen Release (Phase 7)
 - **Notfall-Handbuch:** `docs/onboarding-runbook.md` Abschnitt „Notfall"; noch nicht erprobt
-- **KI im Betrieb:** Claude-Abo des Projektinhabers; Kontingent: rollierendes 5-Stunden-Fenster, Zurücksetz-Zeitpunkt je Session über `get_session` (geprüft 2026-10-13); Rückfallweg ohne KI: Entwicklung pausiert, das veröffentlichte Spiel ist unabhängig
-- **Zugriff der KI auf die Produktion:** kein Zugriff auf Spielerrechner; im Repository Schreibrechte über Claude Code; Releases nur nach Freigabe
+- **KI im Betrieb:** Codex-Laufzeit des Projektinhabers; Modellverfügbarkeit und Kontingente ausschließlich nach der jeweiligen Laufzeitanzeige. Rückfallweg ohne KI: Entwicklung pausiert, das veröffentlichte Spiel ist unabhängig.
+- **Zugriff der KI auf die Produktion:** kein Zugriff auf Spielerrechner; im Repository Schreibrechte über Codex im Rahmen der Laufzeitrechte; Releases nur nach Freigabe
 - **Unbeaufsichtigtes Handeln der KI:** nein
 
 ### Ablaufdaten-Register
@@ -324,14 +320,14 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 | Posten | Art (laufend / einmalig / KI-Verbrauch) | Betrag je Monat | Stand vom | Entscheidung nötig ab |
 |---|---|---|---|---|
 | GitHub (öffentliches Repo, Actions) | laufend | 0 € | 2026-10-13 | private Nutzung oder Actions-Limits |
-| Claude-Abo | KI-Verbrauch | außerhalb des Rahmens | 2026-10-13 | – |
+| Codex-/KI-Zugang | KI-Verbrauch | außerhalb des Rahmens | 2026-11-04 | – |
 
 <!-- ANCHOR:entscheidungsbefugnisse -->
 ## 9. Entscheidungsbefugnisse
 
 - **Freigabe-Entscheidungen trifft:** der Projektinhaber (GitHub: Paddel87)
-- **Rollen:** Der Projektinhaber ist Auftraggeber, Visionär und Qualitätsprüfer; der Coding-Assistent (Claude Code) trägt die technische Umsetzung und Bewertung und legt freigabepflichtige Entscheidungen vor
-- **Kommunikationskanal für Freigaben:** direkt im Chat bzw. in der Claude-Code-Session, bevorzugt mit anklickbaren Antwortoptionen (Spracheingabe)
+- **Rollen:** Der Projektinhaber ist Auftraggeber, Visionär und Qualitätsprüfer; Codex trägt die technische Umsetzung und Bewertung und legt freigabepflichtige Entscheidungen vor. Die Modellrollen stehen verbindlich in `AGENTS.md`, Abschnitt „Rollen- und Modellorchestrierung".
+- **Kommunikationskanal für Freigaben:** direkt im Chat bzw. in der Codex-Session, bevorzugt mit anklickbaren Antwortoptionen (Spracheingabe)
 - **Reaktionszeit-Erwartung:** asynchron, keine harte Antwortzeit
 
 <!-- ANCHOR:repository-regeln -->
@@ -375,4 +371,4 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 
 ---
 
-**Pflegehinweis:** Änderungen an Status, Stack oder Constraints sind freigabepflichtig (`CLAUDE.md` Abschnitt 4) und erzeugen einen ADR-Eintrag. Statuswechsel ziehen README-Badge- und CHANGELOG-Updates nach sich.
+**Pflegehinweis:** Änderungen an Status, Stack oder Constraints sind nach `AGENTS.md` freigabepflichtig und erzeugen einen ADR-Eintrag. Statuswechsel ziehen README-Badge- und CHANGELOG-Updates nach sich.

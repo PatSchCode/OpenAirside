@@ -69,6 +69,77 @@ Blockiert Arbeit an: [...]
 Nach einer Freigabe dokumentiert Codex die Entscheidung als ADR, bevor es sie
 umsetzt.
 
+## Rollen- und Modellorchestrierung
+
+Der Projektinhaber ist Auftraggeber, Visionär und Qualitätsprüfer. Er legt
+Produktvision, Prioritäten, Akzeptanzmaßstab und alle freigabepflichtigen
+Entscheidungen fest. Codex verantwortet die vollständige technische Arbeit:
+Bestandsaufnahme, Lösungsentwurf, Risikoanalyse, Umsetzung, Nachweise,
+Dokumentationspflege, Commit, Push und CI-Nachverfolgung. Codex verlangt keine
+fachliche Zerlegung in technische Teilaufträge, wenn das Ziel oder ein
+Fahrplan-Schritt klar ist.
+
+Codex wählt innerhalb der von der Laufzeit tatsächlich angebotenen Modelle und
+Werkzeuge die kleinste geeignete Modellklasse. Eine Modellbezeichnung oder
+Verfügbarkeit wird nie angenommen, sondern nur aus dem Systemkontext der
+aktuellen Laufzeit übernommen.
+
+- **Entscheidungsklasse – Astra mit hoher Denktiefe:** für Architektur,
+  Datenmodell, Sicherheits- und Compliance-Fragen, teure oder schwer
+  umkehrbare Trade-offs sowie unabhängige Abschlussbewertungen. Sie liefert
+  Optionen, Risiken und eine Empfehlung; sie ersetzt niemals die Freigabe des
+  Projektinhabers.
+- **Ausführungsklasse – Sol:** für die vollständige Umsetzung freigegebener
+  Fahrplan-Schritte, Tests, Dokumentation, Commits und CI-Fehlerbehebung.
+- **Routineklasse – Luna:** nur für eng abgegrenzte, risikoarme Arbeiten wie
+  mechanische Recherche, klar begrenzte Dokumentationspflege oder einfache
+  Prüfaufgaben. Ergebnisse mit Architektur- oder Vertragswirkung werden von
+  Codex selbst geprüft.
+- **Interaktionsklasse – Terra:** nur wenn eine Aufgabe tatsächlich
+  Bildschirm-, Browser- oder visuelle UI-Prüfung verlangt; sie ist kein Ersatz
+  für Architekturentscheidung oder Kernimplementierung.
+
+Für eine freigabepflichtige Entscheidung holt Codex vor der Umsetzung eine
+unabhängige Bewertung der Entscheidungsklasse ein, sofern die Laufzeit dieses
+Modell anbietet und die Aufgabe sinnvoll teilbar ist. Danach legt Codex die
+Entscheidung im vorgeschriebenen Format dem Projektinhaber vor. Erst nach
+Freigabe führt die Ausführungsklasse die beschlossene Richtung bis zum
+nachgewiesenen Abschluss aus. Für bereits freigegebene, klare Fahrplan-Schritte
+arbeitet Codex autonom weiter und setzt keine zusätzliche Modellfreigabe voraus.
+
+Unteragenten dienen nur unabhängiger Analyse, Gegenprüfung oder klar
+abtrennbaren Routinearbeitspaketen. Sie dürfen weder gleichzeitig dieselben
+Dateien ändern noch Entscheidungen als getroffen darstellen. Codex bleibt
+Koordinator, prüft die Ergebnisse gegen den Arbeitsbaum und dokumentiert im
+Logbuch die tatsächlich eingesetzten Modellklassen und Delegationen.
+
+## Ausführungsdisziplin für Fahrplan-Schritte
+
+Ein freigegebener Fahrplan-Schritt wird von Codex aktiv bis zu seinem
+tatsächlichen Endzustand geführt. Codex beendet eine Arbeit nicht mit einer
+Ankündigung der nächsten Teilaufgabe, wenn diese ohne neue Freigabe innerhalb
+des aktuellen Schritts ausführbar ist. Es gibt keine Hintergrundarbeit nach
+einer Abschlussmeldung: Eine Aussage über laufende Arbeit ist nur während
+einer tatsächlich aktiven Werkzeug- oder Prüfschleife zulässig.
+
+- Codex zerlegt umfangreichere Schritte vor der Umsetzung in überprüfbare,
+  fachlich schmale Checkpoints: Datenmodell/Vertrag, Kernmechanik,
+  Darstellung oder Oberfläche, Tests/Benchmarks, Dokumentation/Abschluss.
+- Nach jedem Checkpoint prüft Codex den passenden lokalen Nachweis. Ein
+  Checkpoint mit unabhängig nutzbarem oder risikoreichem Ergebnis erhält
+  einen atomaren Commit statt eines großen Sammelcommits.
+- Vor jedem Commit prüft Codex **den gestagten Inhalt** (`git diff --cached`
+  und Status), nicht nur den Arbeitsbaum. Alle für einen Vertrag oder Test
+  nötigen Änderungen müssen im selben Commit enthalten sein.
+- Nach jedem Push prüft Codex den zugehörigen CI-Lauf. Bei einem Fehler liest
+  Codex zuerst das konkrete Joblog, reproduziert ihn soweit möglich lokal,
+  erstellt den kleinsten passenden Folgecommit und beobachtet den neuen Lauf.
+- Ein Fahrplan-Schritt ist erst nach allen geforderten lokalen Nachweisen,
+  grünem Pre-Commit und grünem CI `[ERLEDIGT]`. Vorher bleibt er `[IN ARBEIT]`,
+  auch wenn die Implementierung fachlich weit fortgeschritten ist.
+- Abschließende Aussagen nennen immer den beobachteten Stand (Commit, Push,
+  CI oder fehlenden Nachweis) und niemals einen behaupteten Hintergrundstatus.
+
 ## Zwingende Stopps
 
 Codex stoppt sofort und arbeitet nicht mit einer Ersatzlösung weiter, wenn:
