@@ -2,26 +2,25 @@
 
 <!-- Anforderungen von OpenAirside: was das Spiel können muss, für wen, mit welcher Priorität.
      Klasse G: befüllt in Modus 1.5 (templates/projektstart.md, Schritt 1a) am 2026-10-13;
-     neu abgeleitet aus `docs/vision-2.md` nach ADR-046 am 2026-10-29.
+     an der verbindlichen Vision, dem Funktionsinventar und der Modernisierung ausgerichtet;
+     ADR-047 stellt diese Grundlage am 2026-11-04 wieder her.
      Abschnitt 1 („Übersicht") gehört zur Mindest-Lektüre (CLAUDE.md Abschnitt 2).
-     Jede Spielfunktion nennt ihre Säule aus `docs/vision-2.md` (Spalte „Säule“, Regel-010):
-     S1 Umbau im Betrieb, S2 Ströme lesen, S3 Rhythmus und Fracht, S4 Störung und Erholung,
-     S5 Airlines als Partner, G Grundsatz (Lernen, Bedienkomfort, Erklären), B Basis
-     (Genre-Grundlage, Leistung, Plattform, Inhalte). Die Akzeptanz ist aus sich heraus prüfbar;
-     `funktionsinventar.md` und `modernisierung.md` sind nur Ideenquellen. -->
+     Die Spalte „Säule“ dokumentiert bei älteren Einträgen nur deren Herkunft aus ADR-046.
+     Sie ist keine Zulassungsbedingung mehr. Jede Spielfunktion verweist nach Regel-004 auf
+     `funktionsinventar.md` und/oder `modernisierung.md`; die Akzeptanz ist aus sich heraus prüfbar. -->
 
 <!-- ANCHOR:uebersicht -->
-## 1. Übersicht (Stand vom 2026-10-29)
+## 1. Übersicht (Stand vom 2026-11-04)
 
 | Kennzahl | Wert |
 |---|---|
 | Anforderungen gesamt | 68 |
-| davon Muss / Soll / Kann | 55 / 9 / 3 (dazu 1 verworfen) |
+| davon Muss / Soll / Kann | 56 / 8 / 4 |
 | Muss-Anforderungen ohne Fahrplan-Schritt | 0 |
 | Muss-Anforderungen ohne Test (Pflicht ab Klasse G) | 0 (Testpfade geplant, entstehen mit dem Schritt) |
-| Verworfen (mit ADR) | 1 ganz (FR-037); teilweise oder herabgestuft: FR-031 (alte Fassung), FR-033 (Hangars, Tiere), FR-002 (Muss → Soll); alle ADR-046 |
+| Verworfen (mit ADR) | keine durch ADR-047: FR-037, die ursprüngliche Breite von FR-031 und FR-033 sowie die Priorität von FR-002 sind wiederhergestellt; ADR-046-Ergänzungen werden einzeln gegen Inventar und Modernisierung priorisiert |
 
-**Offene Punkte:** Prioritäten der neuen Anforderungen FR-053 bis FR-068 sind ein Vorschlag der KI vom 2026-10-29 aus der Auswahl des Projektinhabers; Spielwerte (Gebühren, Zusagen, Störwirkung, Mindestumsteigezeit) werden in den Schritten eigenständig festgelegt.
+**Offene Punkte:** Prioritäten der in ADR-046 ergänzten Anforderungen FR-053 bis FR-068 werden im wieder aktivierten Abgleich 6.3 gegen Inventar und Modernisierung bestätigt oder neu eingeordnet. Spielwerte werden eigenständig festgelegt.
 
 <!-- ANCHOR:beteiligte -->
 ## 2. Beteiligte
@@ -43,7 +42,7 @@
 
 | ID | Wer | Was | Quelle |
 |---|---|---|---|
-| UC-001 | Spieler | Neues Spiel anlegen: Bestandsflughafen oder leere Karte, Name, Kartengröße, Schwierigkeit, Sandbox | `docs/vision-2.md` Abschnitt 3 |
+| UC-001 | Spieler | Neues Spiel anlegen: Bestandsflughafen oder leere Karte, Name, Kartengröße, Schwierigkeit, Sandbox | `docs/vision.md`, ADR-047 |
 | UC-002 | Spieler | Flughafen bauen und umbauen: Gebäude, Etagen, Räume, Zonen, Objekte, Straßen | Säule 1 |
 | UC-003 | Spieler | Flugbetrieb einrichten: Bahnen, Rollwege, Stellplätze, Verkehrssteuerung | Basis |
 | UC-004 | Spieler | Verträge mit Airlines aushandeln, Gebühren festlegen, Flüge in Wellen planen | Säulen 3 und 5 |
@@ -52,7 +51,7 @@
 | UC-007 | Spieler | Flugzeuge abfertigen und versorgen (Turnaround, Betankung, Enteisung, Pushback) | Basis |
 | UC-008 | Spieler | Personal und Wirtschaft führen, an Kennzahlen gemessen werden | Säule 5 |
 | UC-009 | Spieler | Notfälle, Wetter und Störungen bewältigen und den Betrieb erholen | Säule 4 |
-| UC-010 | Spieler | Großflughafen mit über 10.000 Personen flüssig betreiben | `docs/vision-2.md` Abschnitt 4 |
+| UC-010 | Spieler | Großflughafen mit über 10.000 Personen flüssig betreiben | `docs/vision.md`, Leistungsziel |
 | UC-011 | Spieler | Verstehen, warum etwas nicht funktioniert (Wege, Wartezeit, Leistung, Verkehr) | Säule 2 |
 | UC-012 | Spieler mit schwächerem Rechner | Benchmark ausführen und Kartengröße bewusst wählen | Grundsatz Untergrenze |
 | UC-013 | Einsteiger | Mit Lektionen an einem kleinen Bestandsflughafen beginnen | Grundsatz „Lernen am eigenen Flughafen“ |
@@ -68,20 +67,18 @@
 | Anwendungsfall | Begründung | Entschieden am | Wieder aufgreifen, wenn … |
 |---|---|---|---|
 | Kurven beim Bauen | rechtwinkliges Raster; Kurven sprengen Bau- und Wegelogik | 2026-10-13 | nie geplant; nur bei neuer Vision |
-| Nachbau oder Funktionsgleichheit mit einem bestimmten Spiel | eigenes Spiel nach eigenem Entwurf (ADR-046) | 2026-10-29 | nicht vorgesehen |
+| Übernahme konkreter geschützter Inhalte eines anderen Spiels | rechtliche und technische Eigenständigkeit (ADR-047) | 2026-11-04 | nie; funktionale Orientierung bleibt zulässig |
 | Spielstände oder Mods anderer Spiele laden | kein Material und keine Formatbindung an andere Spiele | 2026-10-13 | nicht vorgesehen |
 | Vertrieb über Steam oder andere Stores | GitHub-only, betreiberneutral | 2026-10-13 | Projektinhaber entscheidet nach 1.0 |
-| Reine Frachtflüge (Frachtnacht) im ersten Umfang | zuerst Beiladefracht (ADR-046) | 2026-10-29 | nach Beiladefracht, FR-066 |
+| Reine Frachtflüge (Frachtnacht) im ersten Umfang | Cargo folgt nach dem funktionalen Kern (ADR-006, ADR-047) | 2026-11-04 | nach dem Funktionsabgleich 6.3 |
 | Mehrspieler | nicht Teil der Vision | 2026-10-13 | Community-Wunsch nach 1.0 |
 | Code-Mods (Skripte) | Sicherheits- und Stabilitätsfrage offen (`docs/project-context.md` offene Fragen) | 2026-10-13 | Phase 6 |
 | Isometrische 3D-Sicht | Kandidat, spätere Ausbaustufe | 2026-10-13 | nach 1.0 |
-| Forschung, Hangars, Tiere | tragen keine Säule (Regel-010, ADR-046) | 2026-10-29 | wenn eine Säule sie braucht |
-| Ideen aus `modernisierung.md` ohne Säule | nur Ideenquelle (Regel-010) | 2026-10-29 | jeweils einzeln mit Säule |
 
 <!-- ANCHOR:kernprozesse -->
 ## 4. Kernprozesse
 
-Seit ADR-046 beschreibt jeder Prozess nur noch das Soll von OpenAirside; die frühere Spalte „Ist“ (Ablauf im bisherigen Vorbild) entfällt.
+Die Prozesse beschreiben das eigenständige Soll von OpenAirside. Funktionale Referenzen dienen dem Umfangsabgleich, niemals der Übernahme konkreter Ausgestaltung.
 
 ### Prozess: Abflug eines Passagiers
 
@@ -121,14 +118,14 @@ Seit ADR-046 beschreibt jeder Prozess nur noch das Soll von OpenAirside; die fr�
 <!-- ANCHOR:funktionale-anforderungen -->
 ## 5. Funktionale Anforderungen
 
-Spalte „Fahrplan-Schritt": Schritt-ID aus `docs/fahrplan.md`. Spalte „Test": geplanter Testort; `core/` = Rust-Kern (cargo test), `app/` = Präsentation (Vitest), `e2e/` = Playwright. Spalte „Säule“: siehe Kopf.
+Spalte „Fahrplan-Schritt": Schritt-ID aus `docs/fahrplan.md`. Spalte „Test": geplanter Testort; `core/` = Rust-Kern (cargo test), `app/` = Präsentation (Vitest), `e2e/` = Playwright. Die Spalte „Säule“ ist bei ADR-046-Einträgen historische Herkunft, nicht Priorisierungsregel.
 
 ### Grundlagen und Meta
 
 | ID | Anforderung | Säule | Anwendungsfall | Priorität | Prüfbare Akzeptanz | Fahrplan-Schritt | Test (ab Klasse G) | Status |
 |---|---|---|---|---|---|---|---|---|
 | FR-001 | Neues Spiel mit Startform (Bestandsflughafen oder leere Karte), Name/IATA/Logo, Kartengröße, Schwierigkeit | S1, G | UC-001 | Muss | Startform wählbar; Schwierigkeit legt u. a. die Störwirkung von Baustellen fest (FR-055) | 5.1 | `core/tests/new_game.rs` | OFFEN |
-| FR-002 | Sandbox-Modus mit Regel-Schaltern | B | UC-001 | Soll | Geld, Störungen und Störwirkung von Baustellen abschaltbar; Sandbox deaktiviert Erfolge | 5.1 | `core/tests/sandbox.rs` | OFFEN (Priorität 2026-10-29 von Muss auf Soll, ADR-046) |
+| FR-002 | Sandbox-Modus mit Regel-Schaltern | B | UC-001 | Muss | Geld, Störungen und Störwirkung von Baustellen abschaltbar; Sandbox deaktiviert Erfolge | 5.1 | `core/tests/sandbox.rs` | OFFEN (Priorität durch ADR-047 wiederhergestellt) |
 | FR-003 | Zeitsteuerung mit Pause, 1×–3×, Nachtsprung und Kalender | B | UC-010 | Muss | bei 3× kein Simulationsrückstand im Referenzszenario | 2.2, 4.1 | `core/tests/time.rs` | OFFEN (Zeitsteuerung, Nachtsprung und Kalender seit 2.2 im Kern; Rückstand im Referenzszenario misst 4.1) |
 | FR-004 | Spielstände: manuell, Schnellspeichern, Autosave mit Rotation, Vorschaubild | B | UC-014 | Muss | Laden ergibt identischen Zustand (Prüfsumme) | 2.5 | `core/tests/savegame_roundtrip.rs`, `e2e/smoke.spec.ts` | ERLEDIGT 2026-10-19 (Intervall und Zahl der Autosaves einstellbar seit 2.6) |
 | FR-005 | Einstellungen: Einheiten, Währung, Uhr, Passagieranteil, Steuerung | B | UC-001 | Muss | jede Einstellung wirkt ohne Neustart und bleibt gespeichert | 5.1 | `app/settings.test.ts` | OFFEN |
@@ -175,7 +172,7 @@ Spalte „Fahrplan-Schritt": Schritt-ID aus `docs/fahrplan.md`. Spalte „Test":
 | FR-025 | Gepäckbänder, Sortierung, Verladung, Ausgabe | B | UC-006 | Muss | Prozess Gepäck im Szenario ohne Stillstand | 3.5, 5.5 | `core/tests/baggage.rs` | OFFEN |
 | FR-026 | Dreistufige Gepäckkontrolle | B | UC-006 | Muss | CT-Anlage, Bildauswertung, Handkontrolle mit eigenem Durchsatz | 5.5 | `core/tests/baggage_screening.rs` | OFFEN |
 | FR-046 | Datenmodell bereitet Fracht vor | S3 | UC-006 | Muss | Ladungsart „Fracht" im Schema vorhanden, ohne Spielmechanik | 2.3 | `core/tests/cargo_ready.rs` | ERLEDIGT 2026-10-14 (2.3) |
-| FR-048 | Beiladefracht mit den Passagierflügen | S3 | UC-006 | Muss | Fracht von der Landseite über Frachthalle und Vorfeld ins Flugzeug; Umschlag verlängert die Bodenzeit; Ankunft umgekehrt | 5.5 | `core/tests/belly_cargo.rs` | OFFEN (2026-10-29 von Kann „Fracht spielbar“ auf Muss „Beiladefracht“, ADR-046) |
+| FR-048 | Fracht spielbar (Beiladefracht als erster Umfang) | S3 | UC-006 | Kann | Fracht von der Landseite über Frachthalle und Vorfeld ins Flugzeug; Umschlag verlängert die Bodenzeit; Ankunft umgekehrt | 6.3 | `core/tests/cargo.rs` | OFFEN (Priorität und Landeplatz durch ADR-047 wiederhergestellt) |
 | FR-066 | Frachtnacht: reine Frachtflüge in der Nacht mit Frachthalle und Lärmgrenzen (2026-10-29) | S3, S5 | UC-006 | Kann | nach FR-048 | – | – | OFFEN |
 
 ### Flugbetrieb, Flüge und Airlines
@@ -186,7 +183,7 @@ Spalte „Fahrplan-Schritt": Schritt-ID aus `docs/fahrplan.md`. Spalte „Test":
 | FR-028 | Automatische Verkehrssteuerung mit Vorrangregeln nach ADR-005 | B, S4 | UC-003 | Muss | 7-stufige Rangfolge; Szenario-Test mit Notfall ohne Blockade; Entscheidungen für Spieler einsehbar | 3.12, 3.4 | `core/tests/traffic_control.rs` | OFFEN |
 | FR-029 | Startfreigabe-Zeit am Gate, „Aufrollen und Warten" | S3 | UC-003 | Muss | Abflüge in der Welle ohne Stau an der Bahn | 5.5 | `core/tests/departure_sequencing.rs` | OFFEN |
 | FR-030 | Verträge mit Airlines: Gebühren, Laufzeit, messbare Zusagen, Nachverhandeln; Flugplanung | S5 | UC-004 | Muss | Prozess „Vertrag mit einer Airline“; Zusage gemessen, Bonus und Abschlag gebucht | 3.6, 5.5 | `core/tests/flights.rs`, `core/tests/contracts.rs` | OFFEN (2026-10-29 neu gefasst, ADR-046) |
-| FR-031 | Flugzeugtypen und Airlines als Daten, Klassen nach Bedarf der Säulen, weitere per Mod | B | UC-004, UC-015 | Muss | Regional, Mittel, Groß als eigene Typen mit Airlines; ein weiterer Typ aus dem Mod-Ordner | 5.7 | `core/tests/aircraft_data.rs` | OFFEN (alte Fassung „alle Add-on-Klassen“ VERWORFEN 2026-10-29, ADR-046) |
+| FR-031 | Flugzeugtypen und Airlines als Daten, alle vorgesehenen Klassen, weitere per Mod | B | UC-004, UC-015 | Muss | alle im Inventar vorgesehenen Klassen als Datensätze; zusätzlicher Typ aus dem Mod-Ordner | 5.7 | `core/tests/aircraft_data.rs` | OFFEN (Umfang durch ADR-047 wiederhergestellt) |
 | FR-059 | Tagesrhythmus: Flugplan in Wellen, Spitzen planbar und sichtbar (2026-10-29) | S3 | UC-004, UC-019 | Muss | Flugplan mit Wellen; Spitzen im Overlay und in der Tabelle sichtbar | 3.6 | `core/tests/schedule_waves.rs` | OFFEN |
 | FR-061 | Slots für knappe Zeiten in der Spitze als Teil der Verträge (2026-10-29) | S3, S5 | UC-004 | Soll | Spitzenzeiten begrenzt; Vergabe in Verträgen; Airline ohne Slot weicht aus | 5.5 | `core/tests/slots.rs` | OFFEN |
 | FR-064 | Geschäftsmodelle der Airlines mit eigenen Kennzahlen und Wünschen (2026-10-29) | S5 | UC-004 | Muss | Billigflieger, Netzcarrier, Regional, Fracht als Daten; zwei Modelle verlangen messbar verschiedene Flughäfen | 3.6 | `core/tests/airline_models.rs` | OFFEN |
@@ -197,7 +194,7 @@ Spalte „Fahrplan-Schritt": Schritt-ID aus `docs/fahrplan.md`. Spalte „Test":
 | ID | Anforderung | Säule | Anwendungsfall | Priorität | Prüfbare Akzeptanz | Fahrplan-Schritt | Test (ab Klasse G) | Status |
 |---|---|---|---|---|---|---|---|---|
 | FR-032 | Turnaround: Betankung, Catering, Reinigung, Enteisung, Pushback, Fahrzeuge | B, S3 | UC-007 | Muss | Bodenzeit ergibt sich aus den Abfertigungsschritten; Beiladefracht verlängert sie | 3.5, 5.5 | `core/tests/turnaround.rs` | OFFEN |
-| FR-033 | Notfälle und Wetter | S4 | UC-009 | Muss | Notfall mit Einsatzfahrzeugen; Wetter verändert Kapazität von Bahn und Vorfeld | 5.6 | `core/tests/emergencies.rs` | OFFEN (Teil „Hangars, Tiere“ VERWORFEN 2026-10-29, ADR-046) |
+| FR-033 | Notfälle, Wetter, Hangars und Tiere | S4 | UC-009 | Muss | Notfall mit Einsatzfahrzeugen; Wetter verändert Kapazität; Hangars und Tiermanagement sind im Funktionsabgleich abgedeckt | 5.6, 6.3 | `core/tests/emergencies.rs`, `core/tests/wildlife.rs` | OFFEN (Umfang durch ADR-047 wiederhergestellt) |
 | FR-034 | Störungen: Drohne, IT-Ausfall, Stromausfall | S4 | UC-009 | Muss | jede Störung senkt Kapazität messbar und endet | 5.6 | `core/tests/disruptions.rs` | OFFEN |
 | FR-062 | Betriebstag mit Störung als Szenario, bewertet wird die Erholung (2026-10-29) | S4 | UC-009 | Muss | Szenario mit Störung am Morgen; Kennzahl „Verspätungsminuten bis Tagesende“ | 5.6 | `core/tests/recovery_day.rs` | OFFEN |
 
@@ -207,7 +204,7 @@ Spalte „Fahrplan-Schritt": Schritt-ID aus `docs/fahrplan.md`. Spalte „Test":
 |---|---|---|---|---|---|---|---|---|
 | FR-035 | Personal mit Verträgen, Schichten, Zufriedenheit | B | UC-008 | Muss | Schichten decken den Tagesrhythmus; Unterbesetzung zeigt sich als Ursache in der Diagnose | 5.6 | `core/tests/staff.rs` | OFFEN |
 | FR-036 | Wirtschaft: Einnahmen, Kosten, Kredite, Lieferanten | S5 | UC-008 | Muss | Einnahmen aus Gebühren und Läden, Kosten aus Personal und Bau; Kredit möglich | 3.6, 5.6 | `core/tests/economy.rs` | OFFEN |
-| FR-037 | Forschung, Ziele, Bewertungen, Post/E-Mail | – | UC-008 | – | – | – | – | VERWORFEN 2026-10-29 (ADR-046: Forschung trägt keine Säule; Bewertung über FR-063, Ziele über FR-062) |
+| FR-037 | Forschung, Ziele, Bewertungen, Post/E-Mail | B | UC-008 | Muss | Fortschritt, Ziele und Bewertungen sind im Szenario nachvollziehbar; Nachrichten erklären wichtige Ereignisse | 5.6 | `core/tests/research.rs`, `core/tests/goals.rs` | OFFEN (durch ADR-047 wiederhergestellt) |
 | FR-038 | Messbare Zusagen mit Bonus und Abschlag gegenüber Airlines | S5 | UC-004, UC-008 | Muss | Zusage aus dem Vertrag (FR-030) gemessen; Bonus oder Abschlag gebucht und erklärt | 3.6, 5.6 | `core/tests/service_levels.rs` | OFFEN |
 | FR-039 | Große Tabellen-Panels (Flüge, Personal, Finanzen) bleiben bei Großflughafen flüssig | G | UC-010 | Muss | 10.000 Zeilen sortieren/filtern ohne spürbare Verzögerung (< 100 ms) | 1.4, 3.6, 5.6 | `app/tables.bench.ts` | OFFEN |
 | FR-063 | Kennzahlen statt Sterne: Pünktlichkeit, Wartezeit, Umsteigequote, Gepäck-Fehlleitungen (2026-10-29) | S5, S2 | UC-008, UC-011 | Muss | Kennzahlen je Airline und Flughafen; Airlines entscheiden danach | 3.6 | `core/tests/kpis.rs` | OFFEN |
@@ -226,9 +223,9 @@ Spalte „Fahrplan-Schritt": Schritt-ID aus `docs/fahrplan.md`. Spalte „Test":
 | FR-043 | Erklärbare Wegfindungsprobleme | S2 | UC-011 | Muss | Bei fehlendem Weg wird Ursache angezeigt (Zone, Verbindung, Station) | 3.3 | `core/tests/path_diagnostics.rs` | OFFEN |
 | FR-044 | Inhalte als Datenpakete; Mods plattformneutral aktivierbar | B | UC-015 | Muss | Airline, Flugzeugtyp, Objekt aus Mod-Ordner im Spiel, ohne Store-Workshop | 2.4, 3.6, 6.1 | `core/tests/datapacks.rs`, `e2e/smoke.spec.ts` | OFFEN (Objekt aus dem Mod-Ordner seit 2.4, 2026-10-18; Airline und Flugzeugtyp 3.6; Mod-Verwaltung 6.1) |
 | FR-045 | Lauffähig auf Windows, Linux, macOS; Download von GitHub | B | UC-017 | Muss | CI baut und startet auf allen drei Plattformen; Release-Artefakte je Plattform | 1.6, 2.1, 7.2 | `e2e/smoke.spec.ts` in `.github/workflows/ci.yml` und `release.yml` (seit 2.1, x64 bzw. macOS arm64) | OFFEN (arm64 für Windows/Linux und v1.0.0-Builds in 7.2) |
-| FR-047 | Musik, Geräusche, Atmosphäre | B | UC-005 | Soll | freie Bibliotheken; Durchsagen und Stimmengewirr | 6.2 | `app/audio.test.ts` | OFFEN |
+| FR-047 | Musik, Geräusche, Atmosphäre | B | UC-005 | Soll | jeder eingebundene Audioinhalt hat eine Herkunfts- und Rechteangabe; Durchsagen und Stimmengewirr | 6.2 | `app/audio.test.ts` | OFFEN |
 | FR-049 | Intro-/Menü-Video | B | UC-001 | Kann | – | 6.2 | – | OFFEN |
-| FR-050 | Grafiken als eigene SVG, im Build gerastert | B | UC-002 | Soll | ADR-008; keine Grafik anderer Spiele oder ihrer Mods | 2.10 | `scripts/assets.test.mjs`, `tools/assets` (cargo test), `e2e/smoke.spec.ts` | ERLEDIGT 2026-10-19 (ADR-033, ADR-034) |
+| FR-050 | Grafiken als eigene, KI-gestützt erstellte SVG, im Build gerastert | B | UC-002 | Soll | ADR-008 und ADR-047; eigene Designsprache, keine Grafik anderer Spiele oder ihrer Mods | 2.10 | `scripts/assets.test.mjs`, `tools/assets` (cargo test), `e2e/smoke.spec.ts` | ERLEDIGT 2026-10-19 (Pipeline); laufende Inhalte vor Einbindung prüfen |
 | FR-051 | Isometrische Sicht | B | UC-002 | Kann | spätere Ausbaustufe | – | – | OFFEN |
 
 **Regeln:**
@@ -237,7 +234,7 @@ Spalte „Fahrplan-Schritt": Schritt-ID aus `docs/fahrplan.md`. Spalte „Test":
 - Eine Muss-Anforderung ohne Fahrplan-Schritt ist ein Bug (Drift-Prüfung, CLAUDE.md Abschnitt 16).
 - Eine Muss-Anforderung zu streichen oder herabzustufen ist ein Descope: Status `VERWORFEN` mit ADR (CLAUDE.md Abschnitt 6, „Keine Verschiebung ohne Landeplatz").
 - Neue Anforderungen während des Projekts bekommen Datum und Quelle (z. B. „Live-Test 2026-06-20").
-- Jede Spielfunktion nennt ihre Säule (Regel-010).
+- Jede Spielfunktion nennt ihre Referenzen aus Inventar und/oder Modernisierung (Regel-004); historische Säulenwerte sind keine Zulassungsbedingung.
 
 <!-- ANCHOR:nicht-funktionale-anforderungen -->
 ## 6. Nicht-funktionale Anforderungen

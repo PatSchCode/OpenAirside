@@ -1,4 +1,6 @@
-# Vision 2: OpenAirside
+# Vision 2: OpenAirside (historisch)
+
+> **Historischer Stand:** Dieses Dokument beschreibt den durch ADR-046 beschlossenen Pivot vom 2026-10-29. ADR-047 hat ihn am 2026-11-04 als verbindliche Produktentscheidung abgelöst. Die aktuelle Vision steht in `docs/vision.md`; die hier beschriebenen Ideen bleiben nur als einzeln zu prüfende Kandidaten erhalten.
 
 <!-- Eingangs-Dokument nach dem Vision-Pivot vom 2026-10-29 (ADR-046). Ersetzt `docs/vision.md`,
      die als historisches Dokument unverändert bleibt. Abgeleitet aus

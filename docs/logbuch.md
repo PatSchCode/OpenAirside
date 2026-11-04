@@ -24,6 +24,28 @@ Phase 1 abgeschlossen (ADR-016), Detail-Einträge in `docs/archiv/logbuch-phase-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – ADR-047 Produktvision wiederhergestellt
+
+- **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
+- **Bearbeitet:** ADR-046 als überholt gekennzeichnet, ADR-047 angelegt und die davon abhängigen Leitdokumente (Vision, Kontext, Anforderungen, Fahrplan, Referenzdokumente, Entscheidungen, README) konsistent ausgerichtet.
+- **Erreicht:** Die umfassende Flughafenmanagementsimulation ist wieder verbindliche Vision. Inventar und Modernisierung sind wieder Referenzen nach Regel-004. Grafiken, Audio und rechtliche Eigenständigkeit sind präzisiert; Rust-Kern, TypeScript/React, PixiJS, Datenpakete, Spielstände, Tests, Benchmarks und vorhandene Mechaniken bleiben ohne Rückbau erhalten.
+- **Offen geblieben:** Priorisierung der ADR-046-Ergänzungen im Funktionsabgleich 6.3; Audioanbieter und konkrete Rechteprüfung erst vor Audioeinbindung; Vorlage für 3.2 mit konkreten Referenz-IDs.
+- **Nächster Schritt:** 3.2-Vorlage gegen `docs/vision.md`, `docs/funktionsinventar.md` und `docs/modernisierung.md` erstellen und zur Freigabe vorlegen.
+- **Modell-Bilanz:** GPT-5/Codex; keine Delegation.
+- **Kontextgröße:** nicht feststellbar.
+- **Ablaufdaten-Prüfung:** keine fällige Änderung.
+- **README und Drift:** README, ADR-Übersicht, Regeln, Fahrplan, Anforderungen, Referenzdokumente und Projektkontext gegengeprüft; keine Architektur- oder Quellcodeänderung.
+- **Nachweise:** `git diff --check` grün; `pre-commit 4.7.0` für alle geänderten Dateien grün (einschließlich PyMarkdown). Der zunächst nicht auflösbare Aufruf `pre-commit` (`command not found`) wurde mit der vorhandenen isolierten pipx-Installation geprüft; keine Hook-Umgehung.
+- **Commit-Status:** Commit `efd94b3` (`docs: restore comprehensive airport vision`), Branch `docs/adr-047-rueckkehr-zur-urspruenglichen-vision`, Pull Request #44.
+
+### 2026-11-04 (Europe/Berlin) – [SESSIONSTART] – ADR-047 Rückkehr zur ursprünglichen Produktvision
+
+- **Letzter Stand:** ADR-046 ist noch als aktive strategische Produktentscheidung dokumentiert; die technische Basis und die bereits umgesetzten Funktionen bleiben erhalten.
+- **Geplant für diese Session:** Nach ausdrücklicher Freigabe des Projektinhabers ADR-047 und die davon betroffenen Projektdokumente konsistent auf die ursprüngliche Vision einer umfassenden, eigenständig implementierten Flughafenmanagementsimulation ausrichten.
+- **Vorabprüfung:** Pflichtlektüre durchlaufen: `project-context.md` vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan aktueller Stand und Phase 3; Architektur Abschnitte 1, 2 und 9; Decisions Teil A und C; aktive Blocker: keine; Requirements-Übersicht (Klasse G). ADR-046, ADR-006 und die vorangehende Vision wurden vollständig geprüft.
+- **Arbeitsgrenze:** Ausschließlich Dokumentation und Planung. Kein Quellcode-, Architektur-, Asset- oder Git-Historien-Rückbau.
+- **Modell:** GPT-5/Codex laut Systemkontext.
+
 ### 2026-11-04 (Europe/Berlin) – [SESSIONENDE] – Q.8 CI-Push-Fallback
 
 - **Session-Dauer:** kurz; genaue Laufzeit nicht verfügbar.
