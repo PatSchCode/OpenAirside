@@ -11,6 +11,7 @@
 import type { CatalogEntry } from "../src/generated/CatalogEntry.js";
 import type { PackReport } from "../src/generated/PackReport.js";
 import type { TickStats } from "../src/generated/TickStats.js";
+import type { TerminalStationPoint } from "../src/generated/TerminalStationPoint.js";
 import { BuildPanel } from "./build-panel.js";
 import { BuildTool } from "./build-tool.js";
 import { type ClientHandlers, CoreClient } from "./core-client.js";
@@ -34,6 +35,7 @@ const savesBox = document.getElementById("saves");
 const noticeBox = document.getElementById("notice");
 const settingsBox = document.getElementById("settings");
 const settingsButton = document.getElementById("settings-button");
+const terminalBox = document.getElementById("terminal");
 
 function write(line: string): void {
   if (log === null) return;
@@ -78,6 +80,30 @@ async function start(): Promise<void> {
   let catalogFor = 0;
   let catalogQuery = 0;
   let buildPanel: BuildPanel | undefined;
+  let terminalQuery = 0;
+
+  const showTerminal = (stations: readonly TerminalStationPoint[]): void => {
+    if (terminalBox === null) return;
+    if (stations.length === 0) {
+      terminalBox.hidden = true;
+      return;
+    }
+    terminalBox.hidden = false;
+    const bottleneck = stations.reduce((worst, station) =>
+      station.queued > worst.queued ? station : worst,
+    );
+    const rows = stations.map(
+      (station) =>
+        `${station.kind}: queue ${String(station.queued)}, wait ${String(station.waitingTicks)} ticks, served ${String(station.served)}/${String(station.throughput)}`,
+    );
+    terminalBox.textContent = [
+      "Terminal flow",
+      ...rows,
+      bottleneck.queued > 0
+        ? `Lesson 1: ${bottleneck.kind} is the bottleneck. Increase its throughput to shorten the queue.`
+        : "Lesson 1: no station is currently congested.",
+    ].join("\n");
+  };
 
   // Build tool (step 3.1b): pointer gestures become build commands with a provisional drawing (S-2).
   const tool = new BuildTool({
@@ -117,6 +143,7 @@ async function start(): Promise<void> {
       write(`core ${core.name} ${core.version}, session ${String(session)}`);
       catalogSession = 0;
       catalogQuery = 0;
+      terminalQuery = 0;
       checkBasePack();
       // The core is ready: texts of all loaded packs (S-6 `lang.texts`).
       reloadLanguage();
@@ -129,6 +156,7 @@ async function start(): Promise<void> {
       write(`session ${String(session)} at tick ${String(at)}`);
       catalogSession = 0;
       catalogQuery = 0;
+      terminalQuery = 0;
       tool.reset();
       series?.onSession(session);
     },
@@ -172,6 +200,7 @@ async function start(): Promise<void> {
         catalogFor = frame.header.session;
         catalogQuery = client?.query({ kind: "catalog" }) ?? 0;
       }
+      if (terminalQuery === 0) terminalQuery = client?.query({ kind: "terminalStations" }) ?? 0;
       const now = performance.now();
       const rtt = now - requestedAt;
       perf.frame(now, rtt);
@@ -189,6 +218,11 @@ async function start(): Promise<void> {
           catalogSession = catalogFor;
           setCatalog(answer.catalog);
         }
+        return;
+      }
+      if (id === terminalQuery) {
+        terminalQuery = 0;
+        if (answer.terminalStations !== undefined) showTerminal(answer.terminalStations);
         return;
       }
       if (answer.dictionary !== undefined) {

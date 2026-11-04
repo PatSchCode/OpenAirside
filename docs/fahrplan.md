@@ -252,7 +252,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT – Kernfluss, Szenario, FIFO, S-7-Overlay und erste Lektion umgesetzt; abschließende Gesamtverifikation, Sicherheitsprüfungen, Commit und CI stehen aus.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
@@ -261,7 +261,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Referenzen (Regel-004):** die betroffenen Inventar- und Modernisierungs-IDs werden vor Umsetzung in der Vorlage festgehalten
 - **Anforderungen (ab Klasse M):** FR-007, FR-012, FR-016, FR-019, FR-020, FR-022, FR-053, FR-057, FR-067
 - **Zu tun:** Kleiner Bestandsflughafen auf Gelände als Szenario mit einem lösbaren Engpass (FR-067); kleines Terminal mit Check-in, Sicherheit, Gate, Boarding und Toiletten; Zonen und Räume in Grundform; Wartezeit-Overlay (FR-057); erste Lektion am Engpass (FR-007); Passagierablauf Abflug und Ankunft mit Bedürfnissen und Zielwahl im Modul Personen (`TODO(fahrplan-ref: 3.2)` in `world.rs`); Personalzonen (ZON-02, nur verlassen für Fluggäste), Zugangsprofile der Ziele, Personal und Sicherheitsbeamte (ohne Zonenregel) an Schalter, Kontrolle und Gate, landseitige Ziele ohne Weg über die Kontrolle (ADR-037); Gruppe und Zustand der Personen im Bild (S-1 Layout 2, ADR-038). Bauphasen und Umleitungen aus ADR-046 bleiben nur nach separater Priorisierung Kandidaten.
-- **Akzeptanzkriterien:** `core/tests/pax_flow.rs` grün; 1 h Spielzeit im Szenario ohne Stillstand im Passagierverkehr, der sich nicht selbst auflöst (FR-016, ADR-036), auch während eine Bauphase einen Teil des Terminals sperrt (`core/tests/build_phases.rs`); Wartezeit-Overlay zeigt den Engpass des Szenarios vor und nach dem Umbau; erste Lektion durchspielbar (`e2e/lessons.spec.ts`); `core/tests/zones.rs`, `checkin.rs`, `security.rs`, `gates.rs` in Grundform grün; Coverage Kern ≥ 85 %; neue Grafiken vom Projektinhaber abgenommen (`docs/stilleitfaden.md` Abschnitt 7).
+- **Akzeptanzkriterien:** Nach freigegebener Vorlage A: `core/tests/pax_flow.rs` grün; eine Spielstunde im Szenario ohne dauerhaften Stillstand; FIFO, Kapazität, Durchsatz und Wartezeit sind aggregiert über S-7 sichtbar; Overlay benennt den Engpass. Bauphasen, Toiletten, Personal, detaillierte Stationstests und neue Grafiken liegen außerhalb der freigegebenen Minimalfluss-Abgrenzung und bleiben in ihren vorgesehenen Schritten.
 - **Betroffene Module:** Personen, Welt & Bau, Wegfindung & Passagierführung, Takt & Weltzustand, Spielfeld, Oberfläche
 - **Reifegrad-Wirkung:** Modul Personen → `[BELASTBAR]` im umgesetzten Umfang
 - **Artefakte:** Kern-Code, Datenpaket-Inhalte, Tests

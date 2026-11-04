@@ -14,6 +14,7 @@ import type { EventRecord } from "../src/generated/EventRecord.js";
 import type { FrameFilter } from "../src/generated/FrameFilter.js";
 import type { Query } from "../src/generated/Query.js";
 import type { TickStats } from "../src/generated/TickStats.js";
+import type { TerminalStationPoint } from "../src/generated/TerminalStationPoint.js";
 import { type Frame, readFrame } from "./frame-reader.js";
 
 /** Protocol version of this renderer (core/src/port.rs `PROTOCOL`). */
@@ -51,6 +52,8 @@ export interface QueryAnswer {
   readonly detail?: Detail;
   /** Entries of the session in their fixed order; the index is the number S-1 uses. */
   readonly catalog?: readonly CatalogEntry[];
+  /** Station telemetry for the terminal overlay. */
+  readonly terminalStations?: readonly TerminalStationPoint[];
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -97,6 +100,23 @@ function eventsOf(value: unknown): EventRecord[] | undefined {
     return undefined;
   }
   return value.every(isEventRecord) ? value : undefined;
+}
+
+function isTerminalStations(value: unknown): value is TerminalStationPoint[] {
+  return (
+    Array.isArray(value) &&
+    value.every(
+      (station) =>
+        isRecord(station) &&
+        typeof station.kind === "string" &&
+        isCount(station.target) &&
+        isCount(station.queued) &&
+        isCount(station.served) &&
+        isCount(station.waitingTicks) &&
+        isCount(station.capacity) &&
+        isCount(station.throughput),
+    )
+  );
 }
 
 /** Protocol state of the renderer side of the port. */
@@ -243,7 +263,9 @@ export class CoreClient {
                   ? { detail: data.detail as unknown as Detail }
                   : Array.isArray(data.catalog) && data.catalog.every(isRecord)
                     ? { catalog: data.catalog as unknown as CatalogEntry[] }
-                    : {};
+                    : isTerminalStations(data.terminalStations)
+                      ? { terminalStations: data.terminalStations }
+                      : {};
           this.handlers.queryResult(data.id, answer);
           return;
         }

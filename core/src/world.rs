@@ -12,7 +12,7 @@ use rayon::ThreadPool;
 use crate::adoption::AdoptionMode;
 use crate::build::grid::{AreaKind, Cell, GridError, Zone};
 use crate::build::objects::BuildRefusal;
-use crate::build::target::Target;
+use crate::build::target::{Target, TerminalStationKind};
 use crate::build::{Blocks, Build, BuildSnapshot, SavedBuild};
 use crate::geometry::{CellPos, CellRect, MapSize, Rotation};
 use crate::hash::StateHasher;
@@ -110,6 +110,121 @@ impl World {
         world.wayfinding.adopt_fields(Fields::compute(&input, 0));
         world.persons.resample_headings(world.wayfinding.fields());
         world
+    }
+
+    /// Compact terminal for the vertical slice of step 3.2. Departing
+    /// passengers use check-in, security and a gate; arriving passengers
+    /// start at the gate and leave through the exit station.
+    #[must_use]
+    pub fn small_terminal(map: MapSize, persons: u32, seed: u64) -> Option<Self> {
+        const WIDTH: u16 = 32;
+        const HEIGHT: u16 = 16;
+        if map.width < WIDTH || map.height < HEIGHT {
+            return None;
+        }
+        let (x0, y0) = ((map.width - WIDTH) / 2, (map.height - HEIGHT) / 2);
+        let mut world = Self::new(map);
+        for x in 0..WIDTH {
+            let zone = match x {
+                13 => Zone::Security,
+                14..=27 => Zone::Airside,
+                28 => Zone::Exit,
+                _ => Zone::Landside,
+            };
+            world
+                .build
+                .grid_mut()
+                .fill(
+                    CellRect {
+                        floor: 0,
+                        x0: x0 + x,
+                        y0,
+                        x1: x0 + x + 1,
+                        y1: y0 + HEIGHT,
+                    },
+                    Cell::floor(zone),
+                )
+                .ok()?;
+        }
+        let pos = |x, y| CellPos {
+            x: x0 + x,
+            y: y0 + y,
+            floor: 0,
+        };
+        let check_in = world
+            .build
+            .add_station(
+                TerminalStationKind::CheckIn,
+                vec![pos(10, 7)],
+                vec![pos(9, 7), pos(8, 7), pos(7, 7)],
+                16,
+                1,
+            )
+            .ok()?;
+        world
+            .build
+            .add_station(
+                TerminalStationKind::Security,
+                vec![pos(13, 7)],
+                vec![pos(12, 7), pos(11, 7)],
+                16,
+                2,
+            )
+            .ok()?;
+        let gate = world
+            .build
+            .add_station(
+                TerminalStationKind::Gate,
+                vec![pos(20, 7)],
+                vec![pos(19, 7), pos(18, 7)],
+                16,
+                3,
+            )
+            .ok()?;
+        world
+            .build
+            .add_station(
+                TerminalStationKind::Exit,
+                vec![pos(28, 7)],
+                vec![pos(27, 7), pos(26, 7)],
+                16,
+                2,
+            )
+            .ok()?;
+
+        let mut rng = SplitMix64(seed);
+        let departing_count = persons / 2 + persons % 2;
+        let departing: Vec<CellPos> = (0..departing_count)
+            .map(|_| {
+                pos(
+                    1,
+                    u16::try_from(rng.next() % u64::from(HEIGHT)).unwrap_or(0),
+                )
+            })
+            .collect();
+        let arriving: Vec<CellPos> = (0..(persons - departing_count))
+            .map(|_| {
+                pos(
+                    22,
+                    u16::try_from(rng.next() % u64::from(HEIGHT)).unwrap_or(0),
+                )
+            })
+            .collect();
+        world.persons.spawn_passengers(
+            &world.build,
+            &departing,
+            crate::persons::GROUP_DEPARTING,
+            check_in,
+            seed,
+        );
+        world.persons.spawn_passengers(
+            &world.build,
+            &arriving,
+            crate::persons::GROUP_ARRIVING,
+            gate,
+            seed ^ 0xa771_0e00,
+        );
+        Some(world)
     }
 
     /// Size of the map.

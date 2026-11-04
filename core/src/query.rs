@@ -34,7 +34,7 @@ use std::cmp::Ordering;
 use serde::{Deserialize, Serialize};
 
 use crate::datapack::model::Placement;
-use crate::frame::Snapshot;
+use crate::frame::{Snapshot, TerminalStationPoint};
 use crate::geometry::Handle;
 
 /// Version of the table layout.
@@ -197,6 +197,9 @@ pub enum Query {
     /// All entries of the loaded packs in the session (ab 3.1, ADR-032,
     /// L-2). The catalog changes only with the session.
     Catalog {},
+    /// Queue, capacity and latest service figures for terminal stations.
+    /// This is an additive S-7 result for the step 3.2 terminal overlay.
+    TerminalStations {},
 }
 
 /// An entry of the catalog of the session. The entries come in a fixed
@@ -270,6 +273,8 @@ pub enum Answer {
     Detail(Detail),
     /// The catalog of the session.
     Catalog(Vec<CatalogEntry>),
+    /// Current station telemetry of the captured frame.
+    TerminalStations(Vec<TerminalStationPoint>),
 }
 
 /// Error codes of S-7.
@@ -407,6 +412,9 @@ pub fn answer(query: &Query, snapshot: &Snapshot) -> Result<Answer, &'static str
                     replaced_by: snapshot.content().replaced_by(&o.id).map(str::to_owned),
                 })
                 .collect(),
+        )),
+        Query::TerminalStations {} => Ok(Answer::TerminalStations(
+            snapshot.terminal_stations().to_vec(),
         )),
         Query::Detail { about } => {
             let index = usize::try_from(about.index).map_err(|_| code::STALE_HANDLE)?;
@@ -554,6 +562,27 @@ mod tests {
             Ok(Answer::Table(buf)) => buf,
             other => panic!("no table: {other:?}"),
         }
+    }
+
+    #[test]
+    fn terminal_stations_report_queue_and_capacity_from_the_same_snapshot() {
+        let world = World::small_terminal(MapSize::new(64, 64).unwrap(), 8, 3).unwrap();
+        let mut snap = Snapshot::default();
+        snap.capture(4, 50, &world, &std::sync::Arc::default());
+        let Ok(Answer::TerminalStations(stations)) = answer(&Query::TerminalStations {}, &snap)
+        else {
+            panic!("no terminal stations")
+        };
+        assert_eq!(stations.len(), 4);
+        assert_eq!(
+            stations[0].throughput, 1,
+            "check-in is the initial bottleneck"
+        );
+        assert!(
+            stations
+                .iter()
+                .all(|station| station.queued == 0 && station.served == 0)
+        );
     }
 
     fn f32_column(buf: &[u8], offset: usize, rows: usize) -> Vec<f32> {

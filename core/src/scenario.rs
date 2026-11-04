@@ -22,6 +22,10 @@ use crate::world::World;
 /// every 64 cells and needs room for the hall, the security line and the
 /// airside area.
 pub const MIN_EDGE: u16 = 256;
+/// Smallest map that fits the step 3.2 terminal scenario.
+pub const SMALL_TERMINAL_WIDTH: u16 = 32;
+/// Height of the step 3.2 terminal scenario.
+pub const SMALL_TERMINAL_HEIGHT: u16 = 16;
 
 /// Number of check-in groups (airlines).
 const AIRLINES: usize = 8;
@@ -290,6 +294,7 @@ pub fn fits_reference_terminal(map: MapSize) -> bool {
 pub fn scenario_world(scenario: Scenario, map: MapSize, persons: u32, seed: u64) -> Option<World> {
     match scenario {
         Scenario::OpenHall => Some(World::open_hall(map, persons, seed)),
+        Scenario::SmallTerminal => World::small_terminal(map, persons, seed),
         Scenario::ReferenceTerminal => {
             reference_terminal(map, REFERENCE_EDGE, REFERENCE_GATES, persons, seed)
         }
@@ -586,6 +591,9 @@ pub fn reference_terminal(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::persons::{
+        GROUP_ARRIVING, GROUP_DEPARTING, PASSENGER_COMPLETE, PASSENGER_TRAVELLING,
+    };
     use crate::wayfinding::flowfield::FieldSet;
 
     fn map() -> MapSize {
@@ -605,6 +613,49 @@ mod tests {
         assert!(reference_terminal(map(), 513, 17, 0, 1).is_none());
         assert!(reference_terminal(MapSize::new(512, 300).unwrap(), 301, 17, 0, 1).is_none());
         assert!(reference_terminal(map(), 256, 17, 0, 1).is_some());
+    }
+
+    #[test]
+    fn the_small_terminal_completes_departures_and_arrivals() {
+        let pool = pool(2);
+        let map = MapSize::new(64, 64).unwrap();
+        let mut world = scenario_world(Scenario::SmallTerminal, map, 20, 7).unwrap();
+        assert_eq!(world.build().stations().len(), 4);
+        assert_eq!(world.build().targets().len(), 4);
+        world.rebuild_fields_now(&pool);
+        for tick in 0..600 {
+            world.step(&pool, &pool, tick, true);
+        }
+        let mut departing = (0, 0);
+        let mut arriving = (0, 0);
+        world.persons().visit(|person| match person.group {
+            GROUP_DEPARTING => {
+                departing.0 += 1;
+                departing.1 += u32::from(person.state == PASSENGER_COMPLETE);
+            }
+            GROUP_ARRIVING => {
+                arriving.0 += 1;
+                arriving.1 += u32::from(person.state == PASSENGER_COMPLETE);
+            }
+            _ => {}
+        });
+        assert_eq!(departing, (10, 10));
+        assert_eq!(arriving, (10, 10));
+        assert!(
+            !world.persons().has_active(),
+            "completed passengers leave the active set"
+        );
+        assert!(
+            world
+                .persons()
+                .queued_for(world.build().stations()[0].target)
+                == 0
+        );
+        let mut travelling = 0;
+        world.persons().visit(|person| {
+            travelling += u32::from(person.state == PASSENGER_TRAVELLING);
+        });
+        assert_eq!(travelling, 0);
     }
 
     #[test]

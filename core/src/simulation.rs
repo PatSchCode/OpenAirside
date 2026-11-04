@@ -674,10 +674,13 @@ impl Simulation {
                 .set_walls(*area, *wall)
                 .map_err(|_| rejection(code::OUT_OF_MAP)),
             DebugAction::LoadScenario { scenario, persons } => {
-                if matches!(
+                if (matches!(
                     scenario,
                     Scenario::ReferenceTerminal | Scenario::FurnishedTerminal
-                ) && !crate::scenario::fits_reference_terminal(self.config.map)
+                ) && !crate::scenario::fits_reference_terminal(self.config.map))
+                    || (matches!(scenario, Scenario::SmallTerminal)
+                        && (self.config.map.width < crate::scenario::SMALL_TERMINAL_WIDTH
+                            || self.config.map.height < crate::scenario::SMALL_TERMINAL_HEIGHT))
                 {
                     return Err(rejection(code::OUT_OF_MAP));
                 }

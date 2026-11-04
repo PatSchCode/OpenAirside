@@ -49,4 +49,5 @@ export type Query =
        */
       about: Handle;
     }
-  | { kind: "catalog" };
+  | { kind: "catalog" }
+  | { kind: "terminalStations" };

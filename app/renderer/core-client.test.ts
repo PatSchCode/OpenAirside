@@ -233,6 +233,19 @@ describe("CoreClient", () => {
     ];
     client.handle({ type: "queryResult", session: 1, id: 6, catalog });
     expect(handlers.queryResult).toHaveBeenLastCalledWith(6, { catalog });
+    const terminalStations = [
+      {
+        kind: "checkIn",
+        target: 0,
+        queued: 3,
+        served: 1,
+        waitingTicks: 5,
+        capacity: 16,
+        throughput: 1,
+      },
+    ];
+    client.handle({ type: "queryResult", session: 1, id: 7, terminalStations });
+    expect(handlers.queryResult).toHaveBeenLastCalledWith(7, { terminalStations });
     client.handle({ type: "queryResult", session: 1, id: 7, catalog: [1] });
     expect(handlers.queryResult).toHaveBeenLastCalledWith(7, {});
     client.handle({ type: "queryError", session: 1, id: 3, code: "unknownTable", textKey: "x" });

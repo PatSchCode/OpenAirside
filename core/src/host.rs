@@ -176,23 +176,29 @@ impl PortHost {
     /// (S-7 "Konsistenz"), outside the simulation step.
     fn query(&self, id: u32, query: &Query) -> Outgoing {
         let session = self.announced;
-        let result = |dictionary, detail, catalog| ServerMessage::QueryResult {
+        let result = |dictionary, detail, catalog, terminal_stations| ServerMessage::QueryResult {
             session,
             id,
             dictionary,
             detail,
             catalog,
+            terminal_stations,
         };
         match answer(query, &self.front) {
             Ok(Answer::Table(buf)) => Outgoing::Binary {
-                message: result(None, None, None),
+                message: result(None, None, None, None),
                 buf,
             },
             Ok(Answer::Dictionary(dictionary)) => {
-                Outgoing::Message(result(Some(dictionary), None, None))
+                Outgoing::Message(result(Some(dictionary), None, None, None))
             }
-            Ok(Answer::Detail(detail)) => Outgoing::Message(result(None, Some(detail), None)),
-            Ok(Answer::Catalog(catalog)) => Outgoing::Message(result(None, None, Some(catalog))),
+            Ok(Answer::Detail(detail)) => Outgoing::Message(result(None, Some(detail), None, None)),
+            Ok(Answer::Catalog(catalog)) => {
+                Outgoing::Message(result(None, None, Some(catalog), None))
+            }
+            Ok(Answer::TerminalStations(stations)) => {
+                Outgoing::Message(result(None, None, None, Some(stations)))
+            }
             Err(code) => Outgoing::Message(ServerMessage::QueryError {
                 session,
                 id,

@@ -4,6 +4,7 @@ import type { CoreInfo } from "./CoreInfo.js";
 import type { Detail } from "./Detail.js";
 import type { Dictionary } from "./Dictionary.js";
 import type { EventRecord } from "./EventRecord.js";
+import type { TerminalStationPoint } from "./TerminalStationPoint.js";
 import type { TickStats } from "./TickStats.js";
 
 /**
@@ -91,6 +92,10 @@ export type ServerMessage =
        * Answer of a catalog query.
        */
       catalog?: CatalogEntry[];
+      /**
+       * Answer of a terminal-stations query.
+       */
+      terminalStations?: TerminalStationPoint[];
     }
   | {
       type: "coreStats";

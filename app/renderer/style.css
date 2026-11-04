@@ -171,6 +171,24 @@ body {
   display: none;
 }
 
+#terminal {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  max-width: 300px;
+  white-space: pre-line;
+  font:
+    13px/1.4 system-ui,
+    sans-serif;
+  background: rgb(17 19 23 / 92%);
+  border-radius: 4px;
+  padding: 8px;
+}
+
+#terminal[hidden] {
+  display: none;
+}
+
 #build button {
   margin: 0 3px 4px;
   background: #2a3038;

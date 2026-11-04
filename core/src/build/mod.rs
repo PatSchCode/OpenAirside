@@ -28,7 +28,7 @@ use grid::{BLOCK_CELLS, Block, Cell, Grid, GridError, GridSnapshot, WALL, floor_
 use network::{Network, NetworkKind, NodeId};
 use objects::{MAX_OBJECTS, MAX_TYPES, ObjectContext, Occupancy, PlacedObject, TypeTable};
 use orders::{DeliveryPoint, MAX_DELIVERY_POINTS, MAX_ORDERS, Order, OrderContext};
-use target::{LoadKind, MAX_TARGETS, Target};
+use target::{LoadKind, MAX_TARGETS, Target, TerminalStation, TerminalStationKind};
 
 /// Why a target could not be added.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -43,6 +43,8 @@ pub enum TargetError {
 pub struct Build {
     grid: Grid,
     targets: Vec<Target>,
+    /// Terminal services and their passenger targets (ADR-048).
+    stations: Vec<TerminalStation>,
     networks: [Network; 3],
     /// Single objects (ADR-042), in the order of their handles.
     objects: Pool<PlacedObject>,
@@ -72,6 +74,7 @@ impl Build {
         Self {
             grid: Grid::new(map),
             targets: Vec::new(),
+            stations: Vec::new(),
             networks: NetworkKind::ALL.map(Network::new),
             objects: Pool::default(),
             occupancy: Occupancy::default(),
@@ -110,6 +113,12 @@ impl Build {
         &self.targets
     }
 
+    /// Terminal services in their deterministic scenario order.
+    #[must_use]
+    pub fn stations(&self) -> &[TerminalStation] {
+        &self.stations
+    }
+
     /// Adds a target and returns its field number. The field exists after
     /// the next recomputation.
     ///
@@ -125,6 +134,26 @@ impl Build {
         }
         self.targets.push(target);
         Ok(u8::try_from(self.targets.len() - 1).unwrap_or(u8::MAX))
+    }
+
+    /// Adds a terminal station and its passenger target.
+    pub fn add_station(
+        &mut self,
+        kind: TerminalStationKind,
+        cells: Vec<CellPos>,
+        queue_cells: Vec<CellPos>,
+        capacity: u16,
+        throughput: u16,
+    ) -> Result<u8, TargetError> {
+        let target = self.add_target(Target::passengers(cells))?;
+        self.stations.push(TerminalStation {
+            kind,
+            target,
+            queue_cells,
+            capacity,
+            throughput,
+        });
+        Ok(target)
     }
 
     /// Network of the given kind.
@@ -194,6 +223,16 @@ impl Build {
                 hasher.bytes(&c.floor.to_le_bytes());
             }
         }
+        for station in &self.stations {
+            hasher.bytes(&[station.kind as u8, station.target]);
+            hasher.u32(u32::from(station.capacity));
+            hasher.u32(u32::from(station.throughput));
+            for cell in &station.queue_cells {
+                hasher.u32(u32::from(cell.x));
+                hasher.u32(u32::from(cell.y));
+                hasher.bytes(&cell.floor.to_le_bytes());
+            }
+        }
         for network in &self.networks {
             network.hash_into(hasher);
         }
@@ -217,6 +256,7 @@ impl Build {
             grid: self.grid.snapshot(),
             grid_version: self.grid.version(),
             targets: self.targets.clone(),
+            stations: self.stations.clone(),
             networks: self.networks.to_vec(),
             types: self.types.ids().to_vec(),
             objects: self.objects.saved(),
@@ -266,6 +306,14 @@ impl Build {
         {
             return Err(invalid("targetCells"));
         }
+        if saved.stations.iter().any(|s| {
+            usize::from(s.target) >= targets.len()
+                || s.capacity == 0
+                || s.throughput == 0
+                || !s.queue_cells.iter().all(|&cell| on_map(cell))
+        }) {
+            return Err(invalid("stations"));
+        }
         if saved.networks.len() != NetworkKind::ALL.len() {
             return Err(invalid("networks"));
         }
@@ -290,6 +338,7 @@ impl Build {
         Ok(Self {
             grid,
             targets,
+            stations: saved.stations,
             networks,
             objects,
             occupancy,
@@ -409,6 +458,7 @@ pub struct BuildSnapshot {
     grid: GridSnapshot,
     grid_version: u32,
     targets: Vec<Target>,
+    stations: Vec<TerminalStation>,
     networks: Vec<Network>,
     types: Vec<String>,
     objects: Vec<PlacedObject>,
@@ -430,6 +480,7 @@ impl BuildSnapshot {
             grid: blocks.table(&self.grid),
             grid_version: self.grid_version,
             targets: saved_targets(&self.targets),
+            stations: self.stations.clone(),
             networks: self
                 .networks
                 .iter()
@@ -455,6 +506,7 @@ pub(crate) struct SavedBuild {
     pub grid: Vec<u32>,
     pub grid_version: u32,
     pub targets: Vec<SavedTarget>,
+    pub stations: Vec<TerminalStation>,
     pub networks: Vec<SavedNetwork>,
     /// Full ids of the object types that cells and objects refer to; a
     /// type number n is entry n − 1.
@@ -654,6 +706,27 @@ mod tests {
             Err(TargetError::TooMany)
         );
         assert_eq!(build.targets().len(), MAX_TARGETS);
+    }
+
+    #[test]
+    fn terminal_station_owns_a_passenger_target_and_changes_the_hash() {
+        let mut build = Build::new(MapSize::new(64, 64).unwrap());
+        let before = hash(&build);
+        assert_eq!(
+            build.add_station(
+                TerminalStationKind::CheckIn,
+                vec![pos(10, 10)],
+                vec![pos(9, 10), pos(8, 10)],
+                2,
+                4,
+            ),
+            Ok(0)
+        );
+        assert_ne!(hash(&build), before);
+        assert_eq!(build.targets().len(), 1);
+        assert_eq!(build.stations().len(), 1);
+        assert_eq!(build.stations()[0].target, 0);
+        assert_eq!(build.stations()[0].queue_cells.len(), 2);
     }
 
     #[test]
