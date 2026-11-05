@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-11-05 (ADR-051: Passagierkorrektur Option A nachgewiesen)
+- **Stand vom:** 2026-11-05 (ADR-052: S-8-Korrektur Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** Q.10-N2 `[IN ARBEIT]`; Paket A freigegeben und ADR-052 vor Code angelegt. N3 gemergt und nachgewiesen; 3.2 bleibt für seinen Abschlussabgleich offen.
-- **Nächster Schritt:** Q.10-N2 umsetzen und nachweisen; nach Korrektur auch den getrennten Port-Befund N5 klären, dann 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Aktiver Schritt:** keiner; Q.10-N2 auf `a95e47d` lokal, unabhängig und durch volle CI nachgewiesen. N3 gemergt; 3.2 bleibt wegen N5/Abschlussabgleich offen.
+- **Nächster Schritt:** Q.10-N5-Portübergabe prüfen und Korrektur entscheiden, dann 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-043 bis ADR-052; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
@@ -253,7 +253,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). K1–K4 durch Q.10-N3/ADR-051 korrigiert bzw. ausdrücklich aufgelöst; N2 und Abschlussabgleich vor 3.11 offen.
+- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). K1–K4 durch Q.10-N3/ADR-051 korrigiert bzw. ausdrücklich aufgelöst; N2/P1–P4 durch ADR-052 nachgewiesen korrigiert; N5 und Abschlussabgleich vor 3.11 offen.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
@@ -456,7 +456,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N2: S-8-Antwortprüfung und Fehlerzuordnung korrigieren
 
-- **Status:** `[IN ARBEIT]` – Paket A ausdrücklich freigegeben, ADR-052 vor Code; P1–P4 korrigieren und nachweisen. N5 bleibt getrennt.
+- **Status:** `[ERLEDIGT]` 2026-11-05 – Paket A nach ADR-052 auf `a95e47d` umgesetzt; lokale Gates/Hook, unabhängige Sicherheitsnachprüfung und vollständige Code-CI/Security grün. P1–P4 behoben; N5 bleibt getrennt.
 - **Frist:** 2026-11-12 für Entscheidung und Umsetzungsplanung.
 - **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit, danach Ausführung.
 - **Abhängigkeiten:** Prüfbericht `docs/research/q.10-methodik-abgleich.md`, vorhandener S-8-Vertrag.
@@ -467,6 +467,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Betroffene Module:** Plattform, Brücke; keine Behebung innerhalb Q.10-Dokumentationscommit.
 - **Vorlage/Nachweise:** [N2-Vorlage](research/q.10-n2-vorlage.md), [eingefrorene Gegenproben](research/q.10-n2-gegenproben.md). 61 Bestandsfälle grün; zehn Handler-/Parserproben mit vier grünen Kontrollen und sechs erwarteten roten Befundassertionen. Kein Fix oder Abschluss behauptet.
 - **Empfehlung:** A: P1–P4 innerhalb vorhandener Verträge korrigieren; Familie plus gelieferte gültige Anfrage-ID, unmittelbares `invalidAnswer`, vorhandene Sprach-Einzellimits. B: bewusst bis spätestens vor 3.2-Abschluss verschieben. Sicherheitsfreigabe und ADR vor Code; keine neue Beförderung.
+- **Abschlussnachweis:** [Umsetzung](research/q.10-n2-umsetzung.md): 509 Vitest-Tests, zwei Electron-E2E, global 81,41 % Lines, core-status/settings je 100 %. [CI 42062519917](https://github.com/PatSchCode/OpenAirside/actions/runs/42062519917) und [Security 42062519978](https://github.com/PatSchCode/OpenAirside/actions/runs/42062519978) auf `a95e47d` vollständig grün. PR #50 enthält die Korrektur; späteren Merge-/Main-Nachweis im Logbuch führen.
 
 #### Q.10-N3: Passagierzustand, Save/Load und beschlossenen 3.2-Umfang klären
 

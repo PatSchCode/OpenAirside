@@ -17,12 +17,21 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR #47 auf `b16167c` gemergt und hat grüne CI, bleibt für seinen Abschlussabgleich offen. Q.10 ist mit unabhängiger Prüfung und grüner CI erledigt. Q.10-N3 löst K1–K4 mit Option A/ADR-051 auf `9bba166` nachgewiesen auf. Nächster Schritt ist Q.10-N2 vor dem Abschlussabgleich von 3.2 und der Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
+Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR #47 auf `b16167c` gemergt und hat grüne CI, bleibt für seinen Abschlussabgleich offen. Q.10 ist mit unabhängiger Prüfung und grüner CI erledigt. Q.10-N3 löst K1–K4 mit Option A/ADR-051 auf `9bba166` nachgewiesen auf. Q.10-N2/P1–P4 ist nach ADR-052 auf `a95e47d` nachgewiesen korrigiert. Nächster Schritt ist Q.10-N5 vor dem Abschlussabgleich von 3.2 und der Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
 
 ---
 
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N2 Option A nachgewiesen
+
+- **Dauer/Arbeit:** nicht separat gemessen; ADR-052 vor Code (`db77ff0`), Umsetzung P1–P4 (`a95e47d`), Tests/Build/Audits und unabhängige Nachprüfung abgeschlossen. Beide Checkpoints mit aktiven Hooks committed und gepusht. N5 blieb getrennt und unverändert.
+- **Ergebnis:** N2 ERLEDIGT: unbekannte Nachrichten ohne Status-/Berichts-/Portwirkung; Fehler nur über Familie und gelieferte sichere ID; passende ungültige Antworten unmittelbar `invalidAnswer` mit freier Sperre; Sprachgrenzen nach Codepoints/Rust White_Space. Keine Format-, Modul-, Abhängigkeits- oder CI-Änderung und keine Reifegradbeförderung.
+- **Nachweise:** 509 Vitest-Tests/41 Dateien, 17 Fälle gegen tatsächliche registrierte Main-Handler, zwei Electron-E2E, vollständiger Build, Lint/Format/Typen, erzeugte Verträge, cargo-deny, npm-Audit/Lizenzen und vollständiger Pre-Commit grün. TS Lines global 81,41 % (1.985/2.438), core-status 100 % (69/69), settings 100 % (61/61); bestehende Main-Einstiegsausnahme unverändert. Transport-/Sprach-/Mock-Grenzen im Umsetzungsbericht.
+- **Unabhängige Prüfung:** neue Astra-Instanz ohne Gesprächsverlauf, nur lesend: keine neuen hohen/mittleren/niedrigen Befunde im Paket A; keine eigenen Tests. Hauptklasse/Kontextgröße unbestimmbar, Quelle Systemkontext. Keine weitere Delegation und keine gemeinsame Dateibearbeitung.
+- **CI/PR:** [CI 42062519917](https://github.com/PatSchCode/OpenAirside/actions/runs/42062519917) und [Security 42062519978](https://github.com/PatSchCode/OpenAirside/actions/runs/42062519978) auf `a95e47d` vollständig grün, einschließlich aller drei Plattformen, Coverage und Benchmarks. PR #50 offen; Abschlussvermerk im selben PR, neuen Kopf vor Merge beobachten. Branch-Präfix-Abweichung im PR erklärt.
+- **Konsistenz/Offenes:** README, S-8, ADR-Register (52, jüngste 30), Reaktiv-Quote 3/10 bzw. 20/52, datierte Abgleichstabelle, Anforderungen, Blocker und Ablaufregister geprüft. Keine neue fällige Ablaufmaßnahme; Quick Start unverändert. Nächster konkreter Schritt: N5-Gegenproben und eigene Entscheidung vor Abschluss 3.2/Erkundung 3.11. 3.2 bleibt IN ARBEIT, Grafik-Abnahme weiter offen.
 
 ### 2026-11-05 (Europe/Berlin) – Q.10-N2 lokal verifiziert
 

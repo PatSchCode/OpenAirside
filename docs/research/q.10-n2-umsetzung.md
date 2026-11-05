@@ -1,6 +1,6 @@
 # Q.10-N2 – Umsetzung des freigegebenen Pakets A
 
-**Stand:** 2026-11-05, ADR-052 vor Code; lokale Nachweise, unabhängige Nachprüfung und vollständiger Hook bestanden, Commit/Push/CI noch abzuschließen. N5 bleibt getrennt; keine Reifegradbeförderung oder Abschlussbehauptung für 3.2.
+**Stand:** 2026-11-05, ADR-052 vor Code; auf `a95e47d` committed/gepusht; lokale Nachweise, unabhängige Nachprüfung, vollständiger Hook und volle PR-CI/Security bestanden. N5 bleibt getrennt; keine Reifegradbeförderung oder Abschlussbehauptung für 3.2.
 
 ## Ergebnis
 
@@ -34,3 +34,5 @@ Erster Handlerlauf scheiterte an fehlendem `webContents.send` im Electron-Mock; 
 Quick Start und Installationsvoraussetzungen unverändert, kein frischer Installationsklon für diese Validierungskorrektur nötig. Rust-Produktcode unverändert; Kern-Sicherheitsprüfung und bestehende generierte Vertragsprüfungen lokal bestanden, vollständige Rust-/Plattformmatrix wird durch PR-CI erneut nachgewiesen. Reaktiv-Quote 3/10, gesamt 20/52; keine stillen Klassifikationsänderungen. Ablaufregister ohne neue fällige Maßnahme.
 
 `pre-commit run --all-files` unter Node 26.11.1: sämtliche Hooks grün, einschließlich Markdown, JS, rustfmt und Clippy. Gestagten Inhalt vor Commit geprüft. Dokumentbudgets, Linkziele, vollständiges ADR-Register (52/jüngste 30) und Quote (20 gesamt, drei der jüngsten zehn reaktiv) geprüft; keine Kern-/Brücken-/CI-/Templateänderung. Keine neue fällige Ablaufmaßnahme.
+
+[CI 42062519917](https://github.com/PatSchCode/OpenAirside/actions/runs/42062519917) und [Security 42062519978](https://github.com/PatSchCode/OpenAirside/actions/runs/42062519978) auf `a95e47d` abgeschlossen und erfolgreich; sämtliche Code-Gates inklusive Rust-/TS-/Electron-Matrix auf Windows, Linux, macOS, Coverage und Kern-Benchmarks. Kein Code nach dieser Abnahme geändert; Abschlussdokumentation wird im selben PR nachgeführt.
