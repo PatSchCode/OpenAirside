@@ -33,7 +33,7 @@ OpenAirside ist eine freie, eigenständig entwickelte Flughafenmanagementsimulat
 - **Projektphase:** Phase 3: Vertikaler Schnitt „Kleiner Flughafen“ (UMSETZUNG), Entwurfsschritte 3.7 (Personengruppen, Begehbarkeit und Querungen, ADR-037) und 3.8 (Weltdarstellung im Spielfeld, ADR-038) sowie die Messung 3.14, die Korrektur 3.15 (Ruckeln unter Windows) und die Umbauten 3.9 (Kernstruktur der Fachmodule, ADR-039) und 3.10 (Aufteilung der Plattform-Datei `main.ts`) erledigt; Schritt 3.1 (Bauen im Raster) in Stufen: 3.1a Kern erledigt, 3.1b Darstellung und Bedienung erledigt (Messungen auf Referenz-PC und Mac bestanden, ADR-044; Grafik-Abnahme verschoben auf 3.1b-N1), 3.1c Bauaufträge und Bauarbeiter erledigt (ADR-045); Phase 2 (Fundament: Projektgerüst und CI, Weltmaßstab, Schnittstellenverträge, Takt, Raster und Wegweiser, Brücke und Plattform, Datenpakete, Spielstände, Lokalisierung, Grafik-Pipeline) abgeschlossen am 2026-10-19 mit „gezielt umbauen“ (ADR-036); Phase 1 (Technischer Durchstich und Leistungsnachweis) abgeschlossen (ADR-014, ADR-016)
 - **Version:** v0.0.0
 - **Status:** Konzeption
-- **Letzte Änderung:** 2026-11-04 (Terminalfluss 3.2 wird nach ADR-049 finalisiert: Sicherheitsengpass, FIFO-Warteschlangen und Stationsdurchsatz)
+- **Letzte Änderung:** 2026-11-05 (Q.10 / ADR-050: Codex-Regeln gezielt ergänzt; erster unabhängiger Architektur-Code-Abgleich mit offenen Befunden, keine neue Produktfunktion)
 - **Architektur-Reife:** Plattformen und Auslieferungsform BELASTBAR; Stack (Electron 44, TypeScript 6, React 19, PixiJS 8, Rust-Simulationskern), Architektur-Pattern, Betriebsart des Rust-Kerns (natives Modul im Hilfsprozess, ADR-009), Datenmodell im Kern (ADR-010; Weltmaßstab 2 m je Zelle mit Luftseite im Raster und Speicherung in Blöcken nach ADR-020; Personengruppen mit eigenen begehbaren Flächen nach ADR-037), Wegweiser-Prinzip und Leistung von Simulation und Zustandsübergabe BELASTBAR seit dem Leistungsnachweis (ADR-014; Linux-Messung in 7.2); Leistung der Darstellung mit echten Grafiken BELASTBAR im gemessenen Umfang (20.000 Objekte, Windows und macOS, ADR-034), Nahansicht mit Weltdarstellung BELASTBAR unter macOS und Windows (Ruckeln auf dem Referenz-PC in 3.15 behoben; Nachmessung mit dem Bauen in 3.1), Fahrzeuge und Flugzeuge VORLÄUFIG; Bauaktion im nächsten Bild BELASTBAR (ADR-044, Vorschau im ersten Bild auf Referenz-PC und Mac); Zustandsübergabe Kern → Darstellung und große Tabellen BELASTBAR (Windows und macOS gemessen); Schnittstellenverträge für Befehle, Ereignisse, Abfragen, Datenpakete, Spielstände und Plattform BELASTBAR (ADR-021, fortgeschrieben durch ADR-032), Steuerung des Kern-Prozesses durch die Plattform BELASTBAR (ADR-032); Weg der Bauten in die Darstellung BELASTBAR (Blöcke im Bild, Zeichnung mit Shader, ADR-038; umgesetzt in 3.1b, Speicher auf Referenz-PC und Mac gemessen und BELASTBAR); Takt des Simulationskerns BELASTBAR (Umsetzung 2.2; Fachmodule mit fester Reihenfolge und internen Ereignissen seit 3.9, ADR-039); Grundraster der Welt BELASTBAR (Umsetzung 2.3); Brücke zwischen Kern und Oberfläche sowie Plattformschicht BELASTBAR (Umsetzung und Messung 2.7); Lader für Datenpakete BELASTBAR (Umsetzung 2.4); Spielstand-Format durch Umsetzung bestätigt (2.5); Lokalisierung BELASTBAR (Umsetzung 2.6); Grafik-Pipeline (SVG → Atlanten) BELASTBAR (Umsetzung 2.10, ADR-033)
 - **Aktive Blocker:** 0
 
@@ -95,11 +95,13 @@ Sprache und Einstellungen: Die Oberfläche gibt es auf Deutsch und Englisch, bei
 
 ## Nächste Schritte
 
-- ADR-047 umsetzen: Anforderungen und Fahrplan gegen die wiederhergestellte Referenz ausrichten
-- 3.2 neu: kleines Terminal im laufenden Betrieb erweitern, Umleitung und Wartezeit mit Ursache, zugleich erste Lektion
+- Q.10 abgeschlossen: neue CI-Prüfungen und die gefundenen Bestandskorrekturen separat entscheiden
+- 3.2: unabhängige Befunde zu Passagierzuständen und Save/Load klären; danach 3.11 (Suchen ohne Schilder und Feinwege)
 - 3.1b-N1: Abnahme der Grafiken für Boden, Wand und Sitzbank, Zeitpunkt nennt der Projektinhaber
 
 → Vollständiger Fahrplan: [`docs/fahrplan.md`](docs/fahrplan.md)
+
+Die Implementierung von 3.2 ist mit PR #47 gemergt. Der erste statische Architektur-Code-Abgleich fand mittlere Abweichungen; der Abschluss und eine Beförderung des Personenmoduls bleiben bis zur Klärung offen. Prüfstand, Grenzen und Landeplätze: [`Q.10-Prüfbericht`](docs/research/q.10-methodik-abgleich.md). Unterschiede zwischen Entwicklung und gepackter Anwendung stehen im [Umgebungsregister](docs/dev-prod-unterschiede.md).
 
 ## Mitwirken
 

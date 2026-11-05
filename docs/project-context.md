@@ -183,6 +183,7 @@ Keine externen APIs im Spiel.
 
 ### Methodik-Schwellenwerte
 
+- **Methodikstand:** gezielte Übernahme aus Dev-Templates `e9bcc7c` (PR #70), freigegeben am 2026-11-05 als Option A / ADR-050. Vollständiges operatives Regelwerk bleibt `AGENTS.md`; `templates/` wird nicht ersetzt. Regeln 007–009 und die Eigentümerregel zu Abschlusscommits bleiben erhalten. Nachweise und Abweichungen: `docs/research/q.10-methodik-abgleich.md`.
 - **Reaktiv-ADR-Schwellenwert:** maximal 20 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse G).
 - **Wucherungs-Schwelle:** Faktor 2 gegenüber dem ursprünglichen Schrittplan **und** mindestens 5 zusätzliche Schritte.
 - **Vorläufig-zu-Belastbar-Verhältnis:** nach jeder UMSETZUNG-Phase soll mindestens ein `[VORLÄUFIG]`-Bestandteil der berührten Module auf `[BELASTBAR]` befördert sein, sonst Reflexion.
@@ -193,6 +194,15 @@ Keine externen APIs im Spiel.
   - **Interaktionsklasse:** Terra für erforderliche Bildschirm-, Browser- oder visuelle Prüfungen, nicht für Architektur- oder Kernentscheidungen.
   - **Delegation:** nur für unabhängige Analyse, Gegenprüfung oder klar getrennte Routinearbeit; keine parallele Bearbeitung derselben Dateien. Codex koordiniert und protokolliert tatsächliche Modellklassen und Delegationen im Logbuch.
   - **Grenze der Sessiongröße und Kontingente:** ausschließlich nach verlässlicher Anzeige der jeweiligen Codex-Laufzeit dokumentieren; andernfalls `unbestimmbar`.
+
+### Belegte Codex-Fähigkeiten (2026-11-05)
+
+- **Oberfläche:** Codex-Desktop-App, lokaler Checkout auf macOS, gemäß Laufzeitkontext. Keine Cloud-Installation als Voraussetzung angenommen.
+- **Aktives Hauptmodell:** Codex aus dem Systemkontext; exakte Modellvariante und Klasse nicht verlässlich benannt. Keine Modell-Abfrage angeboten. Kein behaupteter Wechsel des Hauptmodells.
+- **Unteragenten:** Modellüberschreibung und `fork_turns=none` angeboten; unabhängige nur lesende Astra-Prüfungen tatsächlich ausgeführt, Fehlerproben bestanden (Q.10-Bericht). Ergebnis bleibt an Prüfstand und Umfang gebunden.
+- **Routineabgabe:** kein Vergleichsprobelauf zur Kostenersparnis durchgeführt; keine Preis-/Kontingentmessung, daher keine wirtschaftliche Delegation als belegt behaupten.
+- **Git/GitHub:** lokaler Git-Zugriff und verbundene GitHub-Lesewerkzeuge beobachtet; Shell-Netzwerk und Schreibzugriff auf `.git` erfordern in dieser Sitzung Sandbox-Eskalation. Das ersetzt keine fachliche Freigabe. Push-/PR-/CI-Nachweise werden gesondert am Abschlusscommit geführt.
+- **Einrichtung:** vorhandene Werkzeuge vor Nutzung aktivieren; aktueller Bereitschaftstest nach Runbook. Fähigkeiten nach Umgebungs-/Werkzeugwechsel erneut prüfen. Keine allgemeine Verhaltensabnahme dieser Desktop-Oberfläche aus einem Cloud-Prüfbericht ableiten.
 
 <!-- ANCHOR:code-standards-und-qualitaetsziele -->
 ## 7. Code-Standards und Qualitätsziele
@@ -236,7 +246,7 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 | cargo-deny `bans`, doppelte Crate-Versionen | `skip` in `deny.toml` | benannte Ausnahme: `syn@2.0.119` (nur über ts-rs-macros 12.0.1 hinter dem Feature `ts`; serde nutzt syn 3) | 2026-10-13 | Q.1 (prüfen, ob ts-rs auf syn 3 umgestellt hat) |
 | cargo-deny `bans`, doppelte Crate-Versionen | `skip` in `deny.toml` | benannte Ausnahme: `miniz_oxide@0.8.9` (nur über png 0.18.1 im Werkzeug-Crate `tools/assets`, ADR-033; der Spielstand nutzt 0.9.1) | 2026-10-19 | Q.1 (prüfen, ob png auf miniz_oxide 0.9 umgestellt hat) |
 
-**Warnungsquellen ohne Schalter:** Hinweise der CI-Plattform zu Action-Versionen und Runner-Images (Annotationen im Lauf); Bündelgrößen-Warnungen von Vite; Abkündigungshinweise von electron-builder und npm (`npm warn deprecated`, Ablaufdaten-Register, Q.1). Bekannter Bestand (Stand 2026-10-13, Release-Lauf 38440601610): npm „install scripts not yet covered by allowScripts" für electron-winstaller und fsevents (Skripte laufen nicht; Bau und Tests grün; Prüfung in Q.1); electron-builder „asar usage is disabled" (Muster aus den Spikes, Entscheidung mit der Signatur in 7.1); „default Electron icon is used" behoben in 2.10 (eigenes Symbol `build/icon.png`, lokaler Paketbau ohne den Hinweis am 2026-10-19). `npm audit --audit-level=high` ist am 2026-11-04 grün; es meldet 25 moderate `minimatch`-Befunde über electron-builder und ESLint, deren vorgeschlagene Korrektur jeweils einen Breaking-Downgrade erzwingen würde.
+**Warnungsquellen ohne Schalter:** Hinweise der CI-Plattform zu Action-Versionen und Runner-Images (Annotationen im Lauf); Bündelgrößen-Warnungen von Vite; Abkündigungshinweise von electron-builder und npm (`npm warn deprecated`, Ablaufdaten-Register, Q.1). Bekannter Bestand (Stand 2026-10-13, Release-Lauf 38440601610): npm „install scripts not yet covered by allowScripts" für electron-winstaller und fsevents (Skripte laufen nicht; Bau und Tests grün; Prüfung in Q.1); electron-builder „asar usage is disabled" (Muster aus den Spikes, Entscheidung mit der Signatur in 7.1); „default Electron icon is used" behoben in 2.10 (eigenes Symbol `build/icon.png`, lokaler Paketbau ohne den Hinweis am 2026-10-19). `npm audit --audit-level=high` ist am 2026-11-05 grün (Security-Lauf 42039133699); es meldet 15 moderate `minimatch`-Befunde über electron-builder und ESLint statt zuvor 25, deren vorgeschlagene Korrektur jeweils einen Breaking-Downgrade erzwingen würde. Die beobachtete Obergrenze sinkt auf 15; Nachprüfung Q.1. Der Rustup-Hinweis „default toolchain implicitly overridden“ bei `cargo install` ist unverändert auch im Main-Lauf 41881621704 vorhanden; kein neuer Befund in Q.10, Nachprüfung Q.1.
 
 ### Durchsetzungsmechanismen
 
@@ -333,12 +343,13 @@ Default: Warnungen sind Fehler (clippy `-D warnings`, ESLint `--max-warnings 0`,
 <!-- ANCHOR:repository-regeln -->
 ## 10. Repository-Regeln
 
-- **Repository:** github.com/Paddel87/OpenAirside (öffentlich)
+- **Repository:** github.com/PatSchCode/OpenAirside (öffentlich; aktueller `origin`, früher Paddel87)
 - **Hauptbranch:** `main`
 - **Push-Regel:** Initialisierung direkt auf `main`; ab Schritt 2.1 Arbeit auf Feature-Branches, Merge nach grüner CI
 - **Sessionende-Commits (Festlegung des Projektinhabers vom 2026-10-13):** Commits zum Sessionende, die nach dem Merge des Schritt-PR entstehen, bekommen keinen eigenen PR. Sie bleiben auf dem Arbeits-Branch und gehen mit dem PR des nächsten Schritts nach `main`. Die nächste Session übernimmt diese Commits auf den aktuellen `main`, statt den Branch ohne sie neu aufzusetzen.
 - **Schutzregeln:** keine Force-Pushes auf `main`; Branches nach Merge löschen
 - **Methodik-Vorlagen:** `templates/` stammt aus dem Template-Repo Dev-Templates und bleibt unverändert im Repo
+- **Umgebungsregister:** `docs/dev-prod-unterschiede.md` führt bewusste Unterschiede zwischen Entwicklungsbetrieb und gepackter Anwendung samt Grenzen lokaler Nachweise.
 
 <!-- ANCHOR:offene-grundsatzfragen -->
 ## 11. Offene Grundsatzfragen

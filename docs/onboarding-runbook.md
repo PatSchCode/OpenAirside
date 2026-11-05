@@ -74,7 +74,7 @@ git clone https://github.com/Paddel87/OpenAirside.git
 cd OpenAirside
 ```
 
-**Erwartetes Ergebnis:** Verzeichnis enthält `CLAUDE.md`, `Cargo.toml`, `package.json`, `core/`, `bridge/`, `app/`, `docs/`.
+**Erwartetes Ergebnis:** Verzeichnis enthält `AGENTS.md`, `Cargo.toml`, `package.json`, `core/`, `bridge/`, `app/`, `docs/`.
 
 ### Schritt 2: Abhängigkeiten installieren
 
@@ -198,7 +198,7 @@ Pflicht ab dem ersten öffentlichen Release (Schritt 7.1). Das Spiel läuft loka
 <!-- ANCHOR:pflegehinweise -->
 ## 8. Pflegehinweise
 
-- **Validierungs-Pflicht:** vor jedem Phasen-Abschluss gegen einen frischen Klon (`CLAUDE.md` Abschnitt 17).
+- **Validierungs-Pflicht:** vor jedem Phasen-Abschluss gegen einen frischen Klon (`AGENTS.md`, „Qualität und Nachweise“); Klasse G zusätzlich auf einer zweiten unterstützten Plattform.
 - **Drift-Verbot:** Abweichung zwischen Runbook und tatsächlichem Setup ist ein Bug und wird im selben Commit behoben.
 - **„Geprüft am"** wird bei jeder Validierung aktualisiert.
 - **Plattform-Hinweise** bleiben konsistent mit `docs/project-context.md` Abschnitt 3.

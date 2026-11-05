@@ -1,6 +1,6 @@
 # Fahrplan
 
-<!-- Zentrales Arbeitsdokument von OpenAirside. Wird vor jeder Änderung gelesen (CLAUDE.md Abschnitt 2)
+<!-- Zentrales Arbeitsdokument von OpenAirside. Wird vor jeder Änderung gelesen (AGENTS.md Sessionstart)
      und nach jedem Arbeitsschritt sowie zu Sessionende aktualisiert (Abschnitt 12).
      Klasse G: 7 Phasen (ADR-001). Laufende Phase im vollen Schrittformat, spätere Phasen grob,
      Verfeinerung jeweils vor Phasenbeginn. -->
@@ -8,12 +8,12 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-11-04 (ADR-047: ursprüngliche Produktvision wiederhergestellt, ADR-046 strategisch überholt; vorhandene Technik und umgesetzte Funktionen bleiben erhalten)
+- **Stand vom:** 2026-11-05 (ADR-050: Dev-Templates gezielt ergänzen, bestehende Projektentscheidungen erhalten)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** keiner; Q.6 `[ERLEDIGT]` 2026-10-28 (Merge mit PR #39, `df6da46`); 3.1c `[ERLEDIGT]` 2026-10-28 (Merge mit PR #38, `394d24e`); 3.1b `[ERLEDIGT]` 2026-10-26 (Merge mit PR #36), 3.1a `[ERLEDIGT]`, Q.5 `[ERLEDIGT]` (PR #37, `56bdc8c`)
-- **Nächster Schritt:** Vorlage zu 3.2 gegen `docs/vision.md`, Funktionsinventar und Modernisierung konkretisieren; offen daneben 3.1b-N1 (Grafik-Abnahme, jetzt mit `base:delivery_point`, Zeitpunkt nennt der Projektinhaber).
-- **Offene STOPP-Situationen:** keine. Reaktiv-Quote 4 / 10 (ADR-038 bis ADR-047) über dem Schwellenwert; ADR-047 korrigiert die Produktvision, ohne Architektur oder Code zu ändern. Reflexion zu ADR-045 (neues Muster nach Regel-009) zur Kenntnis genommen am 2026-10-28, Maßnahme (13); siehe „Iterations-Reflexion".
+- **Aktiver Schritt:** keiner; Q.10 erledigt auf `179aaed` (PR #48, CI und Security grün). 3.2 ist mit PR #47 auf `b16167c` gemergt; dessen CI-Nachweise liegen vor, der fachliche Abschluss bleibt wegen K1–K4 offen.
+- **Nächster Schritt:** Q.10-N3 (Passagierzustand, Save/Load und Umfang 3.2) sowie Q.10-N2 (S-8-Validierung) entscheiden; danach 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-041 bis ADR-050; bekannte Muster nach Regel-009 und Reflexion zu ADR-045 behandeln.
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -36,8 +36,8 @@ Jede Phase ist genau einem Typ zugeordnet. Der Typ bestimmt das Akzeptanzformat 
 **Zweck:** Geplante Funktionalität auf Basis belastbarer Architektur produktiv bauen.
 
 - Akzeptanzkriterien sind **funktionsbasiert**.
-- Berührte Architektur-Bestandteile müssen vor Schrittbeginn `[BELASTBAR]` sein – sonst Stopp.
-- Volle Definition of Done (CLAUDE.md Abschnitt 9).
+- Grundsatzentscheidungen und verwendete Verträge müssen vor Schrittbeginn `[BELASTBAR]` sein. Module dürfen nach Regel-007 `[VORLÄUFIG]` in ihre erste Umsetzung gehen; abhängige `[OFFEN]`-Bestandteile verlangen Erkundung.
+- Volle Definition of Done (AGENTS.md „Qualität und Nachweise“).
 - Architektur-Lücke während der Umsetzung: Schritt stoppen, Lücke als `[OFFEN]` markieren, ERKUNDUNG-Schritt anlegen.
 
 ### STABILISIERUNG
@@ -56,19 +56,20 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 ```text
 ### [Phase].[Nummer]: Kurztitel
 
-- **Status:** [OFFEN | VERSCHOBEN | IN ARBEIT | WARTET-AUF-FREIGABE | BLOCKIERT | ERLEDIGT | CI-AUSSTEHEND (mit Nachprüf-Schritt und Frist) | VERWORFEN]
-- **Landeplatz (nur VERSCHOBEN):** [Ziel-Schritt-ID, z. B. „6.4" – ein Phasen-Verweis ohne Schritt-ID ist unzulässig, siehe CLAUDE.md Abschnitt 6]
+- **Status:** [OFFEN | VERSCHOBEN | IN ARBEIT | WARTET-AUF-FREIGABE | BLOCKIERT | ERLEDIGT | VERWORFEN]
+- **Landeplatz (nur VERSCHOBEN):** [Ziel-Schritt-ID; ein Phasen-Verweis ohne Schritt-ID ist unzulässig, siehe AGENTS.md]
 - **Phasentyp-Kontext:** [ERKUNDUNG | UMSETZUNG | STABILISIERUNG] – ergibt sich aus der Phase
 - **Schritt-Art (nur ERKUNDUNG):** [Spike | Prototyp | Vergleichsstudie | Lasttest | sonstiges]
 - **Zeitbox (nur ERKUNDUNG):** [z. B. „maximal 4h Arbeit, dann Zwischenstand"]
 - **Abhängigkeiten:** [Schritt-IDs, die vorher abgeschlossen sein müssen, oder "keine"]
 - **Frist (Pflicht bei Abkündigungen, Ablaufdaten, Secret-Rotation):** [YYYY-MM-DD]
-- **Freigabepflichtig:** [ja/nein – siehe CLAUDE.md Abschnitt 4]
-- **Empfohlene Klasse:** [Mechanik | Routine | Entscheidung | Ausnahme] – [ein Satz Begründung aus CLAUDE.md Abschnitt 0]
-- **Eingangskriterien:** [was muss gegeben sein, bevor der Schritt begonnen werden kann; bei UMSETZUNG: alle berührten Architektur-Bestandteile auf [BELASTBAR]]
+- **Freigabepflichtig:** [ja/nein – siehe AGENTS.md „Autonomie und Freigaben“]
+- **Empfohlene Klasse:** [Ausführung/Sol | Routine/Luna | Entscheidung/Astra | Interaktion/Terra] – [Begründung]
+- **Eingangskriterien:** [Grundsatzentscheidungen und verwendete Verträge BELASTBAR; Erstumsetzung vorläufiger Module nach Regel-007 erlaubt]
 - **Anforderungen (ab Klasse M):** [FR-IDs aus `docs/requirements.md`, die dieser Schritt umsetzt, oder „keine"]
 - **Zu tun:** [konkrete Arbeitsanweisung; bei UMSETZUNG implementierungsnah, bei ERKUNDUNG: zu klärende Fragen]
 - **Akzeptanzkriterien:** [phasentypabhängig – wissensbasiert / funktionsbasiert / qualitätsbasiert]
+- **Testsignal:** [vor erstem Lauf: welchen Fehler Rot erkennt, was Grün belegt und was ungeprüft bleibt]
 - **Betroffene Module:** [Modulnamen – wenn >1, ggf. aufsplitten]
 - **Reifegrad-Wirkung:** [welche Architektur-Bestandteile werden durch diesen Schritt befördert oder zurückgestuft]
 - **Artefakte:** [erwartete Dateien/Änderungen; bei ERKUNDUNG: ADRs, Architektur-Updates, Erkenntnisdokumente]
@@ -252,7 +253,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** IN ARBEIT – Kernfluss, Szenario, FIFO, S-7-Overlay und erste Lektion umgesetzt; ADR-049 schließt Stationsverbesserung, Queue-Grenze, erreichbares Szenario und gedrosselte Overlay-Abfrage nach. Lokale Prüfungen sind grün; Commit und CI stehen aus.
+- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). Befunde K1–K4 aus Q.10-N3 vor fachlichem Abschluss klären.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
@@ -424,11 +425,67 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 | Schritt | Kurztitel | Anforderungen |
 |---|---|---|
-| 7.1 | Gate vor dem ersten öffentlichen Release (CLAUDE.md Abschnitt 12, `templates/gate-deployment.md`): Sicherheits-Review, Vertretung, Notfall-Handbuch, Signatur-Entscheidung; Lizenzhinweise aller ausgelieferten Abhängigkeiten im Paket (ADR-019) | – |
+| 7.1 | Gate vor dem ersten öffentlichen Release (AGENTS.md „Sessionende“): Sicherheits-Review, Vertretung, Notfall-Handbuch, Signatur-Entscheidung; Lizenzhinweise aller ausgelieferten Abhängigkeiten im Paket (ADR-019) | – |
 | 7.2 | Referenzszenario-Nachweis auf allen Plattformen inklusive Linux-Leistungsmessung auf echter Hardware mit gängigen Treibern (ADR-011, früher gern durch Mitwirkende), Langzeitstabilität, Release-Builds v1.0.0, auch für Windows und Linux auf arm64 (`project-context.md` Abschnitt 6; 2.1 baut dort nur x64); Linux-Pakete mit funktionierender Chromium-Sandbox (z. B. deb mit SUID-`chrome-sandbox` oder AppArmor-Profil, Befund aus 1.6); ab v1.0.0 Zusage für ältere Spielstände, Spielstände aus 1.0 als Prüfdaten aufbewahren (ADR-021) | FR-040, FR-045 |
 | 7.3 | Erfolgskriterien der umfassenden Vision: Spieltest des Projektinhabers über mehrere Stunden, Abgleich der Referenzprinzipien und Bilanz des Machbarkeitstests der KI-gestützten Entwicklung (ADR-016) | – |
 
 ### Querschnitt: wiederkehrende Schritte
+
+#### Q.10: Codex-Methodik nach Dev-Templates gezielt ergänzen
+
+- **Status:** `[ERLEDIGT]` 2026-11-05 auf `179aaed`, PR #48; Option A freigegeben, ADR-050 vor Umsetzung angelegt. Abschlussvermerk folgt als eigener Dokumentationscommit im selben PR.
+- **Phasentyp-Kontext:** Dokumentationspflege; keine Änderung des ursprünglichen Phase-3-Schrittplans.
+- **Empfohlene Klasse:** Ausführung für Dokumentation; unabhängige Entscheidungsklasse für Bestandsprüfung.
+- **Abhängigkeiten:** Abgleich mit Dev-Templates auf Commit `e9bcc7c`; ADR-016, ADR-036 und Eigentümerregeln erhalten.
+- **Frist:** 2026-11-12 für erste Bestandsprüfung und Dokumentbudgets.
+- **Zu tun:** AGENTS ergänzen, aktive Verweise bereinigen, ADR-Übersicht/Logbuch archivieren, Umgebungsunterschiede dokumentieren und erste unabhängige Prüfung der belastbaren Module und des Personenflusses durchführen.
+- **Testsignal:** Dokumentlint Rot erkennt Strukturfehler; Unicode-Zählung Rot erkennt Budgetüberschreitungen; Verlustvergleich erkennt fehlende Archivzeilen; Verweisprüfung erkennt fehlende lokale Ziele. Unabhängige Fehlerproben müssen die eingesetzten Abweichungen finden. Grün dieser Nachweise belegt keine Anwendungstests oder nachträgliche Abnahme von 3.2.
+- **Akzeptanzkriterien:** Projektentscheidungen unverändert, alle übernommenen Regeln mit aktiver Quelle, Dokumentbudgets eingehalten, Prüfbericht mit Befunden und konkreten Landeplätzen; aktiver Hook und CI am Commit grün.
+- **Artefakte:** ADR-050, AGENTS.md, Dokumentarchive, `docs/research/q.10-methodik-abgleich.md`, `docs/dev-prod-unterschiede.md`.
+- **Nachweise:** aktiver Pre-Commit-Hook und unabhängige Abschlussprüfung grün; Unicode-Budgets, Archivverlustvergleich und 90 lokale Linkziele grün. CI 42039133732 und Security 42039133699 auf `179aaed` grün; 16 Checks bestanden, 7 dokumentationsbedingt übersprungen. Matrix-Jobs melden Erfolg mit übersprungenen Code-Schritten, keine neue Laufzeitabnahme. Warnungsbestand gegen `main` verglichen, kein Zuwachs.
+
+#### Q.10-N1: Automatisierte Dokumentbudgets und PR-Metadatenprüfung vorlegen
+
+- **Status:** `[WARTET-AUF-FREIGABE]` – Vorschlag, keine CI-Änderung umgesetzt.
+- **Frist:** 2026-11-12; Entscheidung vor einem neuen CI-Workflow.
+- **Empfohlene Klasse:** Entscheidung; Kategorie Build/CI.
+- **Abhängigkeiten:** Q.10; gemessene Budgets und bestehende Branchregeln.
+- **Vorschlag:** Eigener Workflow für Branchschema und PR-Titel, einschließlich Titel-/Beschreibungsänderungen; Dokumentbudgetprüfung über die bestehende Node-Linie ohne neue Abhängigkeit. Bestehende Regeln zu Pflicht-Gates, Doku-Änderungen und `ci/**`-Push-Fallback erhalten.
+- **Optionen:** A automatisieren (wiederholbare Durchsetzung, CI-Pflegeaufwand); B vorerst manuell prüfen (weniger CI, zusätzliche Prüfdisziplin).
+- **Empfehlung:** A; keine neue Modell- oder CI-Ausnahme. Testsignal vor Umsetzung: ungültige Namen und überschrittene Grenzen werden rot, gültige Fälle grün. Dieser Vorschlag selbst ist kein freigegebener Pipeline-Eingriff.
+
+#### Q.10-N2: S-8-Antwortprüfung und Fehlerzuordnung korrigieren
+
+- **Status:** `[WARTET-AUF-FREIGABE]` – neue Befunde P1–P4, kein Code geändert.
+- **Frist:** 2026-11-12 für Entscheidung und Umsetzungsplanung.
+- **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit, danach Ausführung.
+- **Abhängigkeiten:** Prüfbericht `docs/research/q.10-methodik-abgleich.md`, vorhandener S-8-Vertrag.
+- **Freigabepflichtig:** ja für die zusammenhängende Validierungskorrektur (Sicherheit); bestehende Schnittstellenbedeutung erhalten.
+- **Zu tun nach Freigabe:** Unbekannte Nachrichten ohne dauerhaften Statusverlust behandeln; ungültige Antworten nur ihrer tatsächlichen Anfrage zuordnen, Spielstandfehler als `invalidAnswer` abschließen; Sprachgrenzen am Hauptprozess prüfen.
+- **Testsignal:** Gezielt ungültige und verspätete Nachrichten müssen die richtige Anfrage ablehnen, gültige Folgeanfragen bleiben nutzbar. Überlange Sprachwerte werden zurückgewiesen; kein neuer Gesamtgrenzwert.
+- **Akzeptanzkriterien:** gezielte Regressionstests, vorhandene Gates und Coverage; unabhängige Prüfung der Sicherheitskorrektur, neue Beförderung erst nach Nachprüfung ohne hohe/mittlere Befunde.
+- **Betroffene Module:** Plattform, Brücke; keine Behebung innerhalb Q.10-Dokumentationscommit.
+
+#### Q.10-N3: Passagierzustand, Save/Load und beschlossenen 3.2-Umfang klären
+
+- **Status:** `[WARTET-AUF-FREIGABE]` – Befunde K1–K4 verhindern den Abschluss von 3.2 und die Beförderung Personen.
+- **Frist:** 2026-11-12; Klärung vor 3.11.
+- **Empfohlene Klasse:** Entscheidung wegen Spielstandvalidierung, Datenmodell und Verantwortungsfrage.
+- **Abhängigkeiten:** ADR-048/049 und Prüfbericht Q.10.
+- **Freigabepflichtig:** ja, Sicherheit/Datenmodell; Geduld umsetzen oder ausdrücklich aus dem 3.2-Umfang nehmen. FIFO-Zuständigkeit gegen ADR-048 bestätigen.
+- **Zu tun nach Freigabe:** Neue gespeicherte Werte und FIFO-Invarianten prüfen; deterministische Fortsetzung nach Save/Load einschließlich leerer Zwischenqueues belegen; fehlende Geduld und Architekturverantwortung bewusst auflösen. Formatänderung nicht vorwegnehmen.
+- **Testsignal:** Manipulierte Zustände müssen fehlschlagen; identische Befehlsfolgen vor/nach Laden über weitere Stationswechsel behalten dieselbe Prüfsumme. Geduld bzw. genehmigter Descope ist nachvollziehbar dokumentiert.
+- **Betroffene Module:** Personen, Welt & Bau, Takt & Weltzustand, Spielstand S-5.
+- **Landeplatz:** Korrekturen gehören zum fehlenden Abschlussumfang von 3.2; dieser Nachprüfschritt zählt nicht als neue Phase-3-Funktion.
+
+#### Q.10-N4: Niedrige S-4-Dokumentationsbefunde präzisieren
+
+- **Status:** `[OFFEN]` – D2/D3; keine Vertragsänderung still vorgenommen.
+- **Frist:** 2026-11-12.
+- **Empfohlene Klasse:** Ausführung für Dokumentpflege, Entscheidung falls die Vertragsbedeutung geändert werden soll.
+- **Zu tun:** Unix-Ablehnung harter Links konsistent beschreiben; Reihenfolgeanforderung an Sprachnamen und Ablehnung leerer Texte gegen bestehenden Vertrag und Tests klären.
+- **Testsignal:** Widersprüchliche Aussagen werden gefunden; dokumentierte Beispiele müssen dem geprüften Verhalten entsprechen. Keine Änderung öffentlicher Ladebedingungen als bloße Textkorrektur tarnen.
+- **Betroffene Module:** Inhalte & Mods, Lokalisierung; niedrige Befunde dürfen mit diesem Landeplatz offen bleiben.
 
 #### Q.9: ADR-047 – Produktvision und Referenzbasis wiederherstellen
 
@@ -505,7 +562,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Phasentyp-Kontext:** STABILISIERUNG (wiederkehrend, unabhängig von der laufenden Phase)
 - **Abhängigkeiten:** keine
 - **Frist:** 2027-01-02 (zwei Monate vor Lebensende Electron 44 am 2027-03-02); danach je Electron-Linie neu
-- **Freigabepflichtig:** ja (neue Linien nach `CLAUDE.md` Abschnitt 15)
+- **Freigabepflichtig:** ja (neue Linien nach AGENTS.md und Regel-001)
 - **Empfohlene Klasse:** Entscheidung – Wahl neuer Linien ist eine Entscheidung über externe Abhängigkeiten.
 - **Eingangskriterien:** Vorlauf im Ablaufdaten-Register erreicht
 - **Anforderungen (ab Klasse M):** FR-045
