@@ -281,7 +281,7 @@ Das Personenmodul leitet vor jeder Zulassung Nummern aus allen gespeicherten pos
   - `savesAnswer { request, ok: true, value }` bzw. `{ request, ok: false, error: Reason }` – Antwort auf `saves:*` und `lang:texts`.
   - `autosave {}` – ein Autosave ist fällig (Uhr `AutosaveClock` im Kern-Prozess); der Hauptprozess speichert, sobald keine andere Operation läuft.
 - **Hauptprozess → Kern-Prozess:**
-  - `port` mit einem `MessagePort` je geladener Seite (Transport von S-1, S-2, S-3, S-7); ein neuer Port schließt den vorigen.
+  - `port` mit einem `MessagePort` je geladener Seite (Transport von S-1, S-2, S-3, S-7); ein neuer Port schließt den vorigen. Empfangsprüfung nach ADR-053/Q.10-N5: Objektnachricht (nicht null/Array) mit `type === "port"`, genau ein übertragener Port; harmlose Zusatzfelder erlaubt. Sonst kein Austausch/`openPort`-Aufruf. Vorherige fachliche Anfragewege bleiben unverändert; keine neue Cleanup- oder Ausnahmebehandlung.
   - `packs:setActive { request, ids }` (S-6 `packs.setActive`).
   - `saves:save { request, name, kind, savedAt, preview }`, `saves:load { request, bytes }`, `saves:info { request, files: { prefix, size }[] }`, `saves:checkPreview { request, png }` (S-5, S-6 `saves.*`); `lang:texts { request, code }` (S-6 `lang.texts`).
   - `autosave:interval { minutes }` (S-6 `settings.autosaveMinutes`, gilt sofort).
@@ -298,6 +298,7 @@ Additive, rückwärtskompatible Ergänzungen nach Regel-008 (ohne eigenen ADR). 
 | Datum | Schnittstelle | Ergänzung | Schritt | Grundlage |
 |---|---|---|---|---|
 | 2026-11-05 | S-8, S-6 | Bestehende Fehlerkorrelation/Sprachgrenzen im Hauptprozess durchgesetzt; Formen und Versionen unverändert | Q.10-N2 | ADR-052 |
+| 2026-11-05 | S-8 | Bestehende Portübergabe ausdrücklich validiert; Nachrichtenart und genau ein Port, Zusatzfelder erlaubt | Q.10-N5 | ADR-053 |
 | 2026-11-05 | S-5 | Format 5 unverändert; strengere Passagier-/Stationsinvarianten und vollständig abgeleitete FIFO-Vergabe mit Überlaufverdichtung | Q.10-N3 | ADR-051 |
 | 2026-10-20 | S-7 | Katalog: feste Reihenfolge, Index = Verweis-Nummer in S-1 | 3.8 (Umsetzung 3.1) | Regel-008, im Rahmen von ADR-038 vorgelegt und freigegeben |
 | 2026-10-21 | S-5 | Format-Version 2 des Weltzustands: Gliederung nach Fachmodulen, getragene interne Ereignisse; Version 1 → `migrationFailed` (nicht additiv, nach der Versionierungsregel von S-5) | 3.9 | ADR-039 |

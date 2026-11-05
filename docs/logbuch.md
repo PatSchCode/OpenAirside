@@ -24,6 +24,11 @@ Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-05 (Europe/Berlin) – Q.10-N5 lokal und unabhängig geprüft
+
+- **Ergebnis:** zwölf Guard-Zeilen im bestehenden Host nach ADR-053, keine andere Produktänderung. 20 neue registrierte Hostfälle, 529 Gesamttests, zwei Electron-E2E, Build/Lint/Format/Typen/Verträge/Audits grün. Lines 81,41 % (1.985/2.438); bestehende Host-Einstiegsausnahme unverändert, keine neue numerische Ausnahme. Native und Transportgrenzen im [Bericht](research/q.10-n5-umsetzung.md).
+- **Prüfung:** neue Astra-Instanz ohne Gesprächsverlauf nur lesend; keine Abweichung im begrenzten Umfang, eigener Hostlauf 20/20 bestanden. Vorentscheidung aus vorheriger Sitzung genutzt; Hauptklasse/Kontextgröße unbestimmbar. Hook/Commit/Push/volle Code-CI noch abzuschließen, N5 bleibt IN ARBEIT.
+
 ### 2026-11-05 (Europe/Berlin) – [SESSIONSTART] – Q.10-N5 Option A umsetzen
 
 - **Stand-Prüfung:** `da6c322`, Branch `docs/q-10-n5-port-vorlage`, sauber, Remote identisch; Remote-main `d8a4b6f`, nur PR #51 offen (kein Entwurf). Vorlagenkopf CI 42117667982 und Security 42117667657 grün laut beobachtetem Abschluss; vorhandener PR wird weitergeführt. Keine fremde Umsetzung oder ungeprüfte Remote-Teile.

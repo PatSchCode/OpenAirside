@@ -1,6 +1,8 @@
 # Q.10-N5 – Gegenproben und Entscheidungsvorlage
 
-**Stand:** 2026-11-05, Basis `d1f4ba2` (Main `d8a4b6f` plus N2-Abschlussvermerk). Vorbereitung, keine Produktkorrektur und kein neuer ADR beschlossen. Frist 2026-11-12 vor Abschluss 3.2/Erkundung 3.11.
+**Aktueller Status:** Option A ausdrücklich freigegeben; ADR-053 vor Produktcode. [Umsetzung und Nachweise](q.10-n5-umsetzung.md). Die folgende Vorlage einschließlich roter Gegenproben dokumentiert den damaligen Prüfstand, keine Behauptung über den korrigierten Code.
+
+**Vorlagenstand:** 2026-11-05, Basis `d1f4ba2` (Main `d8a4b6f` plus N2-Abschlussvermerk). Vorbereitung ohne Produktkorrektur; Frist 2026-11-12 vor Abschluss 3.2/Erkundung 3.11.
 
 ## Befund und Abgrenzung
 

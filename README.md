@@ -98,7 +98,7 @@ Sprache und Einstellungen: Die Oberfläche gibt es auf Deutsch und Englisch, bei
 - Q.10 abgeschlossen: neue CI-Prüfungen und die gefundenen Bestandskorrekturen separat entscheiden
 - Q.10-N3 erledigt: Validierung und FIFO nachgewiesen korrigiert; Geduld/Bedürfnisse ausdrücklich in 5.4, FR-016 bleibt teilweise abgedeckt und offen
 - Q.10-N2 erledigt: [P1–P4 korrigiert und nachgewiesen](docs/research/q.10-n2-umsetzung.md); Paket A nach ADR-052
-- Separaten Port-Befund Q.10-N5 entscheiden: [Gegenproben und Vorlage](docs/research/q.10-n5-vorlage.md); danach 3.2 vor 3.11 abschließen
+- Q.10-N5 nach freigegebenem A/ADR-053 lokal und unabhängig korrigiert geprüft; [Nachweise](docs/research/q.10-n5-umsetzung.md), Code-CI vor Abschluss offen; danach 3.2 vor 3.11 abschließen
 - 3.1b-N1: Abnahme der Grafiken für Boden, Wand und Sitzbank, Zeitpunkt nennt der Projektinhaber
 
 → Vollständiger Fahrplan: [`docs/fahrplan.md`](docs/fahrplan.md)

@@ -159,6 +159,18 @@ try {
       }
       return;
     }
+    // S-8 / ADR-053: attached ports alone never authorize a handoff.
+    const data: unknown = event.data;
+    if (
+      typeof data !== "object" ||
+      data === null ||
+      Array.isArray(data) ||
+      !("type" in data) ||
+      data.type !== "port" ||
+      event.ports.length !== 1
+    ) {
+      return;
+    }
     const [port] = event.ports;
     if (port === undefined) {
       return;

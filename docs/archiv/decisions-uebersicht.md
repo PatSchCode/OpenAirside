@@ -1,7 +1,7 @@
 # Vollständige ADR-Übersicht
 
 Quelle: docs/decisions.md Teil A; angelegt am 2026-11-05 in Q.10 (ADR-050).
-Enthält ADR-001 bis ADR-052. Einzelentscheidungen bleiben unter docs/decisions/.
+Enthält ADR-001 bis ADR-053. Einzelentscheidungen bleiben unter docs/decisions/.
 Bei jeder neuen Entscheidung diese vollständige Übersicht mitpflegen.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |

@@ -12,8 +12,8 @@
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
 - **Aktiver Schritt:** Q.10-N5: Option A freigegeben, ADR-053 vor Umsetzung; begrenzte Portprüfung und Nachweise. N2/N3 gemergt; 3.2 bleibt wegen N5/Abschlussabgleich offen.
-- **Nächster Schritt:** Q.10-N5-Paket A/B entscheiden; bei A ADR vor Korrektur und Nachweisen, dann 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
-- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-043 bis ADR-052; Reflexion zu ADR-051 vor Code durchgeführt.
+- **Nächster Schritt:** Q.10-N5 mit Hook/CI abschließen, dann Abschlussabgleich 3.2 vor Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-044 bis ADR-053; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -495,7 +495,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N5: S-8-Portübergabe im Kern-Host prüfen
 
-- **Status:** `[IN ARBEIT]` – begrenztes Paket A ausdrücklich freigegeben; ADR-053 vor Code. Umsetzung, Nachprüfung und Gates/CI stehen aus.
+- **Status:** `[IN ARBEIT]` – Paket A nach ADR-053 lokal und unabhängig geprüft; 20 neue Hostfälle, 529 Gesamttests, zwei Electron-E2E und lokale Gates grün. Hook/Code-CI vor Abschluss offen; [Nachweise](research/q.10-n5-umsetzung.md).
 - **Frist:** 2026-11-12; vor Abschluss 3.2/Erkundung 3.11 klären.
 - **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit.
 - **Abhängigkeiten:** S-8 und ADR-032; getrennt von der N2-Freigabe P1–P4.
