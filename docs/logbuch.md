@@ -24,6 +24,23 @@ Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N3 Gegenproben und Entscheidungsvorlage
+
+- **Dauer/Arbeit:** nicht separat gemessen; K1–K4 vertieft und isolierte Gegenproben auf `b01ae6c` durchgeführt. Sessionende-Commit `758de6f` und aktuellen main verlustfrei auf neuem Branch `docs/q-10-n3-passagier-vorlage` zusammengeführt; alte Arbeitsbranch nicht für Umsetzung wiederverwendet.
+- **Ergebnis:** [konkrete A/B-Vorlage](research/q.10-n3-vorlage.md) mit Sicherheitsmatrix, Format-5-Ableitung, Überlaufregel, Geduld-Landeplatz und Verantwortungsbestätigung. Noch kein neuer ADR, keine Geduldverschiebung und keine Produktkorrektur beschlossen. Q.10-N3 wartet auf Freigabe; 3.2 bleibt offen.
+- **Nachweise:** unveränderte Basis in temporärer `git archive`-Kopie, Rust 1.98.1, Cargo offline/locked. Bestehende 5 Tests grün; abschließend 3 neue positive Kontrollen grün und 5 Befundtests erwartungsgemäß rot (Exit 101). Voller Container bei Tick 111 sofort hashgleich, 102 Folgeticks später abweichend; Gruppen-/Zustandscode 255 auch hinter gültiger Prüfsumme akzeptiert; Überlauf bedient späteren Wartenden zuerst. Testquellen und Kontrollkonfiguration im Probenbericht; kein grüner Fix behauptet.
+- **Reibung/Gegenprüfung:** erster Integrationshüllen-Aufruf benutzte einen nicht vorhandenen Accessor, durch `served_last_tick` ersetzt. Unabhängige Prüfung fand eine bei `decode` endende K1-Hülle; bis `load_game` ergänzt und gezielt erneut geprüft: gültige Kontrolle hashgleich, beide ungültigen Codes übernommen (erwartetes Rot). Erwartete Negativassertionen sind keine drei Reparaturversuche. Alle Proben-Quellenänderungen blieben außerhalb des Produktcodes.
+- **Nächster Schritt:** Option A (zuverlässiger Minimalfluss, Geduld ausdrücklich 5.4) oder B (Geduld vor Abschluss 3.2 konkretisieren) entscheiden; danach ADR/Reflexion und Umsetzung. S-8-Schritt N2 bleibt getrennt.
+- **Bilanz:** Hauptklasse/Kontextgröße unbestimmbar, Quelle Systemkontext; ein neuer unabhängiger Astra-Entscheidungsprüfer ohne Gesprächsverlauf, nur lesend, keine wirtschaftliche Routineabgabe. README, Reifegrade, Anforderungen und Ablaufregister geprüft; keine fachlichen Quellen still umgeschrieben. Commit/Push/CI der reinen Dokumentationsvorlage folgen nach aktivem Hook; keine Anwendungscode-Coverage für diese Vorlage.
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONSTART] – Q.10-N3 Gegenproben und Vorlage
+
+- **Auftrag:** „los“ nach Empfehlung: K1–K4 prüfen, Gegenproben und konkrete Entscheidungsvorlage vorbereiten; keine vorweggenommene Freigabe für Sicherheits-/Datenmodelländerungen oder neuen Geduldumfang.
+- **Stand-Prüfung:** sauber auf `758de6f`; `main` remote unverändert `b01ae6c`, keine offenen PRs. Der ausstehende Sessionende-Vermerk aus `758de6f` wird gemäß Projektregel auf den neuen Arbeitsbranch übernommen; kein fremder Arbeitsstand.
+- **Pflichtlektüre:** Projektkontext vollständig in begrenzten Abschnitten, letztes Sessionende, Fahrplanstand/Phase/offene Schritte und N3, Architektur 1/2/9, Entscheidungen A/C, aktive Blocker und Requirements-Übersicht gelesen; ADR-048/049 und S-5 gezielt vertieft.
+- **Testsignal vor Lauf:** unveränderte Produktbasis in isolierter temporärer Kopie. Gültiger Kontrollzustand muss laden; ungültige Gruppen/Zustände müssen abgelehnt werden; Fortsetzung nach Save/Load muss über weitere Stationswechsel dieselbe Prüfsumme behalten. Erwartetes Rot bestätigt den Befund, nicht eine erfolgreiche Korrektur. Keine Probe verändert die Produktimplementierung.
+- **Modell/Quelle:** Codex aus Systemkontext, Hauptklasse und Kontextgröße unbestimmbar; unabhängige Entscheidungsklasse wird für den Lösungsentwurf hinzugezogen.
+
 ### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10 gemergt
 
 - **Fortsetzung/Auftrag:** Nach Rückfrage des Projektinhabers Merge von PR #48 übernommen. Vor Merge Arbeitsbaum sauber, unveränderter PR-Kopf `12fc163`, 16 Checks bestanden und 7 dokumentationsbedingt übersprungen; Merge mit erwarteter Kopf-SHA abgesichert.

@@ -96,7 +96,7 @@ Sprache und Einstellungen: Die Oberfläche gibt es auf Deutsch und Englisch, bei
 ## Nächste Schritte
 
 - Q.10 abgeschlossen: neue CI-Prüfungen und die gefundenen Bestandskorrekturen separat entscheiden
-- 3.2: unabhängige Befunde zu Passagierzuständen und Save/Load klären; danach 3.11 (Suchen ohne Schilder und Feinwege)
+- 3.2: [Vorlage zu Passagierzuständen und Save/Load](docs/research/q.10-n3-vorlage.md) entscheiden; Fehler durch isolierte Gegenproben bestätigt, danach Korrektur und Abschluss vor 3.11
 - 3.1b-N1: Abnahme der Grafiken für Boden, Wand und Sitzbank, Zeitpunkt nennt der Projektinhaber
 
 → Vollständiger Fahrplan: [`docs/fahrplan.md`](docs/fahrplan.md)

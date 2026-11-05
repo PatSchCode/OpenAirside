@@ -484,7 +484,7 @@ Erster unabhängiger Bestandsabgleich am 2026-11-05, Basis `b16167c`, ADR-050. N
 |---|---|---|
 | Takt & Weltzustand | 2026-11-05, `b16167c` | geprüfte Reihenfolge ohne weitere gefundene Abweichung; Personen-Hash/Restore K2 in Q.10-N3 mitbetroffen |
 | Welt & Bau | 2026-11-05, `b16167c` | FIFO-Verantwortungsbeschreibung K4 klären, Q.10-N3 |
-| Personen | 2026-11-05, `b16167c` | K1–K4 mittel; bleibt VORLÄUFIG, Beförderung und Abschluss 3.2 gesperrt bis Q.10-N3 |
+| Personen | 2026-11-05, `b16167c`; Gegenproben auf `b01ae6c` | K1/K2 inzwischen dynamisch bestätigt, K3/K4 weiter offen; bleibt VORLÄUFIG. [N3-Vorlage](research/q.10-n3-vorlage.md), keine Korrektur oder Beförderung vorweggenommen |
 | Brücke | 2026-11-05, `b16167c` | D1 redaktionell ergänzt; S-8-Gegenstelle mit P1–P4 in Q.10-N2 |
 | Plattform | 2026-11-05, `b16167c` | P1–P4 mittel, Q.10-N2; keine neue Beförderung im betroffenen Umfang |
 | Inhalte & Mods (Lader) | 2026-11-05, `b16167c` | D2/D3 niedrig, Q.10-N4; Transportgrenzen P4 in Q.10-N2 |

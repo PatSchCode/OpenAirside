@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-11-05 (ADR-050: Dev-Templates gezielt ergänzen, bestehende Projektentscheidungen erhalten)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** keiner; Q.10 erledigt auf `179aaed` (PR #48, CI und Security grün). 3.2 ist mit PR #47 auf `b16167c` gemergt; dessen CI-Nachweise liegen vor, der fachliche Abschluss bleibt wegen K1–K4 offen.
+- **Aktiver Schritt:** keiner; Q.10-N3-Gegenproben und Vorlage erstellt, wartet auf die Entscheidung A/B. Keine Produktkorrektur vor Freigabe. Q.10 ist gemergt (PR #48, `b01ae6c`); 3.2 bleibt wegen K1–K4 offen.
 - **Nächster Schritt:** Q.10-N3 (Passagierzustand, Save/Load und Umfang 3.2) sowie Q.10-N2 (S-8-Validierung) entscheiden; danach 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-041 bis ADR-050; bekannte Muster nach Regel-009 und Reflexion zu ADR-045 behandeln.
 
@@ -468,7 +468,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N3: Passagierzustand, Save/Load und beschlossenen 3.2-Umfang klären
 
-- **Status:** `[WARTET-AUF-FREIGABE]` – Befunde K1–K4 verhindern den Abschluss von 3.2 und die Beförderung Personen.
+- **Status:** `[WARTET-AUF-FREIGABE]` – Gegenproben und konkrete Vorlage erstellt; K1/K2 dynamisch bestätigt, Überlauf verletzt FIFO. Produktkorrektur und Geduldumfang nicht freigegeben; 3.2 bleibt offen.
 - **Frist:** 2026-11-12; Klärung vor 3.11.
 - **Empfohlene Klasse:** Entscheidung wegen Spielstandvalidierung, Datenmodell und Verantwortungsfrage.
 - **Abhängigkeiten:** ADR-048/049 und Prüfbericht Q.10.
@@ -477,6 +477,8 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Testsignal:** Manipulierte Zustände müssen fehlschlagen; identische Befehlsfolgen vor/nach Laden über weitere Stationswechsel behalten dieselbe Prüfsumme. Geduld bzw. genehmigter Descope ist nachvollziehbar dokumentiert.
 - **Betroffene Module:** Personen, Welt & Bau, Takt & Weltzustand, Spielstand S-5.
 - **Landeplatz:** Korrekturen gehören zum fehlenden Abschlussumfang von 3.2; dieser Nachprüfschritt zählt nicht als neue Phase-3-Funktion.
+- **Vorlage:** `docs/research/q.10-n3-vorlage.md`; vollständige isolierte Testquellen in `docs/research/q.10-n3-gegenproben.md`. Empfehlung A: Format 5 mit vollständig abgeleiteter Nummernvergabe und definierter Verdichtung; vollständige Validierung; Geduld ausdrücklich nach 5.4; bestehende Verantwortungen bestätigen. B: Geduld bereits für Abschluss 3.2 konkret entwerfen. Noch kein ADR-051 und kein Descope vorgenommen.
+- **Beobachtete Gegenproben:** bestehende 5 Personen-Tests grün; neue Unit-Kontrollen 2 grün und 4 erwartete Befundtests rot; Integration 1 Kontrolle grün und 1 Rundlauf rot. Voller Save/Load-Hash direkt gleich, nach 102 Folgeticks abweichend. Exit 101 der isolierten Negativproben ist ein bestätigter Fehlernachweis, keine bestandene Korrektur oder rote Projekt-CI.
 
 #### Q.10-N4: Niedrige S-4-Dokumentationsbefunde präzisieren
 
