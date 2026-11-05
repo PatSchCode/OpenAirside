@@ -471,7 +471,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N3: Passagierzustand, Save/Load und beschlossenen 3.2-Umfang klären
 
-- **Status:** `[ERLEDIGT]` – Option A nach ADR-051 auf `9bba166` umgesetzt, lokale Gates/Hook, unabhängige Sicherheitsnachprüfung und volle CI/Security grün. K1/K2 korrigiert, K3 ausdrücklich nach 5.4 verschoben, K4 Verantwortung bestätigt. 3.2 bleibt für N2/Abschlussabgleich offen.
+- **Status:** `[ERLEDIGT]` – Option A nach ADR-051 auf `9bba166` umgesetzt, lokale Gates/Hook, unabhängige Sicherheitsnachprüfung und volle CI/Security grün. K1/K2 korrigiert, K3 ausdrücklich nach 5.4 verschoben, K4 Verantwortung bestätigt. 3.2 bleibt für seinen Abschlussabgleich offen.
 - **Frist:** 2026-11-12; Klärung vor 3.11.
 - **Empfohlene Klasse:** Entscheidung wegen Spielstandvalidierung, Datenmodell und Verantwortungsfrage.
 - **Abhängigkeiten:** ADR-048/049 und Prüfbericht Q.10.
@@ -496,6 +496,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 #### Q.10-N5: S-8-Portübergabe im Kern-Host prüfen
 
 - **Status:** `[ERLEDIGT]` 2026-11-05 – Paket A nach ADR-053 auf `c295ebb` umgesetzt; 20 neue Hostfälle, 529 Gesamttests, zwei Electron-E2E, lokale Gates/Hook, unabhängige Prüfung und volle Code-CI/Security grün; [Nachweise](research/q.10-n5-umsetzung.md).
+- **Merge-Nachweis:** PR #51 auf `1009723` gemergt; Main-CI 42120517838 und Security 42120517802 abgeschlossen und grün, Produktcode unverändert.
 - **Frist:** 2026-11-12; vor Abschluss 3.2/Erkundung 3.11 klären.
 - **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit.
 - **Abhängigkeiten:** S-8 und ADR-032; getrennt von der N2-Freigabe P1–P4.

@@ -24,6 +24,13 @@ Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – N5 gemergt und Main geprüft
+
+- **Ergebnis:** [PR #51](https://github.com/PatSchCode/OpenAirside/pull/51) mit geprüftem Kopf `b253bf1` nach `main` gemergt, Merge `100972316ed2304baefc3ac451049edfb07eff40`. Abschlusskopf: CI 42120168766 und Security 42120168613 grün (16 bestanden, sieben dokumentationsbedingt übersprungen); volle Code-Abnahme zuvor auf `c295ebb`.
+- **Main-Nachweise:** [CI 42120517838](https://github.com/PatSchCode/OpenAirside/actions/runs/42120517838) und [Security 42120517802](https://github.com/PatSchCode/OpenAirside/actions/runs/42120517802) auf `1009723` vollständig abgeschlossen und grün. Arbeitsbranch auf den Merge fast-forwarded; Produktdiff gegen `c295ebb` leer. Keine Produktänderung nach unabhängiger Prüfung.
+- **Konsistenz/Offenes:** Bericht und Fahrplan ergänzt; veralteten N2-Verweis im bereits erledigten N3-Schritt auf den verbleibenden 3.2-Abschlussabgleich präzisiert. README, ADR-Register/Quote 3/10 bzw. 20/53, Reifegrade, Anforderungen, Blocker, Fristen und Budgets geprüft. Keine neue fällige Maßnahme. Nächster Schritt: Abschlussabgleich 3.2 vor 3.11; keine vorweggenommene Beförderung.
+- **Bilanz/Commit:** kurze Merge-Fortsetzung, Dauer nicht separat gemessen; Codex laut Systemkontext, Hauptklasse/Kontextgröße unbestimmbar, keine weitere Delegation. Dieser Vermerk wird mit aktivem Hook committed/gepusht und bleibt gemäß Eigentümerregel ohne neuen PR auf dem Arbeitsbranch; mit dem nächsten Schritt nach main übernehmen.
+
 ### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N5 Option A nachgewiesen
 
 - **Dauer/Arbeit:** nicht separat gemessen; Freigabe „a“, ADR-053 vor Code auf `13e5cee`, zwölf Guard-Zeilen und 20 registrierte Hostregressionen auf `c295ebb`; beide Checkpoints mit aktiven Hooks committed/gepusht. Kein Produktcode nach unabhängiger Prüfung geändert.
