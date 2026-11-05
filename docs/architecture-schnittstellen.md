@@ -231,6 +231,12 @@ Befehle und Abfragen adressieren Zellen, Rechtecke oder Handles. Positionen von 
   - **Bauaufträge und Bauarbeiter (3.1c, ADR-045, Format 4):** Welt & Bau speichert zusätzlich die offenen Aufträge (Handle, Typ, Art mit Flächenart und Kostenfaktor bzw. Drehung und `blocks`, Fußabdruck, Arbeitsmenge und geleistete Arbeit in Ticks eines Bauarbeiters) in Handle-Reihenfolge, den Zähler für das nächste Auftrags-Handle und die Anlieferstellen (Objekt-Handle, Zahl der Bauarbeiter).
   - **Terminalfluss (3.2, ADR-048, Format 5):** Welt & Bau speichert Terminalstationen (`checkIn`, `security`, `gate`, `exit`) mit Ziel, Wartezellen, Kapazität und Durchsatz. Personen speichern zusätzlich Gruppe, Zustand, FIFO-Reihenfolge und Wartezeit. Die S-7-Abfrage `terminalStations` liefert pro Station aus demselben Bild-Schnappschuss Warteschlangenlänge, aktuelle Wartezeit, Bedienungen im letzten Tick, Kapazität und Durchsatz. Format 4 wird vor 1.0 mit `migrationFailed` abgewiesen; fehlerhafte Stationen ergeben `invalidState` mit `check` `stations`.
 
+### S-5-Präzisierung Q.10-N3 (ADR-051)
+
+Format 5 bleibt erhalten. Die Ladeprüfung erlaubt nur neutrale Personen (Gruppe 0, Zustand/Queue/Wartezeit 0) und Abflug/Ankunft (1/2) mit gültiger Stationsart und travelling/waiting/complete. Travelling hat Queue/Wartezeit 0; waiting darf ohne Zulassung Nummer 0 tragen, complete darf Restwerte behalten, auch bei frühem Routenende. Positive Nummern sind global eindeutig; zugelassene Wartende sind je Station durch Wartezellen begrenzt. Stationsziele und Wartezellen sind eindeutig. Fehler vor Sitzungsübernahme: `invalidState`, `check` = `personState`, `personStation`, `personQueueOrder`, `personQueueCapacity`, `stationTargets` oder `stationQueueCells`; bisherige geometrische Prüfungen bleiben bestehen.
+
+Das Personenmodul leitet vor jeder Zulassung Nummern aus allen gespeicherten positiven Werten einschließlich complete ab. Bei unzureichendem Zahlenraum für den Batch werden bestehende Werte ordnungserhaltend verdichtet; keine Normalisierung nur beim Laden. Die unmittelbare Prüfsumme und die Fortsetzung bleiben damit vom gespeicherten Zustand bestimmt. Keine zusätzliche allgemeine Gleichheit von Kapazität und Wartezellenzahl.
+
 <!-- ANCHOR:s-6-plattform-api -->
 ## Schnittstelle: S-6 Plattform-API (Präsentation ↔ Plattform) [BELASTBAR]
 
@@ -290,6 +296,7 @@ Additive, rückwärtskompatible Ergänzungen nach Regel-008 (ohne eigenen ADR). 
 
 | Datum | Schnittstelle | Ergänzung | Schritt | Grundlage |
 |---|---|---|---|---|
+| 2026-11-05 | S-5 | Format 5 unverändert; strengere Passagier-/Stationsinvarianten und vollständig abgeleitete FIFO-Vergabe mit Überlaufverdichtung | Q.10-N3 | ADR-051 |
 | 2026-10-20 | S-7 | Katalog: feste Reihenfolge, Index = Verweis-Nummer in S-1 | 3.8 (Umsetzung 3.1) | Regel-008, im Rahmen von ADR-038 vorgelegt und freigegeben |
 | 2026-10-21 | S-5 | Format-Version 2 des Weltzustands: Gliederung nach Fachmodulen, getragene interne Ereignisse; Version 1 → `migrationFailed` (nicht additiv, nach der Versionierungsregel von S-5) | 3.9 | ADR-039 |
 | 2026-10-25 | S-7 | `catalog`: Abfrage und Antwort `queryResult { catalog }` mit `CatalogEntry[]` | 3.1a | Regel-008, ADR-032 (L-2), ADR-038 |

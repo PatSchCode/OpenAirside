@@ -15,7 +15,6 @@ Die 30 jüngsten ADRs stehen hier; [vollständige Übersicht](archiv/decisions-u
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
-| 021 | 2026-10-13 | Aktiv (S-6 für Pakete geändert durch ADR-026, um `saves.preview` ergänzt durch ADR-028, `onCoreExit` durch ADR-029, `lang.*` und Modul-Karte durch ADR-031; S-5-Grenzen geändert durch ADR-030; fortgeschrieben und um S-8 ergänzt durch ADR-032; S-1 fortgeschrieben durch ADR-038) | ERKENNTNIS | SCHNITTSTELLE, SECURITY | API-Verträge, Architektur, Sicherheit | Schnittstellenverträge S-2 bis S-7 |
 | 022 | 2026-10-13 | Aktiv | OPERATIV | DEPLOYMENT, PERFORMANCE | Build/Deploy | Kern-Benchmark als CI-Gate und Prüfung der erzeugten TypeScript-Typen |
 | 023 | 2026-10-13 | Aktiv | OPERATIV | DEPLOYMENT, PERFORMANCE | Build/Deploy | Wegweiser-Benchmark als Schritt im CI-Job „Kern-Benchmark“ |
 | 024 | 2026-10-14 | Aktiv (Einschränkung auf die Brücke aufgehoben durch ADR-025) | OPERATIV | STACK, SCHNITTSTELLE | Externe Abhängigkeiten | Umwandlung JS ↔ Rust in der Brücke mit napi `serde-json` |
@@ -42,13 +41,15 @@ Die 30 jüngsten ADRs stehen hier; [vollständige Übersicht](archiv/decisions-u
 | 045 | 2026-10-28 | Aktiv | REAKTIV | DATENMODELL, SCHNITTSTELLE | Datenmodell, API-Verträge, Build/Deploy | Bauaufträge mit Bauarbeitern, Anlieferstelle, Gelände in neuen Karten |
 | 046 | 2026-10-29 | Überholt durch ADR-047 | STRATEGISCH | METHODIK | Methodik | Neuausrichtung als eigenes Flughafen-Aufbauspiel |
 | 047 | 2026-11-04 | Aktiv | REAKTIV | METHODIK, COMPLIANCE | Produktvision, Lizenz/Compliance | Rückkehr zur umfassenden Flughafenmanagementsimulation |
-| 048 | 2026-11-04 | Aktiv | STRATEGISCH | DATENMODELL, SCHNITTSTELLE, MODUL | Datenmodell, API-Verträge, Architektur | Minimaler Passagierfluss und Terminalstationen in Schritt 3.2 |
+| 048 | 2026-11-04 | Aktiv (Geduldumfang fortgeschrieben durch ADR-051) | STRATEGISCH | DATENMODELL, SCHNITTSTELLE, MODUL | Datenmodell, API-Verträge, Architektur | Minimaler Passagierfluss und Terminalstationen in Schritt 3.2 |
 | 049 | 2026-11-04 | Aktiv | OPERATIV | DATENMODELL, SCHNITTSTELLE, PERFORMANCE | Datenmodell, API-Verträge | Additive Stationsverbesserung für die erste Terminallektion |
 | 050 | 2026-11-05 | Aktiv | OPERATIV | METHODIK | Methodik | Dev-Templates gezielt in OpenAirsides Codex-Regeln übernehmen |
 
+| 051 | 2026-11-05 | Aktiv | REAKTIV | DATENMODELL, SECURITY, SCHNITTSTELLE, MODUL | Sicherheit, Datenmodell, API-Verträge, Architektur | Passagierzustände validieren und FIFO aus Format 5 ableiten |
+
 ### Reaktiv-Quote
 
-- **Aktueller Wert:** 3 / 10 über die letzten 10 ADRs (ADR-041 bis ADR-050: ADR-042, ADR-045, ADR-047), 30 % – **über dem Schwellenwert**; gesamt 19 / 50. ADR-047 ist eine strategische Korrektur ohne Architektur- oder Codeänderung. Reflexionen in `fahrplan.md` Abschnitt „Iterations-Reflexion" (letzte: Anlass ADR-045, 2026-10-28, neues Muster nach Regel-009); ab Phase 3 eine Reflexion je Phase bei gleichem Muster (Regel-009)
+- **Aktueller Wert:** 4 / 10 über ADR-042 bis ADR-051 (ADR-042, ADR-045, ADR-047, ADR-051), 40 % – **über dem Schwellenwert**; gesamt 20 / 51. Reflexion zu ADR-051 vor Code im Fahrplan durchgeführt; keine stille Umklassifikation.
 - **Schwellenwert (in `project-context.md` festgelegt):** maximal 20 % über die letzten 10 ADRs
 - **Bei Überschreitung:** Regel-009 anwenden: bekanntes Muster mit bestehender Reflexion verknüpfen; bei neuem Muster sofort STOPP und Reflexion. Die Quote zählt die festgehaltenen Klassifikationen; keine stille Umklassifikation älterer ADRs.
 
@@ -147,6 +148,9 @@ Seit 2026-10-13 liegt jeder ADR als eigene Datei in `docs/decisions/` (ADR-001: 
 - [ADR-047: Rückkehr zur umfassenden Flughafenmanagementsimulation](decisions/ADR-047.md)
 - [ADR-048: Minimaler Passagierfluss und Terminalstationen in Schritt 3.2](decisions/ADR-048.md)
 - [ADR-049: Additive Stationsverbesserung für die erste Terminallektion](decisions/ADR-049.md)
+
+- [ADR-050: Dev-Templates gezielt übernehmen](decisions/ADR-050.md)
+- [ADR-051: Passagierzustände validieren und FIFO ableiten](decisions/ADR-051.md)
 
 ---
 

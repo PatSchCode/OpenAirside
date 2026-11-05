@@ -8,12 +8,12 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-11-05 (ADR-050: Dev-Templates gezielt ergänzen, bestehende Projektentscheidungen erhalten)
+- **Stand vom:** 2026-11-05 (ADR-051: Passagierkorrektur Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** keiner; Q.10 erledigt auf `179aaed` (PR #48, CI und Security grün). 3.2 ist mit PR #47 auf `b16167c` gemergt; dessen CI-Nachweise liegen vor, der fachliche Abschluss bleibt wegen K1–K4 offen.
-- **Nächster Schritt:** Q.10-N3 (Passagierzustand, Save/Load und Umfang 3.2) sowie Q.10-N2 (S-8-Validierung) entscheiden; danach 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
-- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-041 bis ADR-050; bekannte Muster nach Regel-009 und Reflexion zu ADR-045 behandeln.
+- **Aktiver Schritt:** keiner; Q.10-N3 auf `9bba166` lokal, unabhängig und durch volle CI nachgewiesen. Q.10 ist gemergt; 3.2 bleibt für seinen Abschlussabgleich offen.
+- **Nächster Schritt:** Q.10-N2 (S-8-Validierung) entscheiden; danach 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 4 / 10 über ADR-042 bis ADR-051; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -253,7 +253,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). Befunde K1–K4 aus Q.10-N3 vor fachlichem Abschluss klären.
+- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). K1–K4 durch Q.10-N3/ADR-051 korrigiert bzw. ausdrücklich aufgelöst; N2 und Abschlussabgleich vor 3.11 offen.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
@@ -261,8 +261,8 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Eingangskriterien:** 3.1 erledigt; Vorlage mit Referenzen aus Inventar und Modernisierung nach Regel-004 freigegeben
 - **Referenzen (Regel-004):** die betroffenen Inventar- und Modernisierungs-IDs werden vor Umsetzung in der Vorlage festgehalten
 - **Anforderungen (ab Klasse M):** FR-007, FR-012, FR-016, FR-019, FR-020, FR-022, FR-053, FR-057, FR-067
-- **Zu tun:** Kleiner Bestandsflughafen auf Gelände als Szenario mit einem lösbaren Engpass (FR-067); kleines Terminal mit Check-in, Sicherheit, Gate, Boarding und Toiletten; Zonen und Räume in Grundform; Wartezeit-Overlay (FR-057); erste Lektion am Engpass (FR-007); Passagierablauf Abflug und Ankunft mit Bedürfnissen und Zielwahl im Modul Personen (`TODO(fahrplan-ref: 3.2)` in `world.rs`); Personalzonen (ZON-02, nur verlassen für Fluggäste), Zugangsprofile der Ziele, Personal und Sicherheitsbeamte (ohne Zonenregel) an Schalter, Kontrolle und Gate, landseitige Ziele ohne Weg über die Kontrolle (ADR-037); Gruppe und Zustand der Personen im Bild (S-1 Layout 2, ADR-038). Bauphasen und Umleitungen aus ADR-046 bleiben nur nach separater Priorisierung Kandidaten.
-- **Akzeptanzkriterien:** Nach freigegebener Vorlage A: `core/tests/pax_flow.rs` grün; eine Spielstunde im Szenario ohne dauerhaften Stillstand; FIFO, Kapazität, Durchsatz und Wartezeit sind aggregiert über S-7 sichtbar; Overlay benennt den Engpass. Bauphasen, Toiletten, Personal, detaillierte Stationstests und neue Grafiken liegen außerhalb der freigegebenen Minimalfluss-Abgrenzung und bleiben in ihren vorgesehenen Schritten.
+- **Zu tun:** Kleiner Bestandsflughafen auf Gelände als Szenario mit einem lösbaren Engpass (FR-067); kleines Terminal mit Check-in, Sicherheit, Gate, Boarding und Toiletten; Zonen und Räume in Grundform; Wartezeit-Overlay (FR-057); erste Lektion am Engpass (FR-007); Passagierablauf Abflug und Ankunft mit Stationsfolge im Modul Personen; Bedürfnisse/Geduld ausdrücklich nach 5.4 verschoben (ADR-051); Personalzonen (ZON-02, nur verlassen für Fluggäste), Zugangsprofile der Ziele, Personal und Sicherheitsbeamte (ohne Zonenregel) an Schalter, Kontrolle und Gate, landseitige Ziele ohne Weg über die Kontrolle (ADR-037); Gruppe und Zustand der Personen im Bild (S-1 Layout 2, ADR-038). Bauphasen und Umleitungen aus ADR-046 bleiben nur nach separater Priorisierung Kandidaten.
+- **Akzeptanzkriterien:** Nach freigegebener Vorlage A: `core/tests/pax_flow.rs` grün; eine Spielstunde im Szenario ohne dauerhaften Stillstand; FIFO, Kapazität, Durchsatz und Wartezeit sind aggregiert über S-7 sichtbar; Overlay benennt den Engpass. Geduld/Bedürfnisse sind durch ADR-051 ausdrücklich nach 5.4 verschoben; FR-016 bleibt offen. Bauphasen, Toiletten, Personal, detaillierte Stationstests und neue Grafiken liegen außerhalb der freigegebenen Minimalfluss-Abgrenzung und bleiben in ihren vorgesehenen Schritten.
 - **Betroffene Module:** Personen, Welt & Bau, Wegfindung & Passagierführung, Takt & Weltzustand, Spielfeld, Oberfläche
 - **Reifegrad-Wirkung:** Modul Personen → `[BELASTBAR]` im umgesetzten Umfang
 - **Artefakte:** Kern-Code, Datenpaket-Inhalte, Tests
@@ -401,7 +401,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 | 5.1 | Spielstart vollständig: Standort, Kartengröße, Sandbox, Einstellungen (`game.new` vollständig, ADR-032, L-3); lokalisierte Meldung bei `incompatible` statt Konsolenzeile (ADR-032, R-8); Flughafenname im Weltzustand und in den Spielstand-Metadaten (META-02, Feld leer seit 2.5); Spielmenü mit Speichern, Laden und Spielstand-Liste (ersetzt die einfache Liste aus 2.5); Einstellungs-Menü (ersetzt das minimale Panel aus 2.6) mit der Grafik-Einstellung „alle Einzelheiten in der Übersicht“ (ADR-038, Voreinstellung vereinfacht), dabei Obergrenze des Autosave-Intervalls (60 Minuten, Schätzung aus 2.6, ADR-031) überprüfen | FR-001, FR-002, FR-005, FR-067 |
 | 5.2 | Etagen, Zonen (international), Bauen vollständig mit Bauphasen, Störwirkung von Baustellen und freieren Raumformen | FR-010, FR-012, FR-053, FR-055, FR-056 |
 | 5.3 | Landseite: Parken, ÖPNV, Kreuzungen mit wählbarer Vorfahrt | FR-013, FR-015 |
-| 5.4 | Terminal vollständig: Umsteiger und Umsteigebank, moderner Check-in, Kontrollspuren, Grenze, Läden, Info | FR-019 bis FR-024, FR-060 |
+| 5.4 | Terminal vollständig: Umsteiger und Umsteigebank, moderner Check-in, Kontrollspuren, Grenze, Läden, Info; Bedürfnisse/Geduld (ADR-051) | FR-016, FR-019 bis FR-024, FR-060 |
 | 5.5 | Airside, Gepäck mit dreistufiger Kontrolle, Flüge, Abfertigung vollständig, Startfreigabe, Beiladefracht, Slots in Verträgen | FR-025, FR-026, FR-027, FR-029, FR-030, FR-032, FR-048, FR-061 |
 | 5.6 | Personal, Wirtschaft, Forschung, Ziele, Bewertungen, Notfälle, Störungen und Tutorial; große Tabellen für Personal und Finanzen; Aufgabenfelder für wechselnde Einzelziele des Personals (Technik, Reinigung) mit Vermeiden doppelter Zuteilung (ADR-037) | FR-007, FR-008, FR-033 bis FR-039, FR-062, FR-068 |
 | 5.7 | Flugzeugtypen und Airlines als Daten, vollständige im Inventar vorgesehene Klassen | FR-031 |
@@ -468,7 +468,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N3: Passagierzustand, Save/Load und beschlossenen 3.2-Umfang klären
 
-- **Status:** `[WARTET-AUF-FREIGABE]` – Befunde K1–K4 verhindern den Abschluss von 3.2 und die Beförderung Personen.
+- **Status:** `[ERLEDIGT]` – Option A nach ADR-051 auf `9bba166` umgesetzt, lokale Gates/Hook, unabhängige Sicherheitsnachprüfung und volle CI/Security grün. K1/K2 korrigiert, K3 ausdrücklich nach 5.4 verschoben, K4 Verantwortung bestätigt. 3.2 bleibt für N2/Abschlussabgleich offen.
 - **Frist:** 2026-11-12; Klärung vor 3.11.
 - **Empfohlene Klasse:** Entscheidung wegen Spielstandvalidierung, Datenmodell und Verantwortungsfrage.
 - **Abhängigkeiten:** ADR-048/049 und Prüfbericht Q.10.
@@ -477,6 +477,9 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Testsignal:** Manipulierte Zustände müssen fehlschlagen; identische Befehlsfolgen vor/nach Laden über weitere Stationswechsel behalten dieselbe Prüfsumme. Geduld bzw. genehmigter Descope ist nachvollziehbar dokumentiert.
 - **Betroffene Module:** Personen, Welt & Bau, Takt & Weltzustand, Spielstand S-5.
 - **Landeplatz:** Korrekturen gehören zum fehlenden Abschlussumfang von 3.2; dieser Nachprüfschritt zählt nicht als neue Phase-3-Funktion.
+- **Vorlage:** `docs/research/q.10-n3-vorlage.md`; vollständige isolierte Testquellen in `docs/research/q.10-n3-gegenproben.md`. Empfehlung A: Format 5 mit vollständig abgeleiteter Nummernvergabe und definierter Verdichtung; vollständige Validierung; Geduld ausdrücklich nach 5.4; bestehende Verantwortungen bestätigen. B: Geduld bereits für Abschluss 3.2 konkret entwerfen. Option A freigegeben; ADR-051 bestätigt Umfang und Verantwortungen.
+- **Abschlussnachweis:** [Umsetzungsbericht](research/q.10-n3-umsetzung.md); 341 Rust-/490 Vitest-Tests, zwei Electron-E2E, 4.000 Folgeticks hashgleich, atomare Ablehnung, MAX/MAX-1, Lasttest bis 200.000. Kern-Coverage 98,10 %, Personen 98,48 %. [CI 42049026540](https://github.com/PatSchCode/OpenAirside/actions/runs/42049026540) und [Security 42049026580](https://github.com/PatSchCode/OpenAirside/actions/runs/42049026580) bestanden. PR #49 noch offen; Abschlussdokumentation folgt mit neuem Kopf.
+- **Beobachtete Gegenproben:** bestehende 5 Personen-Tests grün; neue Unit-Kontrollen 2 grün und 4 erwartete Befundtests rot; Integration 1 Kontrolle grün und 1 Rundlauf rot. Voller Save/Load-Hash direkt gleich, nach 102 Folgeticks abweichend. Exit 101 der isolierten Negativproben ist ein bestätigter Fehlernachweis, keine bestandene Korrektur oder rote Projekt-CI.
 
 #### Q.10-N4: Niedrige S-4-Dokumentationsbefunde präzisieren
 
@@ -822,6 +825,15 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Maßnahme (13):** Entsteht eine neue Maßnahme, wendet die KI sie im selben Arbeitsgang auf alle offenen Stufen und Schritte der laufenden Vorlage an, nicht nur auf die gerade bearbeitete Teilaufgabe.
 - **Ausblick:** Sind die folgenden ADRs nicht reaktiv, sinkt die Quote auf 4 / 10 ab ADR-046, 3 / 10 ab ADR-047 und 2 / 10 (Schwellenwert eingehalten) ab ADR-048.
 - **Kenntnisnahme:** Projektinhaber am 2026-10-28 per Auswahl („Übernehmen“ für Festlegungen, Einstufung und Maßnahme (13)); kein Umbau, Maßnahme (13) gilt.
+
+### Ergänzung Reaktiv-Quote (2026-11-05, Anlass ADR-051; neues Muster nach Regel-009)
+
+- **Befund:** 4/10 reaktiv über ADR-042 bis ADR-051, gesamt 20/51. Reflexion vor Code durchgeführt.
+- **Ursache:** Unmittelbarer Rundlauf statt weiterer Stationsfolge geprüft; neue Passagierfelder nicht vollständig in Ladevalidierung erfasst. Geduld-TODO ersetzte keine Umfangsentscheidung.
+- **Architektur:** Änderungen in Welt & Bau und Takt & Weltzustand verlangen Reflexion. Kein Umbau der Modulgrenzen nötig; vorhandene Leserichtung reicht aus.
+- **Maßnahme im freigegebenen Paket:** vollständige Zustandsmatrix mit positiven Kontrollen, atomarer Ablehnung und mehrstufiger Fortsetzung; Überlauf und Last nachweisen. Keine neue CI oder Methodik.
+- **5.4-Landeplatz:** deterministisch gespeicherte Bedürfnisse/Geduld, nachvollziehbare Wartezeitwirkung, sichtbare Erschöpfungsreaktion mit Diagnose, sichere Route-/Queue-Übergänge, identische Save/Load-Fortsetzung; Tests für Schwellen, Reaktion und Erholung. Konkrete Werte und Reaktionen vor Umsetzung entscheiden. FR-016 bleibt offen.
+- **Freigabe:** Option A durch Projektinhaber am 2026-11-05; N2 getrennt.
 
 <!-- ANCHOR:parallelisierbarkeit -->
 ## Parallelisierbarkeit

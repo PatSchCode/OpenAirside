@@ -57,9 +57,11 @@ Zeilen beziehen sich auf die unveränderte Codebasis `b16167c`; Dokumentzeilen a
 
 ## Umfang ohne weitere gefundene Abweichung
 
+Nachprüfung 2026-11-05 in Q.10-N3: K1 und K2 durch isolierte dynamische Proben einschließlich vollständigem Container-Rundlauf bestätigt; zusätzlich FIFO-Verletzung beim Überlauf nachgewiesen. Die frühere Kennzeichnung „statisch“ in der Befundtabelle beschreibt den ursprünglichen Abgleich. Aktuelle Ergebnisse und offene Korrekturentscheidung: [N3-Vorlage](q.10-n3-vorlage.md); keine Produktkorrektur vorweggenommen.
+
 Im geprüften Zusammensetzungspfad: Build → Wayfinding → Persons, interne Bauarbeiterereignisse, S-7-Snapshot; Prozessaufteilung und Bildtransport; benannte S-6-Aufrufe; JSON-only-Lader und atomare Paketübernahme; Sprachfallback; Build-only-Grafikrasterung und Atlasanbindung in drei Stufen. „Keine weitere Abweichung gefunden“ ist keine Gesamtfreigabe dieser Module.
 
-Ungeprüft bleiben dynamische Gegenproben zu K1–P4, vollständige Aufrufkombinationen, sämtliche vorläufigen Fachmodule außerhalb Personen, erneute plattformübergreifende Laufzeitmessungen und die komplette Verhaltensabnahme der Agentenmethodik in dieser Desktop-Oberfläche. Bestandenes Upstream-Verhalten in einer Cloud-Aufgabe gilt nicht automatisch hier.
+Weiterhin ungeprüft bleiben die vollständige Validierungsmatrix und die Wirksamkeit einer Korrektur für K1/K2 sowie dynamische Gegenproben zu P1–P4, vollständige Aufrufkombinationen, sämtliche vorläufigen Fachmodule außerhalb Personen, erneute plattformübergreifende Laufzeitmessungen und die komplette Verhaltensabnahme der Agentenmethodik in dieser Desktop-Oberfläche. Bestandenes Upstream-Verhalten in einer Cloud-Aufgabe gilt nicht automatisch hier.
 
 ## Dokument- und Abschlussnachweise
 

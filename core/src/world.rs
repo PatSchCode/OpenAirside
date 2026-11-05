@@ -616,6 +616,9 @@ impl RestoredWorld {
             delivery,
         )
         .map_err(invalid)?;
+        persons
+            .validate_stations(self.build.stations())
+            .map_err(invalid)?;
         Ok(World {
             build: self.build,
             wayfinding: prepared.resume(mode, background),
