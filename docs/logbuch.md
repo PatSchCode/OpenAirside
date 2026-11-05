@@ -24,6 +24,14 @@ Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-05 (Europe/Berlin) – [SESSIONSTART] – Q.10-N2 Option A umsetzen
+
+- **Freigabe:** „freigabe a“ für das konkrete Paket P1–P4 der N2-Vorlage. N5 bleibt ausdrücklich getrennt; keine neue Architekturbeziehung, Abhängigkeit oder CI-Änderung.
+- **Stand-Prüfung:** sauber auf `92b8889`, Branch `docs/q-10-n2-s8-vorlage`, Remote identisch; PR #50 offen/CLEAN, main unverändert `468bc32`. Vorlagen-CI 42058912533 und Security 42058912545 grün. Bestehender PR wird fortgeführt, kein zweiter PR.
+- **Pflichtlektüre:** Projektkontext vollständig, letztes Sessionende, Fahrplanstand/Phase/N2 und offene Schrittstände, Architektur 1/2/9, Entscheidungen A/C, aktive Blocker und Requirements-Übersicht; N2-Vorlage und S-8 vertieft. Abgeschnittene Stellen gezielt nachgelesen.
+- **Checkpoints/Testsignal:** Sicherheits-ADR vor Code; Status/Korrelation und Sprachgrenzen mit gezielten Regressionen; Integration gegen tatsächlichen Main-Listener ohne Produkt-Testzugriffe; vollständige Gates/Coverage, unabhängige Nachprüfung, Commit/Push/CI und Merge. Alte oder unlesbare IDs dürfen keine fremde Anfrage beenden; passende ungültige Antworten geben Locks sofort frei; Folgeanfragen funktionieren. 4.096/4.097 Codepoints und Rust-kompatibles Whitespace schützen gültige Sprachwerte.
+- **Modell/Quelle:** Codex laut Systemkontext, Hauptklasse/Kontextgröße unbestimmbar. Unabhängige Astra-Vorentscheidung liegt vor; Nachprüfung der Umsetzung erfolgt separat und nur lesend.
+
 ### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N2 Entscheidungsvorlage
 
 - **Dauer/Arbeit:** nicht separat gemessen; P1–P4 gegen S-4/S-6/S-8 und Gegenstellen gelesen, isolierte Handler-/Dienst-/Parserproben ausgeführt und [konkretes Paket A/B](research/q.10-n2-vorlage.md) mit [Testquellen](research/q.10-n2-gegenproben.md) vorbereitet. N3-Abschlusscommit `d160277` auf neuen Branch `docs/q-10-n2-s8-vorlage` übernommen.

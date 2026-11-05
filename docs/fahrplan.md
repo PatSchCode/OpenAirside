@@ -11,9 +11,9 @@
 - **Stand vom:** 2026-11-05 (ADR-051: Passagierkorrektur Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** keiner; Q.10-N2-Gegenproben und Entscheidungsvorlage erstellt, wartet auf Sicherheitsfreigabe. N3 gemergt und nachgewiesen; 3.2 bleibt für seinen Abschlussabgleich offen.
-- **Nächster Schritt:** Q.10-N2 Option A/B entscheiden; nach Korrektur auch den getrennten Port-Befund N5 klären, dann 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
-- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 4 / 10 über ADR-042 bis ADR-051; Reflexion zu ADR-051 vor Code durchgeführt.
+- **Aktiver Schritt:** Q.10-N2 `[IN ARBEIT]`; Paket A freigegeben und ADR-052 vor Code angelegt. N3 gemergt und nachgewiesen; 3.2 bleibt für seinen Abschlussabgleich offen.
+- **Nächster Schritt:** Q.10-N2 umsetzen und nachweisen; nach Korrektur auch den getrennten Port-Befund N5 klären, dann 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-043 bis ADR-052; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -456,7 +456,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N2: S-8-Antwortprüfung und Fehlerzuordnung korrigieren
 
-- **Status:** `[WARTET-AUF-FREIGABE]` – P1–P4 dynamisch bestätigt; konkrete Vorlage A/B und unabhängige Astra-Bewertung liegen vor. Kein Produktcode geändert.
+- **Status:** `[IN ARBEIT]` – Paket A ausdrücklich freigegeben, ADR-052 vor Code; P1–P4 korrigieren und nachweisen. N5 bleibt getrennt.
 - **Frist:** 2026-11-12 für Entscheidung und Umsetzungsplanung.
 - **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit, danach Ausführung.
 - **Abhängigkeiten:** Prüfbericht `docs/research/q.10-methodik-abgleich.md`, vorhandener S-8-Vertrag.
