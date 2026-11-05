@@ -53,7 +53,7 @@ Bei jeder neuen Entscheidung diese vollständige Übersicht mitpflegen.
 | 045 | 2026-10-28 | Aktiv | REAKTIV | DATENMODELL, SCHNITTSTELLE | Datenmodell, API-Verträge, Build/Deploy | Bauaufträge mit Bauarbeitern, Anlieferstelle, Gelände in neuen Karten |
 | 046 | 2026-10-29 | Überholt durch ADR-047 | STRATEGISCH | METHODIK | Methodik | Neuausrichtung als eigenes Flughafen-Aufbauspiel |
 | 047 | 2026-11-04 | Aktiv | REAKTIV | METHODIK, COMPLIANCE | Produktvision, Lizenz/Compliance | Rückkehr zur umfassenden Flughafenmanagementsimulation |
-| 048 | 2026-11-04 | Aktiv | STRATEGISCH | DATENMODELL, SCHNITTSTELLE, MODUL | Datenmodell, API-Verträge, Architektur | Minimaler Passagierfluss und Terminalstationen in Schritt 3.2 |
+| 048 | 2026-11-04 | Aktiv (Geduldumfang fortgeschrieben durch ADR-051) | STRATEGISCH | DATENMODELL, SCHNITTSTELLE, MODUL | Datenmodell, API-Verträge, Architektur | Minimaler Passagierfluss und Terminalstationen in Schritt 3.2 |
 | 049 | 2026-11-04 | Aktiv | OPERATIV | DATENMODELL, SCHNITTSTELLE, PERFORMANCE | Datenmodell, API-Verträge | Additive Stationsverbesserung für die erste Terminallektion |
 | 050 | 2026-11-05 | Aktiv | OPERATIV | METHODIK | Methodik | Dev-Templates gezielt in OpenAirsides Codex-Regeln übernehmen |
 | 051 | 2026-11-05 | Aktiv | REAKTIV | DATENMODELL, SECURITY, SCHNITTSTELLE, MODUL | Sicherheit, Datenmodell, API-Verträge, Architektur | Passagierzustände validieren und FIFO aus Format 5 ableiten |

@@ -153,7 +153,7 @@ Spalte „Fahrplan-Schritt": Schritt-ID aus `docs/fahrplan.md`. Spalte „Test":
 
 | ID | Anforderung | Säule | Anwendungsfall | Priorität | Prüfbare Akzeptanz | Fahrplan-Schritt | Test (ab Klasse G) | Status |
 |---|---|---|---|---|---|---|---|---|
-| FR-016 | Passagiere mit Bedürfnissen, Zufriedenheit und Ablauf Abflug/Ankunft | B, S2 | UC-005 | Muss | Kernprozesse Abflug und Ankunft; 1 h Spielzeit im Szenario ohne Stillstand, der sich nicht selbst auflöst (ADR-036) | 3.2, 4.1 | `core/tests/pax_flow.rs` | OFFEN |
+| FR-016 | Passagiere mit Bedürfnissen, Zufriedenheit und Ablauf Abflug/Ankunft | B, S2 | UC-005 | Muss | Kernprozesse Abflug und Ankunft; 1 h Spielzeit im Szenario ohne Stillstand, der sich nicht selbst auflöst (ADR-036) | 3.2, 4.1, 5.4 | `core/tests/pax_flow.rs`; Bedürfnisse/Geduld in 5.4 (ADR-051), Minimalfluss teilweise abgedeckt | OFFEN |
 | FR-017 | Wegfindung nach Wegweiser-Prinzip | B | UC-010 | Muss | ADR-004; 10.000 Personen mit ≤ 4 ms je Simulationstakt auf Referenz-Hardware | 1.2, 2.3, 3.11, 3.3 | `core/benches/flowfield.rs` | OFFEN (Wegweiser im Kern und Benchmark als CI-Gate seit 2.3; Satz der Bauarbeiter seit 3.1c; Passagierführung 3.3) |
 | FR-018 | Passagierführung über Schilder und Bodenmarkierungen; ohne Schilder Suchen | S2 | UC-005 | Muss | mit Beschilderung messbar kürzere Wegzeit als ohne | 3.11, 3.3 | `core/tests/signage.rs` | OFFEN |
 | FR-019 | Check-in modern: Online-Anteil, Gepäckabgabe, Self Bag Drop, gemeinsam genutzte Schalter | B | UC-005 | Muss | alle vier Formen im Szenario nutzbar; Schalter mehreren Airlines zuordenbar | 3.2, 5.4 | `core/tests/checkin.rs` | OFFEN |

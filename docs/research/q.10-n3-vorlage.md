@@ -1,6 +1,6 @@
 # Q.10-N3 – Passagierzustände und Save/Load: Entscheidungsvorlage
 
-**Status:** ENTWURF – wartet auf ausdrückliche Freigabe; kein neuer ADR und keine Produktkorrektur vorweggenommen.
+**Status:** Option A am 2026-11-05 vom Projektinhaber mit „a“ freigegeben; Entscheidung in ADR-051 vor Umsetzung dokumentiert. Die folgenden Befunde und Optionen halten den Stand der ursprünglichen Vorlage fest; Umsetzungsnachweise werden getrennt dokumentiert.
 **Prüfstand:** 2026-11-05, Produktbasis `b01ae6c7a382ef9ec596ef0410e20f232f4e6af4`.
 **Fahrplan:** Q.10-N3, fehlender Abschlussumfang von 3.2; keine neue Phase-3-Funktion.
 

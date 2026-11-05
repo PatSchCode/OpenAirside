@@ -12,6 +12,9 @@
 
 pub mod workers;
 
+#[cfg(test)]
+mod queue_tests;
+
 use rayon::ThreadPool;
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
@@ -60,8 +63,9 @@ pub struct StationTelemetry {
 
 /// Hot fields of one person, needed in every tick; stored as they are in a
 /// save game.
-// TODO(fahrplan-ref: 3.2): needs, patience, tickets and other cold fields of
-// passengers and staff.
+// TODO(fahrplan-ref: 5.4): stored passenger needs and patience (ADR-051);
+// decide thresholds and visible reactions before implementation.
+// TODO(fahrplan-ref: 3.2): tickets and other cold fields of passengers and staff.
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 pub(crate) struct Person {
     x: u16,
@@ -178,9 +182,6 @@ pub struct Persons {
     next: Vec<Person>,
     workers: Pool<Worker>,
     per_floor: [u32; FLOORS],
-    /// Next non-zero FIFO order. It is reconstructed from persisted persons
-    /// when loading, so it does not need a separate save-game field.
-    next_queue_order: u32,
     station_telemetry: Vec<StationTelemetry>,
 }
 
@@ -401,7 +402,6 @@ impl Persons {
     pub fn clear(&mut self) {
         self.pool.clear();
         self.next.clear();
-        self.next_queue_order = 1;
         self.count_per_floor_serial();
     }
 
@@ -469,14 +469,13 @@ impl Persons {
     /// movement phase. Equal-tick arrivals retain their deterministic pool
     /// order; earlier ticks always have lower order values.
     fn enqueue_waiters(&mut self, stations: &[TerminalStation]) {
-        if self.next_queue_order == 0 {
-            self.next_queue_order = 1;
-        }
         let mut admitted = stations
             .iter()
             .map(|station| (station.target, 0usize, station.queue_cells.len()))
             .collect::<Vec<_>>();
+        let mut order = 0;
         for person in self.pool.as_slice() {
+            order = order.max(person.queue_order);
             if person.state == PASSENGER_WAITING
                 && person.queue_order != 0
                 && let Some((_, count, _)) = admitted
@@ -486,6 +485,23 @@ impl Persons {
                 *count += 1;
             }
         }
+        // Reserve enough numbers for the entire pool, hence for every possible
+        // admission in this batch. No wrapping and no load-only normalization.
+        if order.checked_add(self.pool.len() as u32).is_none() {
+            let mut ranked = self
+                .pool
+                .as_slice()
+                .iter()
+                .enumerate()
+                .filter(|(_, p)| p.queue_order != 0)
+                .map(|(index, p)| (p.queue_order, index))
+                .collect::<Vec<_>>();
+            ranked.sort_unstable();
+            for (rank, &(_, index)) in ranked.iter().enumerate() {
+                self.pool.items_mut()[index].queue_order = rank as u32 + 1;
+            }
+            order = ranked.len() as u32;
+        }
         for person in self.pool.items_mut() {
             if person.state == PASSENGER_WAITING
                 && person.queue_order == 0
@@ -494,8 +510,8 @@ impl Persons {
                     .find(|(target, _, _)| *target == person.target)
                 && *count < *limit
             {
-                person.queue_order = self.next_queue_order;
-                self.next_queue_order = self.next_queue_order.wrapping_add(1).max(1);
+                order += 1;
+                person.queue_order = order;
                 *count += 1;
             }
         }
@@ -567,6 +583,53 @@ impl Persons {
         Pool::<Person>::fits(count)
     }
 
+    /// Checks passenger references and cross-record queue invariants against
+    /// the already validated station configuration (ADR-051).
+    pub(crate) fn validate_stations(
+        &self,
+        stations: &[TerminalStation],
+    ) -> Result<(), &'static str> {
+        let mut orders = std::collections::HashSet::new();
+        let mut admitted = [0usize; 256];
+        let mut by_target = [None; 256];
+        for station in stations {
+            by_target[usize::from(station.target)] = Some(station);
+        }
+        for person in self.pool.as_slice() {
+            if person.group == 0 {
+                continue;
+            }
+            let station = by_target[usize::from(person.target)].ok_or("personStation")?;
+            let compatible = match person.group {
+                GROUP_DEPARTING => matches!(
+                    station.kind,
+                    TerminalStationKind::CheckIn
+                        | TerminalStationKind::Security
+                        | TerminalStationKind::Gate
+                ),
+                GROUP_ARRIVING => matches!(
+                    station.kind,
+                    TerminalStationKind::Gate | TerminalStationKind::Exit
+                ),
+                _ => false,
+            };
+            if !compatible {
+                return Err("personStation");
+            }
+            if person.queue_order != 0 && !orders.insert(person.queue_order) {
+                return Err("personQueueOrder");
+            }
+            if person.state == PASSENGER_WAITING && person.queue_order != 0 {
+                let count = &mut admitted[usize::from(person.target)];
+                *count += 1;
+                if *count > station.queue_cells.len() {
+                    return Err("personQueueCapacity");
+                }
+            }
+        }
+        Ok(())
+    }
+
     /// Persons and construction workers of a loaded save game in a world
     /// with `map`, `targets` targets and the delivery points `delivery`.
     ///
@@ -577,6 +640,9 @@ impl Persons {
     /// step share outside 0 … 1; `workers` for too many construction
     /// workers and `worker` for the first one off the map, with an unknown
     /// state, heading or delivery point, or a load out of range.
+    /// `personState` for an unknown group/state or inconsistent travelling
+    /// or neutral fields. Station references and queue invariants are checked
+    /// separately by [`Self::validate_stations`] before world adoption.
     pub(crate) fn restore(
         saved: Vec<Person>,
         workers: Vec<Worker>,
@@ -589,24 +655,28 @@ impl Persons {
             targets: targets.max(1),
         };
         let pool = Pool::restore(saved, &context)?;
+        for person in pool.as_slice() {
+            let valid = match person.group {
+                0 => person.state == 0 && person.queue_order == 0 && person.wait_ticks == 0,
+                GROUP_DEPARTING | GROUP_ARRIVING => match person.state {
+                    PASSENGER_TRAVELLING => person.queue_order == 0 && person.wait_ticks == 0,
+                    PASSENGER_WAITING | PASSENGER_COMPLETE => true,
+                    _ => false,
+                },
+                _ => false,
+            };
+            if !valid {
+                return Err("personState");
+            }
+        }
         let workers = Pool::restore(workers, &WorkerContext { map, delivery })?;
         let mut persons = Self {
             next: pool.as_slice().to_vec(),
             pool,
             workers,
             per_floor: [0; FLOORS],
-            next_queue_order: 1,
             station_telemetry: Vec::new(),
         };
-        persons.next_queue_order = persons
-            .pool
-            .as_slice()
-            .iter()
-            .map(|person| person.queue_order)
-            .max()
-            .unwrap_or(0)
-            .wrapping_add(1)
-            .max(1);
         persons.count_per_floor_serial();
         Ok(persons)
     }

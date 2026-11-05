@@ -24,6 +24,13 @@ Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-05 (Europe/Berlin) – Q.10-N3 lokal verifiziert
+
+- **Umsetzung:** Option A nach ADR-051; Zustands-/Stationsmatrix, atomare Ablehnung, vollständig abgeleitete FIFO mit Überlaufverdichtung. Format 5 unverändert; Geduld nach 5.4, FR-016 offen, Modulverantwortungen bestätigt.
+- **Nachweise:** 341 Workspace-Rust-Tests, 490 Vitest-Tests, zwei Electron-E2E-Tests, Build, Typen/Schema, Lint/Format, cargo-deny, npm-Audit und vollständiger Pre-Commit grün. Coverage Kern 98,10 %, Personen 98,48 %. Last 200.000 gemischte Personen normal 0,416 ms / Verdichtung 2,282 ms; Tick-Benchmark grün. Grenzen, genaue Befehle und behobene Umgebungsreibungen im [Umsetzungsbericht](research/q.10-n3-umsetzung.md).
+- **Unabhängige Prüfung:** neue Astra-Instanz ohne Gesprächsverlauf, nur lesend; keine hohen/mittleren Befunde, sieben gezielte Tests selbst bestanden. Anfangs schwacher Lasttest auf Hinweis erweitert und nachgeprüft; keine gemeinsame Dateibearbeitung.
+- **Stand:** gestagten Code und Verträge geprüft; regulärer Implementierungscommit folgt. Q.10-N3 bleibt bis Push/CI IN ARBEIT. N2 nicht umgesetzt, Personen nicht still hochgestuft; Abschluss von 3.2 bleibt eigener Abgleich.
+
 ### 2026-11-05 (Europe/Berlin) – [SESSIONSTART] – Q.10-N3 Option A umsetzen
 
 - **Freigabe:** Projektinhaber wählt „a“ zur konkreten N3-Vorlage: Validierung, vollständig abgeleitete FIFO-Vergabe mit Verdichtung, Format 5 erhalten, Zuständigkeiten bestätigen und Geduld ausdrücklich nach 5.4 verschieben. N2 bleibt getrennt.

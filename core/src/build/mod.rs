@@ -329,6 +329,18 @@ impl Build {
         }) {
             return Err(invalid("stations"));
         }
+        let mut station_targets = std::collections::HashSet::new();
+        let mut queue_cells = std::collections::HashSet::new();
+        for station in &saved.stations {
+            if !station_targets.insert(station.target) {
+                return Err(invalid("stationTargets"));
+            }
+            for cell in &station.queue_cells {
+                if !queue_cells.insert((cell.x, cell.y, cell.floor)) {
+                    return Err(invalid("stationQueueCells"));
+                }
+            }
+        }
         if saved.networks.len() != NetworkKind::ALL.len() {
             return Err(invalid("networks"));
         }
@@ -695,6 +707,53 @@ mod tests {
 
     fn pos(x: u16, y: u16) -> CellPos {
         CellPos { x, y, floor: 0 }
+    }
+
+    #[test]
+    fn loaded_station_targets_and_queue_cells_are_unique() {
+        let map = MapSize::new(64, 64).unwrap();
+        let mut build = Build::new(map);
+        build
+            .add_station(
+                TerminalStationKind::CheckIn,
+                vec![pos(4, 4)],
+                vec![pos(3, 4)],
+                7,
+                1,
+            )
+            .unwrap();
+        build
+            .add_station(
+                TerminalStationKind::Security,
+                vec![pos(8, 4)],
+                vec![pos(7, 4)],
+                1,
+                1,
+            )
+            .unwrap();
+        let mut pool = BlockPool::default();
+        let saved = build.snapshot().to_saved(&mut pool);
+        let blocks = Blocks::restore(pool.into_blocks()).unwrap();
+        // Capacity need not equal the number of queue cells outside the scenario.
+        assert!(Build::restore(saved.clone(), map, &blocks).is_ok());
+        for (mutation, check) in [
+            (0, "stationTargets"),
+            (1, "stationQueueCells"),
+            (2, "stationQueueCells"),
+        ] {
+            let mut bad = saved.clone();
+            match mutation {
+                0 => bad.stations[1].target = bad.stations[0].target,
+                1 => bad.stations[1].queue_cells = bad.stations[0].queue_cells.clone(),
+                _ => bad.stations[0].queue_cells.push(pos(3, 4)),
+            }
+            let error = Build::restore(bad, map, &blocks).err().unwrap();
+            assert_eq!(error.code, "invalidState");
+            assert_eq!(
+                error.params.get("check"),
+                Some(&crate::text::ParamValue::Text(check.into()))
+            );
+        }
     }
 
     fn hash(build: &Build) -> u64 {
