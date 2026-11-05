@@ -15,6 +15,14 @@ nicht geraten, sondern aus den jeweiligen Projektdokumenten gelesen.
 
 ## Sessionstart
 
+Vor der Pflichtlektüre prüft Codex Worktree, Remote-Stand, Branches und offene
+PRs einschließlich Entwürfen. Auf einem Arbeitsbranch wird der Hauptbranch
+nur verglichen; vorhandene Arbeit wird weder überschrieben noch doppelt
+begonnen. Nachziehen erfolgt nur ohne Verlust und per Fast-Forward. Eigene
+Commits, fremde Änderungen und bereits vorhandene Umsetzung werden geklärt,
+bevor abhängige Arbeit beginnt. Nichterreichbare Teile heißen `ungeprüft`;
+vor Push oder PR wird die fehlende Standprüfung gemeldet und geklärt.
+
 Vor jeder Änderung liest Codex in dieser Reihenfolge:
 
 1. `docs/project-context.md` vollständig.
@@ -31,6 +39,19 @@ Danach legt Codex vor jeder weiteren Änderung einen `[SESSIONSTART]`-Eintrag
 in `docs/logbuch.md` an. Er nennt Modell und Quelle aus dem Systemkontext.
 Ist keine verlässliche Klassenzuordnung verfügbar, wird das ehrlich als
 `unbestimmbar` dokumentiert; Codex erfindet keine Laufzeitabfragen.
+
+Der Sessionstart enthält eine Zeile **Stand-Prüfung** mit Commit, Branch,
+lokalen Änderungen, Remote-/PR-Ergebnis und ungeprüften Teilen. Reine Lese-,
+Gesprächs- und Prüfsitzungen ändern keine Dateien und brauchen keinen
+Sessionrahmen. Wird daraus eine Arbeitssitzung, erfolgt der Eintrag vor der
+ersten verändernden Handlung. Nach Kontextverdichtung werden Git-Stand,
+Freigaben und Nachweise erneut geprüft; eine Zusammenfassung ersetzt keine
+fehlenden Belege. Abgeschnittene Leseausgaben werden gezielt nachgelesen.
+
+Für den Fahrplan genügen beim Einstieg Phasenkopf sowie Überschrift und Status
+aller offenen Schritte; aktiver, nächster und berührte Schritte werden
+vollständig gelesen. In der zentralen ADR-Übersicht stehen die 30 jüngsten
+Einträge, ältere im verlinkten vollständigen Archiv. Teil C bleibt Pflicht.
 
 ## Autonomie und Freigaben
 
@@ -113,6 +134,16 @@ Dateien ändern noch Entscheidungen als getroffen darstellen. Codex bleibt
 Koordinator, prüft die Ergebnisse gegen den Arbeitsbaum und dokumentiert im
 Logbuch die tatsächlich eingesetzten Modellklassen und Delegationen.
 
+Eine unabhängige Prüfung erbt keinen Umsetzungsgesprächsverlauf und verändert
+keine Dateien. Der Prüfer erhält Commit, abgegrenzten Auftrag und die nötigen
+Projektquellen. Anderes Modell ist bevorzugt; gleiche Modellwahl wird genannt.
+Fehlt die technische Trennung, bereitet Codex einen vollständigen Auftrag für
+eine separate Sitzung vor; die Prüfung bleibt bis zum Ergebnis offen.
+Routineabgabe zur Kostenersparnis setzt belegte Modellzuordnung, einen
+erfolgreichen Vergleichsprobelauf derselben Aufgabenart und nachvollziehbaren
+Nutzen voraus. Pflichtprüfungen sind davon unabhängig. Unbekannte Preise,
+Kontingente, Kontextgrößen oder Wechselmöglichkeiten werden nicht erfunden.
+
 ## Ausführungsdisziplin für Fahrplan-Schritte
 
 Ein freigegebener Fahrplan-Schritt wird von Codex aktiv bis zu seinem
@@ -189,6 +220,13 @@ Der Fahrplan-Schritt wird `[BLOCKIERT]`.
 
 ## Qualität und Nachweise
 
+Vor dem ersten Lauf neuer oder akzeptanzrelevanter Tests nennt der aktive
+Schritt ein **Testsignal**: welchen Fehler Rot erkennt, was Grün belegt und
+welche Grenze ungeprüft bleibt. Ein grüner Wiederholungslauf nach Rot ohne
+geklärte Ursache ist kein Nachweis; nichtdeterministische Tests werden geklärt.
+Schutzmechanismen werden zusätzlich durch absichtlich erzeugte Fehlerfälle
+bis zur tatsächlichen Ablehnung, Meldung oder Wiederherstellung geprüft.
+
 Ein Fahrplan-Schritt wird erst als `[ERLEDIGT]` markiert, wenn – soweit
 anwendbar – alle folgenden Nachweise vorliegen:
 
@@ -206,6 +244,93 @@ anwendbar – alle folgenden Nachweise vorliegen:
 
 Keine Erfolgsmeldung ohne tatsächlichen Befehlsausgabe-Nachweis. Fehlt ein
 Nachweis, bleibt der Schritt `[IN ARBEIT]`.
+
+`[CI-AUSSTEHEND]` ist in OpenAirside kein zulässiger Abschlussstatus. Zulässig
+sind `[OFFEN]`, `[VERSCHOBEN]` mit Ziel-Schritt-ID, `[IN ARBEIT]`,
+`[WARTET-AUF-FREIGABE]`, `[BLOCKIERT]` mit Blockerverweis, `[ERLEDIGT]` mit
+Nachweisen und Datum sowie `[VERWORFEN]` mit ADR. Je Sitzung wird höchstens
+ein Schritt aktiv bearbeitet; pausierte Arbeit bleibt mit Statushinweis sichtbar.
+
+### Unabhängiger Abgleich von Architektur und Code
+
+Vor jeder Beförderung auf `[BELASTBAR]`, an Phasengrenzen für berührte Module
+und spätestens nach zwei Phasengrenzen oder sechs Monaten je Modul wird dessen
+Beschreibung gegen den Code geprüft. Neue Module werden spätestens an ihrer
+ersten Phasengrenze geprüft. Der erste Bestandsabgleich erhält eine Frist.
+
+Der nur lesende Prüfer gleicht Verantwortungen, Schnittstellen, Datenflüsse
+und Datenmodell in beide Richtungen ab, einschließlich Aufrufstellen und
+Code ohne beschriebenen Modul-Landeplatz. Beim ersten Einsatz und nach einem
+Modellwechsel prüft er eine isolierte Kopie eines Eintrags mit eingesetzter
+Abweichung; nur wenn er sie findet, gilt die Fehlerprobe. Die Originaldatei
+wird dafür nicht manipuliert. Eine Probe ersetzt nicht den Bestandsabgleich.
+
+Jeder Befund nennt Datei/Zeile, Schwere hoch/mittel/niedrig, vermutlich falsche
+Seite (Code/Dokumentation/unklar), Freigabewirkung und Landeplatz. Kein Befund
+bedeutet nur „keine Abweichung gefunden“ im benannten Umfang. Hohe und mittlere
+Befunde sperren eine Beförderung; hohe Befunde werden vor der nächsten Phase
+behoben. Bei hohen Befunden an belastbarem Bestand wird die Rückstufung gemäß
+geltender Architekturregel per ADR vorgelegt. Nicht genehmigte Architektur im
+Code wird nicht durch stilles Umschreiben der Dokumentation legitimiert.
+Datum, Commit, Umfang und Ergebnis stehen am Modul bzw. in einer verlinkten
+Abgleichstabelle bei der Reifegrad-Übersicht.
+
+### Skripte, Umgebungen und reaktive Entscheidungen
+
+Hilfsskripte brauchen Header zu Zweck, Voraussetzungen, Plattformen und
+Exit-Codes; komplexe Skripte (über 100 Zeilen, mehrere Unterbefehle, mehr als
+drei externe Werkzeuge oder Cleanup-Logik) zusätzlich Aussagen zu
+Wiederholbarkeit/Reproduzierbarkeit und einen Tooling-Eintrag. Neue
+Voraussetzungen und Umgebungsvariablen werden im selben Commit mit README,
+Runbook und gegebenenfalls einer ENV-Beispieldatei abgeglichen. Lokale
+Lint-/Typ-Suppressions brauchen engsten Scope, Begründung und Fahrplanbezug;
+pauschale Ausnahmen werden vorgelegt.
+
+Bewusste Unterschiede zwischen Entwicklung und gepackter Anwendung stehen
+in `docs/dev-prod-unterschiede.md`, einschließlich der Frage, was lokal
+unentdeckt bleibt. Die verfügbare Umgebung wird vor Einrichtung geprüft;
+vorhandene Installationen werden aktiviert, fehlende nach Runbook ergänzt.
+Laufende Prozesse und Bereitschaft werden nach Wiederanlauf neu belegt.
+Eine neue Shell oder ein vorbereiteter Checkout belegt keine frische Installation.
+
+Architekturentscheidungen in einer Stabilisierungsphase und ADRs, die andere
+ADRs innerhalb von 14 Tagen ändern oder zurücknehmen, sind `[REAKTIV]`.
+Regel-009 steuert zusätzlich die Reflexionsfrequenz, nicht die Zählweise.
+Neue Muster werden sofort reflektiert; bekannte gemäß der geltenden Reflexion.
+
+### Dokumentbudgets und Archivierung
+
+Grenzen werden in Unicode-Zeichen mit einem Werkzeug gemessen, einschließlich
+Ankern und Leerzeilen. Abschnitte reichen bis zur nächsten gleich- oder
+höherwertigen Überschrift. Abweichungen brauchen Begründung und Freigabe im
+Projektkontext; eine Überschreitung bei Übernahme erhält einen Schritt mit Frist.
+
+| Gelesener Teil | Obergrenze in Zeichen |
+|---|---|
+| Projektkontext vollständig | 50.000 |
+| Letztes Sessionende und jüngere Einträge | 6.000 |
+| Fahrplan „Aktueller Stand“ | 3.000 |
+| Phasenkopf und Überschrift/Status offener Schritte | 15.000 |
+| Offene Betriebsschritte, sobald vorhanden | 5.000 |
+| Architektur 1, 2 und 9 zusammen | 20.000 |
+| Decisions Teil A | 8.000 |
+| Decisions Teil C | 10.000 |
+| Aktive Blocker | 5.000 |
+| Requirements-Übersicht | 5.000 |
+
+Bei mehr als 30 ADR-Übersichtszeilen wandern ältere Zeilen ins vollständige
+Archiv `docs/archiv/decisions-uebersicht.md`; Einzel-ADRs bleiben nach ADR-001
+unter `docs/decisions/`. Überholte Regeln werden archiviert. Abgeschlossene
+Phasen werden im Fahrplan ausgelagert. Logbuchdetails abgeschlossener Phasen
+werden mit einer Reflexion von höchstens 30 Zeilen im aktiven Logbuch archiviert.
+Bei mehr als 800 Logbuchzeilen werden ältere Details chronologisch archiviert,
+der letzte Wiedereinstieg und alle offenen Freigaben bleiben aktiv. Gelöste
+Blocker über 90 Tage wandern ins Jahresarchiv. Quellen, Zeitraum und Datum
+stehen im Archivkopf; Historie und Links bleiben erhalten.
+
+Budgets werden zu jedem Sessionende geprüft. Ab 80 % einer Grenze wird eine
+automatisierte Prüfung mit Frist vorbereitet; Hook-/CI-Änderungen bleiben
+freigabepflichtig und werden nicht beiläufig umgesetzt.
 
 ## Sichere Werkzeugnutzung
 
@@ -255,3 +380,12 @@ weiterbauen, gezielt umbauen oder neu aufsetzen. Vor einem ersten öffentlichen
 Deployment sind Bedrohungsmodell, Sicherheitsniveau, Härtung, Secrets,
 Backup-Wiederherstellung, unabhängige Prüfung, Notfall-Handbuch und
 Betriebskonzept nachweislich abgeschlossen.
+
+Der Vision-Abgleich belegt jedes umgesetzte Element bis zur nutzerzugänglichen
+Oberfläche, CLI oder API. Teilweise Abdeckung heißt nicht erledigt; fehlende
+Teile erhalten konkrete Schritt-IDs oder einen Descope-ADR. Vor Phasenabschluss
+wird der dokumentierte Onboarding-Pfad frisch validiert, für Klasse G zusätzlich
+auf einer zweiten unterstützten Plattform. Lesebudgets, aktive Verweise,
+Abgleichfristen, ADR-Quote und bewusste Umgebungsunterschiede gehören zur
+Konsistenzprüfung. Sessionende-Commits folgen weiterhin der ausdrücklich
+festgelegten Projektregel in `docs/project-context.md` Abschnitt 10.

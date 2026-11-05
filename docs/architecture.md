@@ -3,7 +3,7 @@
 <!-- Systemarchitektur von OpenAirside. Lebendes Dokument, Stand Initialisierung (Modus 2) 2026-10-13.
      Klasse G: ein Hauptdokument; Auslagerung in architecture-<modul>.md, sobald > 500 Zeilen
      oder > 5 Module eigene detaillierte Schnittstellen haben (ADR-001).
-     Änderungen an [BELASTBAR]-Bestandteilen sind freigabepflichtig (CLAUDE.md Abschnitt 4); rein additive,
+     Änderungen an [BELASTBAR]-Bestandteilen sind freigabepflichtig (AGENTS.md, Autonomie und Freigaben); rein additive,
      rückwärtskompatible Ergänzungen von Schnittstellen nach Regel-008 ohne ADR (ADR-036).
      Abschnitt 4 ausgelagert nach architecture-schnittstellen.md (ADR-036). -->
 
@@ -17,6 +17,8 @@ Jedes Modul, jede Schnittstelle und jede Architektur-Aussage trägt einen der fo
 - `[OFFEN]` – bewusst nicht entschieden. Kein Code in Bereichen, die davon abhängen, bevor die Lücke geschlossen ist.
 
 **Beförderungsregel:** von `[VORLÄUFIG]` auf `[BELASTBAR]` durch funktionierende Implementierung oder ADR, jeweils mit Datum und Begründung am Eintrag.
+
+Seit ADR-050 verlangt eine neue Beförderung zusätzlich einen unabhängigen Architektur-Code-Abgleich ohne offene hohe oder mittlere Befunde. Bestand wird damit nicht rückwirkend als geprüft erklärt. Eine nötige Rückstufung erfolgt weiterhin ausdrücklich per ADR. Letzter Abgleich je Modul und offene Befunde stehen in der Tabelle bei Abschnitt 9.
 
 **Rückstufungsregel:** `[BELASTBAR]` nur per ADR zurückstufbar. Stille Rückstufung ist verboten.
 
@@ -223,7 +225,7 @@ Kennungen der Knoten sind eindeutig (ADR-032, K-1: zuvor standen Abfrage und Abf
 - **Reifegrad:** `[BELASTBAR]`, seit 2026-10-15, Begründung: Umsetzung 2.7 (Regel-007) mit Tests und Rauchtest auf drei Plattformen; Messung 2.7 auf Mac M3 Pro und Referenz-PC am 2026-10-15, `docs/research/2.7-messung.md`; zuvor `[VORLÄUFIG]` seit 2026-10-13
 - **Verantwortung:** Überträgt Befehle von der Präsentation in den Kern und den sichtbaren Zustand vom Kern in die Präsentation, ohne JSON-Serialisierung großer Datenmengen je Bild.
 - **Nicht-Verantwortung:** keine Spiellogik, keine Darstellung.
-- **Öffentliche Schnittstellen:** S-1, S-2, S-3
+- **Öffentliche Schnittstellen:** S-1, S-2, S-3, S-7 (Abfragen einschließlich Katalog und Stationsstatistik)
 - **Technologie:** Rust (eigene Brücken-Crate mit napi-rs, Regel-006) und TypeScript; TypeScript-Typen werden aus Rust-Typen erzeugt
 - **Übertragungsweg:** `MessagePort` zwischen Kern-Prozess und Renderer, Bild je Frame als Kopie (ADR-009)
 - **Offene Fragen:** Übertragungsumfang – geklärt in Spike 1.3: kompaktes Vollbild mit Filter auf Etage und Kamera-Ausschnitt, keine Änderungslisten (97–99 % der Personen bewegen sich je Tick). Abfrage-Schnittstelle für Tabellen – geklärt in ADR-021 (S-7)
@@ -474,10 +476,27 @@ Flugzeugtyp, Objekttyp, Fahrzeugtyp und Airline stammen aus Datenpaketen (S-4). 
 | NFR Performance: bewegte Sprites und Last durch Fahrzeuge, Flugzeuge, Gepäck, Personal; Linux; integrierte Grafik | VORLÄUFIG | 2026-10-13 | ADR-017, geteilt durch ADR-034 und ADR-038; Verkehr vor 3.4 und 5.5, Referenzszenario 4.1, Linux 7.2, integrierte Grafik 5.8 |
 | NFR Bauaktion im nächsten Bild | BELASTBAR | 2026-10-26 | ADR-044: vorläufige Zeichnung nach S-2 im ersten gerenderten Bild nach der Bauaktion (`previewFramesMax` = 1 in allen 20 Fenstern auf Referenz-PC und Mac, 3.1b-Nachmessung), Wirkung im Kern bis zum Bild höchstens 33 ms (FR-011 < 100 ms); gemessen ist das gerenderte Bild, nicht der Bildwechsel der Anzeige (`docs/research/3.1b-messung.md` 4a, 5.3–5.5); vorher `[VORLÄUFIG]` seit 2026-10-13 (1.5: 2–6 Bilder; 2.7: 1–3 Bilder ohne vorläufiges Zeichnen) |
 
+### Letzter Abgleich mit dem Code
+
+Erster unabhängiger Bestandsabgleich am 2026-11-05, Basis `b16167c`, ADR-050. Nur statisch, keine erneute Laufzeit- oder Sicherheitsabnahme. Bericht mit Belegen und bestandenen isolierten Fehlerproben: [Q.10](research/q.10-methodik-abgleich.md). Bisherige Reifegrade bleiben als historische Entscheidungen sichtbar; keine neue Beförderung bei offenen mittleren Befunden.
+
+| Modul / Bestandteil | Letzter Abgleich | Ergebnis und Landeplatz |
+|---|---|---|
+| Takt & Weltzustand | 2026-11-05, `b16167c` | geprüfte Reihenfolge ohne weitere gefundene Abweichung; Personen-Hash/Restore K2 in Q.10-N3 mitbetroffen |
+| Welt & Bau | 2026-11-05, `b16167c` | FIFO-Verantwortungsbeschreibung K4 klären, Q.10-N3 |
+| Personen | 2026-11-05, `b16167c` | K1–K4 mittel; bleibt VORLÄUFIG, Beförderung und Abschluss 3.2 gesperrt bis Q.10-N3 |
+| Brücke | 2026-11-05, `b16167c` | D1 redaktionell ergänzt; S-8-Gegenstelle mit P1–P4 in Q.10-N2 |
+| Plattform | 2026-11-05, `b16167c` | P1–P4 mittel, Q.10-N2; keine neue Beförderung im betroffenen Umfang |
+| Inhalte & Mods (Lader) | 2026-11-05, `b16167c` | D2/D3 niedrig, Q.10-N4; Transportgrenzen P4 in Q.10-N2 |
+| Lokalisierung | 2026-11-05, `b16167c` | P4 an der Plattformgrenze, Q.10-N2; D3 in Q.10-N4 |
+| Grafik-Pipeline | 2026-11-05, `b16167c` | im benannten statischen Umfang keine weitere Abweichung gefunden |
+
+Weitere vorläufige Fachmodule werden bei ihrer Umsetzung und spätestens an der nächsten Phasengrenze abgeglichen; für die oben geprüften Bestandteile spätestens nach zwei Phasengrenzen oder bis 2027-05-05. Frühere bestandene Tests ersetzen diesen Abgleich nicht.
+
 <!-- ANCHOR:tooling-inventar -->
 ## 10. Tooling-Inventar
 
-Reifegrad-Skala `[ROH]` → `[GEHÄRTET]` → `[KRITISCH]` und Beförderungsregeln nach `CLAUDE.md` Abschnitt 15 („Pflichtkategorien für Hilfsskripts", Pflichten A–H). Hilfsskripte sind Node-Skripte (`scripts/*.mjs`), damit sie auf allen drei Plattformen ohne Zusatzwerkzeuge laufen (`project-context.md` Abschnitt 3).
+Reifegrad-Skala `[ROH]` → `[GEHÄRTET]` → `[KRITISCH]`; Pflichten zu Headern, Plattformen, Exit-Codes, Wiederholbarkeit und Nachweisen nach `AGENTS.md`, „Skripte, Umgebungen und reaktive Entscheidungen“. Hilfsskripte sind Node-Skripte (`scripts/*.mjs`), damit sie auf allen drei Plattformen ohne Zusatzwerkzeuge laufen (`project-context.md` Abschnitt 3).
 
 | Skript | Zweck | Reifegrad | Plattform-Matrix | Voraussetzungen | Idempotenz |
 |---|---|---|---|---|---|

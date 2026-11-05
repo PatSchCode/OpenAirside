@@ -11,28 +11,10 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
+Die 30 jüngsten ADRs stehen hier; [vollständige Übersicht](archiv/decisions-uebersicht.md).
+
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
-| 001 | 2026-10-13 | Aktiv | STRATEGISCH | METHODIK | Methodik | Klasse G und Anpassung des Vorlagen-Sets |
-| 002 | 2026-10-13 | Aktiv (bestätigt durch ADR-014) | STRATEGISCH | STACK | Externe Abhängigkeiten | Stack: Web-Präsentation + Rust-Simulationskern |
-| 003 | 2026-10-13 | Aktiv | STRATEGISCH | MODUL, SCHNITTSTELLE | Architektur | Kern/Präsentation-Trennung, feste Simulationsschritte, Inhalte als Daten |
-| 004 | 2026-10-13 | Aktiv | STRATEGISCH | PERFORMANCE, MODUL | Architektur | Wegfindung nach dem Wegweiser-Prinzip |
-| 005 | 2026-10-13 | Aktiv | STRATEGISCH | MODUL | Architektur | Verkehrsregeln, Vorrang-Rangfolge und automatische Verkehrssteuerung |
-| 006 | 2026-10-13 | Aktiv, durch ADR-047 bestätigt | STRATEGISCH | METHODIK, DATENMODELL | Methodik | Funktionsumfang: Inventar, Modernisierung, Cargo vorbereitet |
-| 007 | 2026-10-13 | Aktiv | STRATEGISCH | DEPLOYMENT | Lizenz/Compliance, Build/Deploy | Vertrieb über GitHub, Lizenzen MIT und CC0 |
-| 008 | 2026-10-13 | Aktiv | STRATEGISCH | MODUL | Architektur | Eigene SVG-Grafiken, Rasterung im Build |
-| 009 | 2026-10-13 | Aktiv | ERKENNTNIS | STACK, SCHNITTSTELLE, PERFORMANCE | Architektur | Betriebsart des Kerns: napi-rs im Electron-Utility-Prozess |
-| 010 | 2026-10-13 | Aktiv | ERKENNTNIS | DATENMODELL, PERFORMANCE, MODUL | Datenmodell, Architektur | Datenmodell und Parallelisierung im Kern, Übernahme der Wegweiser |
-| 011 | 2026-10-13 | Aktiv | REAKTIV | METHODIK, PERFORMANCE | Projekt-Vorgabe | Linux-Leistungsmessung auf echter Hardware verschoben auf Schritt 7.2 |
-| 012 | 2026-10-13 | Aktiv | REAKTIV | DEPLOYMENT | Build/Deploy, Projekt-Vorgabe | macOS nur für Apple-Chips, kein Intel- und kein Universal-Build |
-| 013 | 2026-10-13 | Überholt durch ADR-020 | ERKENNTNIS | DATENMODELL, PERFORMANCE | Datenmodell | Größte Karte 768 × 768 Zellen je Etage, fünf Etagen |
-| 014 | 2026-10-13 | Aktiv | ERKENNTNIS | STACK, PERFORMANCE | Architektur | Stack aus ADR-002 bestätigt, Leistungsnachweis mit Auflagen erbracht |
-| 015 | 2026-10-13 | Aktiv | REAKTIV | DEPLOYMENT | Build/Deploy | Ad-hoc-Signatur für macOS-Pakete der Spike-Builds |
-| 016 | 2026-10-13 | Aktiv | ERKENNTNIS | METHODIK | Architektur, Methodik | Phasenabschluss 1 – gezielt umbauen, Reifegrad-Regel für Umsetzungsschritte |
-| 017 | 2026-10-13 | Aktiv | REAKTIV | PERFORMANCE | Architektur | Reifegrad „NFR Performance Gesamtsystem" auf das Gemessene begrenzt |
-| 018 | 2026-10-13 | Aktiv | OPERATIV | DEPLOYMENT, STACK | Build/Deploy, Externe Abhängigkeiten | Projektgerüst, CI-Gates und napi-Versionen für Phase 2 |
-| 019 | 2026-10-13 | Aktiv | REAKTIV | STACK | Lizenz/Compliance | Erlaubte Lizenzen um BlueOak-1.0.0, 0BSD, Python-2.0 und WTFPL erweitert |
-| 020 | 2026-10-13 | Aktiv (Begehbarkeit des Vorfelds je Personengruppe geändert durch ADR-037) | REAKTIV | DATENMODELL, PERFORMANCE | Datenmodell | Weltmaßstab 2 m je Zelle, Luftseite im Raster, Wegweiser in Blöcken, Zeitmodell |
 | 021 | 2026-10-13 | Aktiv (S-6 für Pakete geändert durch ADR-026, um `saves.preview` ergänzt durch ADR-028, `onCoreExit` durch ADR-029, `lang.*` und Modul-Karte durch ADR-031; S-5-Grenzen geändert durch ADR-030; fortgeschrieben und um S-8 ergänzt durch ADR-032; S-1 fortgeschrieben durch ADR-038) | ERKENNTNIS | SCHNITTSTELLE, SECURITY | API-Verträge, Architektur, Sicherheit | Schnittstellenverträge S-2 bis S-7 |
 | 022 | 2026-10-13 | Aktiv | OPERATIV | DEPLOYMENT, PERFORMANCE | Build/Deploy | Kern-Benchmark als CI-Gate und Prüfung der erzeugten TypeScript-Typen |
 | 023 | 2026-10-13 | Aktiv | OPERATIV | DEPLOYMENT, PERFORMANCE | Build/Deploy | Wegweiser-Benchmark als Schritt im CI-Job „Kern-Benchmark“ |
@@ -62,12 +44,13 @@
 | 047 | 2026-11-04 | Aktiv | REAKTIV | METHODIK, COMPLIANCE | Produktvision, Lizenz/Compliance | Rückkehr zur umfassenden Flughafenmanagementsimulation |
 | 048 | 2026-11-04 | Aktiv | STRATEGISCH | DATENMODELL, SCHNITTSTELLE, MODUL | Datenmodell, API-Verträge, Architektur | Minimaler Passagierfluss und Terminalstationen in Schritt 3.2 |
 | 049 | 2026-11-04 | Aktiv | OPERATIV | DATENMODELL, SCHNITTSTELLE, PERFORMANCE | Datenmodell, API-Verträge | Additive Stationsverbesserung für die erste Terminallektion |
+| 050 | 2026-11-05 | Aktiv | OPERATIV | METHODIK | Methodik | Dev-Templates gezielt in OpenAirsides Codex-Regeln übernehmen |
 
 ### Reaktiv-Quote
 
-- **Aktueller Wert:** 4 / 10 über die letzten 10 ADRs (ADR-038 bis ADR-047: ADR-038, ADR-042, ADR-045, ADR-047), 40 % – **über dem Schwellenwert**; gesamt 19 / 47. ADR-047 ist eine strategische Korrektur ohne Architektur- oder Codeänderung. Reflexionen in `fahrplan.md` Abschnitt „Iterations-Reflexion" (letzte: Anlass ADR-045, 2026-10-28, neues Muster nach Regel-009); ab Phase 3 eine Reflexion je Phase bei gleichem Muster (Regel-009)
+- **Aktueller Wert:** 3 / 10 über die letzten 10 ADRs (ADR-041 bis ADR-050: ADR-042, ADR-045, ADR-047), 30 % – **über dem Schwellenwert**; gesamt 19 / 50. ADR-047 ist eine strategische Korrektur ohne Architektur- oder Codeänderung. Reflexionen in `fahrplan.md` Abschnitt „Iterations-Reflexion" (letzte: Anlass ADR-045, 2026-10-28, neues Muster nach Regel-009); ab Phase 3 eine Reflexion je Phase bei gleichem Muster (Regel-009)
 - **Schwellenwert (in `project-context.md` festgelegt):** maximal 20 % über die letzten 10 ADRs
-- **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
+- **Bei Überschreitung:** Regel-009 anwenden: bekanntes Muster mit bestehender Reflexion verknüpfen; bei neuem Muster sofort STOPP und Reflexion. Die Quote zählt die festgehaltenen Klassifikationen; keine stille Umklassifikation älterer ADRs.
 
 ---
 
@@ -84,7 +67,7 @@
 - **Tags:** [aus Tag-Liste unten]
 - **Phasentyp-Kontext:** [ERKUNDUNG | UMSETZUNG | STABILISIERUNG | INITIALISIERUNG]
 - **Reifegrad-Wirkung:** [...]
-- **Kategorie:** [aus CLAUDE.md Abschnitt 4 oder "Methodik"]
+- **Kategorie:** [aus AGENTS.md „Autonomie und Freigaben“ oder "Methodik"]
 - **Kontext:** [...]
 - **Optionen:** [...]
 - **Entscheidung:** [...]
@@ -188,7 +171,7 @@ Seit 2026-10-13 liegt jeder ADR als eigene Datei in `docs/decisions/` (ADR-001: 
 
 - **Herkunft:** ADR-002
 - **Gilt für:** jede neue Abhängigkeit, jedes Setup, jede Versionsangabe in Dokumenten oder Konfiguration
-- **Regel:** Version gegen offizielle Quellen belegen (Paketregister, Release-Seite, Lebensende), nach „ausgereifte Linie" und Mindestreife aus `project-context.md` Abschnitt 3 wählen (`CLAUDE.md` Abschnitt 15), Kompatibilität mit den tragenden Abhängigkeiten prüfen, `Verifiziert: YYYY-MM-DD` mit Quelle notieren. Neue Linien für Sprache, Framework oder Laufzeit legt die KI als Tabelle zur Bestätigung vor.
+- **Regel:** Version gegen offizielle Quellen belegen (Paketregister, Release-Seite, Lebensende), nach „ausgereifte Linie" und Mindestreife aus `project-context.md` Abschnitt 3 wählen (`AGENTS.md`, „Qualität und Nachweise“), Kompatibilität mit den tragenden Abhängigkeiten prüfen, `Verifiziert: YYYY-MM-DD` mit Quelle notieren. Neue Linien für Sprache, Framework oder Laufzeit legt die KI als Tabelle zur Bestätigung vor.
 - **Ausnahmen:** keine
 - **Gegenbeispiel:** eine Version aus dem Gedächtnis oder aus einem älteren Beispiel übernehmen.
 
@@ -236,7 +219,7 @@ Seit 2026-10-13 liegt jeder ADR als eigene Datei in `docs/decisions/` (ADR-001: 
 #### Regel-007: Reifegrad vor Umsetzungsschritten
 
 - **Herkunft:** ADR-016
-- **Gilt für:** jeden Schritt einer UMSETZUNG-Phase (Auslegung von `CLAUDE.md` Abschnitt 6, „Architektur-Reifegrad respektieren", im Verhältnis zu `architecture.md` Abschnitt 0)
+- **Gilt für:** jeden Schritt einer UMSETZUNG-Phase (Auslegung von `AGENTS.md`, „Planung, Architektur und Anforderungen“, „Architektur-Reifegrad respektieren", im Verhältnis zu `architecture.md` Abschnitt 0)
 - **Regel:** Vor dem Schritt müssen die **Grundsatzentscheidungen**, auf denen er aufbaut, `[BELASTBAR]` sein: Stack, Pattern, Datenmodell und jede Schnittstelle (S-n), die der Schritt nutzt oder umsetzt. **Module** dürfen `[VORLÄUFIG]` in ihre erste Umsetzung gehen; sie werden durch diese Umsetzung belastbar (Beförderungsregel). Ein `[OFFEN]`-Bestandteil, von dem der Schritt abhängt, ist immer ein Erkundungsgrund.
 - **Ausnahmen:** keine
 - **Gegenbeispiel:** Schritt 2.5 (Spielstand) beginnt, während S-5 noch `[OFFEN]` oder `[VORLÄUFIG]` ist; oder ein Modul wird zurückgestellt, weil es vor seiner ersten Umsetzung nicht `[BELASTBAR]` ist.
@@ -245,26 +228,19 @@ Seit 2026-10-13 liegt jeder ADR als eigene Datei in `docs/decisions/` (ADR-001: 
 
 - **Herkunft:** ADR-036
 - **Gilt für:** Schnittstellen S-1 bis S-8 mit Reifegrad `[BELASTBAR]` (`docs/architecture-schnittstellen.md`)
-- **Regel:** Eine rein additive, rückwärtskompatible Ergänzung eines Vertrags gilt nicht als Änderung im Sinne von `architecture.md` Abschnitt 0 und braucht keinen ADR (`CLAUDE.md` Abschnitt 4 Nr. 5). Additiv sind etwa eine neue Funktion, ein neues optionales Feld oder ein neuer Fehlercode, den bestehende Aufrufer nicht auswerten müssen. Sie wird im Änderungsprotokoll der Schnittstelle mit Datum und Schritt eingetragen, im Logbuch vermerkt und dem Projektinhaber in der Vorlage des Schritts zur Kenntnis gegeben.
+- **Regel:** Eine rein additive, rückwärtskompatible Ergänzung eines Vertrags gilt nicht als Änderung im Sinne von `architecture.md` Abschnitt 0 und braucht keinen ADR (`AGENTS.md`, „Autonomie und Freigaben“). Additiv sind etwa eine neue Funktion, ein neues optionales Feld oder ein neuer Fehlercode, den bestehende Aufrufer nicht auswerten müssen. Sie wird im Änderungsprotokoll der Schnittstelle mit Datum und Schritt eingetragen, im Logbuch vermerkt und dem Projektinhaber in der Vorlage des Schritts zur Kenntnis gegeben.
 - **Ausnahmen:** Ein ADR bleibt nötig, wenn die Ergänzung eine neue Beziehung in der Modul-Karte schafft (Kategorie 1), eine neue Abhängigkeit braucht (Kategorie 3), Sicherheit oder Datenschutz berührt (Kategorie 6) oder bestehende Bedeutung ändert, auch nur für einen Teil der Aufrufer.
 - **Gegenbeispiel:** ein neues Pflichtfeld in einer Antwort, das ältere Renderer nicht kennen, als „additiv“ ohne ADR eintragen.
 
 #### Regel-009: Eine Reflexion zur Reaktiv-Quote je Phase
 
 - **Herkunft:** ADR-036
-- **Gilt für:** Überschreitung des Reaktiv-Schwellenwerts (`decisions.md` Teil A, `CLAUDE.md` Abschnitt 0 Auslöser 5)
+- **Gilt für:** Überschreitung des Reaktiv-Schwellenwerts (`decisions.md` Teil A, `AGENTS.md`, „Skripte, Umgebungen und reaktive Entscheidungen“)
 - **Regel:** Solange die Quote aus einem schon reflektierten Muster kommt, gibt es je Phase eine Reflexion, beim Phasenabschluss. Ein reaktiver ADR mit diesem Muster wird im Logbuch mit Verweis auf die geltende Reflexion vermerkt. Eine neue Reflexion mit Stopp entsteht sofort, wenn ein reaktiver ADR ein neues Muster zeigt. Dazu zählt jeder reaktive ADR, der Code in Takt & Weltzustand, Welt & Bau, Wegfindung oder Brücke ändert oder eine Modulgrenze verschiebt.
 - **Ausnahmen:** keine
 - **Gegenbeispiel:** einen reaktiven ADR, der eine Modulgrenze verschiebt, nur mit Verweis auf die Phasen-Reflexion vermerken.
 
-#### Regel-010: Funktionen aus dem eigenen Entwurf begründen
-
-- **Status:** überholt durch ADR-047 (2026-11-04)
-- **Herkunft:** ADR-046
-- **Gilt für:** jeden Umsetzungsschritt, der Spielfunktionen betrifft
-- **Regel (historisch, nicht mehr anzuwenden):** Der Schritt nannte die Säule(n) aus `docs/vision-2.md`, die er trug. ADR-047 ersetzt dieses Kriterium durch Regel-004.
-- **Ausnahmen:** reine Infrastruktur-Schritte
-- **Gegenbeispiel:** eine Funktion mit „das bisherige Vorbild hatte sie“ begründen oder nach Inventar-IDs abarbeiten.
+Überholte Regeln: [Archiv](archiv/decisions-regeln.md).
 
 <!-- ANCHOR:teil-d-geschaeftsentscheidungen -->
 ## Teil D: Geschäftsentscheidungen (BDR)
