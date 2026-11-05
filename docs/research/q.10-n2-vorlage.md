@@ -1,6 +1,6 @@
 # Q.10-N2 – S-8-Antwortprüfung und Fehlerzuordnung
 
-**Status:** Entscheidungsvorlage; Produktcode unverändert, Sicherheitsfreigabe ausstehend.
+**Status:** Option A am 2026-11-05 mit „freigabe a“ ausdrücklich freigegeben; ADR-052 vor Code. Die folgenden Befunde/Optionen bewahren den Stand der Vorlage; aktuelle Umsetzung und Nachweise stehen im [Umsetzungsbericht](q.10-n2-umsetzung.md).
 **Basis:** Produkt `468bc325ffab424f2ddc30641b88391f20f11630`; `d160277` enthält nur den übernommenen N3-Abschlussvermerk.
 
 ## Befunde und dynamische Gegenproben

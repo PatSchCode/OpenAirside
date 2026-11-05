@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   exitedCoreStatus,
+  coreHostAnswerRequestNumber,
   isPackAnswer,
   isSavesAnswer,
   MAX_INFO_FILES,
@@ -31,6 +32,35 @@ const languages = [
   { code: "de", name: "Deutsch", keys: 54 },
   { code: "en", name: "English", keys: 54 },
 ];
+
+describe("answer correlation", () => {
+  it("uses only recognised families and the delivered safe request number", () => {
+    for (const type of ["packs", "packsError", "savesAnswer"]) {
+      for (const request of [0, 12, Number.MAX_SAFE_INTEGER]) {
+        expect(coreHostAnswerRequestNumber({ type, request })).toBe(request);
+      }
+      for (const request of [
+        undefined,
+        "12",
+        -1,
+        0.5,
+        NaN,
+        Infinity,
+        Number.MAX_SAFE_INTEGER + 1,
+      ]) {
+        expect(coreHostAnswerRequestNumber({ type, request })).toBeUndefined();
+      }
+    }
+    for (const raw of [
+      null,
+      [],
+      { type: "unknown", request: 1 },
+      { type: "saves:load", request: 1 },
+    ]) {
+      expect(coreHostAnswerRequestNumber(raw)).toBeUndefined();
+    }
+  });
+});
 
 describe("parseCoreHostMessage", () => {
   it("accepts a ready message with core info and packs", () => {
@@ -121,15 +151,24 @@ describe("nextCoreStatus", () => {
     });
   });
 
-  it("fails on an unexpected message", () => {
-    expect(nextCoreStatus({ type: "bogus" })).toEqual({
-      state: "failed",
-      reason: "unexpected message from core host",
-    });
+  it("preserves status on unknown or malformed messages", () => {
+    const previous = { state: "ready" as const, info };
+    for (const raw of [
+      null,
+      [],
+      1,
+      {},
+      { type: "bogus" },
+      { type: "ready" },
+      { type: "error", message: 1 },
+    ]) {
+      expect(nextCoreStatus(raw, previous)).toBe(previous);
+    }
+    expect(nextCoreStatus({ type: "bogus" })).toEqual({ state: "starting" });
   });
 
   it("does not take pack answers as a status", () => {
-    expect(nextCoreStatus({ type: "packs", request: 1, packs }).state).toBe("failed");
+    expect(nextCoreStatus({ type: "packs", request: 1, packs }).state).toBe("starting");
   });
 });
 
@@ -208,8 +247,7 @@ describe("save game messages (step 2.5)", () => {
 
   it("never takes a save game message for a status", () => {
     expect(nextCoreStatus({ type: "autosave" })).toEqual({
-      state: "failed",
-      reason: "unexpected message from core host",
+      state: "starting",
     });
   });
 

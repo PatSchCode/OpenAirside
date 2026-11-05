@@ -24,6 +24,11 @@ Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-05 (Europe/Berlin) – Q.10-N2 lokal verifiziert
+
+- **Ergebnis:** P1–P4 nach ADR-052 umgesetzt; N5 getrennt. 509 Vitest-Tests/41 Dateien, zwei Electron-E2E, Build, Lint/Format/Typen, erzeugte Verträge, Audits und vollständiger Hook grün. Coverage global 81,41 %, core-status/settings je 100 %. [Nachweise und Grenzen](research/q.10-n2-umsetzung.md).
+- **Gegenprüfung:** neue Astra-Instanz ohne Gesprächsverlauf, nur lesend; keine neuen hohen/mittleren/niedrigen Befunde im Paket A, keine eigenen Tests. Gestagten Inhalt geprüft. Implementierungscommit und Push folgen; N2 bleibt bis grüner CI IN ARBEIT.
+
 ### 2026-11-05 (Europe/Berlin) – [SESSIONSTART] – Q.10-N2 Option A umsetzen
 
 - **Freigabe:** „freigabe a“ für das konkrete Paket P1–P4 der N2-Vorlage. N5 bleibt ausdrücklich getrennt; keine neue Architekturbeziehung, Abhängigkeit oder CI-Änderung.
