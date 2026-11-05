@@ -253,7 +253,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). K1–K4 durch Q.10-N3/ADR-051 korrigiert bzw. ausdrücklich aufgelöst; N2/P1–P4 durch ADR-052 nachgewiesen korrigiert; N5 und Abschlussabgleich vor 3.11 offen.
+- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). K1–K4 durch Q.10-N3/ADR-051 korrigiert bzw. ausdrücklich aufgelöst; N2/P1–P4 durch ADR-052 und N5 durch ADR-053 nachgewiesen korrigiert; Abschlussabgleich vor 3.11 offen.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
