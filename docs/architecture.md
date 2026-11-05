@@ -486,7 +486,7 @@ Erster unabhängiger Bestandsabgleich am 2026-11-05, Basis `b16167c`, ADR-050. U
 | Welt & Bau | 2026-11-05, N3 auf `9bba166` | FIFO-Verantwortung K4 durch ADR-051 bestätigt, Stationsvalidierung ergänzt; [N3-Nachweise](research/q.10-n3-umsetzung.md) |
 | Personen | 2026-11-05, N3 auf `9bba166`, Main `468bc32` | K1/K2 korrigiert, K3 ausdrücklich nach 5.4 verschoben, K4 bestätigt; unabhängige Nachprüfung und volle CI grün. Bleibt VORLÄUFIG bis 3.2-Abschlussabgleich; [N3-Nachweise](research/q.10-n3-umsetzung.md) |
 | Brücke | 2026-11-05, `b16167c`; N2-Gegenstellenabgleich auf `a95e47d` | D1 ergänzt; P1–P4 am Hauptprozess durch N2 korrigiert. Rust-Brückencode unverändert, N5-Portannahme im Kern-Host separat offen |
-| Plattform | 2026-11-05, N2 auf `a95e47d` | P1–P4 nach ADR-052 korrigiert; [Nachweise](research/q.10-n2-umsetzung.md), unabhängige Sicherheitsnachprüfung ohne neue Befunde und volle CI grün. N5-Portannahme mittel/statisch separat offen; keine neue Beförderung |
+| Plattform | 2026-11-05, N2 auf `a95e47d`; N5-Probe Basis `d1f4ba2` | P1–P4 nach ADR-052 korrigiert; [Nachweise](research/q.10-n2-umsetzung.md), unabhängige Sicherheitsnachprüfung und volle CI grün. [N5](research/q.10-n5-vorlage.md): mittlere Portannahme durch Listenerprobe bestätigt, native Folgen nur statisch; eigene Freigabe offen, keine neue Beförderung |
 | Inhalte & Mods (Lader) | 2026-11-05, `b16167c` | D2/D3 niedrig, Q.10-N4; P4-Empfangsgrenzen durch N2 auf `a95e47d` korrigiert |
 | Lokalisierung | 2026-11-05, `b16167c` | P4 an der Plattformgrenze durch N2 auf `a95e47d` korrigiert; D3 weiter in Q.10-N4 |
 | Grafik-Pipeline | 2026-11-05, `b16167c` | im benannten statischen Umfang keine weitere Abweichung gefunden |

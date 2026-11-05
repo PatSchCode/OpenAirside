@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-11-05 (ADR-052: S-8-Korrektur Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** keiner; Q.10-N2 auf `a95e47d` lokal, unabhängig und durch volle CI nachgewiesen. N3 gemergt; 3.2 bleibt wegen N5/Abschlussabgleich offen.
+- **Aktiver Schritt:** keiner; Q.10-N5 wartet nach Gegenproben und unabhängiger Bewertung auf eigene Sicherheitsfreigabe. N2/N3 gemergt; 3.2 bleibt wegen N5/Abschlussabgleich offen.
 - **Nächster Schritt:** Q.10-N5-Portübergabe prüfen und Korrektur entscheiden, dann 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-043 bis ADR-052; Reflexion zu ADR-051 vor Code durchgeführt.
 
@@ -495,7 +495,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N5: S-8-Portübergabe im Kern-Host prüfen
 
-- **Status:** `[OFFEN]` – neuer mittlerer statischer Befund aus unabhängiger N2-Vorlagenprüfung; keine dynamische Gegenprobe und keine Umsetzung vorweggenommen.
+- **Status:** `[WARTET-AUF-FREIGABE]` – Gegenproben bestätigen den mittleren Befund; unabhängige Astra-Bewertung empfiehlt das begrenzte Paket A. Keine Produktkorrektur oder N5-Abnahme vorweggenommen.
 - **Frist:** 2026-11-12; vor Abschluss 3.2/Erkundung 3.11 klären.
 - **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit.
 - **Abhängigkeiten:** S-8 und ADR-032; getrennt von der N2-Freigabe P1–P4.
@@ -504,6 +504,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Testsignal:** unbekannte/ungültige Nachricht darf vorhandene Verbindung nicht ersetzen; gültige Übergabe schließt alten Port und verbindet neuen genau einmal.
 - **Freigabepflichtig:** ja, Sicherheit; Nachprüfung vor neuer Beförderung im betroffenen Empfangsumfang.
 - **Betroffene Module:** Plattform/Kern-Host, S-8-Gegenstelle; keine neue Phase-3-Funktion.
+- **Vorlage/Nachweise:** [Q.10-N5](research/q.10-n5-vorlage.md), Basis `d1f4ba2`: drei Kontrollen grün, fünf erwartete rote Befundassertionen gegen tatsächlichen Host-Listener mit Transport-/Brücken-Doubles. Native Neustartfolge nur statisch; kein Renderer-/Mod-Ausnutzungspfad nachgewiesen. Empfehlung A: explizite `port`-Art und genau ein Port, harmlose Zusatzfelder erlaubt; vorhandene Anfragewege unverändert. B: bewusst vor 3.2-Abschluss terminieren.
 
 #### Q.9: ADR-047 – Produktvision und Referenzbasis wiederherstellen
 

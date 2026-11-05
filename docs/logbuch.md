@@ -24,6 +24,21 @@ Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N5 Entscheidung vorbereitet
+
+- **Arbeit/Ergebnis:** Dauer nicht separat gemessen; tatsächlichen Host-Listener auf Basis `d1f4ba2` geprüft: drei Kontrollen grün, fünf erwartete rote Befundassertionen am Schließen des alten Ports. Nach Formatierung identisch wiederholt; keine Reparatur versucht. Diagnose mit SHA eingefroren, temporäre Testdatei entfernt, Produktdateien unverändert. Vorlage empfiehlt explizite `port`-Art und genau einen Port, Zusatzfelder bleiben zulässig. N5 WARTET-AUF-FREIGABE, keine Korrektur oder neue ADR vorweggenommen.
+- **Grenzen:** Bridge, Parent-Port, Ports und Uhr ersetzt; kein echter Electron-/Nativtransport. Sitzungsneustartfolge statisch, kein dynamisch belegter Weltverlust oder Renderer-/Mod-Ausnutzungspfad. Bei roten Fällen nachfolgende Assertions nicht ausgeführt. Künftige Abnahme prüft auch Antworten am richtigen Port.
+- **Unabhängige Prüfung:** neue Instanz `gpt-6-astra`, hohe Denktiefe, ohne Gesprächsverlauf, nur lesend; keine eigenen Tests. Mittleren Codebefund bestätigt, begrenztes A empfohlen, Konfidenz hoch, Umkehrbarkeit billig. Hauptagent Codex laut Systemkontext, genaue Klasse/Kontextgröße unbestimmbar. Eine Delegation, keine gemeinsame Dateibearbeitung.
+- **Nachweise/Konsistenz:** Dokumentations-Hooks bestanden, lokale Linkziele und eingefrorene Quellen-SHA geprüft. Dokumentbudgets grün (Architektur 17.814/20.000, übrige darunter); automatisierte Budgetprüfung bleibt Q.10-N1 mit eigener CI-Freigabe. README, Fahrplan, datierte Abgleichstabelle, ADRs/Quote 3/10 bzw. 20/52, Anforderungen, Blocker und Ablaufregister geprüft; keine neue fällige Maßnahme, Quick Start unverändert. Keine Reifegradänderung.
+- **Commit/Offenes:** vorbereitende Dokumentation wird nach Prüfung des gestagten Inhalts mit aktivem Hook committed, gepusht und als eigener N5-PR geprüft; der N2-Abschlusscommit wird gemäß Eigentümerregel mitgenommen. CI-Ergebnis wird am konkreten Kopf beobachtet. Nächster Schritt: Entscheidung A/B, danach bei A Sicherheits-ADR vor Code und begrenzte Umsetzung; 3.2 bleibt offen.
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONSTART] – Q.10-N5 Portübergabe prüfen
+
+- **Stand-Prüfung:** `d1f4ba2`, Branch `docs/q-10-n2-s8-vorlage`, sauber und mit Remote identisch; Remote-main `d8a4b6f`, keine offenen PRs einschließlich Entwürfen. Eigener N2-Abschlusscommit bleibt erhalten und geht in den neuen N5-Vorlagenbranch ein. Keine ungeprüften Remote-Teile.
+- **Auftrag/Pflichtlektüre:** N5-Gegenproben und begrenzte Sicherheitsentscheidung vorbereiten; keine Produktkorrektur vor Freigabe. Projektkontext vollständig, letzter Abschluss, Fahrplanstand/Phasenkopf/offene Schritte und N5/3.2/3.11 vollständig, Architektur 1/2/9, Decisions A/C, aktive Blocker und Requirements-Übersicht gelesen.
+- **Testsignal:** Rot erkennt unerlaubten Austausch einer lebenden Portverbindung durch unbekannte/ungültige Nachrichten; gültige Übergabe muss den alten Port schließen und den neuen genau einmal anbinden. Reale registrierte Host-Logik mit isolierten Transport-/Brücken-Doubles; kein Nachweis eines Renderer-/Mod-Ausnutzungspfads oder echten Electron-Transports.
+- **Modell/Quelle:** Codex laut Systemkontext; genaue Hauptklasse/Kontextgröße unbestimmbar. Unabhängige Sicherheitsbewertung durch separate Astra-Instanz ohne Gesprächsverlauf vorgesehen, ausschließlich lesend.
+
 ### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – N2 gemergt und Main geprüft
 
 - **Ergebnis:** [PR #50](https://github.com/PatSchCode/OpenAirside/pull/50) mit geprüftem Kopf `87df23c` nach `main` gemergt, Merge `d8a4b6fd216787b92fb9b3044f8fbef2237b32b2`. Abschlusskopf: CI 42063785242 und Security 42063785258 grün (16 bestanden, sieben dokumentationsbedingt übersprungen); vollständige Code-Abnahme zuvor auf `a95e47d`.
