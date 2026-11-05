@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-11-05 (ADR-051: Passagierkorrektur Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** keiner; Q.10-N3 auf `9bba166` lokal, unabhängig und durch volle CI nachgewiesen. Q.10 ist gemergt; 3.2 bleibt für seinen Abschlussabgleich offen.
-- **Nächster Schritt:** Q.10-N2 (S-8-Validierung) entscheiden; danach 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Aktiver Schritt:** keiner; Q.10-N2-Gegenproben und Entscheidungsvorlage erstellt, wartet auf Sicherheitsfreigabe. N3 gemergt und nachgewiesen; 3.2 bleibt für seinen Abschlussabgleich offen.
+- **Nächster Schritt:** Q.10-N2 Option A/B entscheiden; nach Korrektur auch den getrennten Port-Befund N5 klären, dann 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 4 / 10 über ADR-042 bis ADR-051; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
@@ -456,7 +456,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N2: S-8-Antwortprüfung und Fehlerzuordnung korrigieren
 
-- **Status:** `[WARTET-AUF-FREIGABE]` – neue Befunde P1–P4, kein Code geändert.
+- **Status:** `[WARTET-AUF-FREIGABE]` – P1–P4 dynamisch bestätigt; konkrete Vorlage A/B und unabhängige Astra-Bewertung liegen vor. Kein Produktcode geändert.
 - **Frist:** 2026-11-12 für Entscheidung und Umsetzungsplanung.
 - **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit, danach Ausführung.
 - **Abhängigkeiten:** Prüfbericht `docs/research/q.10-methodik-abgleich.md`, vorhandener S-8-Vertrag.
@@ -465,6 +465,8 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Testsignal:** Gezielt ungültige und verspätete Nachrichten müssen die richtige Anfrage ablehnen, gültige Folgeanfragen bleiben nutzbar. Überlange Sprachwerte werden zurückgewiesen; kein neuer Gesamtgrenzwert.
 - **Akzeptanzkriterien:** gezielte Regressionstests, vorhandene Gates und Coverage; unabhängige Prüfung der Sicherheitskorrektur, neue Beförderung erst nach Nachprüfung ohne hohe/mittlere Befunde.
 - **Betroffene Module:** Plattform, Brücke; keine Behebung innerhalb Q.10-Dokumentationscommit.
+- **Vorlage/Nachweise:** [N2-Vorlage](research/q.10-n2-vorlage.md), [eingefrorene Gegenproben](research/q.10-n2-gegenproben.md). 61 Bestandsfälle grün; zehn Handler-/Parserproben mit vier grünen Kontrollen und sechs erwarteten roten Befundassertionen. Kein Fix oder Abschluss behauptet.
+- **Empfehlung:** A: P1–P4 innerhalb vorhandener Verträge korrigieren; Familie plus gelieferte gültige Anfrage-ID, unmittelbares `invalidAnswer`, vorhandene Sprach-Einzellimits. B: bewusst bis spätestens vor 3.2-Abschluss verschieben. Sicherheitsfreigabe und ADR vor Code; keine neue Beförderung.
 
 #### Q.10-N3: Passagierzustand, Save/Load und beschlossenen 3.2-Umfang klären
 
@@ -489,6 +491,18 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Zu tun:** Unix-Ablehnung harter Links konsistent beschreiben; Reihenfolgeanforderung an Sprachnamen und Ablehnung leerer Texte gegen bestehenden Vertrag und Tests klären.
 - **Testsignal:** Widersprüchliche Aussagen werden gefunden; dokumentierte Beispiele müssen dem geprüften Verhalten entsprechen. Keine Änderung öffentlicher Ladebedingungen als bloße Textkorrektur tarnen.
 - **Betroffene Module:** Inhalte & Mods, Lokalisierung; niedrige Befunde dürfen mit diesem Landeplatz offen bleiben.
+
+#### Q.10-N5: S-8-Portübergabe im Kern-Host prüfen
+
+- **Status:** `[OFFEN]` – neuer mittlerer statischer Befund aus unabhängiger N2-Vorlagenprüfung; keine dynamische Gegenprobe und keine Umsetzung vorweggenommen.
+- **Frist:** 2026-11-12; vor Abschluss 3.2/Erkundung 3.11 klären.
+- **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit.
+- **Abhängigkeiten:** S-8 und ADR-032; getrennt von der N2-Freigabe P1–P4.
+- **Befund:** `app/src/main/core-host.ts:162–168` übernimmt nach erfolglosen Parsern jeden mitgelieferten Port und schließt den vorigen, ohne die benannte Nachrichtenart `port` zu prüfen. Vermutlich Code falsch; mögliche Verbindungsunterbrechung. Kein Ausnutzungspfad aus Renderer oder Mod nachgewiesen, Sender ist der Hauptprozess.
+- **Zu tun:** unbekannte Art mit Port, ungültige bekannte Art mit Port und gültige `port`-Übergabe gegeneinander prüfen; danach begrenzte Korrektur ausdrücklich vorlegen. Keine stillschweigende Erweiterung des N2-Pakets.
+- **Testsignal:** unbekannte/ungültige Nachricht darf vorhandene Verbindung nicht ersetzen; gültige Übergabe schließt alten Port und verbindet neuen genau einmal.
+- **Freigabepflichtig:** ja, Sicherheit; Nachprüfung vor neuer Beförderung im betroffenen Empfangsumfang.
+- **Betroffene Module:** Plattform/Kern-Host, S-8-Gegenstelle; keine neue Phase-3-Funktion.
 
 #### Q.9: ADR-047 – Produktvision und Referenzbasis wiederherstellen
 

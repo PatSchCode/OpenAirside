@@ -24,6 +24,24 @@ Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N2 Entscheidungsvorlage
+
+- **Dauer/Arbeit:** nicht separat gemessen; P1–P4 gegen S-4/S-6/S-8 und Gegenstellen gelesen, isolierte Handler-/Dienst-/Parserproben ausgeführt und [konkretes Paket A/B](research/q.10-n2-vorlage.md) mit [Testquellen](research/q.10-n2-gegenproben.md) vorbereitet. N3-Abschlusscommit `d160277` auf neuen Branch `docs/q-10-n2-s8-vorlage` übernommen.
+- **Ergebnis:** P1 Statusverlust/`notReady`, P2 fremde Anfrage als `invalidAnswer`, P3 `game:new`-Lock bis 120-s-Timeout, P4 leere/überlange Namen und überlange Texte dynamisch bestätigt. Produktdateien unverändert; kein ADR-052, keine Sicherheitskorrektur und kein N2-Abschluss vorweggenommen. Status WARTET-AUF-FREIGABE.
+- **Testsignal/Nachweise:** 61 bestehende Tests grün; zehn isolierte Proben mit vier grünen Kontrollen und sechs erwarteten roten Befundassertionen. Keine drei gescheiterten Reparaturversuche. Tatsächlicher Main-Listener mit gemocktem Electron-Transport, reale Dienste/OperationLock; weder echter Electron-Transport noch Rust-Laderumgehung geprüft. Erste Shell Node 24.15.0; bereits vorhandene fnm-Version 26.11.1 explizit genutzt und beide Läufe mit denselben Ergebnissen wiederholt.
+- **Unabhängige Bewertung:** neue Astra-Instanz (`gpt-6-astra`, hohe Denktiefe, ohne Gesprächsverlauf), nur lesend, keine eigenen Tests. Erster Aufruf am Laufzeitlimit gescheitert; einmaliger späterer Verfügbarkeitsversuch erfolgreich. A empfohlen; Korrelationsmatrix, Codepoints, Rust-/JS-Whitespace U+0085/U+FEFF und D3-Abgrenzung geprüft. Hypothetische ADR-Klassifikation/Quote nicht als beschlossen übernommen; aktueller Bestand unverändert 51 ADRs, 4/10 reaktiv.
+- **Zusatzbefund:** mittel, vermutlich Code, `core-host.ts:162–168` übernimmt einen Port unabhängig von Nachrichtenart. Nur statisch, kein nachgewiesener Ausnutzungspfad aus Renderer/Mod. Separater Landeplatz Q.10-N5 mit Frist 2026-11-12, keine stille Erweiterung von Paket A.
+- **Konsistenz/Offenes:** README, Fahrplan und datierten Architektur-Abgleich aktualisiert; N3-Nachweise verlinkt statt alte offene Befunde als aktuell auszugeben. Keine Reifegradänderung, neue Modulbeziehung oder Voraussetzung. Ablaufregister ohne neue fällige Maßnahme; 3.2 bleibt offen. Nächster konkreter Schritt: ausdrückliche Entscheidung A/B; nach Freigabe Sicherheits-ADR und Umsetzung mit Regressionen, unabhängiger Nachprüfung, Gates und CI. Hauptmodellklasse/Kontextgröße unbestimmbar, Quelle Systemkontext; ein unabhängiger Astra-Prüfer, keine gleichzeitige Dateibearbeitung.
+- **Commit/PR:** Dokumentationsprüfungen und aktiver Hook vor Commit; anschließend Push und ein Vorlagen-PR auf diesem Branch, zugehörige CI vor Abschluss beobachten. Noch kein Commit-/CI-Erfolg für diese Vorlage behauptet; Beobachtung wird ergänzt.
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONSTART] – Q.10-N2 S-8-Entscheidung vorbereiten
+
+- **Auftrag:** „dann den nächsten Schritt“: P1–P4 gegen S-8 prüfen, dynamische Gegenproben und konkrete Entscheidungsvorlage vorbereiten. Keine vorweggenommene Freigabe für die im Fahrplan ausdrücklich freigabepflichtige Sicherheitskorrektur.
+- **Stand-Prüfung:** sauber auf `d160277`, Branch `docs/q-10-n3-passagier-vorlage`; Remote identisch, main `468bc32`, keine offenen PRs einschließlich Entwürfen. Eigener N3-Sessionende-Commit wird verlustfrei auf den neuen N2-Vorlagenbranch übernommen; keine vorhandene N2-Umsetzung festgestellt.
+- **Pflichtlektüre:** Projektkontext vollständig, letztes Sessionende und jüngere Einträge, Fahrplanstand/Phasenkopf/offene Schritte sowie N2 vollständig, Architektur 1/2/9, Entscheidungen A/C, aktive Blocker und Requirements-Übersicht gelesen. ADR-032 und S-8 gezielt vertieft; keine aktiven Blocker.
+- **Testsignal:** gültige Antworten und Folgeanfragen bleiben nutzbar; unbekannte Nachrichten ändern keinen lebenden Kernstatus; fehlerhafte/späte Antworten beenden ausschließlich ihre tatsächliche Anfrage mit `invalidAnswer`; vorhandene Sprachgrenzen gelten am Empfang. Isolierte erwartete rote Gegenproben belegen den Bestand, keinen Fix. Produktcode bleibt unverändert.
+- **Modell/Quelle:** Codex laut Systemkontext; genaue Hauptklasse und Kontextgröße unbestimmbar. Unabhängige Astra-Entscheidungsbewertung wird nur lesend hinzugezogen.
+
 ### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – N3 gemergt und Main geprüft
 
 - **Ergebnis:** [PR #49](https://github.com/PatSchCode/OpenAirside/pull/49) mit geprüftem Kopf `eaa2e66` nach `main` gemergt, Merge `468bc325ffab424f2ddc30641b88391f20f11630`. Abschlusskopf: CI 42050232088 und Security 42050232092 grün (16 bestanden, sieben dokumentationsbedingt übersprungen); vollständige Code-Abnahme zuvor auf `9bba166`.

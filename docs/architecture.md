@@ -478,15 +478,15 @@ Flugzeugtyp, Objekttyp, Fahrzeugtyp und Airline stammen aus Datenpaketen (S-4). 
 
 ### Letzter Abgleich mit dem Code
 
-Erster unabhängiger Bestandsabgleich am 2026-11-05, Basis `b16167c`, ADR-050. Nur statisch, keine erneute Laufzeit- oder Sicherheitsabnahme. Bericht mit Belegen und bestandenen isolierten Fehlerproben: [Q.10](research/q.10-methodik-abgleich.md). Bisherige Reifegrade bleiben als historische Entscheidungen sichtbar; keine neue Beförderung bei offenen mittleren Befunden.
+Erster unabhängiger Bestandsabgleich am 2026-11-05, Basis `b16167c`, ADR-050. Ursprünglich nur statisch; spätere begrenzte Nachprüfungen stehen je Zeile. Keine erneute Gesamt- oder Sicherheitsabnahme aller Module. Bericht mit Belegen und bestandenen isolierten Fehlerproben: [Q.10](research/q.10-methodik-abgleich.md). Bisherige Reifegrade bleiben als historische Entscheidungen sichtbar; keine neue Beförderung bei offenen mittleren Befunden.
 
 | Modul / Bestandteil | Letzter Abgleich | Ergebnis und Landeplatz |
 |---|---|---|
-| Takt & Weltzustand | 2026-11-05, `b16167c` | geprüfte Reihenfolge ohne weitere gefundene Abweichung; Personen-Hash/Restore K2 in Q.10-N3 mitbetroffen |
-| Welt & Bau | 2026-11-05, `b16167c` | FIFO-Verantwortungsbeschreibung K4 klären, Q.10-N3 |
-| Personen | 2026-11-05, `b16167c`; Gegenproben auf `b01ae6c` | K1/K2 inzwischen dynamisch bestätigt, K3/K4 weiter offen; bleibt VORLÄUFIG. [N3-Vorlage](research/q.10-n3-vorlage.md), keine Korrektur oder Beförderung vorweggenommen |
+| Takt & Weltzustand | 2026-11-05, N3 auf `9bba166` | ursprüngliche Reihenfolge ohne weitere gefundene Abweichung; mitbetroffener Personen-Hash/Restore K2 in N3 korrigiert und nachgeprüft |
+| Welt & Bau | 2026-11-05, N3 auf `9bba166` | FIFO-Verantwortung K4 durch ADR-051 bestätigt, Stationsvalidierung ergänzt; [N3-Nachweise](research/q.10-n3-umsetzung.md) |
+| Personen | 2026-11-05, N3 auf `9bba166`, Main `468bc32` | K1/K2 korrigiert, K3 ausdrücklich nach 5.4 verschoben, K4 bestätigt; unabhängige Nachprüfung und volle CI grün. Bleibt VORLÄUFIG bis 3.2-Abschlussabgleich; [N3-Nachweise](research/q.10-n3-umsetzung.md) |
 | Brücke | 2026-11-05, `b16167c` | D1 redaktionell ergänzt; S-8-Gegenstelle mit P1–P4 in Q.10-N2 |
-| Plattform | 2026-11-05, `b16167c` | P1–P4 mittel, Q.10-N2; keine neue Beförderung im betroffenen Umfang |
+| Plattform | 2026-11-05, Gegenproben auf `468bc32` | P1–P4 mittel dynamisch bestätigt; [N2-Vorlage](research/q.10-n2-vorlage.md), Sicherheitsfreigabe offen. Zusätzlicher statischer Port-Befund mittel, Q.10-N5; keine neue Beförderung im betroffenen Umfang |
 | Inhalte & Mods (Lader) | 2026-11-05, `b16167c` | D2/D3 niedrig, Q.10-N4; Transportgrenzen P4 in Q.10-N2 |
 | Lokalisierung | 2026-11-05, `b16167c` | P4 an der Plattformgrenze, Q.10-N2; D3 in Q.10-N4 |
 | Grafik-Pipeline | 2026-11-05, `b16167c` | im benannten statischen Umfang keine weitere Abweichung gefunden |

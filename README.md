@@ -97,7 +97,8 @@ Sprache und Einstellungen: Die Oberfläche gibt es auf Deutsch und Englisch, bei
 
 - Q.10 abgeschlossen: neue CI-Prüfungen und die gefundenen Bestandskorrekturen separat entscheiden
 - Q.10-N3 erledigt: Validierung und FIFO nachgewiesen korrigiert; Geduld/Bedürfnisse ausdrücklich in 5.4, FR-016 bleibt teilweise abgedeckt und offen
-- Q.10-N2 (S-8-Validierung) entscheiden und 3.2 vor 3.11 abschließen
+- [Q.10-N2: S-8-Entscheidungsvorlage](docs/research/q.10-n2-vorlage.md) A/B entscheiden; vier Befunde durch Handler-/Parserproben bestätigt, Produktkorrektur noch nicht freigegeben
+- Separaten Port-Befund Q.10-N5 klären; danach 3.2 vor 3.11 abschließen
 - 3.1b-N1: Abnahme der Grafiken für Boden, Wand und Sitzbank, Zeitpunkt nennt der Projektinhaber
 
 → Vollständiger Fahrplan: [`docs/fahrplan.md`](docs/fahrplan.md)
