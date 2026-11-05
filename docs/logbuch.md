@@ -17,12 +17,20 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR #47 auf `b16167c` gemergt, der Abschlussnachweis wird in 3.2 nachgeführt. Q.10 ergänzt nach freigegebener Option A die Codex-Methodik. Danach folgen die Befundklärung zu 3.2 und die Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
+Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR #47 auf `b16167c` gemergt und hat grüne CI, bleibt fachlich wegen K1–K4 offen. Q.10 ist mit unabhängiger Prüfung und grüner CI erledigt. Nächster Schritt ist die Entscheidung zu Q.10-N3/N2 vor dem Abschluss von 3.2 und der Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
 
 ---
 
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10 nachgewiesen abgeschlossen
+
+- **Dauer/Arbeit:** nicht minutengenau gemessen; Methodikübernahme, Archivpflege und erster unabhängiger statischer Bestandsabgleich. Ergebnis und Delegationen im vorangehenden Sessionende; keine zusätzliche Codearbeit.
+- **Ergebnis:** Dokumentationscommit `179aaed` gepusht, PR [#48](https://github.com/PatSchCode/OpenAirside/pull/48) offen, nicht gemergt. CI [42039133732](https://github.com/PatSchCode/OpenAirside/actions/runs/42039133732) und Security [42039133699](https://github.com/PatSchCode/OpenAirside/actions/runs/42039133699) grün, 16 bestandene und 7 übersprungene Checks. Code-Schritte der Matrix bei reinem Doku-PR übersprungen; keine neue Anwendungstestabnahme.
+- **Warnungsabgleich:** npm jetzt 15 moderate statt 25 Befunde; bekannte transitive Werkzeuge, High-Gate grün. Rustup-Hinweis zum überschriebenen Default-Toolchain identisch im vorherigen Main-Security-Lauf 41881621704; Ubuntu-26-Annotation bereits im Ablaufregister. Kein neuer Warnungszuwachs.
+- **Offen/nächster Schritt:** Q.10-N3 (Sicherheit/Datenmodell, Save/Load und Geduldumfang) und N2 (S-8-Validierung) benötigen eigene Freigaben. Q.10-N1 neue CI ebenfalls ungeändert offen; D2/D3 in N4. 3.2 bleibt IN ARBEIT trotz grünem Main-CI-Lauf 41881621765 und Security 41881621704. Keine Reifegrade still verändert.
+- **Bilanz:** genaue Hauptmodellklasse und Kontextgröße unbestimmbar; keine weitere Delegation seit Abschlussprüfung. Ablaufdaten und Dokumentkonsistenz erneut geprüft; keine zusätzliche fällige Herstellerfrist. Abschlussvermerk wird mit regulärem Hook im bestehenden PR committed und gepusht; CI am neuen Kopf wird vor der Antwort erneut beobachtet.
 
 ### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10 lokal verifiziert
 

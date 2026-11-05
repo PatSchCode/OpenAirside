@@ -95,7 +95,7 @@ Sprache und Einstellungen: Die Oberfläche gibt es auf Deutsch und Englisch, bei
 
 ## Nächste Schritte
 
-- Q.10: Methodik-Abgleich abschließen; neue CI-Prüfungen separat entscheiden
+- Q.10 abgeschlossen: neue CI-Prüfungen und die gefundenen Bestandskorrekturen separat entscheiden
 - 3.2: unabhängige Befunde zu Passagierzuständen und Save/Load klären; danach 3.11 (Suchen ohne Schilder und Feinwege)
 - 3.1b-N1: Abnahme der Grafiken für Boden, Wand und Sitzbank, Zeitpunkt nennt der Projektinhaber
 

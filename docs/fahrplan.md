@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-11-05 (ADR-050: Dev-Templates gezielt ergänzen, bestehende Projektentscheidungen erhalten)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** Q.10 Methodik-Abgleich. 3.2 wurde mit PR #47 auf `b16167c` gemergt; Abschlussdokumentation und unabhängige Befunde werden ausdrücklich nachgeführt, keine rückwirkende Fertigmeldung.
-- **Nächster Schritt:** Q.10 abschließen; Befunde des Architektur-Code-Abgleichs klären und den Abschluss von 3.2 nachweisen, danach 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Aktiver Schritt:** keiner; Q.10 erledigt auf `179aaed` (PR #48, CI und Security grün). 3.2 ist mit PR #47 auf `b16167c` gemergt; dessen CI-Nachweise liegen vor, der fachliche Abschluss bleibt wegen K1–K4 offen.
+- **Nächster Schritt:** Q.10-N3 (Passagierzustand, Save/Load und Umfang 3.2) sowie Q.10-N2 (S-8-Validierung) entscheiden; danach 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-041 bis ADR-050; bekannte Muster nach Regel-009 und Reflexion zu ADR-045 behandeln.
 
 <!-- ANCHOR:phasen-typen -->
@@ -253,7 +253,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** `[IN ARBEIT]` – während Q.10 nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; frühere lokale Prüfungen siehe Logbuch 2026-11-04. CI-Nachweis und Befunde aus dem ersten Architektur-Code-Abgleich vor Abschluss nachführen.
+- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). Befunde K1–K4 aus Q.10-N3 vor fachlichem Abschluss klären.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
@@ -433,7 +433,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10: Codex-Methodik nach Dev-Templates gezielt ergänzen
 
-- **Status:** `[IN ARBEIT]` – Option A freigegeben am 2026-11-05, ADR-050 vor Umsetzung angelegt.
+- **Status:** `[ERLEDIGT]` 2026-11-05 auf `179aaed`, PR #48; Option A freigegeben, ADR-050 vor Umsetzung angelegt. Abschlussvermerk folgt als eigener Dokumentationscommit im selben PR.
 - **Phasentyp-Kontext:** Dokumentationspflege; keine Änderung des ursprünglichen Phase-3-Schrittplans.
 - **Empfohlene Klasse:** Ausführung für Dokumentation; unabhängige Entscheidungsklasse für Bestandsprüfung.
 - **Abhängigkeiten:** Abgleich mit Dev-Templates auf Commit `e9bcc7c`; ADR-016, ADR-036 und Eigentümerregeln erhalten.
@@ -442,6 +442,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Testsignal:** Dokumentlint Rot erkennt Strukturfehler; Unicode-Zählung Rot erkennt Budgetüberschreitungen; Verlustvergleich erkennt fehlende Archivzeilen; Verweisprüfung erkennt fehlende lokale Ziele. Unabhängige Fehlerproben müssen die eingesetzten Abweichungen finden. Grün dieser Nachweise belegt keine Anwendungstests oder nachträgliche Abnahme von 3.2.
 - **Akzeptanzkriterien:** Projektentscheidungen unverändert, alle übernommenen Regeln mit aktiver Quelle, Dokumentbudgets eingehalten, Prüfbericht mit Befunden und konkreten Landeplätzen; aktiver Hook und CI am Commit grün.
 - **Artefakte:** ADR-050, AGENTS.md, Dokumentarchive, `docs/research/q.10-methodik-abgleich.md`, `docs/dev-prod-unterschiede.md`.
+- **Nachweise:** aktiver Pre-Commit-Hook und unabhängige Abschlussprüfung grün; Unicode-Budgets, Archivverlustvergleich und 90 lokale Linkziele grün. CI 42039133732 und Security 42039133699 auf `179aaed` grün; 16 Checks bestanden, 7 dokumentationsbedingt übersprungen. Matrix-Jobs melden Erfolg mit übersprungenen Code-Schritten, keine neue Laufzeitabnahme. Warnungsbestand gegen `main` verglichen, kein Zuwachs.
 
 #### Q.10-N1: Automatisierte Dokumentbudgets und PR-Metadatenprüfung vorlegen
 
