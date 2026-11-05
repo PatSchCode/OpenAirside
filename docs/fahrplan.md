@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-11-05 (ADR-050: Dev-Templates gezielt ergänzen, bestehende Projektentscheidungen erhalten)
+- **Stand vom:** 2026-11-05 (ADR-051: Passagierkorrektur Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** Q.10-N3 `[IN ARBEIT]`; Option A freigegeben, ADR-051 vor Umsetzung angelegt. Q.10 ist gemergt (PR #48, `b01ae6c`); 3.2 bleibt wegen K1–K4 offen.
-- **Nächster Schritt:** Q.10-N3 nachweisen; danach Q.10-N2 (S-8-Validierung) entscheiden; danach 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Aktiver Schritt:** keiner; Q.10-N3 auf `9bba166` lokal, unabhängig und durch volle CI nachgewiesen. Q.10 ist gemergt; 3.2 bleibt für seinen Abschlussabgleich offen.
+- **Nächster Schritt:** Q.10-N2 (S-8-Validierung) entscheiden; danach 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 4 / 10 über ADR-042 bis ADR-051; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
@@ -253,7 +253,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). Befunde K1–K4 aus Q.10-N3 vor fachlichem Abschluss klären.
+- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). K1–K4 durch Q.10-N3/ADR-051 korrigiert bzw. ausdrücklich aufgelöst; N2 und Abschlussabgleich vor 3.11 offen.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
@@ -468,7 +468,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N3: Passagierzustand, Save/Load und beschlossenen 3.2-Umfang klären
 
-- **Status:** `[IN ARBEIT]` – Option A freigegeben, ADR-051 vor Umsetzung. Validierung und FIFO korrigieren; Geduld ausdrücklich nach 5.4. 3.2 bleibt bis Nachweisen offen.
+- **Status:** `[ERLEDIGT]` – Option A nach ADR-051 auf `9bba166` umgesetzt, lokale Gates/Hook, unabhängige Sicherheitsnachprüfung und volle CI/Security grün. K1/K2 korrigiert, K3 ausdrücklich nach 5.4 verschoben, K4 Verantwortung bestätigt. 3.2 bleibt für N2/Abschlussabgleich offen.
 - **Frist:** 2026-11-12; Klärung vor 3.11.
 - **Empfohlene Klasse:** Entscheidung wegen Spielstandvalidierung, Datenmodell und Verantwortungsfrage.
 - **Abhängigkeiten:** ADR-048/049 und Prüfbericht Q.10.
@@ -478,6 +478,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Betroffene Module:** Personen, Welt & Bau, Takt & Weltzustand, Spielstand S-5.
 - **Landeplatz:** Korrekturen gehören zum fehlenden Abschlussumfang von 3.2; dieser Nachprüfschritt zählt nicht als neue Phase-3-Funktion.
 - **Vorlage:** `docs/research/q.10-n3-vorlage.md`; vollständige isolierte Testquellen in `docs/research/q.10-n3-gegenproben.md`. Empfehlung A: Format 5 mit vollständig abgeleiteter Nummernvergabe und definierter Verdichtung; vollständige Validierung; Geduld ausdrücklich nach 5.4; bestehende Verantwortungen bestätigen. B: Geduld bereits für Abschluss 3.2 konkret entwerfen. Option A freigegeben; ADR-051 bestätigt Umfang und Verantwortungen.
+- **Abschlussnachweis:** [Umsetzungsbericht](research/q.10-n3-umsetzung.md); 341 Rust-/490 Vitest-Tests, zwei Electron-E2E, 4.000 Folgeticks hashgleich, atomare Ablehnung, MAX/MAX-1, Lasttest bis 200.000. Kern-Coverage 98,10 %, Personen 98,48 %. [CI 42049026540](https://github.com/PatSchCode/OpenAirside/actions/runs/42049026540) und [Security 42049026580](https://github.com/PatSchCode/OpenAirside/actions/runs/42049026580) bestanden. PR #49 noch offen; Abschlussdokumentation folgt mit neuem Kopf.
 - **Beobachtete Gegenproben:** bestehende 5 Personen-Tests grün; neue Unit-Kontrollen 2 grün und 4 erwartete Befundtests rot; Integration 1 Kontrolle grün und 1 Rundlauf rot. Voller Save/Load-Hash direkt gleich, nach 102 Folgeticks abweichend. Exit 101 der isolierten Negativproben ist ein bestätigter Fehlernachweis, keine bestandene Korrektur oder rote Projekt-CI.
 
 #### Q.10-N4: Niedrige S-4-Dokumentationsbefunde präzisieren

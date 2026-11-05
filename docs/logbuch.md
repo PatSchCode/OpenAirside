@@ -17,12 +17,21 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR #47 auf `b16167c` gemergt und hat grüne CI, bleibt fachlich wegen K1–K4 offen. Q.10 ist mit unabhängiger Prüfung und grüner CI erledigt. Nächster Schritt ist die Entscheidung zu Q.10-N3/N2 vor dem Abschluss von 3.2 und der Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
+Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR #47 auf `b16167c` gemergt und hat grüne CI, bleibt für seinen Abschlussabgleich offen. Q.10 ist mit unabhängiger Prüfung und grüner CI erledigt. Q.10-N3 löst K1–K4 mit Option A/ADR-051 auf `9bba166` nachgewiesen auf. Nächster Schritt ist Q.10-N2 vor dem Abschlussabgleich von 3.2 und der Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
 
 ---
 
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N3 Option A nachgewiesen
+
+- **Dauer/Arbeit:** nicht separat gemessen; Freigabe dokumentiert, ADR-051/Reflexion vor Code, Validierung und FIFO korrigiert, Tests und unabhängige Nachprüfung abgeschlossen. Codecommit `9bba166`, Entscheidungscheckpoint `64087d8`, beide mit aktiven Hooks committed und gepusht.
+- **Ergebnis:** N3 ERLEDIGT: K1/K2 behoben, K3 Geduld/Bedürfnisse ausdrücklich nach 5.4 mit konkreter Abnahme verschoben, K4 Zuständigkeiten bestätigt. Format 5 erhalten. Keine Hochstufung von Personen oder Abschlussbehauptung für 3.2; N2 bleibt getrennt.
+- **Nachweise:** 341 Rust-Tests, 490 Vitest-Tests, zwei Electron-E2E, Build, Format/Lint/Typen/Schema, cargo-deny, npm-Audit, vollständiger Pre-Commit grün. Coverage Kern 98,10 %, Personen 98,48 %. Save/Load 4.000 Folgeticks hashgleich; ungültige Zustände atomar abgelehnt; MAX/MAX-1 und 200.000-Personen-Lasttest bestanden. Details und Umgebungsgrenzen im Umsetzungsbericht.
+- **CI/PR:** [CI 42049026540](https://github.com/PatSchCode/OpenAirside/actions/runs/42049026540) und [Security 42049026580](https://github.com/PatSchCode/OpenAirside/actions/runs/42049026580) auf `9bba166` abgeschlossen und grün, sämtliche Code-/Plattform-Gates. PR #49 wird mit diesem Abschlussvermerk aktualisiert; neuer Kopf vor Merge erneut zu beobachten. Branch-Präfix-Abweichung im bestehenden PR erklärt, kein zweiter PR.
+- **Konsistenz/Offenes:** README, ADR-/Reifegrad-/Modulregister, S-5, FR-016, Blocker und Ablaufregister geprüft; keine neue fällige Ablaufmaßnahme. Reaktiv 4/10, Reflexion zu ADR-051 vor Code. Nächster konkreter Schritt: N2-Entscheidung zu S-8 vorbereiten; danach 3.2-Abschlussabgleich vor 3.11. Grafik-Abnahme unverändert offen.
+- **Modell-/Delegationsbilanz:** Hauptagent Codex laut Systemkontext, genaue Klasse/Kontextgröße unbestimmbar. Ein neuer unabhängiger Astra-Prüfer mit hoher Denktiefe ohne Gesprächsverlauf, nur lesend, sieben Tests selbst bestanden, keine hohen/mittleren Befunde. Lasttest auf Prüfhinweis verbessert. Keine gleichzeitigen Änderungen an Dateien; bestehende Astra-Vorentscheidung genutzt.
 
 ### 2026-11-05 (Europe/Berlin) – Q.10-N3 lokal verifiziert
 

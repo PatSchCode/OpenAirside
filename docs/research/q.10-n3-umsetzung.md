@@ -1,6 +1,6 @@
 # Q.10-N3 – Umsetzung von Option A
 
-**Stand:** 2026-11-05; ADR-051 vor Code, Freigabe „a“ durch Projektinhaber. Lokal umgesetzt und verifiziert; Push/CI noch nachzuweisen. Q.10-N2 bleibt getrennt; keine Hochstufung des Personenmoduls durch diese Korrektur.
+**Stand:** 2026-11-05; ADR-051 vor Code, Freigabe „a“ durch Projektinhaber. Auf `9bba166` umgesetzt, committed und gepusht; vollständige PR-CI und Security grün. Q.10-N2 bleibt getrennt; keine Hochstufung des Personenmoduls durch diese Korrektur.
 
 ## Ergebnis und Gültigkeitsbereich
 
@@ -40,6 +40,6 @@ Coverage: `cargo llvm-cov --package openairside-core --all-features --offline --
 
 Vollständiger Build und beide vorhandenen Electron-E2E-Tests bestanden. Erster Build scheiterte in der Sandbox an `spawn EPERM` der napi-Prozessabfrage; Wiederholung außerhalb der Sandbox erfolgreich. Erster E2E-Lauf: Smoke grün, Welt-Test scheiterte ausschließlich an englischem Erwartungstext bei deutscher Systemlokalisierung. Derselbe unveränderte Testbestand mit prozesslokalem macOS-Argument `-AppleLanguages '(en)'` über temporären Electron-Launcher: **2 bestanden**, Exit 0. Keine Systemeinstellung, Produktdatei oder Testassertion dafür geändert. Das ist ein englischer lokaler Abnahmelauf; die deutsche Anzeige wurde beobachtet, keine neue allgemeine sprachübergreifende E2E-Abdeckung behauptet.
 
-`pre-commit run --all-files`: alle Hooks grün, einschließlich Markdown, Security-Grundprüfungen, JS und Rust. Änderungen vor dem Commit am gestagten Inhalt geprüft. CI bleibt bis zum beobachteten PR-Lauf offen.
+`pre-commit run --all-files`: alle Hooks grün, einschließlich Markdown, Security-Grundprüfungen, JS und Rust. Änderungen vor dem Commit am gestagten Inhalt geprüft. [CI 42049026540](https://github.com/PatSchCode/OpenAirside/actions/runs/42049026540) und [Security 42049026580](https://github.com/PatSchCode/OpenAirside/actions/runs/42049026580) auf `9bba166` abgeschlossen und erfolgreich; einschließlich Rust-/Electron-Prüfungen auf Windows, Linux und macOS, Coverage und Kern-Benchmarks. Abschlussdokumentation ändert keinen Produktcode.
 
 Quick Start: Installation, Startbefehle und öffentliche Bedienwege unverändert; kein frischer Installationsklon für diese Kernkorrektur erforderlich. Dokumentbudgets, lokale Links, ADR-Register (51, jüngste 30), Reaktiv-Quote (4/10), Requirements und Ablaufregister geprüft. Keine fällige neue Ablaufmaßnahme; bestehende Fristen bleiben erhalten.
