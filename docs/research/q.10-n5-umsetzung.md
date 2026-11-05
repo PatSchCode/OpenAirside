@@ -1,6 +1,6 @@
 # Q.10-N5 – Umsetzung der freigegebenen Portvalidierung
 
-**Stand:** 2026-11-05, Option A ausdrücklich freigegeben, ADR-053 auf `13e5cee` vor Produktcode committed. Umsetzung lokal und unabhängig geprüft; vollständiger Pre-Commit grün, Code-CI vor Erledigung nachführen. 3.2 bleibt für seinen Abschlussabgleich offen, keine neue Beförderung.
+**Stand:** 2026-11-05, Option A ausdrücklich freigegeben, ADR-053 auf `13e5cee` vor Produktcode committed. Umsetzung auf `c295ebb` committed/gepusht, lokal und unabhängig geprüft; vollständiger Pre-Commit und volle Code-CI/Security grün. N5 erledigt; 3.2 bleibt für seinen Abschlussabgleich offen, keine neue Beförderung.
 
 ## Änderung und Nachweisgrenzen
 
@@ -21,3 +21,5 @@ ESLint ohne Warnungen, Prettier, Typprüfung und vollständiger Build bestanden.
 Reaktiv-Quote 3/10 über ADR-044–053, gesamt 20/53, alte Klassifikationen unverändert. Bestehende Reflexion/Handlermaßnahme aus ADR-051/052 gilt weiter. Ablaufdaten-Register ohne neue fällige Maßnahme; Budgetautomatisierung bleibt Q.10-N1 mit eigener Freigabe. Keine neue Modul- oder Reifegradentscheidung.
 
 Beide bestehenden Electron-E2E bestanden (12,6 s, Exit 0), einschließlich vier Sitzungswechseln und Bauaktion. Neuer unabhängiger Prüfer `gpt-6-astra`, hohe Denktiefe, ohne Gesprächsverlauf, nur lesend: keine Abweichung im begrenzten N5-Umfang; eigener Lauf **20/20** Hosttests grün. Keine eigenen Gates/Remoteprüfung durch den Prüfer (DNS dort nicht verfügbar); Hauptagent hat Remote/PR geprüft. Keine Gesamtabnahme oder neue Beförderung. Geprüfte SHA-256: Host `817e9fb45a959a7183421e954a59909868a6e261bc17937856acb36937041922`, Tests `48d9fceaef7e223fd8094f45f00dc0ae3cc8d56312eee354a66e1f5c41541816`.
+
+[CI 42119228021](https://github.com/PatSchCode/OpenAirside/actions/runs/42119228021) und [Security 42119228025](https://github.com/PatSchCode/OpenAirside/actions/runs/42119228025) auf `c295ebb` vollständig abgeschlossen und grün: Rust-/TS-/Electron-Matrix auf Windows/Linux/macOS, Coverage und Kern-Benchmarks. Gestagter Inhalt vor beiden Checkpoint-Commits geprüft, aktive Hooks bestanden. Kein Produktcode nach unabhängiger Prüfung geändert. Abschlussdokumentation folgt im selben PR #51; späteren Merge-/Main-Nachweis im Logbuch führen.

@@ -17,12 +17,21 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR #47 auf `b16167c` gemergt und hat grüne CI, bleibt für seinen Abschlussabgleich offen. Q.10 ist mit unabhängiger Prüfung und grüner CI erledigt. Q.10-N3 löst K1–K4 mit Option A/ADR-051 auf `9bba166` nachgewiesen auf. Q.10-N2/P1–P4 ist nach ADR-052 auf `a95e47d` nachgewiesen korrigiert. Nächster Schritt ist Q.10-N5 vor dem Abschlussabgleich von 3.2 und der Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
+Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR #47 auf `b16167c` gemergt und hat grüne CI, bleibt für seinen Abschlussabgleich offen. Q.10 ist mit unabhängiger Prüfung und grüner CI erledigt. Q.10-N3 löst K1–K4 mit Option A/ADR-051 auf `9bba166` nachgewiesen auf. Q.10-N2/P1–P4 ist nach ADR-052 auf `a95e47d` korrigiert. Q.10-N5 ist nach ADR-053 auf `c295ebb` lokal, unabhängig und mit voller CI nachgewiesen korrigiert. Nächster Schritt ist der Abschlussabgleich von 3.2 vor Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
 
 ---
 
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N5 Option A nachgewiesen
+
+- **Dauer/Arbeit:** nicht separat gemessen; Freigabe „a“, ADR-053 vor Code auf `13e5cee`, zwölf Guard-Zeilen und 20 registrierte Hostregressionen auf `c295ebb`; beide Checkpoints mit aktiven Hooks committed/gepusht. Kein Produktcode nach unabhängiger Prüfung geändert.
+- **Ergebnis:** N5 ERLEDIGT: ausschließlich explizite Objekt-Nachricht `port` mit genau einem Port tauscht die Verbindung; Zusatzfelder bleiben erlaubt, vorherige Anfragewege unverändert. Keine neue Version, Abhängigkeit, Port-Cleanup-/Ausnahmepolitik, CI-Änderung oder Beförderung. Native/Transportgrenzen im [Bericht](research/q.10-n5-umsetzung.md).
+- **Nachweise:** 529 Tests/42 Dateien, 20 neue Hostfälle, zwei Electron-E2E, Build, Lint/Format/Typen, erzeugte Verträge, Audits/Lizenzen und vollständiger Pre-Commit grün. Lines global 81,41 % (1.985/2.438); bestehende Host-Einstiegsausnahme unverändert. Quick Start unverändert, frischer Installationsklon nicht relevant.
+- **Unabhängige Prüfung:** neue Astra-Instanz (`gpt-6-astra`, hohe Denktiefe) ohne Gesprächsverlauf, nur lesend: keine Abweichung im begrenzten Umfang, eigener Hostlauf 20/20 grün. Remote dort wegen DNS ungeprüft; Hauptagent hat Remote/PR geprüft. Hauptklasse/Kontextgröße unbestimmbar, Quelle Systemkontext; eine Nachprüfdelegation, vorhandene Vorentscheidung genutzt.
+- **CI/PR:** [CI 42119228021](https://github.com/PatSchCode/OpenAirside/actions/runs/42119228021) und [Security 42119228025](https://github.com/PatSchCode/OpenAirside/actions/runs/42119228025) auf `c295ebb` vollständig abgeschlossen und grün, alle Plattform-/Coverage-/Benchmark-Gates. PR #51 offen; Abschlussdokumentation im selben PR, neuen Kopf vor Merge beobachten. Branchname des bestehenden PR beibehalten.
+- **Konsistenz/Offenes:** README, Fahrplan, ADR-Register (53/jüngste 30), Quote 3/10 bzw. 20/53, S-8, datierter Abgleich, Anforderungen, Blocker, Ablaufregister und Budgets geprüft; keine neue fällige Maßnahme. Nächster konkreter Schritt: Abschlussabgleich 3.2 vor 3.11. 3.2 bleibt IN ARBEIT, Grafik-Abnahme und gesonderte N1/N4-Landeplätze unverändert offen.
 
 ### 2026-11-05 (Europe/Berlin) – Q.10-N5 lokal und unabhängig geprüft
 

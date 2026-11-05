@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-11-05 (ADR-052: S-8-Korrektur Option A nachgewiesen)
+- **Stand vom:** 2026-11-05 (ADR-053: Portvalidierung Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** Q.10-N5: Option A freigegeben, ADR-053 vor Umsetzung; begrenzte Portprüfung und Nachweise. N2/N3 gemergt; 3.2 bleibt wegen N5/Abschlussabgleich offen.
-- **Nächster Schritt:** Q.10-N5 mit Hook/CI abschließen, dann Abschlussabgleich 3.2 vor Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Aktiver Schritt:** keiner; Q.10-N5 auf `c295ebb` lokal, unabhängig und mit voller Code-CI nachgewiesen. N2/N3 gemergt; 3.2 bleibt für seinen Abschlussabgleich offen.
+- **Nächster Schritt:** Abschlussabgleich 3.2 vor Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-044 bis ADR-053; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
@@ -495,7 +495,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N5: S-8-Portübergabe im Kern-Host prüfen
 
-- **Status:** `[IN ARBEIT]` – Paket A nach ADR-053 lokal und unabhängig geprüft; 20 neue Hostfälle, 529 Gesamttests, zwei Electron-E2E und lokale Gates grün. Hook/Code-CI vor Abschluss offen; [Nachweise](research/q.10-n5-umsetzung.md).
+- **Status:** `[ERLEDIGT]` 2026-11-05 – Paket A nach ADR-053 auf `c295ebb` umgesetzt; 20 neue Hostfälle, 529 Gesamttests, zwei Electron-E2E, lokale Gates/Hook, unabhängige Prüfung und volle Code-CI/Security grün; [Nachweise](research/q.10-n5-umsetzung.md).
 - **Frist:** 2026-11-12; vor Abschluss 3.2/Erkundung 3.11 klären.
 - **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit.
 - **Abhängigkeiten:** S-8 und ADR-032; getrennt von der N2-Freigabe P1–P4.
