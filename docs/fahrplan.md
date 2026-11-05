@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
 - **Aktiver Schritt:** keiner; Q.10-N5 wartet nach Gegenproben und unabhängiger Bewertung auf eigene Sicherheitsfreigabe. N2/N3 gemergt; 3.2 bleibt wegen N5/Abschlussabgleich offen.
-- **Nächster Schritt:** Q.10-N5-Portübergabe prüfen und Korrektur entscheiden, dann 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Nächster Schritt:** Q.10-N5-Paket A/B entscheiden; bei A ADR vor Korrektur und Nachweisen, dann 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-043 bis ADR-052; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
