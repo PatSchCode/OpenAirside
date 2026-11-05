@@ -24,6 +24,13 @@ Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-05 (Europe/Berlin) – [SESSIONSTART] – Q.10-N5 Option A umsetzen
+
+- **Stand-Prüfung:** `da6c322`, Branch `docs/q-10-n5-port-vorlage`, sauber, Remote identisch; Remote-main `d8a4b6f`, nur PR #51 offen (kein Entwurf). Vorlagenkopf CI 42117667982 und Security 42117667657 grün laut beobachtetem Abschluss; vorhandener PR wird weitergeführt. Keine fremde Umsetzung oder ungeprüfte Remote-Teile.
+- **Freigabe/Pflichtlektüre:** „a“ für das begrenzte N5-Paket; unabhängige Astra-Vorentscheidung liegt vor. Kontext vollständig, letzter Abschluss, Fahrplanstand/Phase/offene Schritte und N5/3.2/3.11, Architektur 1/2/9, Decisions A/C, aktive Blocker und Requirements-Übersicht gelesen; abgeschnittene Architekturzeilen nachgelesen.
+- **Checkpoints/Testsignal:** ADR vor Produktcode; Guard für explizite Objekt-Nachricht `port` mit genau einem Port, Zusatzfelder erlaubt; reale Host-Handlerregressionen. Rot erkennt unerlaubtes Schließen/Neuanbinden oder Nachrichten/Pump am falschen Port, Grün korrekte Übergabe und erhaltene Anfragewege. Gemockte native Brücke/Transport bleiben Grenze; Electron-E2E ergänzen. Danach lokale Gates/Coverage, unabhängige Nachprüfung, Commit/Push/CI und Merge.
+- **Modell/Quelle:** Codex laut Systemkontext, genaue Hauptklasse/Kontextgröße unbestimmbar. Neue unabhängige Astra-Nachprüfung ohne Gesprächsverlauf nur lesend vorgesehen; keine zusätzliche Sicherheitsfreigabe für bereits beschlossene Richtung nötig.
+
 ### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N5 Entscheidung vorbereitet
 
 - **Arbeit/Ergebnis:** Dauer nicht separat gemessen; tatsächlichen Host-Listener auf Basis `d1f4ba2` geprüft: drei Kontrollen grün, fünf erwartete rote Befundassertionen am Schließen des alten Ports. Nach Formatierung identisch wiederholt; keine Reparatur versucht. Diagnose mit SHA eingefroren, temporäre Testdatei entfernt, Produktdateien unverändert. Vorlage empfiehlt explizite `port`-Art und genau einen Port, Zusatzfelder bleiben zulässig. N5 WARTET-AUF-FREIGABE, keine Korrektur oder neue ADR vorweggenommen.
