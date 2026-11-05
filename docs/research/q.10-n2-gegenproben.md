@@ -27,9 +27,11 @@ Bestand: 61 Tests in drei Dateien bestanden, Exit 0. Abschließende Gegenproben:
 
 Die Testquelle dient dem eingefrorenen Fehlernachweis. Bei Produktkorrektur werden dauerhafte Regressionen mit vollständiger Wiederherstellungsprüfung angelegt; eine nach Korrektur hypothetisch unaufgelöste Promise in der P1-Hülle ist kein Abschlussnachweis. Die ursprünglichen roten Assertions werden hier nicht nachträglich grün geschrieben.
 
+Eigene abschließende Vorlagenprüfung: Die positive `lang:texts`-Kontrolle wurde von lediglich lesbarer Antwort-Hülle auf semantisch gültige Sprachpaare präzisiert. Erneuter Lauf unter Node 26.11.1: dieselben vier Kontrollen grün und sechs Befundassertionen rot. Keine rote Assertion oder Produktlogik geändert; SHA unten bezeichnet die abschließend ausgeführte Quelle.
+
 ## Datei: app/src/main/n2-probe.test.ts
 
-SHA-256: 596876dbc54dc16cbff46a32c78881ab5b770bc67a0f1fbe1193b2a08a8a70a4.
+SHA-256: 274812f3633ccef994afa85a0b0659c00f50d5041a36a3f9ba5a62cff322d4f1.
 
 ```typescript
 /** N2 isolated probes: actual main listener, mocked Electron transport only. */
@@ -87,11 +89,12 @@ afterEach(() => { vi.clearAllTimers(); vi.useRealTimers(); });
 
 it("control: valid saves answers settle and a following request works", async () => {
   const main = await setup();
-  for (const value of ["first", "second"]) {
+  for (const word of ["first", "second"]) {
+    const value = [["ui.title", word]];
     const pending = main.requestSaves((request) => ({ type: "lang:texts", request, code: "en" }));
     const request = transport.sent.at(-1)!.request;
     transport.listener!({ type: "savesAnswer", request, ok: true, value });
-    expect(await pending).toBe(value);
+    expect(await pending).toEqual(value);
   }
 });
 

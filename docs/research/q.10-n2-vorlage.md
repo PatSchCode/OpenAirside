@@ -65,7 +65,7 @@ Zusätzlich Format/Lint/Typen, konkrete Coverage für geänderte Einheiten ≥ P
 
 **Empfehlung des Hauptagenten:** A. P1–P3 sind im Handler reproduziert; P4 ist eine bestätigte zusätzliche Empfangslücke, ohne nachgewiesene Laderumgehung. Kein Grund für einen Protokollneuentwurf oder neue globale Sprachlimits.
 
-**Konfidenz:** hoch für die reproduzierten Befunde; mittel bis hoch für die Korrekturrichtung, bis Gegenprüfung und vollständige Matrix vorliegen. **Umkehrbarkeit:** billig bis mittel, weil keine Datenmigration vorgesehen ist; falsche Korrelation kann dennoch laufende Operationen treffen.
+**Konfidenz:** hoch für die reproduzierten Befunde; mittel bis hoch für die Korrekturrichtung, bis die vollständige Implementierungsmatrix und unabhängige Sicherheitsnachprüfung vorliegen. **Umkehrbarkeit:** billig bis mittel, weil keine Datenmigration vorgesehen ist; falsche Korrelation kann dennoch laufende Operationen treffen.
 
 ## Unabhängige Bewertung
 
@@ -80,3 +80,5 @@ Die ausdrückliche Sicherheitsfreigabe bleibt erforderlich. Diese Vorlage ist ke
 ## Dokumentationsnachweise
 
 Produktdiff gegen `468bc32` leer; sämtliche Änderungen dieses Branches sind Markdown einschließlich des übernommenen N3-Abschlussvermerks. SHA-256 der eingebetteten Probe stimmt mit der ausgeführten Quelle überein; die isolierte Main-Kopie entspricht dem Original bis auf den dokumentierten Testzugriff. Dokumentbudgets, lokale Links und ADR-Register/Quote geprüft. Kein neues Tool, keine Installation und keine Quick-Start-Änderung, daher kein frischer Installationsklon für diese Vorlage. Keine neue Anwendungscode-Coverage behauptet; konkrete Coverage ist Bestandteil der späteren Korrekturabnahme.
+
+Vorlagencommit `baba7c6` mit aktivem Hook gepusht, [PR #50](https://github.com/PatSchCode/OpenAirside/pull/50) offen; [CI 42058255144](https://github.com/PatSchCode/OpenAirside/actions/runs/42058255144) und [Security 42058255033](https://github.com/PatSchCode/OpenAirside/actions/runs/42058255033) grün. Reine Dokumentations-CI; Code-Matrix auf bestandenem Ausgangsstand übersprungen bzw. ohne Ausführung grün gemeldet. Keine erneute Produktabnahme. Schlusspräzisierung der positiven Probe und Abschlussnachweis werden im selben PR nachgeführt und erneut geprüft.
