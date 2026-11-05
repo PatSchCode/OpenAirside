@@ -24,6 +24,13 @@ Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-05 (Europe/Berlin) – [SESSIONSTART] – Q.10-N3 Option A umsetzen
+
+- **Freigabe:** Projektinhaber wählt „a“ zur konkreten N3-Vorlage: Validierung, vollständig abgeleitete FIFO-Vergabe mit Verdichtung, Format 5 erhalten, Zuständigkeiten bestätigen und Geduld ausdrücklich nach 5.4 verschieben. N2 bleibt getrennt.
+- **Pflichtlektüre:** Projektkontext vollständig, letztes Sessionende und jüngere Einträge, Fahrplanstand und laufende Phase, Architektur 1/2/9, Entscheidungen A/C, aktive Blocker und Requirements-Übersicht gelesen; Vorlage und S-5 vertieft. Arbeitsbaum sauber auf `74ac869`; bestehender PR #49 wird weitergeführt.
+- **Checkpoints/Testsignal:** zuerst ADR/Vertrag und Reflexion, dann Kernmechanik mit positiven/negativen Ladeproben und Fortsetzungs-/Überlaufregressionen, danach Coverage, Lastnachweis, unabhängige Sicherheitsprüfung und vollständige Gates. Ungültige Zustände müssen atomar scheitern; gültige Spielstände unmittelbar und nach Folgeticks hashgleich bleiben.
+- **Modell/Quelle:** Codex laut Systemkontext; genaue Hauptmodellklasse und Kontextgröße unbestimmbar. Unabhängige Astra-Vorbewertung liegt vor; Abschlussprüfung wird getrennt und nur lesend beauftragt.
+
 ### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N3 Gegenproben und Entscheidungsvorlage
 
 - **Dauer/Arbeit:** nicht separat gemessen; K1–K4 vertieft und isolierte Gegenproben auf `b01ae6c` durchgeführt. Sessionende-Commit `758de6f` und aktuellen main verlustfrei auf neuem Branch `docs/q-10-n3-passagier-vorlage` zusammengeführt; alte Arbeitsbranch nicht für Umsetzung wiederverwendet.
