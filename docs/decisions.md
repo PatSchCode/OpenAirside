@@ -15,7 +15,6 @@ Die 30 jüngsten ADRs stehen hier; [vollständige Übersicht](archiv/decisions-u
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
-| 023 | 2026-10-13 | Aktiv | OPERATIV | DEPLOYMENT, PERFORMANCE | Build/Deploy | Wegweiser-Benchmark als Schritt im CI-Job „Kern-Benchmark“ |
 | 024 | 2026-10-14 | Aktiv (Einschränkung auf die Brücke aufgehoben durch ADR-025) | OPERATIV | STACK, SCHNITTSTELLE | Externe Abhängigkeiten | Umwandlung JS ↔ Rust in der Brücke mit napi `serde-json` |
 | 025 | 2026-10-18 | Aktiv | REAKTIV | STACK, SCHNITTSTELLE, DEPLOYMENT | Externe Abhängigkeiten, Build/Deploy | Bibliotheken für den Datenpaket-Lader und die Schema-Erzeugung |
 | 026 | 2026-10-18 | Aktiv | REAKTIV | SCHNITTSTELLE, SECURITY | API-Verträge | Pakete in S-6 über ihre Manifest-ID |
@@ -45,10 +44,11 @@ Die 30 jüngsten ADRs stehen hier; [vollständige Übersicht](archiv/decisions-u
 | 050 | 2026-11-05 | Aktiv | OPERATIV | METHODIK | Methodik | Dev-Templates gezielt in OpenAirsides Codex-Regeln übernehmen |
 | 051 | 2026-11-05 | Aktiv | REAKTIV | DATENMODELL, SECURITY, SCHNITTSTELLE, MODUL | Sicherheit, Datenmodell, API-Verträge, Architektur | Passagierzustände validieren und FIFO aus Format 5 ableiten |
 | 052 | 2026-11-05 | Aktiv | OPERATIV | SECURITY, SCHNITTSTELLE | Sicherheit, Schnittstellenvalidierung | S-8-Antworten sicher zuordnen und Sprachgrenzen prüfen |
+| 053 | 2026-11-05 | Aktiv | OPERATIV | SECURITY, SCHNITTSTELLE | Sicherheit, Schnittstellenvalidierung | S-8-Portübergabe ausdrücklich validieren |
 
 ### Reaktiv-Quote
 
-- **Aktueller Wert:** 3 / 10 über ADR-043 bis ADR-052 (ADR-045, ADR-047, ADR-051), 30 % – **über dem Schwellenwert**; gesamt 20 / 52. ADR-052 stellt bestehende Verträge operativ wieder her; keine neue Architektur oder Modulgrenze. Reflexion zu ADR-051 und die Handler-Integrationsmaßnahme aus ADR-052 gelten weiter.
+- **Aktueller Wert:** 3 / 10 über ADR-044 bis ADR-053 (ADR-045, ADR-047, ADR-051), 30 % – **über dem Schwellenwert**; gesamt 20 / 53. ADR-052/053 stellen bestehende Verträge operativ wieder her; keine neue Architektur oder Modulgrenze. Reflexion zu ADR-051 und die Handler-Integrationsmaßnahme aus ADR-052 gelten weiter.
 - **Schwellenwert (in `project-context.md` festgelegt):** maximal 20 % über die letzten 10 ADRs
 - **Bei Überschreitung:** Regel-009 anwenden: bekanntes Muster mit bestehender Reflexion verknüpfen; bei neuem Muster sofort STOPP und Reflexion. Die Quote zählt die festgehaltenen Klassifikationen; keine stille Umklassifikation älterer ADRs.
 

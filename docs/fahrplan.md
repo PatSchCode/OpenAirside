@@ -8,12 +8,12 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-11-05 (ADR-052: S-8-Korrektur Option A nachgewiesen)
+- **Stand vom:** 2026-11-05 (ADR-053: Portvalidierung Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** keiner; Q.10-N2 auf `a95e47d` lokal, unabhängig und durch volle CI nachgewiesen. N3 gemergt; 3.2 bleibt wegen N5/Abschlussabgleich offen.
-- **Nächster Schritt:** Q.10-N5-Portübergabe prüfen und Korrektur entscheiden, dann 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
-- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-043 bis ADR-052; Reflexion zu ADR-051 vor Code durchgeführt.
+- **Aktiver Schritt:** keiner; Q.10-N5 auf `c295ebb` lokal, unabhängig und mit voller Code-CI nachgewiesen. N2/N3 gemergt; 3.2 bleibt für seinen Abschlussabgleich offen.
+- **Nächster Schritt:** Abschlussabgleich 3.2 vor Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-044 bis ADR-053; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -253,7 +253,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). K1–K4 durch Q.10-N3/ADR-051 korrigiert bzw. ausdrücklich aufgelöst; N2/P1–P4 durch ADR-052 nachgewiesen korrigiert; N5 und Abschlussabgleich vor 3.11 offen.
+- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). K1–K4 durch Q.10-N3/ADR-051 korrigiert bzw. ausdrücklich aufgelöst; N2/P1–P4 durch ADR-052 und N5 durch ADR-053 nachgewiesen korrigiert; Abschlussabgleich vor 3.11 offen.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
@@ -495,7 +495,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N5: S-8-Portübergabe im Kern-Host prüfen
 
-- **Status:** `[OFFEN]` – neuer mittlerer statischer Befund aus unabhängiger N2-Vorlagenprüfung; keine dynamische Gegenprobe und keine Umsetzung vorweggenommen.
+- **Status:** `[ERLEDIGT]` 2026-11-05 – Paket A nach ADR-053 auf `c295ebb` umgesetzt; 20 neue Hostfälle, 529 Gesamttests, zwei Electron-E2E, lokale Gates/Hook, unabhängige Prüfung und volle Code-CI/Security grün; [Nachweise](research/q.10-n5-umsetzung.md).
 - **Frist:** 2026-11-12; vor Abschluss 3.2/Erkundung 3.11 klären.
 - **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit.
 - **Abhängigkeiten:** S-8 und ADR-032; getrennt von der N2-Freigabe P1–P4.
@@ -504,6 +504,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Testsignal:** unbekannte/ungültige Nachricht darf vorhandene Verbindung nicht ersetzen; gültige Übergabe schließt alten Port und verbindet neuen genau einmal.
 - **Freigabepflichtig:** ja, Sicherheit; Nachprüfung vor neuer Beförderung im betroffenen Empfangsumfang.
 - **Betroffene Module:** Plattform/Kern-Host, S-8-Gegenstelle; keine neue Phase-3-Funktion.
+- **Vorlage/Nachweise:** [Q.10-N5](research/q.10-n5-vorlage.md), Basis `d1f4ba2`: drei Kontrollen grün, fünf erwartete rote Befundassertionen gegen tatsächlichen Host-Listener mit Transport-/Brücken-Doubles. Native Neustartfolge nur statisch; kein Renderer-/Mod-Ausnutzungspfad nachgewiesen. Empfehlung A: explizite `port`-Art und genau ein Port, harmlose Zusatzfelder erlaubt; vorhandene Anfragewege unverändert. B: bewusst vor 3.2-Abschluss terminieren.
 
 #### Q.9: ADR-047 – Produktvision und Referenzbasis wiederherstellen
 
