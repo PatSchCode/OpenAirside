@@ -24,6 +24,13 @@ Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – N3 gemergt und Main geprüft
+
+- **Ergebnis:** [PR #49](https://github.com/PatSchCode/OpenAirside/pull/49) mit geprüftem Kopf `eaa2e66` nach `main` gemergt, Merge `468bc325ffab424f2ddc30641b88391f20f11630`. Abschlusskopf: CI 42050232088 und Security 42050232092 grün (16 bestanden, sieben dokumentationsbedingt übersprungen); vollständige Code-Abnahme zuvor auf `9bba166`.
+- **Main-Nachweise:** [CI 42050840216](https://github.com/PatSchCode/OpenAirside/actions/runs/42050840216) und [Security 42050840247](https://github.com/PatSchCode/OpenAirside/actions/runs/42050840247) auf `468bc32` abgeschlossen und grün; sämtliche Code-/Plattform-/Coverage-/Benchmark-Gates. Arbeitsbranch auf den inhaltlich identischen Merge fast-forwarded; Produktdiff gegen `9bba166` leer.
+- **Dokumentation:** Merge-Nachweise in Fahrplan und Bericht ergänzt, versehentliche Leerzeile vor ADR-051 entfernt; zentrale Übersicht jetzt als zusammenhängende 30-zeilige Tabelle geprüft. Keine Produktänderung nach unabhängiger Prüfung. README, offene N2-Entscheidung, Reifegrade, FR-016 und Fristen bleiben konsistent.
+- **Bilanz/nächster Schritt:** kurze Merge-Fortsetzung, Dauer nicht separat gemessen; Codex laut Systemkontext, Klasse/Kontextgröße unbestimmbar, keine weitere Delegation. N2-Entscheidung zu S-8 vorbereiten, danach 3.2-Abschlussabgleich. Dieser Sessionende-Vermerk wird mit aktivem Hook committed/gepusht und bleibt gemäß Eigentümerregel ohne neuen PR auf dem Arbeitsbranch; mit dem nächsten Schritt nach main übernehmen.
+
 ### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N3 Option A nachgewiesen
 
 - **Dauer/Arbeit:** nicht separat gemessen; Freigabe dokumentiert, ADR-051/Reflexion vor Code, Validierung und FIFO korrigiert, Tests und unabhängige Nachprüfung abgeschlossen. Codecommit `9bba166`, Entscheidungscheckpoint `64087d8`, beide mit aktiven Hooks committed und gepusht.
