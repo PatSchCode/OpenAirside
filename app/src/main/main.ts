@@ -29,6 +29,7 @@ import { fileURLToPath } from "node:url";
 import { parseCoreArgs, withoutPackOptions } from "./core-port.js";
 import {
   type CoreStatus,
+  coreHostAnswerRequestNumber,
   exitedCoreStatus,
   nextCoreStatus,
   isPackAnswer,
@@ -256,22 +257,35 @@ function startCore(): void {
     }
     if (isSavesAnswer(raw)) {
       log("warn", "malformed save game answer from the core process");
+      const request = coreHostAnswerRequestNumber(raw);
+      if (request !== undefined) {
+        settleSaves({
+          type: "savesAnswer",
+          request,
+          ok: false,
+          error: platformReason("invalidAnswer"),
+        });
+      }
       return;
     }
     if (isPackAnswer(raw)) {
       // A malformed pack answer says nothing about the state of the core.
       log("warn", "malformed pack answer from the core process");
-      const open = packs.pendingRequest();
-      if (open !== undefined) {
-        packs.settle({ type: "packsError", request: open, message: "invalidAnswer" });
+      const request = coreHostAnswerRequestNumber(raw);
+      if (request !== undefined) {
+        packs.settle({ type: "packsError", request, message: "invalidAnswer" });
       }
       return;
     }
-    if (message?.type === "ready") {
+    if (message?.type !== "ready" && message?.type !== "error") {
+      log("warn", "unknown or malformed message from the core process");
+      return;
+    }
+    if (message.type === "ready") {
       packs.setReports(message.packs, message.languages);
       sendAutosaveInterval();
     }
-    globalThis.openairsideCoreStatus = nextCoreStatus(raw);
+    globalThis.openairsideCoreStatus = nextCoreStatus(raw, globalThis.openairsideCoreStatus);
     connect();
   });
   process.on("exit", (code: number) => {

@@ -15,7 +15,6 @@ Die 30 jüngsten ADRs stehen hier; [vollständige Übersicht](archiv/decisions-u
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
-| 022 | 2026-10-13 | Aktiv | OPERATIV | DEPLOYMENT, PERFORMANCE | Build/Deploy | Kern-Benchmark als CI-Gate und Prüfung der erzeugten TypeScript-Typen |
 | 023 | 2026-10-13 | Aktiv | OPERATIV | DEPLOYMENT, PERFORMANCE | Build/Deploy | Wegweiser-Benchmark als Schritt im CI-Job „Kern-Benchmark“ |
 | 024 | 2026-10-14 | Aktiv (Einschränkung auf die Brücke aufgehoben durch ADR-025) | OPERATIV | STACK, SCHNITTSTELLE | Externe Abhängigkeiten | Umwandlung JS ↔ Rust in der Brücke mit napi `serde-json` |
 | 025 | 2026-10-18 | Aktiv | REAKTIV | STACK, SCHNITTSTELLE, DEPLOYMENT | Externe Abhängigkeiten, Build/Deploy | Bibliotheken für den Datenpaket-Lader und die Schema-Erzeugung |
@@ -44,12 +43,12 @@ Die 30 jüngsten ADRs stehen hier; [vollständige Übersicht](archiv/decisions-u
 | 048 | 2026-11-04 | Aktiv (Geduldumfang fortgeschrieben durch ADR-051) | STRATEGISCH | DATENMODELL, SCHNITTSTELLE, MODUL | Datenmodell, API-Verträge, Architektur | Minimaler Passagierfluss und Terminalstationen in Schritt 3.2 |
 | 049 | 2026-11-04 | Aktiv | OPERATIV | DATENMODELL, SCHNITTSTELLE, PERFORMANCE | Datenmodell, API-Verträge | Additive Stationsverbesserung für die erste Terminallektion |
 | 050 | 2026-11-05 | Aktiv | OPERATIV | METHODIK | Methodik | Dev-Templates gezielt in OpenAirsides Codex-Regeln übernehmen |
-
 | 051 | 2026-11-05 | Aktiv | REAKTIV | DATENMODELL, SECURITY, SCHNITTSTELLE, MODUL | Sicherheit, Datenmodell, API-Verträge, Architektur | Passagierzustände validieren und FIFO aus Format 5 ableiten |
+| 052 | 2026-11-05 | Aktiv | OPERATIV | SECURITY, SCHNITTSTELLE | Sicherheit, Schnittstellenvalidierung | S-8-Antworten sicher zuordnen und Sprachgrenzen prüfen |
 
 ### Reaktiv-Quote
 
-- **Aktueller Wert:** 4 / 10 über ADR-042 bis ADR-051 (ADR-042, ADR-045, ADR-047, ADR-051), 40 % – **über dem Schwellenwert**; gesamt 20 / 51. Reflexion zu ADR-051 vor Code im Fahrplan durchgeführt; keine stille Umklassifikation.
+- **Aktueller Wert:** 3 / 10 über ADR-043 bis ADR-052 (ADR-045, ADR-047, ADR-051), 30 % – **über dem Schwellenwert**; gesamt 20 / 52. ADR-052 stellt bestehende Verträge operativ wieder her; keine neue Architektur oder Modulgrenze. Reflexion zu ADR-051 und die Handler-Integrationsmaßnahme aus ADR-052 gelten weiter.
 - **Schwellenwert (in `project-context.md` festgelegt):** maximal 20 % über die letzten 10 ADRs
 - **Bei Überschreitung:** Regel-009 anwenden: bekanntes Muster mit bestehender Reflexion verknüpfen; bei neuem Muster sofort STOPP und Reflexion. Die Quote zählt die festgehaltenen Klassifikationen; keine stille Umklassifikation älterer ADRs.
 
@@ -151,6 +150,7 @@ Seit 2026-10-13 liegt jeder ADR als eigene Datei in `docs/decisions/` (ADR-001: 
 
 - [ADR-050: Dev-Templates gezielt übernehmen](decisions/ADR-050.md)
 - [ADR-051: Passagierzustände validieren und FIFO ableiten](decisions/ADR-051.md)
+- [ADR-052: S-8-Antworten sicher zuordnen und Sprachgrenzen prüfen](decisions/ADR-052.md)
 
 ---
 

@@ -279,6 +279,17 @@ function isRequestNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isSafeInteger(value) && value >= 0;
 }
 
+/** Actual request number of a recognisable answer, even with a bad body.
+ * Never substitutes a pending request for an unreadable number (ADR-052).
+ */
+export function coreHostAnswerRequestNumber(value: unknown): number | undefined {
+  return isRecord(value) &&
+    (isPackAnswer(value) || isSavesAnswer(value)) &&
+    isRequestNumber(value.request)
+    ? value.request
+    : undefined;
+}
+
 /** Whether `value` claims to answer a pack request, valid or not. */
 export function isPackAnswer(value: unknown): boolean {
   return isRecord(value) && (value.type === "packs" || value.type === "packsError");
@@ -302,13 +313,15 @@ export function parsePackRequest(
 
 /**
  * Computes the next core status after a raw message from the core host.
- * Unknown messages mark the core as failed, because the main process cannot
- * rely on a core that speaks an unexpected protocol.
+ * Unknown or malformed messages preserve the previous status (S-8, ADR-052).
  */
-export function nextCoreStatus(raw: unknown): CoreStatus {
+export function nextCoreStatus(
+  raw: unknown,
+  previous: CoreStatus = { state: "starting" },
+): CoreStatus {
   const message = parseCoreHostMessage(raw);
   if (message === undefined || (message.type !== "ready" && message.type !== "error")) {
-    return { state: "failed", reason: "unexpected message from core host" };
+    return previous;
   }
   if (message.type === "ready") {
     return { state: "ready", info: message.info };

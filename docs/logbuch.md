@@ -17,12 +17,59 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR #47 auf `b16167c` gemergt und hat grüne CI, bleibt für seinen Abschlussabgleich offen. Q.10 ist mit unabhängiger Prüfung und grüner CI erledigt. Q.10-N3 löst K1–K4 mit Option A/ADR-051 auf `9bba166` nachgewiesen auf. Nächster Schritt ist Q.10-N2 vor dem Abschlussabgleich von 3.2 und der Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
+Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR #47 auf `b16167c` gemergt und hat grüne CI, bleibt für seinen Abschlussabgleich offen. Q.10 ist mit unabhängiger Prüfung und grüner CI erledigt. Q.10-N3 löst K1–K4 mit Option A/ADR-051 auf `9bba166` nachgewiesen auf. Q.10-N2/P1–P4 ist nach ADR-052 auf `a95e47d` nachgewiesen korrigiert. Nächster Schritt ist Q.10-N5 vor dem Abschlussabgleich von 3.2 und der Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
 
 ---
 
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N2 Option A nachgewiesen
+
+- **Dauer/Arbeit:** nicht separat gemessen; ADR-052 vor Code (`db77ff0`), Umsetzung P1–P4 (`a95e47d`), Tests/Build/Audits und unabhängige Nachprüfung abgeschlossen. Beide Checkpoints mit aktiven Hooks committed und gepusht. N5 blieb getrennt und unverändert.
+- **Ergebnis:** N2 ERLEDIGT: unbekannte Nachrichten ohne Status-/Berichts-/Portwirkung; Fehler nur über Familie und gelieferte sichere ID; passende ungültige Antworten unmittelbar `invalidAnswer` mit freier Sperre; Sprachgrenzen nach Codepoints/Rust White_Space. Keine Format-, Modul-, Abhängigkeits- oder CI-Änderung und keine Reifegradbeförderung.
+- **Nachweise:** 509 Vitest-Tests/41 Dateien, 17 Fälle gegen tatsächliche registrierte Main-Handler, zwei Electron-E2E, vollständiger Build, Lint/Format/Typen, erzeugte Verträge, cargo-deny, npm-Audit/Lizenzen und vollständiger Pre-Commit grün. TS Lines global 81,41 % (1.985/2.438), core-status 100 % (69/69), settings 100 % (61/61); bestehende Main-Einstiegsausnahme unverändert. Transport-/Sprach-/Mock-Grenzen im Umsetzungsbericht.
+- **Unabhängige Prüfung:** neue Astra-Instanz ohne Gesprächsverlauf, nur lesend: keine neuen hohen/mittleren/niedrigen Befunde im Paket A; keine eigenen Tests. Hauptklasse/Kontextgröße unbestimmbar, Quelle Systemkontext. Keine weitere Delegation und keine gemeinsame Dateibearbeitung.
+- **CI/PR:** [CI 42062519917](https://github.com/PatSchCode/OpenAirside/actions/runs/42062519917) und [Security 42062519978](https://github.com/PatSchCode/OpenAirside/actions/runs/42062519978) auf `a95e47d` vollständig grün, einschließlich aller drei Plattformen, Coverage und Benchmarks. PR #50 offen; Abschlussvermerk im selben PR, neuen Kopf vor Merge beobachten. Branch-Präfix-Abweichung im PR erklärt.
+- **Konsistenz/Offenes:** README, S-8, ADR-Register (52, jüngste 30), Reaktiv-Quote 3/10 bzw. 20/52, datierte Abgleichstabelle, Anforderungen, Blocker und Ablaufregister geprüft. Keine neue fällige Ablaufmaßnahme; Quick Start unverändert. Nächster konkreter Schritt: N5-Gegenproben und eigene Entscheidung vor Abschluss 3.2/Erkundung 3.11. 3.2 bleibt IN ARBEIT, Grafik-Abnahme weiter offen.
+
+### 2026-11-05 (Europe/Berlin) – Q.10-N2 lokal verifiziert
+
+- **Ergebnis:** P1–P4 nach ADR-052 umgesetzt; N5 getrennt. 509 Vitest-Tests/41 Dateien, zwei Electron-E2E, Build, Lint/Format/Typen, erzeugte Verträge, Audits und vollständiger Hook grün. Coverage global 81,41 %, core-status/settings je 100 %. [Nachweise und Grenzen](research/q.10-n2-umsetzung.md).
+- **Gegenprüfung:** neue Astra-Instanz ohne Gesprächsverlauf, nur lesend; keine neuen hohen/mittleren/niedrigen Befunde im Paket A, keine eigenen Tests. Gestagten Inhalt geprüft. Implementierungscommit und Push folgen; N2 bleibt bis grüner CI IN ARBEIT.
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONSTART] – Q.10-N2 Option A umsetzen
+
+- **Freigabe:** „freigabe a“ für das konkrete Paket P1–P4 der N2-Vorlage. N5 bleibt ausdrücklich getrennt; keine neue Architekturbeziehung, Abhängigkeit oder CI-Änderung.
+- **Stand-Prüfung:** sauber auf `92b8889`, Branch `docs/q-10-n2-s8-vorlage`, Remote identisch; PR #50 offen/CLEAN, main unverändert `468bc32`. Vorlagen-CI 42058912533 und Security 42058912545 grün. Bestehender PR wird fortgeführt, kein zweiter PR.
+- **Pflichtlektüre:** Projektkontext vollständig, letztes Sessionende, Fahrplanstand/Phase/N2 und offene Schrittstände, Architektur 1/2/9, Entscheidungen A/C, aktive Blocker und Requirements-Übersicht; N2-Vorlage und S-8 vertieft. Abgeschnittene Stellen gezielt nachgelesen.
+- **Checkpoints/Testsignal:** Sicherheits-ADR vor Code; Status/Korrelation und Sprachgrenzen mit gezielten Regressionen; Integration gegen tatsächlichen Main-Listener ohne Produkt-Testzugriffe; vollständige Gates/Coverage, unabhängige Nachprüfung, Commit/Push/CI und Merge. Alte oder unlesbare IDs dürfen keine fremde Anfrage beenden; passende ungültige Antworten geben Locks sofort frei; Folgeanfragen funktionieren. 4.096/4.097 Codepoints und Rust-kompatibles Whitespace schützen gültige Sprachwerte.
+- **Modell/Quelle:** Codex laut Systemkontext, Hauptklasse/Kontextgröße unbestimmbar. Unabhängige Astra-Vorentscheidung liegt vor; Nachprüfung der Umsetzung erfolgt separat und nur lesend.
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N2 Entscheidungsvorlage
+
+- **Dauer/Arbeit:** nicht separat gemessen; P1–P4 gegen S-4/S-6/S-8 und Gegenstellen gelesen, isolierte Handler-/Dienst-/Parserproben ausgeführt und [konkretes Paket A/B](research/q.10-n2-vorlage.md) mit [Testquellen](research/q.10-n2-gegenproben.md) vorbereitet. N3-Abschlusscommit `d160277` auf neuen Branch `docs/q-10-n2-s8-vorlage` übernommen.
+- **Ergebnis:** P1 Statusverlust/`notReady`, P2 fremde Anfrage als `invalidAnswer`, P3 `game:new`-Lock bis 120-s-Timeout, P4 leere/überlange Namen und überlange Texte dynamisch bestätigt. Produktdateien unverändert; kein ADR-052, keine Sicherheitskorrektur und kein N2-Abschluss vorweggenommen. Status WARTET-AUF-FREIGABE.
+- **Testsignal/Nachweise:** 61 bestehende Tests grün; zehn isolierte Proben mit vier grünen Kontrollen und sechs erwarteten roten Befundassertionen. Keine drei gescheiterten Reparaturversuche. Tatsächlicher Main-Listener mit gemocktem Electron-Transport, reale Dienste/OperationLock; weder echter Electron-Transport noch Rust-Laderumgehung geprüft. Erste Shell Node 24.15.0; bereits vorhandene fnm-Version 26.11.1 explizit genutzt und beide Läufe mit denselben Ergebnissen wiederholt.
+- **Unabhängige Bewertung:** neue Astra-Instanz (`gpt-6-astra`, hohe Denktiefe, ohne Gesprächsverlauf), nur lesend, keine eigenen Tests. Erster Aufruf am Laufzeitlimit gescheitert; einmaliger späterer Verfügbarkeitsversuch erfolgreich. A empfohlen; Korrelationsmatrix, Codepoints, Rust-/JS-Whitespace U+0085/U+FEFF und D3-Abgrenzung geprüft. Hypothetische ADR-Klassifikation/Quote nicht als beschlossen übernommen; aktueller Bestand unverändert 51 ADRs, 4/10 reaktiv.
+- **Zusatzbefund:** mittel, vermutlich Code, `core-host.ts:162–168` übernimmt einen Port unabhängig von Nachrichtenart. Nur statisch, kein nachgewiesener Ausnutzungspfad aus Renderer/Mod. Separater Landeplatz Q.10-N5 mit Frist 2026-11-12, keine stille Erweiterung von Paket A.
+- **Konsistenz/Offenes:** README, Fahrplan und datierten Architektur-Abgleich aktualisiert; N3-Nachweise verlinkt statt alte offene Befunde als aktuell auszugeben. Keine Reifegradänderung, neue Modulbeziehung oder Voraussetzung. Ablaufregister ohne neue fällige Maßnahme; 3.2 bleibt offen. Nächster konkreter Schritt: ausdrückliche Entscheidung A/B; nach Freigabe Sicherheits-ADR und Umsetzung mit Regressionen, unabhängiger Nachprüfung, Gates und CI. Hauptmodellklasse/Kontextgröße unbestimmbar, Quelle Systemkontext; ein unabhängiger Astra-Prüfer, keine gleichzeitige Dateibearbeitung.
+- **Commit/PR:** `baba7c6` mit aktivem Hook committed/gepusht; [PR #50](https://github.com/PatSchCode/OpenAirside/pull/50) offen. [CI 42058255144](https://github.com/PatSchCode/OpenAirside/actions/runs/42058255144) und [Security 42058255033](https://github.com/PatSchCode/OpenAirside/actions/runs/42058255033) auf diesem Kopf abgeschlossen und grün; nur Dokumentations-Gates neu geprüft, keine Produktkorrektur. Eigene Schlussprüfung präzisierte die positive `lang:texts`-Kontrolle auf gültige Sprachpaare; unter Node 26.11.1 erneut vier Kontrollen grün/sechs Befundassertionen rot. Diese Quelle samt SHA und Abschlussnachweis folgen im selben PR; neuer Kopf wird vor Antwort beobachtet. Keine neue Sicherheitsfreigabe oder Reifegradbeförderung.
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONSTART] – Q.10-N2 S-8-Entscheidung vorbereiten
+
+- **Auftrag:** „dann den nächsten Schritt“: P1–P4 gegen S-8 prüfen, dynamische Gegenproben und konkrete Entscheidungsvorlage vorbereiten. Keine vorweggenommene Freigabe für die im Fahrplan ausdrücklich freigabepflichtige Sicherheitskorrektur.
+- **Stand-Prüfung:** sauber auf `d160277`, Branch `docs/q-10-n3-passagier-vorlage`; Remote identisch, main `468bc32`, keine offenen PRs einschließlich Entwürfen. Eigener N3-Sessionende-Commit wird verlustfrei auf den neuen N2-Vorlagenbranch übernommen; keine vorhandene N2-Umsetzung festgestellt.
+- **Pflichtlektüre:** Projektkontext vollständig, letztes Sessionende und jüngere Einträge, Fahrplanstand/Phasenkopf/offene Schritte sowie N2 vollständig, Architektur 1/2/9, Entscheidungen A/C, aktive Blocker und Requirements-Übersicht gelesen. ADR-032 und S-8 gezielt vertieft; keine aktiven Blocker.
+- **Testsignal:** gültige Antworten und Folgeanfragen bleiben nutzbar; unbekannte Nachrichten ändern keinen lebenden Kernstatus; fehlerhafte/späte Antworten beenden ausschließlich ihre tatsächliche Anfrage mit `invalidAnswer`; vorhandene Sprachgrenzen gelten am Empfang. Isolierte erwartete rote Gegenproben belegen den Bestand, keinen Fix. Produktcode bleibt unverändert.
+- **Modell/Quelle:** Codex laut Systemkontext; genaue Hauptklasse und Kontextgröße unbestimmbar. Unabhängige Astra-Entscheidungsbewertung wird nur lesend hinzugezogen.
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – N3 gemergt und Main geprüft
+
+- **Ergebnis:** [PR #49](https://github.com/PatSchCode/OpenAirside/pull/49) mit geprüftem Kopf `eaa2e66` nach `main` gemergt, Merge `468bc325ffab424f2ddc30641b88391f20f11630`. Abschlusskopf: CI 42050232088 und Security 42050232092 grün (16 bestanden, sieben dokumentationsbedingt übersprungen); vollständige Code-Abnahme zuvor auf `9bba166`.
+- **Main-Nachweise:** [CI 42050840216](https://github.com/PatSchCode/OpenAirside/actions/runs/42050840216) und [Security 42050840247](https://github.com/PatSchCode/OpenAirside/actions/runs/42050840247) auf `468bc32` abgeschlossen und grün; sämtliche Code-/Plattform-/Coverage-/Benchmark-Gates. Arbeitsbranch auf den inhaltlich identischen Merge fast-forwarded; Produktdiff gegen `9bba166` leer.
+- **Dokumentation:** Merge-Nachweise in Fahrplan und Bericht ergänzt, versehentliche Leerzeile vor ADR-051 entfernt; zentrale Übersicht jetzt als zusammenhängende 30-zeilige Tabelle geprüft. Keine Produktänderung nach unabhängiger Prüfung. README, offene N2-Entscheidung, Reifegrade, FR-016 und Fristen bleiben konsistent.
+- **Bilanz/nächster Schritt:** kurze Merge-Fortsetzung, Dauer nicht separat gemessen; Codex laut Systemkontext, Klasse/Kontextgröße unbestimmbar, keine weitere Delegation. N2-Entscheidung zu S-8 vorbereiten, danach 3.2-Abschlussabgleich. Dieser Sessionende-Vermerk wird mit aktivem Hook committed/gepusht und bleibt gemäß Eigentümerregel ohne neuen PR auf dem Arbeitsbranch; mit dem nächsten Schritt nach main übernehmen.
 
 ### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N3 Option A nachgewiesen
 

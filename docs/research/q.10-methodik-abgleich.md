@@ -55,6 +55,10 @@ Zeilen beziehen sich auf die unveränderte Codebasis `b16167c`; Dokumentzeilen a
 | D2 | niedrig / Doku | S-4 `:196` behauptet, harte Links würden nicht erkannt; `:202` und `core/src/datapack/files.rs:346` nennen Unix-Ablehnung | Bestehende Aussage vereinheitlichen, Q.10-N4 |
 | D3 | niedrig / Doku | S-4 `:203` beschreibt Sprachname nur „in mindestens einem Paket“. `core/src/datapack/load.rs:767` verlangt ihn beim ersten geladenen Eintrag; `:792` lehnt zusätzlich leere/Whitespace-Texte ab | Präzisierung oder Vertragsentscheidung bewusst trennen, Q.10-N4 |
 
+## Nachprüfungsstand 2026-11-05
+
+Die ursprünglichen Befundzeilen bleiben als Prüfstand erhalten. N3/ADR-051 ist auf `9bba166` umgesetzt, unabhängig geprüft und mit grüner Main-CI auf `468bc32` gemergt: [Nachweise](q.10-n3-umsetzung.md). P1–P4 sind inzwischen durch isolierte Handler-/Parserproben auf diesem Produktstand bestätigt; [N2-Vorlage](q.10-n2-vorlage.md) und [Quellen](q.10-n2-gegenproben.md). N2/P1–P4 ist nach ausdrücklicher Freigabe/ADR-052 auf `a95e47d` korrigiert, unabhängig nachgeprüft und mit vollständiger CI nachgewiesen: [Umsetzung](q.10-n2-umsetzung.md). Ein zusätzlich gefundener mittlerer statischer Port-Befund erhält den getrennten Landeplatz Q.10-N5. Historische Aussagen der folgenden ursprünglichen Abschnitte sind keine Behauptung über den heutigen Korrekturstand.
+
 ## Umfang ohne weitere gefundene Abweichung
 
 Nachprüfung 2026-11-05 in Q.10-N3: K1 und K2 durch isolierte dynamische Proben einschließlich vollständigem Container-Rundlauf bestätigt; zusätzlich FIFO-Verletzung beim Überlauf nachgewiesen. Die frühere Kennzeichnung „statisch“ in der Befundtabelle beschreibt den ursprünglichen Abgleich. Aktuelle Ergebnisse und offene Korrekturentscheidung: [N3-Vorlage](q.10-n3-vorlage.md); keine Produktkorrektur vorweggenommen.

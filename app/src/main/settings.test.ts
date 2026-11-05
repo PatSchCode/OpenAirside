@@ -88,6 +88,23 @@ describe("settings", () => {
     }
   });
 
+  it("matches Rust name whitespace and counts codepoints rather than UTF-16 units", () => {
+    for (const name of ["a".repeat(4096), "😀".repeat(4096), "e\u0301".repeat(2048), "\uFEFF"]) {
+      expect(parseLanguageList([{ code: "en", name, keys: 0 }])).toEqual([
+        { code: "en", name, keys: 0 },
+      ]);
+    }
+    for (const name of ["", " \n\t", "\u0085", "\u2003", "x".repeat(4097), "😀".repeat(4097)]) {
+      expect(parseLanguageList([{ code: "en", name, keys: 0 }])).toBeUndefined();
+    }
+    for (const text of ["", " \n", "😀".repeat(4096), "e\u0301".repeat(2048)]) {
+      expect(parseTexts([["ui.name", text]])?.["ui.name"]).toBe(text);
+    }
+    for (const text of ["x".repeat(4097), "😀".repeat(4097), "x".repeat(100_000)]) {
+      expect(parseTexts([["ui.name", text]])).toBeUndefined();
+    }
+  });
+
   it("checks the language list of the core", () => {
     expect(parseLanguageList(languages)).toEqual(languages);
     expect(parseLanguageList([])).toEqual([]);

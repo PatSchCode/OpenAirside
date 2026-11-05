@@ -8,12 +8,12 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-11-05 (ADR-051: Passagierkorrektur Option A nachgewiesen)
+- **Stand vom:** 2026-11-05 (ADR-052: S-8-Korrektur Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** keiner; Q.10-N3 auf `9bba166` lokal, unabhängig und durch volle CI nachgewiesen. Q.10 ist gemergt; 3.2 bleibt für seinen Abschlussabgleich offen.
-- **Nächster Schritt:** Q.10-N2 (S-8-Validierung) entscheiden; danach 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
-- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 4 / 10 über ADR-042 bis ADR-051; Reflexion zu ADR-051 vor Code durchgeführt.
+- **Aktiver Schritt:** keiner; Q.10-N2 auf `a95e47d` lokal, unabhängig und durch volle CI nachgewiesen. N3 gemergt; 3.2 bleibt wegen N5/Abschlussabgleich offen.
+- **Nächster Schritt:** Q.10-N5-Portübergabe prüfen und Korrektur entscheiden, dann 3.2 abschließen und 3.11 beginnen. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-043 bis ADR-052; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -253,7 +253,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). K1–K4 durch Q.10-N3/ADR-051 korrigiert bzw. ausdrücklich aufgelöst; N2 und Abschlussabgleich vor 3.11 offen.
+- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). K1–K4 durch Q.10-N3/ADR-051 korrigiert bzw. ausdrücklich aufgelöst; N2/P1–P4 durch ADR-052 nachgewiesen korrigiert; N5 und Abschlussabgleich vor 3.11 offen.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
@@ -456,7 +456,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N2: S-8-Antwortprüfung und Fehlerzuordnung korrigieren
 
-- **Status:** `[WARTET-AUF-FREIGABE]` – neue Befunde P1–P4, kein Code geändert.
+- **Status:** `[ERLEDIGT]` 2026-11-05 – Paket A nach ADR-052 auf `a95e47d` umgesetzt; lokale Gates/Hook, unabhängige Sicherheitsnachprüfung und vollständige Code-CI/Security grün. P1–P4 behoben; N5 bleibt getrennt.
 - **Frist:** 2026-11-12 für Entscheidung und Umsetzungsplanung.
 - **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit, danach Ausführung.
 - **Abhängigkeiten:** Prüfbericht `docs/research/q.10-methodik-abgleich.md`, vorhandener S-8-Vertrag.
@@ -465,6 +465,9 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Testsignal:** Gezielt ungültige und verspätete Nachrichten müssen die richtige Anfrage ablehnen, gültige Folgeanfragen bleiben nutzbar. Überlange Sprachwerte werden zurückgewiesen; kein neuer Gesamtgrenzwert.
 - **Akzeptanzkriterien:** gezielte Regressionstests, vorhandene Gates und Coverage; unabhängige Prüfung der Sicherheitskorrektur, neue Beförderung erst nach Nachprüfung ohne hohe/mittlere Befunde.
 - **Betroffene Module:** Plattform, Brücke; keine Behebung innerhalb Q.10-Dokumentationscommit.
+- **Vorlage/Nachweise:** [N2-Vorlage](research/q.10-n2-vorlage.md), [eingefrorene Gegenproben](research/q.10-n2-gegenproben.md). 61 Bestandsfälle grün; zehn Handler-/Parserproben mit vier grünen Kontrollen und sechs erwarteten roten Befundassertionen. Kein Fix oder Abschluss behauptet.
+- **Empfehlung:** A: P1–P4 innerhalb vorhandener Verträge korrigieren; Familie plus gelieferte gültige Anfrage-ID, unmittelbares `invalidAnswer`, vorhandene Sprach-Einzellimits. B: bewusst bis spätestens vor 3.2-Abschluss verschieben. Sicherheitsfreigabe und ADR vor Code; keine neue Beförderung.
+- **Abschlussnachweis:** [Umsetzung](research/q.10-n2-umsetzung.md): 509 Vitest-Tests, zwei Electron-E2E, global 81,41 % Lines, core-status/settings je 100 %. [CI 42062519917](https://github.com/PatSchCode/OpenAirside/actions/runs/42062519917) und [Security 42062519978](https://github.com/PatSchCode/OpenAirside/actions/runs/42062519978) auf `a95e47d` vollständig grün. PR #50 enthält die Korrektur; späteren Merge-/Main-Nachweis im Logbuch führen.
 
 #### Q.10-N3: Passagierzustand, Save/Load und beschlossenen 3.2-Umfang klären
 
@@ -478,7 +481,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Betroffene Module:** Personen, Welt & Bau, Takt & Weltzustand, Spielstand S-5.
 - **Landeplatz:** Korrekturen gehören zum fehlenden Abschlussumfang von 3.2; dieser Nachprüfschritt zählt nicht als neue Phase-3-Funktion.
 - **Vorlage:** `docs/research/q.10-n3-vorlage.md`; vollständige isolierte Testquellen in `docs/research/q.10-n3-gegenproben.md`. Empfehlung A: Format 5 mit vollständig abgeleiteter Nummernvergabe und definierter Verdichtung; vollständige Validierung; Geduld ausdrücklich nach 5.4; bestehende Verantwortungen bestätigen. B: Geduld bereits für Abschluss 3.2 konkret entwerfen. Option A freigegeben; ADR-051 bestätigt Umfang und Verantwortungen.
-- **Abschlussnachweis:** [Umsetzungsbericht](research/q.10-n3-umsetzung.md); 341 Rust-/490 Vitest-Tests, zwei Electron-E2E, 4.000 Folgeticks hashgleich, atomare Ablehnung, MAX/MAX-1, Lasttest bis 200.000. Kern-Coverage 98,10 %, Personen 98,48 %. [CI 42049026540](https://github.com/PatSchCode/OpenAirside/actions/runs/42049026540) und [Security 42049026580](https://github.com/PatSchCode/OpenAirside/actions/runs/42049026580) bestanden. PR #49 noch offen; Abschlussdokumentation folgt mit neuem Kopf.
+- **Abschlussnachweis:** [Umsetzungsbericht](research/q.10-n3-umsetzung.md); 341 Rust-/490 Vitest-Tests, zwei Electron-E2E, 4.000 Folgeticks hashgleich, atomare Ablehnung, MAX/MAX-1, Lasttest bis 200.000. Kern-Coverage 98,10 %, Personen 98,48 %. [CI 42049026540](https://github.com/PatSchCode/OpenAirside/actions/runs/42049026540) und [Security 42049026580](https://github.com/PatSchCode/OpenAirside/actions/runs/42049026580) bestanden. PR #49 auf `468bc32` gemergt; Main-CI 42050840216 und Security 42050840247 ebenfalls vollständig grün.
 - **Beobachtete Gegenproben:** bestehende 5 Personen-Tests grün; neue Unit-Kontrollen 2 grün und 4 erwartete Befundtests rot; Integration 1 Kontrolle grün und 1 Rundlauf rot. Voller Save/Load-Hash direkt gleich, nach 102 Folgeticks abweichend. Exit 101 der isolierten Negativproben ist ein bestätigter Fehlernachweis, keine bestandene Korrektur oder rote Projekt-CI.
 
 #### Q.10-N4: Niedrige S-4-Dokumentationsbefunde präzisieren
@@ -489,6 +492,18 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Zu tun:** Unix-Ablehnung harter Links konsistent beschreiben; Reihenfolgeanforderung an Sprachnamen und Ablehnung leerer Texte gegen bestehenden Vertrag und Tests klären.
 - **Testsignal:** Widersprüchliche Aussagen werden gefunden; dokumentierte Beispiele müssen dem geprüften Verhalten entsprechen. Keine Änderung öffentlicher Ladebedingungen als bloße Textkorrektur tarnen.
 - **Betroffene Module:** Inhalte & Mods, Lokalisierung; niedrige Befunde dürfen mit diesem Landeplatz offen bleiben.
+
+#### Q.10-N5: S-8-Portübergabe im Kern-Host prüfen
+
+- **Status:** `[OFFEN]` – neuer mittlerer statischer Befund aus unabhängiger N2-Vorlagenprüfung; keine dynamische Gegenprobe und keine Umsetzung vorweggenommen.
+- **Frist:** 2026-11-12; vor Abschluss 3.2/Erkundung 3.11 klären.
+- **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit.
+- **Abhängigkeiten:** S-8 und ADR-032; getrennt von der N2-Freigabe P1–P4.
+- **Befund:** `app/src/main/core-host.ts:162–168` übernimmt nach erfolglosen Parsern jeden mitgelieferten Port und schließt den vorigen, ohne die benannte Nachrichtenart `port` zu prüfen. Vermutlich Code falsch; mögliche Verbindungsunterbrechung. Kein Ausnutzungspfad aus Renderer oder Mod nachgewiesen, Sender ist der Hauptprozess.
+- **Zu tun:** unbekannte Art mit Port, ungültige bekannte Art mit Port und gültige `port`-Übergabe gegeneinander prüfen; danach begrenzte Korrektur ausdrücklich vorlegen. Keine stillschweigende Erweiterung des N2-Pakets.
+- **Testsignal:** unbekannte/ungültige Nachricht darf vorhandene Verbindung nicht ersetzen; gültige Übergabe schließt alten Port und verbindet neuen genau einmal.
+- **Freigabepflichtig:** ja, Sicherheit; Nachprüfung vor neuer Beförderung im betroffenen Empfangsumfang.
+- **Betroffene Module:** Plattform/Kern-Host, S-8-Gegenstelle; keine neue Phase-3-Funktion.
 
 #### Q.9: ADR-047 – Produktvision und Referenzbasis wiederherstellen
 

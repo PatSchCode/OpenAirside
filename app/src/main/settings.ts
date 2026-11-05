@@ -25,6 +25,20 @@ export const BASE_LANGUAGES: readonly string[] = ["de", "en"];
 
 const LANGUAGE_CODE = /^[a-z]{2,3}(?:-[a-z0-9]{2,8})?$/;
 const TEXT_KEY = /^[A-Za-z0-9_.-]{1,128}$/;
+/** S-4 limit, measured in Unicode codepoints like the Rust JSON scanner. */
+const MAX_STRING_CODEPOINTS = 4096;
+// Rust str::trim uses Unicode White_Space; JS trim differs at U+0085/U+FEFF.
+const HAS_NAME_CHARACTER = /[^\p{White_Space}]/u;
+
+function withinStringLimit(value: string): boolean {
+  let count = 0;
+  const characters = value[Symbol.iterator]();
+  while (!characters.next().done) {
+    count += 1;
+    if (count > MAX_STRING_CODEPOINTS) return false;
+  }
+  return true;
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -130,6 +144,8 @@ export function parseLanguageList(value: unknown): LanguageInfo[] | undefined {
       !isRecord(item) ||
       !isLanguageCode(item.code) ||
       typeof item.name !== "string" ||
+      !HAS_NAME_CHARACTER.test(item.name) ||
+      !withinStringLimit(item.name) ||
       !inRange(item.keys, { min: 0, max: Number.MAX_SAFE_INTEGER })
     ) {
       return undefined;
@@ -150,7 +166,12 @@ export function parseTexts(value: unknown): Record<string, string> | undefined {
   for (const pair of value as unknown[]) {
     if (!Array.isArray(pair) || pair.length !== 2) return undefined;
     const [key, text] = pair as unknown[];
-    if (typeof key !== "string" || !TEXT_KEY.test(key) || typeof text !== "string") {
+    if (
+      typeof key !== "string" ||
+      !TEXT_KEY.test(key) ||
+      typeof text !== "string" ||
+      !withinStringLimit(text)
+    ) {
       return undefined;
     }
     out[key] = text;
