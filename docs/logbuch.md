@@ -17,12 +17,19 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt. Hoher A1 und mittlere A2–A6 sperren Abschluss/Beförderung von 3.2, Blocker #002 aktiv, Personen VORLÄUFIG. Nachbesserung A am 2026-11-06 ausdrücklich freigegeben: ADR-054, Ursachen/Prävention vor Code unabhängig gegengeprüft. Nächster Checkpoint C1/C2: Format-/Vertragsmodell und räumliche Stationsmechanik samt Nachweisen. Noch keine Produktkorrektur durch die Reflexion. N2/N3/N5 bleiben in ihrem begrenzten Umfang erledigt. 3.11 wartet; Grafik-Abnahme 3.1b-N1 offen. Frühere Details im verlinkten Archiv.
+Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt. 3.2 bleibt IN ARBEIT, Blocker #002 aktiv, Personen VORLÄUFIG. Nachbesserung A ausdrücklich freigegeben: ADR-054, Ursachen/Prävention vor Code unabhängig geprüft. A1-Zielwechsel/COMPLETE isoliert nachgebessert, lokaler Rust-/Coverage-Nachweis grün; kein Gesamtabschluss. A2 erneut rot, A3–A6 offen. Nächster Checkpoint C1/C2: Format-/Vertragsmodell und räumliche Stationsmechanik samt Nachweisen. N2/N3/N5 bleiben im begrenzten Umfang erledigt. 3.11 wartet; Grafik-Abnahme 3.1b-N1 offen. Frühere Details im Archiv.
 
 ---
 
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
+
+### 2026-11-06 14:28 – [BEOBACHTUNG] – Ursachen geklärt und A1-Zwischenkorrektur lokal nachgewiesen
+
+- **Ursachen/Freigabe:** [Historie und Prävention](research/3.2-ursachenanalyse.md), vor Produktcode unabhängig geprüft; A in ADR-054 beschlossen, Dokumentationscheckpoint `5034f88` mit aktiven Hooks. Reaktivquote 4/10 bzw. 21/54, neue Reflexion vor Code. Historisch abgeschwächte Abnahme nicht als genehmigten Descope behandeln.
+- **Produkt/Prüfung:** alte Ankunftsrichtung beim Zielwechsel verwerfen, COMPLETE bei Bewegung und Feldneuaufbau einfrieren. Zweite unabhängige Astra-Instanz fand zunächst den Resampling-Pfad; nach Ergänzung keine hohen/mittleren Befunde im engen Diff. Keine Prüfertests oder Gesamtabnahme. [Matrix und Befehle](research/3.2-nachbesserung-nachweise.md): neue Positionsprobe erst rot, danach grün; A2 bei Tick 20 weiter rot. Gesamtpaket A bleibt offen.
+- **Lokaler Endstand:** voller Rust-Coverage-Lauf nach letzter Ergänzung, Exit 0: 294 bestanden, ein regulär ignorierter Lasttest; Lines gesamt 97,89 %, Kern 98,07 %, Personen 98,54 %. Format/Clippy/Hooks/Audits grün, npm-Bestand 15 moderate, 546 Lizenzen. Keine neue Abhängigkeit, CI-/Buildänderung oder Ausnahme. Quick Start für isolierte Korrektur nicht betroffen, C4-Einstieg weiter offen.
+- **Git/PR:** Produktcheckpoint noch uncommitted; nächster Nachweis Commit/Push/CI im bestehenden PR #53, als Entwurf mit vollständigem Restumfang markiert. 3.2 IN ARBEIT, Personen VORLÄUFIG, Blocker #002 aktiv; keine Wahl von Option B und keine erneute Freigabe verlangt.
 
 ### 2026-11-06 14:00 – [SESSIONSTART] – Freigegebene Nachbesserung A: Ursachen zuerst
 

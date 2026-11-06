@@ -13,7 +13,7 @@
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
 - **Aktiver Schritt:** 3.2, Nachbesserung A freigegeben (ADR-054); Ursachen und Prävention vor Code unabhängig gegengeprüft. Blocker #002 und bisherige Reifegrade bleiben bestehen.
 - **Nächster Schritt:** C1/C2 des [freigegebenen Pakets A](research/3.2-nachbesserungsentwurf.md): Format-/Vertragsbruch und räumliche Stationsmechanik mit negativen und positiven Nachweisen. 3.11 wartet. Grafik-Abnahme 3.1b-N1 bleibt offen.
-- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-044 bis ADR-053; Reflexion zu ADR-051 vor Code durchgeführt.
+- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 4 / 10 über ADR-045 bis ADR-054; neue Ursachenreflexion zu ADR-054 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -255,6 +255,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 - **Status:** `[IN ARBEIT]` – Abschlussabgleich 2026-11-05 auf `18176a6`: hoher Stationswechselbefund A1 sowie mittlere A2–A6 (FIFO vor Zulassung, Warteflächen, Diagnose und Lektionsweg/Nachweise), [Blocker #002](blockers.md). Keine Beförderung; [Bericht/Gegenproben](research/3.2-abschlussabgleich.md). PR #47 auf `b16167c` und N2/N3/N5 haben grüne CI in ihrem jeweiligen Umfang, keine Gesamtabnahme.
 - **Nachbesserung:** [Paket A vom 2026-11-06](research/3.2-nachbesserungsentwurf.md) ausdrücklich freigegeben, [ADR-054](decisions/ADR-054.md). [Ursachen/Prävention](research/3.2-ursachenanalyse.md) vor Code geprüft. C1–C5 mit ihren Testsignalen und Pflichtfällen gelten vollständig; Format 6/Protokoll 3, räumliche Phasen, Bedienzeit und sichtbare Lektion. Keine neue Schritt-ID oder Geduld-/Feinweg-Erweiterung.
+- **Zwischenstand/Nachweismatrix:** [A1-Zielwechsel und COMPLETE-Sperre](research/3.2-nachbesserung-nachweise.md) isoliert vor dem Modellumbau korrigiert, einschließlich Feldneuaufbau. Teilnachweis, kein A1-/3.2-Gesamtabschluss; A2 erneut rot, C1–C5 verbleiben offen.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)

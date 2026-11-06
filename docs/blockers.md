@@ -31,6 +31,7 @@ Für alle anderen Fälle gilt die Dreifach-Regel aus CLAUDE.md Abschnitt 10.
 - **Wirkung:** 3.2 bleibt IN ARBEIT, Personen VORLÄUFIG; keine Beförderung/3.11-Freigabe aus bisherigen grünen Tests ableiten.
 - **Auflösung/Frist:** Nachbesserungsentwurf in 3.2, Daten-/Vertragsfragen ausdrücklich vorlegen; Korrekturen und räumliche Übergangs-/FIFO-/Diagnose-/Lektionsnachweise vor Abschluss 3.2 und vor 3.11. Entwurf spätestens 2026-11-12 vorlegen. Keine Produktkorrektur durch diesen Prüfbericht.
 - **Stand 2026-11-06:** [Paket A](research/3.2-nachbesserungsentwurf.md) ausdrücklich freigegeben, ADR-054; [Ursachenprüfung/Prävention](research/3.2-ursachenanalyse.md) vor Code abgeschlossen und unabhängig gegengeprüft. Entwurfsfrist erfüllt; Blocker bleibt bis Umsetzung/Nachweisen aktiv.
+- **Teilkorrektur:** Zielwechsel/COMPLETE für A1 mit Positions- und Freeze-Regressionen nachgebessert; [Nachweismatrix](research/3.2-nachbesserung-nachweise.md). A2 erneut rot und A3–A6 offen; kein Gesamtabschluss oder Auflösen dieses Blockers.
 
 ---
 

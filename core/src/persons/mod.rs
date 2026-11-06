@@ -409,6 +409,10 @@ impl Persons {
     /// fields were computed).
     pub(crate) fn resample_headings(&mut self, fields: &FieldSet) {
         for p in self.pool.items_mut() {
+            if matches!(p.group, GROUP_DEPARTING | GROUP_ARRIVING) && p.state == PASSENGER_COMPLETE
+            {
+                continue;
+            }
             p.heading = fields.dir(p.target, p.pos());
         }
     }
@@ -700,6 +704,11 @@ fn add_counts(mut a: [u32; FLOORS], b: [u32; FLOORS]) -> [u32; FLOORS] {
 
 /// Next state of one person.
 fn step_person(mut p: Person, fields: &FieldSet, targets: usize) -> Person {
+    // Completion is terminal. In particular an old walking heading must
+    // never move a passenger after its first successful completion (3.2/A1).
+    if matches!(p.group, GROUP_DEPARTING | GROUP_ARRIVING) && p.state == PASSENGER_COMPLETE {
+        return p;
+    }
     if p.state == PASSENGER_WAITING {
         p.wait_ticks = p.wait_ticks.saturating_add(1);
         return p;
@@ -766,6 +775,10 @@ fn advance_passenger(person: &mut Person, stations: &[TerminalStation]) {
     if let Some(station) = next {
         person.target = station.target;
         person.state = PASSENGER_TRAVELLING;
+        // ARRIVED described the previous target. Force sampling the new
+        // target before its arrival can be interpreted on a later tick.
+        person.heading = UNREACHABLE;
+        person.progress = 0.0;
         person.queue_order = 0;
         person.wait_ticks = 0;
     } else {
@@ -815,6 +828,32 @@ mod tests {
             queue_order: 0,
             wait_ticks: 0,
         }
+    }
+
+    #[test]
+    fn completed_passenger_keeps_even_a_stored_moving_heading_frozen() {
+        let build = Build::new(MapSize::new(64, 64).unwrap());
+        let fields = FieldSet::empty(&build.grid().snapshot(), 0);
+        for group in [GROUP_DEPARTING, GROUP_ARRIVING] {
+            let finished = Person {
+                group,
+                state: PASSENGER_COMPLETE,
+                ..person()
+            };
+            assert_eq!(step_person(finished, &fields, 1), finished);
+            let mut persons = Persons::restore(
+                vec![finished],
+                vec![],
+                MapSize::new(64, 64).unwrap(),
+                1,
+                vec![],
+            )
+            .unwrap();
+            persons.resample_headings(&fields);
+            assert_eq!(persons.saved(), vec![finished]);
+        }
+        let neutral = person();
+        assert_ne!(step_person(neutral, &fields, 1), neutral);
     }
 
     #[test]
