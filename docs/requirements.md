@@ -24,6 +24,8 @@
 
 Abgleich 3.2 am 2026-11-05: FR-007/012/016/019/020/022/053/057/067 bleiben offen bzw. teilweise abgedeckt; keine Erledigung aus dem grünen Minimalfluss-Stundenlauf ableiten. [Nutzerwege, Umfang und sperrende Befunde](research/3.2-abschlussabgleich.md); Geduld/Bedürfnisse bleiben nach ADR-051 in 5.4.
 
+Nachbesserung A am 2026-11-06: räumlicher Fluss und sichtbare erste Lektion lokal nachgewiesen und unabhängig nachgeprüft; die Linux-Pixelabnahme bleibt nach drei Ansätzen rot. 3.2 BLOCKIERT ([Nachweise](research/3.2-nachbesserung-nachweise.md), Blocker #002), keine Erledigung der genannten Anforderungen.
+
 <!-- ANCHOR:beteiligte -->
 ## 2. Beteiligte
 

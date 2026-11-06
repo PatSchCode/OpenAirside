@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-11-06 (ADR-054: Nachbesserung A, C1/C2 in Umsetzung)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** 3.2, Nachbesserung A freigegeben (ADR-054); Ursachen und Prävention vor Code unabhängig gegengeprüft. Blocker #002 und bisherige Reifegrade bleiben bestehen.
-- **Nächster Schritt:** C4 des [freigegebenen Pakets A](research/3.2-nachbesserungsentwurf.md): frischer Einstieg, danach C5-Gesamtabgleich. C1/C2 CI-grün; C3 einschließlich neuer E2Es lokal grün, Commit/CI im selben PR nachführen. 3.11 wartet; Grafik-Abnahme 3.1b-N1 offen.
+- **Aktiver Schritt:** 3.2 `[BLOCKIERT]`, [Blocker #002](blockers.md): Linux-Pixelnachweis nach drei Ansätzen rot. A/ADR-054 umgesetzt und lokal geprüft; keine Beförderung oder Erledigung.
+- **Nächster Schritt:** Klärung für isolierte Linux-Canvas-Diagnose in 3.2; kein vierter Reparaturversuch ohne Auflösung des Stopps. Frischer macOS-Einstieg und C5 samt Kantenkorrektur nachgewiesen; Linux-Abnahme sperrt Abschluss/Merge. 3.11 wartet, Grafik-Abnahme 3.1b-N1 offen.
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 4 / 10 über ADR-045 bis ADR-054; neue Ursachenreflexion zu ADR-054 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
@@ -253,9 +253,9 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** `[IN ARBEIT]` – Abschlussabgleich 2026-11-05 auf `18176a6`: hoher Stationswechselbefund A1 sowie mittlere A2–A6 (FIFO vor Zulassung, Warteflächen, Diagnose und Lektionsweg/Nachweise), [Blocker #002](blockers.md). Keine Beförderung; [Bericht/Gegenproben](research/3.2-abschlussabgleich.md). PR #47 auf `b16167c` und N2/N3/N5 haben grüne CI in ihrem jeweiligen Umfang, keine Gesamtabnahme.
+- **Status:** `[BLOCKIERT]` – 2026-11-06, [Blocker #002](blockers.md): Linux-Pixelabnahme nach drei gezielten Ansätzen rot (`b0dcd4d`); Stopp, keine Erledigung/Beförderung und kein Merge. Historische A1–A6 aus dem [Abschlussabgleich](research/3.2-abschlussabgleich.md) nachgebessert; neue Plattform-Nachweislücke bleibt.
 - **Nachbesserung:** [Paket A vom 2026-11-06](research/3.2-nachbesserungsentwurf.md) ausdrücklich freigegeben, [ADR-054](decisions/ADR-054.md). [Ursachen/Prävention](research/3.2-ursachenanalyse.md) vor Code geprüft. C1–C5 mit ihren Testsignalen und Pflichtfällen gelten vollständig; Format 6/Protokoll 3, räumliche Phasen, Bedienzeit und sichtbare Lektion. Keine neue Schritt-ID oder Geduld-/Feinweg-Erweiterung.
-- **Zwischenstand/Nachweismatrix:** [C1/C2](research/3.2-nachbesserung-nachweise.md) mit Format 6/Port 3, räumlichen Phasen/FIFO/Bedienzeit und Ladevalidierung auf `4fc649c` committed/gepusht, CI/Security grün (18 Jobs). C3 sichtbar lokalisiert implementiert; sichtbare DE/EN-Läufe einschließlich Ablehnung/Fremdantwort und Pixi-Ausblendung lokal grün, endgültige Prüfungen/Commit nachführen. C4 frischer Einstieg, C5 und 3.2-Gesamtabschluss offen; keine Beförderung.
+- **Zwischenstand/Nachweismatrix:** [C1–C5-Nachweise](research/3.2-nachbesserung-nachweise.md): Format 6/Port 3, räumlicher Fluss/FIFO/Bedienzeit, lokale 302 Rust-/537 TS-Tests, vier Electron-E2Es, Kausalvergleich/Last und frischer macOS-`npm start` grün. C5-1 aktuelle Diagonalecken/Treppen in `9c34292` korrigiert/nachgeprüft, C5-2 Matrix synchronisiert. Linux zeigt in der Pixelgegenprobe trotz Zoom22 keine Änderung an den Messpunkten; Ursache offen, drei Ansätze/Artefakte im Blocker. PR #53 bleibt Entwurf.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)

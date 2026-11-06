@@ -17,12 +17,22 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.2 bleibt IN ARBEIT, Personen VORLÄUFIG, Blocker #002 aktiv. A/ADR-054: C1/C2 auf `4fc649c` committed/gepusht, CI (18 Jobs)/Security grün. C3 sichtbar lokalisiert implementiert: 537 TS-Tests/82,22 % Lines und vier Electron-E2Es einschließlich DE/EN-Ablehnung/Fremdantwort/Pixi-Pixel grün. Zweite frische Astra-Prüfung fand Sitzungsfehler und zwei Nachweislücken, vor Commit korrigiert/ergänzt; engen Abschluss nachführen. Nächster Checkpoint C4: frischer Einstieg, danach C5. Kein Gesamtabschluss/Merge; 3.11 wartet. N2/N3/N5 begrenzt erledigt, Grafik-Abnahme 3.1b-N1 offen.
+Phase 3 läuft. 3.2 BLOCKIERT, Personen VORLÄUFIG, Blocker #002 aktiv. A/ADR-054 mit Kernfluss, Format6/Port3 und sichtbarer DE/EN-Lektion lokal nachgewiesen; C5-Kantenbefund in `9c34292` repariert/nachgeprüft. Produktkopf `b0dcd4d` gepusht: CI17/18 grün, Linux-Pixelprobe nach drei Ansätzen rot, Security grün. Stopp nach AGENTS, kein vierter Versuch/Merge; PR #53 Entwurf. Nächster Schritt: isolierte Linux-Canvas-Diagnose klären. Frischer macOS-Einstieg und lokale Tests grün; keine Gesamterledigung. 3.11 wartet, Grafik-Abnahme 3.1b-N1 offen.
 
 ---
 
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
+
+### 2026-11-06 17:52 – [SESSIONENDE] – A weit umgesetzt, Linux-Nachweis nach drei Ansätzen blockiert
+
+- **Dauer/Arbeit:** etwa 2 h 24 min ab 15:28. C1/C2 räumlicher Stationsfluss/FIFO/Bedienzeit und Format6/Port3, C3 sichtbare DE/EN-Lektion, C4 Wirkungs-/Last-/Fortsetzungs-/Onboarding-Nachweise und unabhängiger C5-Gesamtabgleich. Ursachen vor Code vorhanden; neue Kanten-Prüfblindstelle zusätzlich reflektiert, korrigiert und nachgeprüft. [Matrix/Details](research/3.2-nachbesserung-nachweise.md).
+- **Beobachteter Produktstand:** `4fc649c`, `a43f95e`, `9c34292`, `dadc661`, `b0dcd4d` regulär mit Hooks committed/gepusht. `4fc649c` volle CI/Security grün. Auf `b0dcd4d` [CI42254974159](https://github.com/PatSchCode/OpenAirside/actions/runs/42254974159) abgeschlossen/fehlgeschlagen: 17/18 Jobs erfolgreich, nur Linux-Electron rot. [Security42254974276](https://github.com/PatSchCode/OpenAirside/actions/runs/42254974276) vollständig grün. PR #53 bleibt Entwurf, main unverändert, kein Merge.
+- **Lokale Nachweise:** 302 Rusttests, Lines gesamt97,71/Kern97,87/Personen95,23/Station96,76%; 537 TS-Tests, global82,22%, Terminalpanel100%. Vier Electron-E2Es39,6s, Kausalvergleich5610→3510 Warteticks/765→465 Abflussticks. Wiederholte200k-Last Mittel0,869/p990,945ms, echteVerdichtung4,405ms. Frischer isolierter Klon mit tatsächlichem npm-ci/Hook/npm-start und neuem Profil bis sichtbaren40/40-Abschlüssen, nurmacOS; keine frische Werkzeuginstallation oder zweite lokale Plattform behauptet.
+- **Stopp/Offenes:** Linux-Pixelprüfung trotz korrektem Zoom22 und öffentlichem Filter dreimal rot; alle Ansätze, Fehlgründe, Hypothesen, Fehlerbild und Klärungsfrage in [Blocker002](blockers.md). Terra sieht „renderer canvas“, Punkte anderswo und freie Messbereiche; Ursache offen. Kein vierter Reparaturversuch, keine Testlockerung. 3.2 BLOCKIERT, Personen VORLÄUFIG; nächste Sitzung auf isolierte Linux-Canvas-Reproduktion abgrenzen, 3.11 wartet. Kleiner Debugpanel-Überdeckungsbefund in3.6.
+- **Modell-/Delegationsbilanz:** Hauptmodellklasse/Kontextgröße unbestimmbar, Quelle Laufzeitkontext. Drei frische nur lesende Astra-Prüfinstanzen ohne Umsetzungsgespräch (`gpt-6-astra`, hohe Denktiefe laut Werkzeugaufruf): C1/C2, C3 und C5 mit isolierten Fehlerproben/Nachprüfungen; eine Terra-Instanz (`gpt-6.1-terra`, mittel) für tatsächliche Screenshotprüfung. Keine fremde Dateibearbeitung; C5 führte eigene isolierte Rotprobe außerhalb des Repos aus, übrige Prüfer keine eigenen Testläufe.
+- **Konsistenz:** 150 relative Dateiverweise gültig, Log unter 800 Zeilen; Unicode-Budgets eingehalten (Kontext35.511, Architektur1/2/9 18.428, aktiveBlocker4.197). README, Anforderungen, Fahrplan, Reifegrade, ADR-Quote und Blocker ohne Gesamterledigung abgeglichen. Keine neuen bewussten Dev-/Paketunterschiede; frischer Lauf bleibt Entwicklungsnachweis auf macOS, Linux-Canvas ausdrücklich ungeklärt.
+- **Abschluss/Commitstatus:** Dieser reine Stop-/Nachweisabschluss ist noch uncommitted; nach Stand-/Konsistenz-/Budget-/Linkprüfung mit regulären Hooks im selben PR committen und dessen Dokumentations-CI beobachten. Ein grüner Dokumentationslauf hebt die fehlgeschlagene Produktabnahme nicht auf. Keine neue Entscheidung, Reaktivquote4/10 bzw.21/54 unverändert. Ablaufregister ohne neue fällige Maßnahme; Budgetautomatisierung Q.10-N1 bleibt bis2026-11-12 freigabepflichtig, aktiveBlocker jetzt über80%.
 
 ### 2026-11-06 16:47 – [BEOBACHTUNG] – C1/C2 lokal verifiziert, Commit vorbereitet
 
