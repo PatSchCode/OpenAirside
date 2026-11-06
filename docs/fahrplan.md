@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-11-05 (ADR-053: Portvalidierung Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** keiner; 3.2-Abschlussabgleich auf `18176a6` durchgeführt und mit PR #52 dokumentiert: hoher A1 und mittlere A2–A6 sperren Abschluss/Beförderung, Blocker #002. Keine Produktkorrektur.
-- **Nächster Schritt:** gezielten 3.2-Nachbesserungsentwurf bis 2026-11-12 vorlegen; räumliche Stationsfolge, FIFO/Vorstau, Warteflächen, Diagnose und Lektion. 3.11 wartet. Grafik-Abnahme 3.1b-N1 bleibt offen.
+- **Aktiver Schritt:** keiner; 3.2-Nachbesserungsentwurf für A1–A6 ausgearbeitet und unabhängig bewertet, Umsetzung wartet auf Freigabe. Blocker #002 und bisherige Reifegrade bleiben bestehen.
+- **Nächster Schritt:** [konkretes Paket A/B](research/3.2-nachbesserungsentwurf.md) entscheiden; A umfasst Format 6/Port-Protokoll 3 und vollständige Minimalfluss-Nachweise. 3.11 wartet. Grafik-Abnahme 3.1b-N1 bleibt offen.
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-044 bis ADR-053; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
@@ -254,6 +254,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
 - **Status:** `[IN ARBEIT]` – Abschlussabgleich 2026-11-05 auf `18176a6`: hoher Stationswechselbefund A1 sowie mittlere A2–A6 (FIFO vor Zulassung, Warteflächen, Diagnose und Lektionsweg/Nachweise), [Blocker #002](blockers.md). Keine Beförderung; [Bericht/Gegenproben](research/3.2-abschlussabgleich.md). PR #47 auf `b16167c` und N2/N3/N5 haben grüne CI in ihrem jeweiligen Umfang, keine Gesamtabnahme.
+- **Nachbesserung:** [Entwurf vom 2026-11-06](research/3.2-nachbesserungsentwurf.md), noch nicht freigegeben: Format 6, Port-Protokoll 3, Bedienzeit statt throughput, räumliche Phasen/Tickets/Reservierungen, ehrliche Diagnose und sichtbarer Lektionsweg. Keine neue Phase-3-Schritt-ID, keine Geduld-/Feinweg-Erweiterung.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)

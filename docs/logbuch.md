@@ -17,12 +17,26 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt. 3.2 ist implementiert/gemergt, aber der Abschlussabgleich auf `18176a6` findet hohen A1 und mittlere A2–A6; Blocker #002 sperrt Abschluss und Beförderung. Personen bleibt VORLÄUFIG. N2/N3/N5 sind in ihrem begrenzten Korrekturumfang nachgewiesen erledigt, keine Gesamtabnahme. Nächster Schritt: gezielter 3.2-Nachbesserungsentwurf bis 2026-11-12 vor Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
+Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt. 3.2 ist implementiert/gemergt, aber hoher A1 und mittlere A2–A6 sperren Abschluss/Beförderung, Blocker #002 aktiv. Personen bleibt VORLÄUFIG. Der konkrete 3.2-Nachbesserungsentwurf ist am 2026-11-06 unabhängig bewertet: Empfehlung A mit Format 6/Port-Protokoll 3, Freigabe offen. Kein neuer ADR oder Produktcode. N2/N3/N5 bleiben in ihrem begrenzten Korrekturumfang erledigt. Nächster Schritt: A/B entscheiden, danach bei A ADR/Reflexion vor Umsetzung und Nachweisen. 3.11 wartet; Grafik-Abnahme 3.1b-N1 bleibt offen. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
 
 ---
 
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
+
+### 2026-11-06 (Europe/Berlin) – [SESSIONENDE] – 3.2-Nachbesserungsentwurf vorgelegt
+
+- **Dauer/Arbeit:** nicht separat gemessen; A1–A6 auf Basis `72fbf71` in konkretes Daten-/Vertrags-/Bedienmodell und fünf Checkpoints übersetzt. Nur Dokumentation, kein neuer ADR, Produktcode, Abhängigkeits-, Build- oder CI-Eingriff. Eigener Abschlusscommit `72fbf71` wird gemäß Eigentümerregel mit dem neuen PR übernommen.
+- **Ergebnis:** A empfiehlt Format 6 ohne Migration aus 5, Port-Protokoll 3 bei unverändertem S-1-Layout 2, Bedienzeit statt throughput, räumliche Stationsphasen mit FIFO/Reservierungen und ehrliche Diagnose/Lektion. B beschränkt sich auf A1-Vorabkorrektur bei unverändertem Format/Protokoll und lässt Abschluss/Restbefunde offen. 3.2 IN ARBEIT, Personen VORLÄUFIG, Blocker #002 aktiv; Entwurfsfrist erfüllt.
+- **Prüfung:** neue Astra-Instanz (`gpt-6-astra`, hohe Denktiefe) ohne Gesprächsverlauf, nur lesend; A empfohlen und nach fünf übernommenen Präzisierungen als Freigabevorlage bewertet. Keine eigenen Tests. Neue lokale Lastbudgets und Szenarioparameter sind Vorschläge, keine Messwerte; Detailreproduktion vor Ausführung festhalten. Hauptklasse/Kontextgröße unbestimmbar laut Systemkontext; eine unabhängige Delegation, keine gemeinsame Dateibearbeitung.
+- **Nachweise/Konsistenz:** Dokumentations-Hooks, Linkziele und Budgets geprüft. Erster Dokumentlint fand eine fehlende Leerzeile vor Liste (MD032), gezielt korrigiert, Wiederholung grün; kein Hook umgangen. README, Fahrplan, Blocker, Anforderungen/Minimalumfang, Reifegrade und ADR-Register/Quote unverändert 3/10 bzw. 20/53 abgeglichen. Ablaufregister ohne neue fällige Maßnahme, Budgetautomatisierung weiter Q.10-N1, Quick Start unverändert. Kein Anwendungstest oder Produktabschluss durch diese Entwurfssitzung behauptet.
+- **Commit/Offenes:** gestagten Inhalt vor Commit prüfen; Commit, Push und PR-CI für die Vorlage folgen. Nächster Schritt ist ausdrückliche Entscheidung A/B; bei A reaktiven ADR und neue Reflexion vor Code anlegen, dann Checkpoints bis unabhängiger Abnahme/CI. Nummer 054 nur als derzeit nächste freie Nummer benannt, nicht reserviert oder beschlossen; hypothetische Quote nicht in den Bestand übernommen.
+
+### 2026-11-06 (Europe/Berlin) – [SESSIONSTART] – 3.2-Nachbesserungsentwurf
+
+- **Stand-Prüfung:** `72fbf71`, Branch `docs/3-2-abschlussabgleich`, sauber und Remote identisch; Remote-main `15bf6d9`, keine offenen PRs einschließlich Entwürfen. Eigener Prüfabschlusscommit wird auf den neuen Entwurfsbranch übernommen; keine Produktkorrektur vorhanden oder ungeprüfte Remote-Teile.
+- **Auftrag/Pflichtlektüre:** konkreten Entwurf für A1–A6 mit Daten-/Vertragswirkung, Abhängigkeiten, Risiken und Abnahme ausarbeiten; keine Umsetzung vor ausdrücklicher Freigabe. Kontext vollständig, letzter Abschluss, Fahrplanstand/Phase/offene Schritte und 3.2/3.11, Architektur 1/2/9, Decisions A/C, aktive Blocker und Requirements-Übersicht gelesen; Abschlussbericht vertieft.
+- **Nachweise/Modell:** Entwurfsprüfung gegen vorhandene Typen, Serialisierung, Modulgrenzen und Codepfade; keine Produkt-Testabnahme behaupten. Dokumentlint/Linkziele/Budgets und unabhängige nur lesende Astra-Bewertung vor Vorlage. Hauptagent Codex laut Systemkontext, genaue Klasse/Kontextgröße unbestimmbar; kein neuer ADR als beschlossen behandeln.
 
 ### 2026-11-06 (Europe/Berlin) – [SESSIONENDE] – 3.2-Prüfbericht gemergt
 
