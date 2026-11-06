@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-11-05 (ADR-053: Portvalidierung Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** 3.2-Abschlussabgleich durchgeführt: hoher A1 und mittlere A2–A6 sperren Abschluss/Beförderung; Blocker #002. Keine Produktkorrektur in dieser Prüfsitzung.
+- **Aktiver Schritt:** keiner; 3.2-Abschlussabgleich auf `18176a6` durchgeführt und mit PR #52 dokumentiert: hoher A1 und mittlere A2–A6 sperren Abschluss/Beförderung, Blocker #002. Keine Produktkorrektur.
 - **Nächster Schritt:** gezielten 3.2-Nachbesserungsentwurf bis 2026-11-12 vorlegen; räumliche Stationsfolge, FIFO/Vorstau, Warteflächen, Diagnose und Lektion. 3.11 wartet. Grafik-Abnahme 3.1b-N1 bleibt offen.
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-044 bis ADR-053; Reflexion zu ADR-051 vor Code durchgeführt.
 
