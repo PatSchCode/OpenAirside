@@ -96,12 +96,50 @@ fn heading(a: CellPos, b: CellPos) -> u8 {
         .map_or(UNREACHABLE, |i| i as u8)
 }
 pub(super) fn can_step(build: &Build, a: CellPos, b: CellPos) -> bool {
-    let (Some(a), Some(b)) = (build.grid().cell(a), build.grid().cell(b)) else {
+    let (Some(from), Some(to)) = (build.grid().cell(a), build.grid().cell(b)) else {
         return false;
     };
-    AccessProfile::Passenger
-        .rules()
-        .step_allowed(a.flags, a.zone, b.flags, b.zone)
+    let rules = AccessProfile::Passenger.rules();
+    let dx = a.x.abs_diff(b.x);
+    let dy = a.y.abs_diff(b.y);
+    if a.floor == b.floor {
+        if dx > 1 || dy > 1 {
+            return false;
+        }
+        // Same corner rule as FieldSet, but against today's grid, not its old snapshot.
+        if dx != 0
+            && dy != 0
+            && ![
+                CellPos {
+                    x: a.x,
+                    y: b.y,
+                    floor: a.floor,
+                },
+                CellPos {
+                    x: b.x,
+                    y: a.y,
+                    floor: a.floor,
+                },
+            ]
+            .into_iter()
+            .all(|at| {
+                build
+                    .grid()
+                    .cell(at)
+                    .is_some_and(|c| rules.walkable(c.flags))
+            })
+        {
+            return false;
+        }
+    } else if dx != 0
+        || dy != 0
+        || a.floor.abs_diff(b.floor) != 1
+        || from.flags & crate::build::grid::STAIRS == 0
+        || to.flags & crate::build::grid::STAIRS == 0
+    {
+        return false;
+    }
+    rules.step_allowed(from.flags, from.zone, to.flags, to.zone)
 }
 fn route(group: u8) -> &'static [TerminalStationKind] {
     use TerminalStationKind::*;

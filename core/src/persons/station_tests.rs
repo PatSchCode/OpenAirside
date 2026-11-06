@@ -358,6 +358,134 @@ fn an_approacher_at_a_cell_centre_uses_the_new_route_after_a_build() {
     assert!(moved.progress > 0.0);
 }
 
+#[test]
+fn a_new_diagonal_corner_block_holds_approach_before_field_adoption() {
+    use crate::command::{Command, DebugAction};
+    for (progress, corner_x) in [(0.0, true), (0.5, true), (0.0, false), (0.5, false)] {
+        let mut cfg = config(2);
+        cfg.adoption = AdoptionMode::FixedTick { delay: 100 };
+        let world = World::small_terminal(cfg.map, 2, 17).unwrap();
+        let mut sim = Simulation::with_world(cfg, world).unwrap();
+        if progress != 0.0 {
+            let mut snapshot = sim.save_snapshot();
+            snapshot.world.persons[0].progress = progress;
+            let bytes = snapshot.encode(&request(), "", "0.0.0").unwrap();
+            sim.load_game(decode(&bytes, &Limits { map_edges: &[64] }).unwrap())
+                .unwrap();
+        }
+        let session = sim.session();
+        sim.submit(session, 1, Command::SetSpeed { speed: Speed::X1 });
+        let before = sim.world().persons().saved()[0];
+        assert!(matches!(before.heading, 1 | 3 | 5 | 7));
+        let at = sim.world().persons().position(0).unwrap();
+        let (dx, dy) = DIRS[usize::from(before.heading)];
+        let x = if corner_x {
+            at.x.checked_add_signed(dx as i16).unwrap()
+        } else {
+            at.x
+        };
+        let y = if corner_x {
+            at.y
+        } else {
+            at.y.checked_add_signed(dy as i16).unwrap()
+        };
+        let area = crate::geometry::CellRect {
+            floor: at.floor,
+            x0: x,
+            y0: y,
+            x1: x + 1,
+            y1: y + 1,
+        };
+        sim.submit(
+            session,
+            2,
+            Command::Debug {
+                action: DebugAction::SetWalls { area, wall: true },
+            },
+        );
+        sim.step();
+        let after = sim.world().persons().saved()[0];
+        assert_eq!(
+            (before.x, before.y, before.progress),
+            (after.x, after.y, after.progress)
+        );
+        assert!(
+            sim.world()
+                .persons()
+                .station_points(sim.world().build())
+                .iter()
+                .any(|s| s.blocked)
+        );
+        sim.submit(
+            session,
+            3,
+            Command::Debug {
+                action: DebugAction::SetWalls { area, wall: false },
+            },
+        );
+        for _ in 0..4000 {
+            sim.step();
+        }
+        assert!(
+            sim.world()
+                .persons()
+                .saved()
+                .iter()
+                .all(|p| p.state == PASSENGER_COMPLETE)
+        );
+    }
+}
+
+#[test]
+fn approach_checks_both_current_stair_ends_while_an_old_field_remains() {
+    use crate::build::grid::{Cell, STAIRS, Zone};
+    for floor in [0, 1] {
+        let mut world = World::small_terminal(config(1).map, 0, 17).unwrap();
+        let a = CellPos {
+            x: 30,
+            y: 30,
+            floor: 1,
+        };
+        let b = CellPos { floor: 0, ..a };
+        let mut stairs = Cell::floor(Zone::Landside);
+        stairs.flags |= STAIRS;
+        for at in [a, b] {
+            world.build_mut().grid_mut().set(at, stairs).unwrap();
+        }
+        let fields = Fields::compute(&crate::wayfinding::Wayfinding::input(world.build()), 0);
+        let target = world.build().stations()[0].target;
+        assert_eq!(fields.main().step_target(target, a, DOWN), Some(b));
+        let mut p = passenger(target, Phase::Approach, 0, a);
+        p.heading = DOWN;
+        p.progress = 0.5;
+        world
+            .build_mut()
+            .grid_mut()
+            .set(CellPos { floor, ..a }, Cell::floor(Zone::Landside))
+            .unwrap();
+        let held = step_person(
+            p,
+            fields.main(),
+            world.build().targets().len(),
+            world.build(),
+        );
+        assert_eq!(held, p);
+        assert!(station::points(&[held], world.build(), &[])[0].blocked);
+        world
+            .build_mut()
+            .grid_mut()
+            .set(CellPos { floor, ..a }, stairs)
+            .unwrap();
+        let moved = step_person(
+            held,
+            fields.main(),
+            world.build().targets().len(),
+            world.build(),
+        );
+        assert!((moved.progress - 0.6).abs() < 0.0001);
+    }
+}
+
 fn phase_key(p: Phase) -> u8 {
     match p {
         Phase::Approach => 0,
