@@ -8,7 +8,7 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-11-06 (ADR-054: Nachbesserung A, C1/C2 in Umsetzung)
+- **Stand vom:** 2026-11-06 (ADR-054 umgesetzt; Linux-Pixelabnahme nach drei Ansätzen blockiert)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
 - **Aktiver Schritt:** 3.2 `[BLOCKIERT]`, [Blocker #002](blockers.md): Linux-Pixelnachweis nach drei Ansätzen rot. A/ADR-054 umgesetzt und lokal geprüft; keine Beförderung oder Erledigung.
