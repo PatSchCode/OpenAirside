@@ -39,7 +39,7 @@ export const HELP = [
   "build <pack:entry> <x> <y> [floor] – build command with a content id (S-2, S-4)",
   "walls <floor> <x0> <y0> <x1> <y1> on|off",
   "scenario hall|small|reference|furnished [persons] – small: terminal lesson",
-  "throughput <target> <rate> – change a terminal station service rate",
+  "serviceTicks <target> <ticks> – duration of future station services (1–65535 ticks)",
   "newgame [1536|2048] – a new game with an empty world on a square map (default 1536)",
   "details on|off – draw objects also in the simplified overview",
   "table [rows 1–1000] – persons of the newest frame, sorted by y and x (S-7)",
@@ -154,17 +154,17 @@ export function parseConsoleLine(line: string): ConsoleResult {
       }
       return command({ kind: "debug", action: { kind: "loadScenario", scenario, persons } });
     }
-    case "throughput": {
+    case "serviceticks": {
       const target = integer(args[0]);
-      const throughput = integer(args[1]);
+      const serviceTicks = integer(args[1]);
       return target !== undefined &&
         target >= 0 &&
         target <= 255 &&
-        throughput !== undefined &&
-        throughput > 0 &&
-        throughput <= 65_535
-        ? command({ kind: "setStationThroughput", target, throughput })
-        : error("throughput <target 0–255> <rate 1–65535>");
+        serviceTicks !== undefined &&
+        serviceTicks > 0 &&
+        serviceTicks <= 65_535
+        ? command({ kind: "setStationServiceTicks", target, serviceTicks })
+        : error("serviceTicks <target 0–255> <ticks 1–65535>");
     }
     case "table": {
       const limit = args[0] === undefined ? 5 : integer(args[0]);

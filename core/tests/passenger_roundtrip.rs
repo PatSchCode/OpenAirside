@@ -2,7 +2,6 @@
 use openairside_core::adoption::AdoptionMode;
 use openairside_core::command::Command;
 use openairside_core::geometry::MapSize;
-use openairside_core::persons::{GROUP_DEPARTING, PASSENGER_TRAVELLING};
 use openairside_core::savegame::{Limits, SaveKind, SaveRequest, decode};
 use openairside_core::simulation::{Simulation, SimulationConfig};
 use openairside_core::time::Speed;
@@ -45,43 +44,30 @@ fn q10n3_full_save_load_continuation_keeps_hash() {
         1,
         Command::SetSpeed { speed: Speed::X1 },
     );
-    let security_target = original
+    let checkin_target = original
         .world()
         .build()
         .stations()
         .iter()
-        .find(|station| {
-            station.kind == openairside_core::build::target::TerminalStationKind::Security
-        })
+        .find(|s| s.kind == openairside_core::build::target::TerminalStationKind::CheckIn)
         .unwrap()
         .target;
     let mut checkpoint = false;
     for _ in 0..4000 {
         original.step();
-        original.world().persons().visit(|person| {
-            checkpoint |= person.group == GROUP_DEPARTING
-                && person.state == PASSENGER_TRAVELLING
-                && original.world().persons().queued_for(security_target) == 0;
-        });
-        // Check-in must already have served a departure before taking the snapshot.
-        let checkin_target = original
+        checkpoint = original
             .world()
-            .build()
-            .stations()
+            .persons()
+            .station_points(original.world().build())
             .iter()
-            .find(|station| {
-                station.kind == openairside_core::build::target::TerminalStationKind::CheckIn
-            })
-            .unwrap()
-            .target;
-        checkpoint &= original.world().persons().served_last_tick(checkin_target) > 0;
+            .any(|s| s.target == checkin_target && s.leaving == 1 && s.served == 1);
         if checkpoint {
             break;
         }
     }
     assert!(
         checkpoint,
-        "must reach the empty queue after Check-in service"
+        "must capture departure from the real Check-in service cell"
     );
     let request = SaveRequest {
         name: "Q10N3 probe".into(),

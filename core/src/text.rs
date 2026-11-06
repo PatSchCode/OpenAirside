@@ -39,7 +39,7 @@ pub fn core_text_keys() -> Vec<String> {
         crate::command::REJECT_TEXT_PREFIX,
         crate::command::code::ALL,
     );
-    add("notice", &[crate::simulation::TICK_LIMIT]);
+    add("notice", &[crate::simulation::TICK_LIMIT, "invalidState"]);
     add(crate::query::ERROR_TEXT_PREFIX, crate::query::code::ALL);
     add(
         crate::datapack::ERROR_TEXT_PREFIX,

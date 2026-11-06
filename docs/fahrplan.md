@@ -8,12 +8,12 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-11-05 (ADR-053: Portvalidierung Option A nachgewiesen)
+- **Stand vom:** 2026-11-06 (ADR-054 umgesetzt; Linux-Pixelabnahme nach drei Ansätzen blockiert)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** 3.2-Abschlussabgleich durchgeführt: hoher A1 und mittlere A2–A6 sperren Abschluss/Beförderung; Blocker #002. Keine Produktkorrektur in dieser Prüfsitzung.
-- **Nächster Schritt:** gezielten 3.2-Nachbesserungsentwurf bis 2026-11-12 vorlegen; räumliche Stationsfolge, FIFO/Vorstau, Warteflächen, Diagnose und Lektion. 3.11 wartet. Grafik-Abnahme 3.1b-N1 bleibt offen.
-- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-044 bis ADR-053; Reflexion zu ADR-051 vor Code durchgeführt.
+- **Aktiver Schritt:** 3.2 `[BLOCKIERT]`, [Blocker #002](blockers.md): Linux-Pixelnachweis nach drei Ansätzen rot. A/ADR-054 umgesetzt und lokal geprüft; keine Beförderung oder Erledigung.
+- **Nächster Schritt:** [Begrenzte Canvas-Diagnose](research/3.2-linux-canvas-diagnose.md) abgeschlossen; Freigabe für Option A (Software-WebGL2 im Linux-E2E und klarer Startfehler ohne WebGL2) einholen. Keine CI-/Renderer-Umstellung ohne Entscheidung. Linux-Nachweis sperrt 3.2/Merge, 3.11 wartet; Grafik-Abnahme 3.1b-N1 offen.
+- **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 4 / 10 über ADR-045 bis ADR-054; neue Ursachenreflexion zu ADR-054 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -253,7 +253,10 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** `[IN ARBEIT]` – Abschlussabgleich 2026-11-05 auf `18176a6`: hoher Stationswechselbefund A1 sowie mittlere A2–A6 (FIFO vor Zulassung, Warteflächen, Diagnose und Lektionsweg/Nachweise), [Blocker #002](blockers.md). Keine Beförderung; [Bericht/Gegenproben](research/3.2-abschlussabgleich.md). PR #47 auf `b16167c` und N2/N3/N5 haben grüne CI in ihrem jeweiligen Umfang, keine Gesamtabnahme.
+- **Status:** `[BLOCKIERT]` – 2026-11-06, [Blocker #002](blockers.md): Linux-Pixelabnahme nach drei gezielten Ansätzen rot (`b0dcd4d`); Stopp, keine Erledigung/Beförderung und kein Merge. Historische A1–A6 aus dem [Abschlussabgleich](research/3.2-abschlussabgleich.md) nachgebessert; neue Plattform-Nachweislücke bleibt.
+- **Nachbesserung:** [Paket A vom 2026-11-06](research/3.2-nachbesserungsentwurf.md) ausdrücklich freigegeben, [ADR-054](decisions/ADR-054.md). [Ursachen/Prävention](research/3.2-ursachenanalyse.md) vor Code geprüft. C1–C5 mit ihren Testsignalen und Pflichtfällen gelten vollständig; Format 6/Protokoll 3, räumliche Phasen, Bedienzeit und sichtbare Lektion. Keine neue Schritt-ID oder Geduld-/Feinweg-Erweiterung.
+- **Begrenzte Diagnose 2026-11-06:** Canvaspfad lokal rot mit Renderer-Ausnahme bereits vor Pixelinjektion; derselbe WebGL-Nutzerweg grün. Testsignal vor Lauf erfasst; keine Linux-Hardware-/Leistungsabnahme daraus. [Befund und unabhängig bewertete Optionen](research/3.2-linux-canvas-diagnose.md); keine CI-Schleife oder Produktkorrektur, BLOCKIERT bis Entscheidung und echten Linux-Nachweisen.
+- **Zwischenstand/Nachweismatrix:** [C1–C5-Nachweise](research/3.2-nachbesserung-nachweise.md): Format 6/Port 3, räumlicher Fluss/FIFO/Bedienzeit, lokale 302 Rust-/537 TS-Tests, vier Electron-E2Es, Kausalvergleich/Last und frischer macOS-`npm start` grün. C5-1 aktuelle Diagonalecken/Treppen in `9c34292` korrigiert/nachgeprüft, C5-2 Matrix synchronisiert. Linux zeigt in der Pixelgegenprobe trotz Zoom22 keine Änderung an den Messpunkten; Ursache offen, drei Ansätze/Artefakte im Blocker. PR #53 bleibt Entwurf.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
@@ -381,6 +384,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Betroffene Module:** Flugbetrieb, Wirtschaft & Management, Oberfläche, Inhalte & Mods, Brücke, Spielfeld
 - **Reifegrad-Wirkung:** Module Flugbetrieb und Oberfläche → `[BELASTBAR]` im umgesetzten Umfang
 - **Artefakte:** Kern-Code, Schemas, Flugplaner, Tests, ADR zu den Lackierungen, Grundgrafiken und Airline-Logos
+- **UI-Nachlese aus 3.2 (niedrig):** Terra-Sichtprüfung 2026-11-06 am frischen Lektionsabschluss: bestehende Diagnose links oben überdeckt eine Konsolenzeile teilweise. Debugpanel-Layout bei der Oberflächenarbeit prüfen; Lektionspanel vollständig lesbar. Keine Abschlusssperre für 3.2.
 
 ### Phase 4: Härtung des vertikalen Schnitts – Typ: STABILISIERUNG
 
@@ -851,6 +855,13 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Maßnahme im freigegebenen Paket:** vollständige Zustandsmatrix mit positiven Kontrollen, atomarer Ablehnung und mehrstufiger Fortsetzung; Überlauf und Last nachweisen. Keine neue CI oder Methodik.
 - **5.4-Landeplatz:** deterministisch gespeicherte Bedürfnisse/Geduld, nachvollziehbare Wartezeitwirkung, sichtbare Erschöpfungsreaktion mit Diagnose, sichere Route-/Queue-Übergänge, identische Save/Load-Fortsetzung; Tests für Schwellen, Reaktion und Erholung. Konkrete Werte und Reaktionen vor Umsetzung entscheiden. FR-016 bleibt offen.
 - **Freigabe:** Option A durch Projektinhaber am 2026-11-05; N2 getrennt.
+
+### Ergänzung Reaktiv-Quote (2026-11-06, ADR-054; Reflexion vor Code)
+
+- **Befund/Freigabe:** A freigegeben; 4/10 reaktiv (045–054), gesamt 21/54. Neues Kern-/Datenmodellmuster verlangt eigene Reflexion, nicht nur Verweis auf ADR-051.
+- **Ursachen/Folgen:** [vollständige historische Analyse](research/3.2-ursachenanalyse.md), unabhängig nur lesend gegengeprüft. Unvollständiger Zielwechsel, Ticket als Platznachweis und verkürzte Wirkungsabnahme; falsche Reiseabschlüsse und unsichtbarer Vorstau sind belegt.
+- **Maßnahmen:** C1–C5 des freigegebenen Pakets mit positions-/zeitbezogenen Übergangsinvarianten, Vorstau-FIFO, tatsächlicher Reservierung, Paarvergleich und sichtbarem DE/EN-Nutzerweg. Jede Zusage benötigt ausführbaren Nachweis; kein stiller Descope im Implementierungsdiff. N3 bleibt nur im damaligen lokalen Umfang erledigt.
+- **Grenzen:** keine neue CI/Methodik, keine vorweggenommene Messung oder Beförderung. Produktabnahme bleibt offen, 3.11 abhängig.
 
 <!-- ANCHOR:parallelisierbarkeit -->
 ## Parallelisierbarkeit

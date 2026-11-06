@@ -120,17 +120,20 @@ impl Build {
     }
 
     /// Changes the service rate of an existing terminal station.
-    pub fn set_station_throughput(
+    pub fn set_station_service_ticks(
         &mut self,
         target: u8,
-        throughput: u16,
+        service_ticks: u16,
     ) -> Result<(), TargetError> {
+        if service_ticks == 0 {
+            return Err(TargetError::NoCells);
+        }
         let station = self
             .stations
             .iter_mut()
             .find(|station| station.target == target)
             .ok_or(TargetError::NoCells)?;
-        station.throughput = throughput;
+        station.service_ticks = service_ticks;
         Ok(())
     }
 
@@ -155,19 +158,33 @@ impl Build {
     pub fn add_station(
         &mut self,
         kind: TerminalStationKind,
-        cells: Vec<CellPos>,
+        entry: CellPos,
         queue_cells: Vec<CellPos>,
-        capacity: u16,
-        throughput: u16,
+        service_cell: CellPos,
+        exit_cell: CellPos,
+        service_ticks: u16,
     ) -> Result<u8, TargetError> {
-        let target = self.add_target(Target::passengers(cells))?;
-        self.stations.push(TerminalStation {
+        if self.targets.len() >= MAX_TARGETS {
+            return Err(TargetError::TooMany);
+        }
+        let target = self.targets.len() as u8;
+        let station = TerminalStation {
             kind,
             target,
+            capacity: u16::try_from(queue_cells.len()).map_err(|_| TargetError::NoCells)?,
             queue_cells,
-            capacity,
-            throughput,
-        });
+            service_cell,
+            exit_cell,
+            service_ticks,
+        };
+        let mut targets = self.targets.clone();
+        targets.push(Target::passengers(vec![entry]));
+        let mut stations = self.stations.clone();
+        stations.push(station.clone());
+        target::validate_stations(&stations, &targets, self.map())
+            .map_err(|_| TargetError::NoCells)?;
+        self.add_target(Target::passengers(vec![entry]))?;
+        self.stations.push(station);
         Ok(target)
     }
 
@@ -241,8 +258,13 @@ impl Build {
         for station in &self.stations {
             hasher.bytes(&[station.kind as u8, station.target]);
             hasher.u32(u32::from(station.capacity));
-            hasher.u32(u32::from(station.throughput));
-            for cell in &station.queue_cells {
+            hasher.u32(u32::from(station.service_ticks));
+            hasher.u32(station.queue_cells.len() as u32);
+            for cell in station
+                .queue_cells
+                .iter()
+                .chain([&station.service_cell, &station.exit_cell])
+            {
                 hasher.u32(u32::from(cell.x));
                 hasher.u32(u32::from(cell.y));
                 hasher.bytes(&cell.floor.to_le_bytes());
@@ -321,26 +343,7 @@ impl Build {
         {
             return Err(invalid("targetCells"));
         }
-        if saved.stations.iter().any(|s| {
-            usize::from(s.target) >= targets.len()
-                || s.capacity == 0
-                || s.throughput == 0
-                || !s.queue_cells.iter().all(|&cell| on_map(cell))
-        }) {
-            return Err(invalid("stations"));
-        }
-        let mut station_targets = std::collections::HashSet::new();
-        let mut queue_cells = std::collections::HashSet::new();
-        for station in &saved.stations {
-            if !station_targets.insert(station.target) {
-                return Err(invalid("stationTargets"));
-            }
-            for cell in &station.queue_cells {
-                if !queue_cells.insert((cell.x, cell.y, cell.floor)) {
-                    return Err(invalid("stationQueueCells"));
-                }
-            }
-        }
+        target::validate_stations(&saved.stations, &targets, map).map_err(invalid)?;
         if saved.networks.len() != NetworkKind::ALL.len() {
             return Err(invalid("networks"));
         }
@@ -716,31 +719,29 @@ mod tests {
         build
             .add_station(
                 TerminalStationKind::CheckIn,
-                vec![pos(4, 4)],
+                pos(2, 4),
                 vec![pos(3, 4)],
-                7,
+                pos(4, 4),
+                pos(5, 4),
                 1,
             )
             .unwrap();
         build
             .add_station(
                 TerminalStationKind::Security,
-                vec![pos(8, 4)],
+                pos(6, 4),
                 vec![pos(7, 4)],
-                1,
+                pos(8, 4),
+                pos(9, 4),
                 1,
             )
             .unwrap();
         let mut pool = BlockPool::default();
         let saved = build.snapshot().to_saved(&mut pool);
         let blocks = Blocks::restore(pool.into_blocks()).unwrap();
-        // Capacity need not equal the number of queue cells outside the scenario.
+        // Format 6 enforces capacity and geometry for every station.
         assert!(Build::restore(saved.clone(), map, &blocks).is_ok());
-        for (mutation, check) in [
-            (0, "stationTargets"),
-            (1, "stationQueueCells"),
-            (2, "stationQueueCells"),
-        ] {
+        for (mutation, check) in [(0, "stationTargets"), (1, "stationCells"), (2, "stations")] {
             let mut bad = saved.clone();
             match mutation {
                 0 => bad.stations[1].target = bad.stations[0].target,
@@ -752,6 +753,61 @@ mod tests {
             assert_eq!(
                 error.params.get("check"),
                 Some(&crate::text::ParamValue::Text(check.into()))
+            );
+        }
+    }
+
+    #[test]
+    fn checksum_valid_station_geometry_and_missing_routes_are_rejected_atomically() {
+        use crate::savegame::{Limits, SaveKind, SaveRequest, decode};
+        use crate::simulation::{Simulation, SimulationConfig};
+        let config = SimulationConfig {
+            map: MapSize::new(64, 64).unwrap(),
+            threads: 1,
+            background_threads: 1,
+            adoption: crate::adoption::AdoptionMode::FixedTick { delay: 1 },
+            persons: 0,
+            seed: 17,
+            start_tick: 0,
+        };
+        let source = Simulation::with_world(
+            config,
+            crate::world::World::small_terminal(config.map, 2, 17).unwrap(),
+        )
+        .unwrap();
+        let mut target =
+            Simulation::with_world(config, crate::world::World::new(config.map)).unwrap();
+        let req = SaveRequest {
+            name: "geometry".into(),
+            kind: SaveKind::Manual,
+            saved_at: "2026-11-06T14:00:00Z".into(),
+            preview: vec![],
+        };
+        for mutation in 0..8 {
+            let mut snapshot = source.save_snapshot();
+            let b = &mut snapshot.world.build;
+            match mutation {
+                0 => b.stations[0].capacity += 1,
+                1 => b.stations[0].service_cell = b.targets[0].cells[0],
+                2 => b.stations[0].queue_cells.reverse(),
+                3 => b.stations.retain(|s| s.kind != TerminalStationKind::Gate),
+                4 => b.stations[0].exit_cell.x = 64,
+                5 => b.stations[0].service_ticks = 0,
+                6 => b.stations[0].queue_cells.clear(),
+                _ => b.targets[0].cells.push(pos(1, 1)),
+            }
+            let bytes = snapshot.encode(&req, "", "0.0.0").unwrap();
+            let before = (target.session(), target.tick(), target.state_hash());
+            let result =
+                decode(&bytes, &Limits { map_edges: &[64] }).and_then(|g| target.load_game(g));
+            assert_eq!(
+                result.unwrap_err().code,
+                "invalidState",
+                "mutation {mutation}"
+            );
+            assert_eq!(
+                before,
+                (target.session(), target.tick(), target.state_hash())
             );
         }
     }
@@ -789,9 +845,10 @@ mod tests {
         assert_eq!(
             build.add_station(
                 TerminalStationKind::CheckIn,
-                vec![pos(10, 10)],
+                pos(7, 10),
                 vec![pos(9, 10), pos(8, 10)],
-                2,
+                pos(10, 10),
+                pos(11, 10),
                 4,
             ),
             Ok(0)
@@ -804,21 +861,22 @@ mod tests {
     }
 
     #[test]
-    fn station_throughput_changes_only_for_existing_stations() {
+    fn station_service_ticks_changes_only_for_existing_stations() {
         let mut build = Build::new(MapSize::new(64, 64).unwrap());
         let target = build
             .add_station(
                 TerminalStationKind::Security,
-                vec![pos(10, 10)],
+                pos(8, 10),
                 vec![pos(9, 10)],
-                1,
+                pos(10, 10),
+                pos(11, 10),
                 1,
             )
             .unwrap();
-        assert_eq!(build.set_station_throughput(target, 3), Ok(()));
-        assert_eq!(build.stations()[0].throughput, 3);
+        assert_eq!(build.set_station_service_ticks(target, 3), Ok(()));
+        assert_eq!(build.stations()[0].service_ticks, 3);
         assert_eq!(
-            build.set_station_throughput(99, 3),
+            build.set_station_service_ticks(99, 3),
             Err(TargetError::NoCells)
         );
     }

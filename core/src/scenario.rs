@@ -623,7 +623,9 @@ mod tests {
         assert_eq!(world.build().stations().len(), 4);
         assert_eq!(world.build().targets().len(), 4);
         world.rebuild_fields_now(&pool);
-        for tick in 0..600 {
+        // ADR-054 replaces instantaneous service. Use the approved hour
+        // horizon, also checked independently with the larger 80-person case.
+        for tick in 0..crate::time::TICKS_PER_GAME_HOUR {
             world.step(&pool, &pool, tick, true);
         }
         let mut departing = (0, 0);

@@ -654,7 +654,8 @@ fn load_scenario(
     // Checked by the command (`fits_reference_terminal`); an impossible
     // scenario keeps the old session.
     if let Some(world) = scenario_world(scenario, config.map, persons, config.seed) {
-        sim.restart_with_world(world);
+        // On rejection the old session stays and restart publishes invalidState.
+        let _ = sim.restart_with_world(world);
     }
     publish(sim, back, shared, Measured::default());
 }

@@ -575,7 +575,7 @@ mod tests {
         };
         assert_eq!(stations.len(), 4);
         assert_eq!(
-            stations[1].throughput, 1,
+            stations[1].service_ticks, 30,
             "security is the initial bottleneck"
         );
         assert!(

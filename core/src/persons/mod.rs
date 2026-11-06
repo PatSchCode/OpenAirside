@@ -10,10 +10,12 @@
 //! delivery points) and "Wegfindung" (flow fields). Construction workers
 //! (`workers`, ADR-045) are persons of their own kind.
 
+mod station;
 pub mod workers;
+use station::{Phase, StationIndex};
 
 #[cfg(test)]
-mod queue_tests;
+mod station_tests;
 
 use rayon::ThreadPool;
 use rayon::prelude::*;
@@ -89,6 +91,7 @@ pub(crate) struct Person {
     /// Ticks spent in the current station queue; reset when service moves
     /// the passenger to the next station.
     wait_ticks: u32,
+    phase: Phase,
 }
 
 /// What a loaded person is checked against.
@@ -124,6 +127,7 @@ impl Kind for Person {
         hasher.bytes(&[self.group, self.state]);
         hasher.u32(self.queue_order);
         hasher.u32(self.wait_ticks);
+        self.phase.hash_into(hasher);
     }
 }
 
@@ -183,6 +187,7 @@ pub struct Persons {
     workers: Pool<Worker>,
     per_floor: [u32; FLOORS],
     station_telemetry: Vec<StationTelemetry>,
+    station_index: StationIndex,
 }
 
 impl Persons {
@@ -204,43 +209,47 @@ impl Persons {
         self.workers.len()
     }
 
-    /// Number of passengers currently waiting for `target`. Terminal overlays
-    /// use this aggregate instead of inspecting individual persons (ADR-048).
+    /// Complete per-station telemetry, aggregated once over the person pool.
     #[must_use]
-    pub fn queued_for(&self, target: u8) -> u32 {
-        u32::try_from(
-            self.pool
-                .as_slice()
-                .iter()
-                .filter(|p| {
-                    p.target == target && p.state == PASSENGER_WAITING && p.queue_order != 0
-                })
-                .count(),
-        )
-        .unwrap_or(u32::MAX)
+    pub fn station_points(&self, build: &Build) -> Vec<crate::frame::TerminalStationPoint> {
+        station::points(self.pool.as_slice(), build, &self.station_telemetry)
     }
 
-    /// Passengers served by a station in the last simulation tick.
+    /// Waiting in the physical line, including travel to service; excludes backlog.
+    #[must_use]
+    pub fn queued_for(&self, target: u8) -> u32 {
+        self.pool
+            .as_slice()
+            .iter()
+            .filter(|p| {
+                p.target == target && matches!(p.phase, Phase::Queue { .. } | Phase::ToService)
+            })
+            .count() as u32
+    }
+
+    /// Completions of service during the last simulation tick.
     #[must_use]
     pub fn served_last_tick(&self, target: u8) -> u16 {
         self.station_telemetry
             .iter()
-            .find(|telemetry| telemetry.target == target)
-            .map_or(0, |telemetry| telemetry.served)
+            .find(|s| s.target == target)
+            .map_or(0, |s| s.served)
     }
 
-    /// Sum of the current waiting times for a station, in simulation ticks.
+    /// Sum over the entire waiting population, including entry backlog.
     #[must_use]
     pub fn waiting_ticks_for(&self, target: u8) -> u64 {
         self.pool
             .as_slice()
             .iter()
-            .filter(|person| {
-                person.target == target
-                    && person.state == PASSENGER_WAITING
-                    && person.queue_order != 0
+            .filter(|p| {
+                p.target == target
+                    && matches!(
+                        p.phase,
+                        Phase::Backlog | Phase::Queue { .. } | Phase::ToService
+                    )
             })
-            .map(|person| u64::from(person.wait_ticks))
+            .map(|p| u64::from(p.wait_ticks))
             .sum()
     }
 
@@ -326,6 +335,7 @@ impl Persons {
                 state: 0,
                 queue_order: 0,
                 wait_ticks: 0,
+                phase: Phase::None,
             });
         }
         self.next.clone_from(self.pool.items_mut());
@@ -341,8 +351,15 @@ impl Persons {
         group: u8,
         first_target: u8,
         seed: u64,
-    ) {
-        debug_assert!(matches!(group, GROUP_DEPARTING | GROUP_ARRIVING));
+    ) -> Result<(), &'static str> {
+        let station = build
+            .stations()
+            .iter()
+            .find(|s| s.target == first_target)
+            .ok_or("personStation")?;
+        if !station::route_valid(group, station, build.stations()) {
+            return Err("personRoute");
+        }
         let mut rng = SplitMix64(seed ^ 0xa11ce);
         for &pos in cells {
             if !walkable_for_passengers(build, pos)
@@ -362,10 +379,12 @@ impl Persons {
                 state: PASSENGER_TRAVELLING,
                 queue_order: 0,
                 wait_ticks: 0,
+                phase: Phase::Approach,
             });
         }
         self.next.clone_from(self.pool.items_mut());
         self.count_per_floor_serial();
+        Ok(())
     }
 
     /// Adds up to `count` persons on random cells of the ground floor that
@@ -402,6 +421,8 @@ impl Persons {
     pub fn clear(&mut self) {
         self.pool.clear();
         self.next.clear();
+        self.station_index = StationIndex::default();
+        self.station_telemetry.clear();
         self.count_per_floor_serial();
     }
 
@@ -409,6 +430,9 @@ impl Persons {
     /// fields were computed).
     pub(crate) fn resample_headings(&mut self, fields: &FieldSet) {
         for p in self.pool.items_mut() {
+            if p.group != 0 && p.phase != Phase::Approach {
+                continue;
+            }
             p.heading = fields.dir(p.target, p.pos());
         }
     }
@@ -435,16 +459,21 @@ impl Persons {
         pool: &ThreadPool,
         events: &mut InternalEvents,
     ) {
-        let (main, targets, stations) = (fields.main(), build.targets().len(), build.stations());
+        let (main, targets) = (fields.main(), build.targets().len());
         let (persons, next) = (self.pool.items_mut(), &mut self.next);
         pool.install(|| {
             next.par_iter_mut()
                 .zip(persons.par_iter())
-                .for_each(|(out, cur)| *out = step_person(*cur, main, targets));
+                .for_each(|(out, cur)| *out = step_person(*cur, main, targets, build));
         });
         std::mem::swap(persons, next);
-        self.enqueue_waiters(stations);
-        self.serve_stations(stations);
+        station::advance(
+            self.pool.items_mut(),
+            &mut self.station_index,
+            &mut self.station_telemetry,
+            build,
+            main,
+        );
         workers::advance(self.workers.items_mut(), build, fields, events);
         let workers = u32::try_from(self.workers.len()).unwrap_or(u32::MAX);
         self.per_floor = pool.install(|| {
@@ -463,88 +492,6 @@ impl Persons {
                 .reduce(|| [0u32; FLOORS], add_counts)
         });
         self.per_floor[GROUND_INDEX] += workers;
-    }
-
-    /// Assigns an order to passengers which reached a station in the last
-    /// movement phase. Equal-tick arrivals retain their deterministic pool
-    /// order; earlier ticks always have lower order values.
-    fn enqueue_waiters(&mut self, stations: &[TerminalStation]) {
-        let mut admitted = stations
-            .iter()
-            .map(|station| (station.target, 0usize, station.queue_cells.len()))
-            .collect::<Vec<_>>();
-        let mut order = 0;
-        for person in self.pool.as_slice() {
-            order = order.max(person.queue_order);
-            if person.state == PASSENGER_WAITING
-                && person.queue_order != 0
-                && let Some((_, count, _)) = admitted
-                    .iter_mut()
-                    .find(|(target, _, _)| *target == person.target)
-            {
-                *count += 1;
-            }
-        }
-        // Reserve enough numbers for the entire pool, hence for every possible
-        // admission in this batch. No wrapping and no load-only normalization.
-        if order.checked_add(self.pool.len() as u32).is_none() {
-            let mut ranked = self
-                .pool
-                .as_slice()
-                .iter()
-                .enumerate()
-                .filter(|(_, p)| p.queue_order != 0)
-                .map(|(index, p)| (p.queue_order, index))
-                .collect::<Vec<_>>();
-            ranked.sort_unstable();
-            for (rank, &(_, index)) in ranked.iter().enumerate() {
-                self.pool.items_mut()[index].queue_order = rank as u32 + 1;
-            }
-            order = ranked.len() as u32;
-        }
-        for person in self.pool.items_mut() {
-            if person.state == PASSENGER_WAITING
-                && person.queue_order == 0
-                && let Some((_, count, limit)) = admitted
-                    .iter_mut()
-                    .find(|(target, _, _)| *target == person.target)
-                && *count < *limit
-            {
-                order += 1;
-                person.queue_order = order;
-                *count += 1;
-            }
-        }
-    }
-
-    /// Serves waiting passengers in their deterministic FIFO queue order.
-    fn serve_stations(&mut self, stations: &[TerminalStation]) {
-        self.station_telemetry.clear();
-        for station in stations {
-            let limit = usize::from(station.throughput);
-            let mut queued: Vec<usize> = self
-                .pool
-                .as_slice()
-                .iter()
-                .enumerate()
-                .filter_map(|(index, person)| {
-                    (person.target == station.target
-                        && person.state == PASSENGER_WAITING
-                        && person.queue_order != 0)
-                        .then_some(index)
-                })
-                .collect();
-            queued.sort_unstable_by_key(|&index| self.pool.as_slice()[index].queue_order);
-            let mut served = 0u16;
-            for index in queued.into_iter().take(limit) {
-                advance_passenger(&mut self.pool.items_mut()[index], stations);
-                served = served.saturating_add(1);
-            }
-            self.station_telemetry.push(StationTelemetry {
-                target: station.target,
-                served,
-            });
-        }
     }
 
     fn count_per_floor_serial(&mut self) {
@@ -583,51 +530,8 @@ impl Persons {
         Pool::<Person>::fits(count)
     }
 
-    /// Checks passenger references and cross-record queue invariants against
-    /// the already validated station configuration (ADR-051).
-    pub(crate) fn validate_stations(
-        &self,
-        stations: &[TerminalStation],
-    ) -> Result<(), &'static str> {
-        let mut orders = std::collections::HashSet::new();
-        let mut admitted = [0usize; 256];
-        let mut by_target = [None; 256];
-        for station in stations {
-            by_target[usize::from(station.target)] = Some(station);
-        }
-        for person in self.pool.as_slice() {
-            if person.group == 0 {
-                continue;
-            }
-            let station = by_target[usize::from(person.target)].ok_or("personStation")?;
-            let compatible = match person.group {
-                GROUP_DEPARTING => matches!(
-                    station.kind,
-                    TerminalStationKind::CheckIn
-                        | TerminalStationKind::Security
-                        | TerminalStationKind::Gate
-                ),
-                GROUP_ARRIVING => matches!(
-                    station.kind,
-                    TerminalStationKind::Gate | TerminalStationKind::Exit
-                ),
-                _ => false,
-            };
-            if !compatible {
-                return Err("personStation");
-            }
-            if person.queue_order != 0 && !orders.insert(person.queue_order) {
-                return Err("personQueueOrder");
-            }
-            if person.state == PASSENGER_WAITING && person.queue_order != 0 {
-                let count = &mut admitted[usize::from(person.target)];
-                *count += 1;
-                if *count > station.queue_cells.len() {
-                    return Err("personQueueCapacity");
-                }
-            }
-        }
-        Ok(())
+    pub(crate) fn validate_stations(&self, build: &Build) -> Result<(), &'static str> {
+        station::validate(self.pool.as_slice(), build)
     }
 
     /// Persons and construction workers of a loaded save game in a world
@@ -655,20 +559,6 @@ impl Persons {
             targets: targets.max(1),
         };
         let pool = Pool::restore(saved, &context)?;
-        for person in pool.as_slice() {
-            let valid = match person.group {
-                0 => person.state == 0 && person.queue_order == 0 && person.wait_ticks == 0,
-                GROUP_DEPARTING | GROUP_ARRIVING => match person.state {
-                    PASSENGER_TRAVELLING => person.queue_order == 0 && person.wait_ticks == 0,
-                    PASSENGER_WAITING | PASSENGER_COMPLETE => true,
-                    _ => false,
-                },
-                _ => false,
-            };
-            if !valid {
-                return Err("personState");
-            }
-        }
         let workers = Pool::restore(workers, &WorkerContext { map, delivery })?;
         let mut persons = Self {
             next: pool.as_slice().to_vec(),
@@ -676,6 +566,7 @@ impl Persons {
             workers,
             per_floor: [0; FLOORS],
             station_telemetry: Vec::new(),
+            station_index: StationIndex::default(),
         };
         persons.count_per_floor_serial();
         Ok(persons)
@@ -699,19 +590,23 @@ fn add_counts(mut a: [u32; FLOORS], b: [u32; FLOORS]) -> [u32; FLOORS] {
 }
 
 /// Next state of one person.
-fn step_person(mut p: Person, fields: &FieldSet, targets: usize) -> Person {
-    if p.state == PASSENGER_WAITING {
-        p.wait_ticks = p.wait_ticks.saturating_add(1);
+fn step_person(mut p: Person, fields: &FieldSet, targets: usize, build: &Build) -> Person {
+    // Completion is terminal. In particular an old walking heading must
+    // never move a passenger after its first successful completion (3.2/A1).
+    if matches!(p.group, GROUP_DEPARTING | GROUP_ARRIVING) && p.state == PASSENGER_COMPLETE {
         return p;
+    }
+    if p.group != 0 && p.phase != Phase::Approach {
+        return p;
+    }
+    // At a cell centre an adopted field may offer a new route around a
+    // build. Never rotate an unfinished edge (its physical position is retained).
+    if p.group != 0 && p.progress == 0.0 {
+        p.heading = fields.dir(p.target, p.pos());
     }
     if p.heading > DOWN {
         // Standing: arrived at the target or without a way to it.
-        if p.heading == ARRIVED
-            && matches!(p.group, GROUP_DEPARTING | GROUP_ARRIVING)
-            && p.state == PASSENGER_TRAVELLING
-        {
-            p.state = PASSENGER_WAITING;
-        } else if p.heading == ARRIVED && targets > 0 && p.group == 0 {
+        if p.heading == ARRIVED && targets > 0 && p.group == 0 {
             p.rng ^= p.rng << 13;
             p.rng ^= p.rng >> 17;
             p.rng ^= p.rng << 5;
@@ -719,6 +614,13 @@ fn step_person(mut p: Person, fields: &FieldSet, targets: usize) -> Person {
         }
         p.heading = fields.dir(p.target, p.pos());
         p.progress = 0.0;
+        return p;
+    }
+    if p.group != 0
+        && !fields
+            .step_target(p.target, p.pos(), p.heading)
+            .is_some_and(|next| station::can_step(build, p.pos(), next))
+    {
         return p;
     }
     let diagonal = matches!(p.heading, 1 | 3 | 5 | 7);
@@ -737,47 +639,6 @@ fn step_person(mut p: Person, fields: &FieldSet, targets: usize) -> Person {
         p.heading = fields.dir(p.target, p.pos());
     }
     p
-}
-
-fn advance_passenger(person: &mut Person, stations: &[TerminalStation]) {
-    let Some(current) = stations
-        .iter()
-        .find(|station| station.target == person.target)
-    else {
-        person.state = PASSENGER_COMPLETE;
-        return;
-    };
-    let next = match person.group {
-        GROUP_DEPARTING => match current.kind {
-            TerminalStationKind::CheckIn => {
-                station_of_kind(stations, TerminalStationKind::Security)
-            }
-            TerminalStationKind::Security => station_of_kind(stations, TerminalStationKind::Gate),
-            TerminalStationKind::Gate | TerminalStationKind::Exit => None,
-        },
-        GROUP_ARRIVING => match current.kind {
-            TerminalStationKind::Gate => station_of_kind(stations, TerminalStationKind::Exit),
-            TerminalStationKind::CheckIn
-            | TerminalStationKind::Security
-            | TerminalStationKind::Exit => None,
-        },
-        _ => None,
-    };
-    if let Some(station) = next {
-        person.target = station.target;
-        person.state = PASSENGER_TRAVELLING;
-        person.queue_order = 0;
-        person.wait_ticks = 0;
-    } else {
-        person.state = PASSENGER_COMPLETE;
-    }
-}
-
-fn station_of_kind(
-    stations: &[TerminalStation],
-    kind: TerminalStationKind,
-) -> Option<&TerminalStation> {
-    stations.iter().find(|station| station.kind == kind)
 }
 
 /// Small deterministic generator for reproducible start states.
@@ -799,7 +660,6 @@ const _: () = assert!(DIRS.len() == 8 && UP == 8 && DOWN == 9);
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::build::target::{TerminalStation, TerminalStationKind};
 
     fn person() -> Person {
         Person {
@@ -814,7 +674,34 @@ mod tests {
             state: 0,
             queue_order: 0,
             wait_ticks: 0,
+            phase: Phase::None,
         }
+    }
+
+    #[test]
+    fn completed_passenger_keeps_even_a_stored_moving_heading_frozen() {
+        let build = Build::new(MapSize::new(64, 64).unwrap());
+        let fields = FieldSet::empty(&build.grid().snapshot(), 0);
+        for group in [GROUP_DEPARTING, GROUP_ARRIVING] {
+            let finished = Person {
+                group,
+                state: PASSENGER_COMPLETE,
+                ..person()
+            };
+            assert_eq!(step_person(finished, &fields, 1, &build), finished);
+            let mut persons = Persons::restore(
+                vec![finished],
+                vec![],
+                MapSize::new(64, 64).unwrap(),
+                1,
+                vec![],
+            )
+            .unwrap();
+            persons.resample_headings(&fields);
+            assert_eq!(persons.saved(), vec![finished]);
+        }
+        let neutral = person();
+        assert_ne!(step_person(neutral, &fields, 1, &build), neutral);
     }
 
     #[test]
@@ -832,153 +719,6 @@ mod tests {
             ..p
         };
         assert!((standing.view().y - 4.5).abs() < 1e-6);
-    }
-
-    #[test]
-    fn routed_passengers_advance_in_their_direction_then_complete() {
-        let stations = vec![
-            TerminalStation {
-                kind: TerminalStationKind::CheckIn,
-                target: 3,
-                queue_cells: Vec::new(),
-                capacity: 1,
-                throughput: 1,
-            },
-            TerminalStation {
-                kind: TerminalStationKind::Security,
-                target: 5,
-                queue_cells: Vec::new(),
-                capacity: 1,
-                throughput: 1,
-            },
-            TerminalStation {
-                kind: TerminalStationKind::Gate,
-                target: 7,
-                queue_cells: Vec::new(),
-                capacity: 1,
-                throughput: 1,
-            },
-            TerminalStation {
-                kind: TerminalStationKind::Exit,
-                target: 9,
-                queue_cells: Vec::new(),
-                capacity: 1,
-                throughput: 1,
-            },
-        ];
-        let mut departing = Person {
-            group: GROUP_DEPARTING,
-            state: PASSENGER_TRAVELLING,
-            target: 3,
-            ..person()
-        };
-        advance_passenger(&mut departing, &stations);
-        assert_eq!(departing.target, 5);
-        advance_passenger(&mut departing, &stations);
-        assert_eq!(departing.target, 7);
-        advance_passenger(&mut departing, &stations);
-        assert_eq!(departing.state, PASSENGER_COMPLETE);
-
-        let mut arriving = Person {
-            group: GROUP_ARRIVING,
-            state: PASSENGER_TRAVELLING,
-            target: 7,
-            ..person()
-        };
-        advance_passenger(&mut arriving, &stations);
-        assert_eq!(arriving.target, 9);
-        advance_passenger(&mut arriving, &stations);
-        assert_eq!(arriving.state, PASSENGER_COMPLETE);
-    }
-
-    #[test]
-    fn station_service_is_fifo_and_limited_by_throughput() {
-        let stations = vec![
-            TerminalStation {
-                kind: TerminalStationKind::CheckIn,
-                target: 3,
-                queue_cells: Vec::new(),
-                capacity: 2,
-                throughput: 1,
-            },
-            TerminalStation {
-                kind: TerminalStationKind::Security,
-                target: 5,
-                queue_cells: Vec::new(),
-                capacity: 2,
-                throughput: 1,
-            },
-            TerminalStation {
-                kind: TerminalStationKind::Gate,
-                target: 7,
-                queue_cells: Vec::new(),
-                capacity: 2,
-                throughput: 2,
-            },
-        ];
-        let queued = Person {
-            group: GROUP_DEPARTING,
-            state: PASSENGER_WAITING,
-            target: 5,
-            queue_order: 2,
-            ..person()
-        };
-        let earlier = Person {
-            queue_order: 1,
-            ..queued
-        };
-        let mut persons = Persons {
-            pool: Pool::restore(
-                vec![queued, earlier],
-                &PersonContext {
-                    map: MapSize::new(64, 64).unwrap(),
-                    targets: 8,
-                },
-            )
-            .unwrap(),
-            ..Persons::default()
-        };
-        persons.serve_stations(&stations);
-        assert_eq!(persons.pool.as_slice()[0].target, 5);
-        assert_eq!(persons.pool.as_slice()[1].target, 7);
-        assert_eq!(persons.pool.as_slice()[1].state, PASSENGER_TRAVELLING);
-        assert_eq!(persons.queued_for(5), 1);
-    }
-
-    #[test]
-    fn queue_admission_is_limited_by_designated_queue_cells() {
-        let stations = [TerminalStation {
-            kind: TerminalStationKind::Security,
-            target: 5,
-            queue_cells: vec![CellPos {
-                x: 1,
-                y: 1,
-                floor: 0,
-            }],
-            capacity: 1,
-            throughput: 1,
-        }];
-        let waiting = Person {
-            group: GROUP_DEPARTING,
-            state: PASSENGER_WAITING,
-            target: 5,
-            ..person()
-        };
-        let mut persons = Persons {
-            pool: Pool::restore(
-                vec![waiting, waiting],
-                &PersonContext {
-                    map: MapSize::new(64, 64).unwrap(),
-                    targets: 8,
-                },
-            )
-            .unwrap(),
-            ..Persons::default()
-        };
-        persons.enqueue_waiters(&stations);
-        assert_eq!(persons.queued_for(5), 1);
-        assert_eq!(persons.pool.as_slice()[0].queue_order, 1);
-        assert_eq!(persons.pool.as_slice()[1].queue_order, 0);
     }
 
     #[test]

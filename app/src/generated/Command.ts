@@ -50,7 +50,7 @@ export type Command =
        */
       area: CellRect;
     }
-  | { kind: "setStationThroughput"; target: number; throughput: number }
+  | { kind: "setStationServiceTicks"; target: number; serviceTicks: number }
   | {
       kind: "debug";
       /**

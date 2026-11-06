@@ -29,8 +29,59 @@ pub struct TerminalStation {
     pub kind: TerminalStationKind,
     pub target: u8,
     pub queue_cells: Vec<CellPos>,
+    pub service_cell: CellPos,
+    pub exit_cell: CellPos,
     pub capacity: u16,
-    pub throughput: u16,
+    pub service_ticks: u16,
+}
+
+/// Static geometry only. Later walls may stop a station without making a
+/// legitimate save unloadable (ADR-054).
+pub(crate) fn validate_stations(
+    stations: &[TerminalStation],
+    targets: &[Target],
+    map: crate::geometry::MapSize,
+) -> Result<(), &'static str> {
+    let mut cells = std::collections::HashSet::new();
+    let mut ids = std::collections::HashSet::new();
+    for s in stations {
+        let target = targets.get(usize::from(s.target)).ok_or("stations")?;
+        if !ids.insert(s.target) {
+            return Err("stationTargets");
+        }
+        if target.cells.len() != 1
+            || s.queue_cells.is_empty()
+            || s.queue_cells.len() > 256
+            || usize::from(s.capacity) != s.queue_cells.len()
+            || s.service_ticks == 0
+        {
+            return Err("stations");
+        }
+        let entry = target.cells[0];
+        for cell in std::iter::once(&entry)
+            .chain(s.queue_cells.iter())
+            .chain([&s.service_cell, &s.exit_cell])
+        {
+            if !map.contains(*cell)
+                || crate::build::grid::floor_index(cell.floor).is_none()
+                || !cells.insert((cell.x, cell.y, cell.floor))
+            {
+                return Err("stationCells");
+            }
+        }
+        if !neighbours(entry, *s.queue_cells.last().unwrap())
+            || !neighbours(s.queue_cells[0], s.service_cell)
+            || !neighbours(s.service_cell, s.exit_cell)
+            || s.queue_cells.windows(2).any(|p| !neighbours(p[0], p[1]))
+        {
+            return Err("stationGeometry");
+        }
+    }
+    Ok(())
+}
+
+pub(crate) fn neighbours(a: CellPos, b: CellPos) -> bool {
+    a.floor == b.floor && u32::from(a.x.abs_diff(b.x)) + u32::from(a.y.abs_diff(b.y)) == 1
 }
 
 /// Kind of load that is transported and handled at an airport. Freight is

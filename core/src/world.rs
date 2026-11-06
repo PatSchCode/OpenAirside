@@ -155,40 +155,44 @@ impl World {
             .build
             .add_station(
                 TerminalStationKind::CheckIn,
-                vec![pos(10, 7)],
-                vec![pos(9, 7), pos(8, 7), pos(7, 7)],
-                3,
-                3,
+                pos(4, 5),
+                vec![pos(7, 5), pos(6, 5), pos(5, 5)],
+                pos(8, 5),
+                pos(9, 5),
+                10,
             )
             .ok()?;
         world
             .build
             .add_station(
                 TerminalStationKind::Security,
-                vec![pos(13, 7)],
-                vec![pos(12, 7), pos(11, 7)],
-                2,
-                1,
+                pos(10, 10),
+                vec![pos(12, 10), pos(11, 10)],
+                pos(13, 10),
+                pos(14, 10),
+                30,
             )
             .ok()?;
         let gate = world
             .build
             .add_station(
                 TerminalStationKind::Gate,
-                vec![pos(20, 7)],
-                vec![pos(19, 7), pos(18, 7)],
-                2,
-                3,
+                pos(16, 5),
+                vec![pos(19, 5), pos(18, 5), pos(17, 5)],
+                pos(20, 5),
+                pos(21, 5),
+                10,
             )
             .ok()?;
         world
             .build
             .add_station(
                 TerminalStationKind::Exit,
-                vec![pos(28, 7)],
-                vec![pos(27, 7), pos(26, 7)],
-                2,
-                2,
+                pos(25, 10),
+                vec![pos(27, 10), pos(26, 10)],
+                pos(28, 10),
+                pos(29, 10),
+                10,
             )
             .ok()?;
 
@@ -210,20 +214,26 @@ impl World {
                 )
             })
             .collect();
-        world.persons.spawn_passengers(
-            &world.build,
-            &departing,
-            crate::persons::GROUP_DEPARTING,
-            check_in,
-            seed,
-        );
-        world.persons.spawn_passengers(
-            &world.build,
-            &arriving,
-            crate::persons::GROUP_ARRIVING,
-            gate,
-            seed ^ 0xa771_0e00,
-        );
+        world
+            .persons
+            .spawn_passengers(
+                &world.build,
+                &departing,
+                crate::persons::GROUP_DEPARTING,
+                check_in,
+                seed,
+            )
+            .ok()?;
+        world
+            .persons
+            .spawn_passengers(
+                &world.build,
+                &arriving,
+                crate::persons::GROUP_ARRIVING,
+                gate,
+                seed ^ 0xa771_0e00,
+            )
+            .ok()?;
         Some(world)
     }
 
@@ -256,6 +266,17 @@ impl World {
     #[must_use]
     pub fn persons(&self) -> &Persons {
         &self.persons
+    }
+
+    /// Rejects invalid station geometry or remaining routes before adopting
+    /// a constructed world, just as the format-6 loader does (ADR-054).
+    pub(crate) fn validate_passengers(&self) -> Result<(), &'static str> {
+        crate::build::target::validate_stations(
+            self.build.stations(),
+            self.build.targets(),
+            self.map(),
+        )?;
+        self.persons.validate_stations(&self.build)
     }
 
     /// Adds one person on each of `cells` (see [`Persons::spawn`]).
@@ -616,9 +637,7 @@ impl RestoredWorld {
             delivery,
         )
         .map_err(invalid)?;
-        persons
-            .validate_stations(self.build.stations())
-            .map_err(invalid)?;
+        persons.validate_stations(&self.build).map_err(invalid)?;
         Ok(World {
             build: self.build,
             wayfinding: prepared.resume(mode, background),
