@@ -22,6 +22,8 @@
 
 **Offene Punkte:** Prioritäten der in ADR-046 ergänzten Anforderungen FR-053 bis FR-068 werden im wieder aktivierten Abgleich 6.3 gegen Inventar und Modernisierung bestätigt oder neu eingeordnet. Spielwerte werden eigenständig festgelegt.
 
+Abgleich 3.2 am 2026-11-05: FR-007/012/016/019/020/022/053/057/067 bleiben offen bzw. teilweise abgedeckt; keine Erledigung aus dem grünen Minimalfluss-Stundenlauf ableiten. [Nutzerwege, Umfang und sperrende Befunde](research/3.2-abschlussabgleich.md); Geduld/Bedürfnisse bleiben nach ADR-051 in 5.4.
+
 <!-- ANCHOR:beteiligte -->
 ## 2. Beteiligte
 

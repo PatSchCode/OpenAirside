@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-11-05 (ADR-053: Portvalidierung Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** keiner; Q.10-N5 auf `c295ebb` lokal, unabhängig und mit voller Code-CI nachgewiesen. N2/N3 gemergt; 3.2 bleibt für seinen Abschlussabgleich offen.
-- **Nächster Schritt:** Abschlussabgleich 3.2 vor Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen (Zeitpunkt durch Projektinhaber).
+- **Aktiver Schritt:** 3.2-Abschlussabgleich durchgeführt: hoher A1 und mittlere A2–A6 sperren Abschluss/Beförderung; Blocker #002. Keine Produktkorrektur in dieser Prüfsitzung.
+- **Nächster Schritt:** gezielten 3.2-Nachbesserungsentwurf bis 2026-11-12 vorlegen; räumliche Stationsfolge, FIFO/Vorstau, Warteflächen, Diagnose und Lektion. 3.11 wartet. Grafik-Abnahme 3.1b-N1 bleibt offen.
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-044 bis ADR-053; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
@@ -253,7 +253,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
-- **Status:** `[IN ARBEIT]` – derzeit nicht aktiv bearbeitet. Implementierung mit `0eb68d6`, Push und Merge PR #47 (`b16167c`) vorhanden; lokale Prüfungen siehe Logbuch 2026-11-04. CI auf `b16167c` grün (41881621765), Security grün (41881621704). K1–K4 durch Q.10-N3/ADR-051 korrigiert bzw. ausdrücklich aufgelöst; N2/P1–P4 durch ADR-052 und N5 durch ADR-053 nachgewiesen korrigiert; Abschlussabgleich vor 3.11 offen.
+- **Status:** `[IN ARBEIT]` – Abschlussabgleich 2026-11-05 auf `18176a6`: hoher Stationswechselbefund A1 sowie mittlere A2–A6 (FIFO vor Zulassung, Warteflächen, Diagnose und Lektionsweg/Nachweise), [Blocker #002](blockers.md). Keine Beförderung; [Bericht/Gegenproben](research/3.2-abschlussabgleich.md). PR #47 auf `b16167c` und N2/N3/N5 haben grüne CI in ihrem jeweiligen Umfang, keine Gesamtabnahme.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
@@ -471,7 +471,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 #### Q.10-N3: Passagierzustand, Save/Load und beschlossenen 3.2-Umfang klären
 
-- **Status:** `[ERLEDIGT]` – Option A nach ADR-051 auf `9bba166` umgesetzt, lokale Gates/Hook, unabhängige Sicherheitsnachprüfung und volle CI/Security grün. K1/K2 korrigiert, K3 ausdrücklich nach 5.4 verschoben, K4 Verantwortung bestätigt. 3.2 bleibt für N2/Abschlussabgleich offen.
+- **Status:** `[ERLEDIGT]` – Option A nach ADR-051 auf `9bba166` umgesetzt, lokale Gates/Hook, unabhängige Sicherheitsnachprüfung und volle CI/Security grün. K1/K2 korrigiert, K3 ausdrücklich nach 5.4 verschoben, K4 Verantwortung bestätigt. 3.2 bleibt für seinen Abschlussabgleich offen.
 - **Frist:** 2026-11-12; Klärung vor 3.11.
 - **Empfohlene Klasse:** Entscheidung wegen Spielstandvalidierung, Datenmodell und Verantwortungsfrage.
 - **Abhängigkeiten:** ADR-048/049 und Prüfbericht Q.10.
@@ -496,6 +496,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 #### Q.10-N5: S-8-Portübergabe im Kern-Host prüfen
 
 - **Status:** `[ERLEDIGT]` 2026-11-05 – Paket A nach ADR-053 auf `c295ebb` umgesetzt; 20 neue Hostfälle, 529 Gesamttests, zwei Electron-E2E, lokale Gates/Hook, unabhängige Prüfung und volle Code-CI/Security grün; [Nachweise](research/q.10-n5-umsetzung.md).
+- **Merge-Nachweis:** PR #51 auf `1009723` gemergt; Main-CI 42120517838 und Security 42120517802 abgeschlossen und grün, Produktcode unverändert.
 - **Frist:** 2026-11-12; vor Abschluss 3.2/Erkundung 3.11 klären.
 - **Empfohlene Klasse:** Entscheidung für Validierung/Sicherheit.
 - **Abhängigkeiten:** S-8 und ADR-032; getrennt von der N2-Freigabe P1–P4.

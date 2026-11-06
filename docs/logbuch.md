@@ -17,12 +17,40 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt; 3.2 wurde mit PR #47 auf `b16167c` gemergt und hat grüne CI, bleibt für seinen Abschlussabgleich offen. Q.10 ist mit unabhängiger Prüfung und grüner CI erledigt. Q.10-N3 löst K1–K4 mit Option A/ADR-051 auf `9bba166` nachgewiesen auf. Q.10-N2/P1–P4 ist nach ADR-052 auf `a95e47d` korrigiert. Q.10-N5 ist nach ADR-053 auf `c295ebb` lokal, unabhängig und mit voller CI nachgewiesen korrigiert. Nächster Schritt ist der Abschlussabgleich von 3.2 vor Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
+Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt. 3.2 ist implementiert/gemergt, aber der Abschlussabgleich auf `18176a6` findet hohen A1 und mittlere A2–A6; Blocker #002 sperrt Abschluss und Beförderung. Personen bleibt VORLÄUFIG. N2/N3/N5 sind in ihrem begrenzten Korrekturumfang nachgewiesen erledigt, keine Gesamtabnahme. Nächster Schritt: gezielter 3.2-Nachbesserungsentwurf bis 2026-11-12 vor Erkundung 3.11. Grafik-Abnahme 3.1b-N1 bleibt offen; Zeitpunkt durch den Projektinhaber. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
 
 ---
 
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
+
+### 2026-11-06 (Europe/Berlin) – Fortsetzung des 3.2-Prüfabschlusses
+
+- **Stand-Prüfung:** `18176a6`, Branch `docs/3-2-abschlussabgleich`, sieben eigene Dokumentänderungen, nichts staged; Remote-main unverändert `1009723`, Abgleichbranch noch nicht veröffentlicht, keine offenen PRs. Gegenproben-/Hookprotokolle erneut gelesen; Befunde und ursprüngliche Freigabe nur für den Abgleich unverändert.
+- **Unterbrechung:** `git add` wurde am vorherigen Abschlussversuch nicht ausgeführt, weil die automatische Freigabeprüfung ihr Nutzungslimit meldete; keine Unsicherheitsentscheidung und kein Hookfehler. Nach „fortsetzen“ Remote-Prüfung wieder erfolgreich; Commit/Push/PR-Abschluss wird regulär fortgesetzt, keine Umgehung.
+- **Modell/Quelle:** Codex laut Systemkontext, Hauptklasse/Kontextgröße unbestimmbar; keine weitere Delegation oder Produktänderung.
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Abschlussabgleich 3.2 mit Befunden
+
+- **Dauer/Arbeit:** nicht separat gemessen; freigegebenen Minimalumfang/ADRs mit Code und Nutzerweg abgeglichen. Zwei echte Kerngegenproben und ein Electron-Bedienlauf, ursprüngliche Quellen mit SHA eingefroren, temporäre Rust-Testdatei entfernt. Produktcode unverändert; eigener N5-Abschlusscommit bleibt im Branch erhalten.
+- **Ergebnis:** 3.2 nicht abschlussfähig, Personen weiterhin VORLÄUFIG. Hoher A1: bei erster COMPLETE-Ankunft Tick 71 noch Gate (36,5/31,5) statt Ausgang (44,5/31,5). Mittlerer A2: Tick 20, queued/wait=0 trotz 58 WAITING. Weitere mittlere A3–A6: Zulassungs-FIFO, räumliche Warteflächen, Lektionsweg und Akzeptanznachweise. Blocker #002 mit Entwurfsfrist 2026-11-12. Bericht ist keine Implementierungsfreigabe oder Descope-Entscheidung.
+- **Nachweise/Grenzen:** bestehender Stundenlauf, fünf Stations-Unit-Tests und zwei Rundläufe grün; zwei neue erwartete rote Assertions Exit 101. Endpositionsprüfung nach 2.000 Ticks war zu schwach, enger Übergangscheck belegt vorzeitiges COMPLETE. Electron nach tatsächlicher Katalogbereitschaft Exit 0, echte Durchsatzänderung/Terminalanzeige beobachtet; erster Lauf vor Bereitschaft erklärt, keine Produktänderung. Keine neue vollständige Coverage-/Paketierungs-/Plattformabnahme behauptet.
+- **Unabhängige Prüfung:** neue Astra-Instanz (`gpt-6-astra`, hohe Denktiefe), ohne Gesprächsverlauf, nur lesend. Isolierte Fehlerprobe bestanden, A1–A6 und grundlegende Zuständigkeiten in beide Richtungen geprüft; sieben eigene relevante Tests grün. A empfohlen: gezielter Nachbesserungsentwurf innerhalb 3.2; Daten-/Vertragsentscheidungen erst konkret vorlegen. Hauptklasse/Kontextgröße unbestimmbar laut Systemkontext; eine unabhängige Delegation, keine gemeinsame Dateibearbeitung.
+- **Konsistenz/Commit:** README, Fahrplan, Reifegrade, Anforderungen/Teilabdeckung, Blocker, Ablaufregister und Budgets geprüft; Quote unverändert 3/10 und 20/53. Architektur über 80 % (18.396/20.000), Budgetautomatisierung bleibt Q.10-N1 mit Frist; keine beiläufige Hook-/CI-Änderung. Dokumentations-Hooks, Linkziele und Quellen-SHA grün, Quick Start unverändert. Gestagten Inhalt vor Commit prüfen; Commit/Push/PR-CI folgen für den Bericht, kein Produktabschluss behauptet. Nächster Schritt: 3.2-Nachbesserungsentwurf; 3.11 wartet.
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONSTART] – Abschlussabgleich 3.2
+
+- **Stand-Prüfung:** `18176a6`, Branch `docs/q-10-n5-port-vorlage`, sauber und Remote identisch; Remote-main `1009723`, keine offenen PRs einschließlich Entwürfen. Eigener N5-Abschlusscommit wird verlustfrei in den neuen Abgleichbranch übernommen; keine ungeprüften Remote-Teile.
+- **Auftrag/Pflichtlektüre:** freigegebenen Umfang von 3.2 gegen Anforderungen, Implementierung und nutzerzugängliche Oberfläche prüfen, Akzeptanznachweise belegen, unabhängiger Abgleich vor möglicher Beförderung. Kontext vollständig, letzter Abschluss, Fahrplanstand/Phase/offene Schritte und 3.2/3.11, Architektur 1/2/9, Decisions A/C, aktive Blocker und Requirements-Übersicht gelesen; ADR-048/049 und Nachlaufnachweise vertieft.
+- **Testsignal:** Rot erkennt fehlende Endzustände, dauerhaften Stillstand oder ausbleibende Entlastung nach Durchsatzänderung. Grün der Kernfälle belegt nur simulierte Mechanik; sichtbare Lektion/Overlay und Bedienweg brauchen getrennten Oberflächennachweis. Keine neue Architektur oder Umfangsentscheidung und keine Beförderung vor Befundklärung.
+- **Modell/Quelle:** Codex laut Systemkontext, genaue Hauptklasse/Kontextgröße unbestimmbar. Unabhängige Astra-Prüfung ohne Gesprächsverlauf nur lesend vorgesehen; erforderliche Fehlerprobe isoliert, Originalquellen unverändert.
+
+### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – N5 gemergt und Main geprüft
+
+- **Ergebnis:** [PR #51](https://github.com/PatSchCode/OpenAirside/pull/51) mit geprüftem Kopf `b253bf1` nach `main` gemergt, Merge `100972316ed2304baefc3ac451049edfb07eff40`. Abschlusskopf: CI 42120168766 und Security 42120168613 grün (16 bestanden, sieben dokumentationsbedingt übersprungen); volle Code-Abnahme zuvor auf `c295ebb`.
+- **Main-Nachweise:** [CI 42120517838](https://github.com/PatSchCode/OpenAirside/actions/runs/42120517838) und [Security 42120517802](https://github.com/PatSchCode/OpenAirside/actions/runs/42120517802) auf `1009723` vollständig abgeschlossen und grün. Arbeitsbranch auf den Merge fast-forwarded; Produktdiff gegen `c295ebb` leer. Keine Produktänderung nach unabhängiger Prüfung.
+- **Konsistenz/Offenes:** Bericht und Fahrplan ergänzt; veralteten N2-Verweis im bereits erledigten N3-Schritt auf den verbleibenden 3.2-Abschlussabgleich präzisiert. README, ADR-Register/Quote 3/10 bzw. 20/53, Reifegrade, Anforderungen, Blocker, Fristen und Budgets geprüft. Keine neue fällige Maßnahme. Nächster Schritt: Abschlussabgleich 3.2 vor 3.11; keine vorweggenommene Beförderung.
+- **Bilanz/Commit:** kurze Merge-Fortsetzung, Dauer nicht separat gemessen; Codex laut Systemkontext, Hauptklasse/Kontextgröße unbestimmbar, keine weitere Delegation. Dieser Vermerk wird mit aktivem Hook committed/gepusht und bleibt gemäß Eigentümerregel ohne neuen PR auf dem Arbeitsbranch; mit dem nächsten Schritt nach main übernehmen.
 
 ### 2026-11-05 (Europe/Berlin) – [SESSIONENDE] – Q.10-N5 Option A nachgewiesen
 

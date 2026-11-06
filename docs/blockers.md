@@ -24,7 +24,12 @@ Für alle anderen Fälle gilt die Dreifach-Regel aus CLAUDE.md Abschnitt 10.
 <!-- ANCHOR:aktive-blocker -->
 ## Aktive Blocker
 
-Keine aktiven Blocker.
+### Blocker #002: Abschluss 3.2 durch Passagierfluss-Befunde gesperrt
+
+- **Erkannt:** 2026-11-05, Prüfstand `18176a6`, kein Dreifach-Reparaturversuch.
+- **Befund:** hoher Stationswechsel-Fehler A1 und mittlere Befunde A2–A6 aus dem [Abschlussabgleich](research/3.2-abschlussabgleich.md). Erste COMPLETE-Ankunft noch am Gate; Null-Wartestatistik trotz 58 Wartender dynamisch belegt. Unabhängige Astra-Prüfung bestätigt die Abschlusssperre.
+- **Wirkung:** 3.2 bleibt IN ARBEIT, Personen VORLÄUFIG; keine Beförderung/3.11-Freigabe aus bisherigen grünen Tests ableiten.
+- **Auflösung/Frist:** Nachbesserungsentwurf in 3.2, Daten-/Vertragsfragen ausdrücklich vorlegen; Korrekturen und räumliche Übergangs-/FIFO-/Diagnose-/Lektionsnachweise vor Abschluss 3.2 und vor 3.11. Entwurf spätestens 2026-11-12 vorlegen. Keine Produktkorrektur durch diesen Prüfbericht.
 
 ---
 
