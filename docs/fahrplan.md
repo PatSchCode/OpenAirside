@@ -383,6 +383,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Betroffene Module:** Flugbetrieb, Wirtschaft & Management, Oberfläche, Inhalte & Mods, Brücke, Spielfeld
 - **Reifegrad-Wirkung:** Module Flugbetrieb und Oberfläche → `[BELASTBAR]` im umgesetzten Umfang
 - **Artefakte:** Kern-Code, Schemas, Flugplaner, Tests, ADR zu den Lackierungen, Grundgrafiken und Airline-Logos
+- **UI-Nachlese aus 3.2 (niedrig):** Terra-Sichtprüfung 2026-11-06 am frischen Lektionsabschluss: bestehende Diagnose links oben überdeckt eine Konsolenzeile teilweise. Debugpanel-Layout bei der Oberflächenarbeit prüfen; Lektionspanel vollständig lesbar. Keine Abschlusssperre für 3.2.
 
 ### Phase 4: Härtung des vertikalen Schnitts – Typ: STABILISIERUNG
 

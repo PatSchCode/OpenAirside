@@ -172,10 +172,17 @@ for (const language of ["de", "en"]) {
       await expect(terminal).not.toContainText(de ? "Lektion geschafft" : "Lesson complete");
       await expect(window.locator("#log")).not.toContainText("dropped world section");
       if (!de) {
+        // Reproduce a changed window viewport after camera focus. The camera keeps its
+        // world origin; canvas size alone no longer identifies the world centre.
+        await window.setViewportSize({ width: 1280, height: 700 });
+        await expect
+          .poll(async () => (await window.locator("#root canvas").boundingBox())?.height)
+          .toBe(700);
         // Feed legal S-1 drawing records to the real Pixi view. Compare rendered pixels,
         // including reuse of previously transparent pool entries. No renderer internals.
         await window.evaluate(() => {
           let mode = 0;
+          let camera: { x0: number; y0: number; x1: number; y1: number } | undefined;
           globalThis.addEventListener("terminal-render-fixture", (event) => {
             mode = (event as CustomEvent<number>).detail;
           });
@@ -189,12 +196,17 @@ for (const language of ["de", "en"]) {
             message: unknown,
             transfer: Transferable[] | StructuredSerializeOptions = [],
           ): void {
+            const request = message as {
+              type?: string;
+              filter?: { view?: { x0: number; y0: number; x1: number; y1: number } };
+            };
+            if (request.type === "frameRequest") camera = request.filter?.view;
             if (!attached && (message as { type?: string }).type === "frameRequest") {
               attached = true;
               const handler = this.onmessage;
               this.onmessage = (event: MessageEvent<unknown>) => {
                 const data = event.data as { type?: string; buf?: ArrayBuffer };
-                if (data.type !== "frame" || data.buf === undefined) {
+                if (data.type !== "frame" || data.buf === undefined || camera === undefined) {
                   handler?.call(this, event);
                   return;
                 }
@@ -206,10 +218,19 @@ for (const language of ["de", "en"]) {
                 bytes.set(new Uint8Array(data.buf, worldAt), 48 + 6 * 8);
                 const view = new DataView(buf);
                 view.setUint32(20, 6, true);
+                const root = document.getElementById("root");
+                if (root === null) throw new Error("missing root");
+                const zoom = root.clientWidth / (camera.x1 - camera.x0);
+                const clips: { x: number; y: number }[] = [];
                 for (let i = 0; i < 6; i += 1) {
                   const at = 48 + i * 8;
-                  view.setUint16(at, (old.getUint16(12, true) / 2 - 6.5 + i * 2) * 32, true);
-                  view.setUint16(at + 2, (old.getUint16(14, true) / 2 + 3.5) * 32, true);
+                  // Use the actual public frame filter, not an assumed camera centre
+                  // after platform window decoration/resizing. Quantise exactly as S-1.
+                  const x = Math.round((camera.x0 + (root.clientWidth * 0.4 + i * 32) / zoom) * 32);
+                  const y = Math.round((camera.y0 + (root.clientHeight * 0.72) / zoom) * 32);
+                  view.setUint16(at, x, true);
+                  view.setUint16(at + 2, y, true);
+                  clips.push({ x: (x / 32 - camera.x0) * zoom, y: (y / 32 - camera.y0) * zoom });
                   view.setInt8(at + 4, 0);
                   view.setUint8(at + 5, 0);
                   view.setUint8(at + 6, mode === 0 ? 1 : ([1, 1, 2, 2, 0, 9][i] ?? 0));
@@ -219,7 +240,9 @@ for (const language of ["de", "en"]) {
                   );
                 }
                 handler?.call(this, new MessageEvent("message", { data: { ...data, buf } }));
-                document.getElementById("root")?.setAttribute("data-render-fixture", String(mode));
+                root.dataset.fixtureClips = JSON.stringify(clips);
+                root.dataset.fixtureCamera = JSON.stringify({ ...camera, zoom });
+                root.setAttribute("data-render-fixture", String(mode));
               };
             }
             original.call(this, message, Array.isArray(transfer) ? { transfer } : transfer);
@@ -230,12 +253,16 @@ for (const language of ["de", "en"]) {
         if (bounds === null) throw new Error("missing playfield");
         const images = async (): Promise<Buffer[]> => {
           const out: Buffer[] = [];
+          const clips = JSON.parse(
+            (await window.locator("#root").getAttribute("data-fixture-clips")) ?? "[]",
+          ) as { x: number; y: number }[];
+          expect(clips).toHaveLength(6);
           for (let i = 0; i < 6; i += 1)
             out.push(
               await window.screenshot({
                 clip: {
-                  x: Math.floor(bounds.x + bounds.width / 2 + (-8.5 + i * 2) * 22) - 1,
-                  y: Math.floor(bounds.y + bounds.height / 2 + 88) - 1,
+                  x: Math.floor(bounds.x + (clips[i]?.x ?? 0)) - 1,
+                  y: Math.floor(bounds.y + (clips[i]?.y ?? 0)) - 1,
                   width: 3,
                   height: 3,
                 },
@@ -244,6 +271,11 @@ for (const language of ["de", "en"]) {
           return out;
         };
         await expect(window.locator("#root")).toHaveAttribute("data-render-fixture", "0");
+        const camera = JSON.parse(
+          (await window.locator("#root").getAttribute("data-fixture-camera")) ?? "{}",
+        ) as { zoom: number };
+        expect(camera.zoom).toBeCloseTo(22);
+        console.log("actual terminal camera", camera);
         // The marker means CPU delivery, not GPU presentation. Let the Pixi ticker draw
         // the empty reference, then wait for the actual pixel result after each change.
         await window.evaluate(
@@ -290,9 +322,11 @@ for (const language of ["de", "en"]) {
       }
     } catch (error) {
       const window = await app.firstWindow();
-      await test
-        .info()
-        .attach("terminal-failure", { body: await window.screenshot(), contentType: "image/png" });
+      await window.screenshot({ path: test.info().outputPath("terminal-failure.png") });
+      await test.info().attach("terminal-failure", {
+        path: test.info().outputPath("terminal-failure.png"),
+        contentType: "image/png",
+      });
       throw error;
     } finally {
       await app.close();
