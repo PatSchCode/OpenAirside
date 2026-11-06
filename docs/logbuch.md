@@ -17,12 +17,25 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.2 BLOCKIERT, Personen VORLÄUFIG, Blocker #002 aktiv. A/ADR-054 mit Kernfluss, Format6/Port3 und sichtbarer DE/EN-Lektion lokal nachgewiesen; C5-Kantenbefund in `9c34292` repariert/nachgeprüft. Produktkopf `b0dcd4d` gepusht: CI17/18 grün, Linux-Pixelprobe nach drei Ansätzen rot, Security grün. Stopp nach AGENTS, kein vierter Versuch/Merge; PR #53 Entwurf. Nächster Schritt: isolierte Linux-Canvas-Diagnose klären. Frischer macOS-Einstieg und lokale Tests grün; keine Gesamterledigung. 3.11 wartet, Grafik-Abnahme 3.1b-N1 offen.
+Phase 3 läuft. 3.2 BLOCKIERT, Personen VORLÄUFIG, Blocker #002 aktiv. Begrenzte Folgediagnose: lokaler Canvaspfad scheitert vor Pixelinjektion am fehlenden Mesh-Zeichenpfad; reguläres WebGL2 grün. Empfehlung A: Software-WebGL2 für Linux-E2E und klarer Startfehler ohne WebGL2, eigene Freigabe nötig. Kein CI-/Renderer-Umbau oder neuer CI-Lauf. Produktkopf `b0dcd4d` bleibt Linux-rot, PR #53 Entwurf, kein Merge. Diagnosenachweise lokal sichern; 3.11 wartet.
 
 ---
 
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
+
+### 2026-11-06 18:17 – [SESSIONENDE] – Canvas-Ursache lokal isoliert, kurze Entscheidungsvorlage
+
+- **Dauer/Umfang:** etwa 13 Minuten seit 18:04, unter der 20-Minuten-Zeitbox. [Diagnose](research/3.2-linux-canvas-diagnose.md) mit tatsächlichem Canvaspfad lokal rot vor Pixelinjektion: fehlendes updateRenderable beim GL-Weltmesh. Normale Gegenkontrolle tatsächlich WebGL2 ANGLE/M3Pro, ein EN-Test, 14,7 s grün, beide strengen Pixelmasken erreicht. Linux-Artefakt zeigt Canvas; der gleichlautende Linux-Stack und Software-WebGL2 dort bleiben zu bestätigen. Keine Hardware-/Leistungsbehauptung.
+- **Änderungen/Nachweise:** E2E erfasst unbehandelte Renderer-Ausnahmen und tatsächlichen Grafikpfad; Assertion vor und nach Pixelinjektion. Kein Produkt-/CI-/Formatwechsel. ESLint, Typprüfung und sämtliche Pre-Commit-Hooks grün; 43 relative Dateiverweise gültig, Budgets eingehalten, aktive Blocker 4.300/5.000. README/Anforderungs-/Reifegradstatus bleibt zutreffend blockiert, Umgebungsregister ergänzt; keine ADR-/Quoteänderung oder neue fällige Ablaufmaßnahme.
+- **Ergebnis/Offenes:** Empfehlung A (Linux-E2E mit nachgewiesenem Software-WebGL2, fehlendes WebGL2 sichtbar abweisen) benötigt neue CI-/Startfreigabe gemäß AGENTS; B wäre eigener Canvas-Weltzeichenpfad. Vor Umsetzung ADR. Keine weitere Reparaturschleife, 3.2 BLOCKIERT/Personen VORLÄUFIG, PR #53 Entwurf, 3.11 wartet.
+- **Modell/Commitstatus:** Codex-Hauptklasse und Kontextgröße unbestimmbar laut Laufzeit. Eine frische nur lesende Astra-Instanz (`gpt-6-astra`, hoch laut Werkzeugaufruf), maximal drei Minuten, ohne Umsetzungsgespräch: lokale Ursachenkette bestätigt und A empfohlen, Linux-Grenze benannt; keine Prüfertests oder Änderungen. Abschluss wird nach gestagter Prüfung lokal regulär committed. Bewusst kein Push: Er würde auf dem noch roten Produktstand eine weitere vollständige CI auslösen; der begrenzte Diagnoseauftrag braucht diese Wiederholung nicht. Nächster freigegebener Umsetzungsschritt übernimmt den lokalen Commit vor Push/CI.
+
+### 2026-11-06 18:07 – [SESSIONSTART] – Begrenzte Linux-Canvas-Diagnose
+
+- **Auftrag:** Projektinhaber erlaubt gezielte Linux-Diagnose, ausdrücklich kurze Sitzung. Zeitbox 20 Minuten ab 18:04, Ende spätestens 18:24; höchstens ein begründeter Korrekturansatz, andernfalls Befund/Übergabe. Keine CI-, Architektur- oder Abnahmeregeländerung freigegeben.
+- **Stand-Prüfung:** `396721c`, Branch `docs/3-2-nachbesserungsentwurf`, sauber und origin-identisch; main `15bf6d9`. Ein offener Entwurfs-PR #53, gleicher Kopf. Produkt-CI auf `b0dcd4d` Linux rot, letzter redundanter Abschlusslauf abgebrochen; keine andere vorhandene Umsetzung überschreiben.
+- **Pflichtlektüre/Modell:** Kontext vollständig, letzter Abschluss, Fahrplanstand/Phase/offene Schritte sowie 3.2/3.11, Architektur1/2/9, DecisionsA/C, aktive Blocker und Requirements-Übersicht gelesen. Codex laut Laufzeit; genaue Hauptmodellklasse/Kontextgröße unbestimmbar. Noch keine Delegation. 3.2 bleibt BLOCKIERT, Personen VORLÄUFIG.
 
 ### 2026-11-06 17:52 – [SESSIONENDE] – A weit umgesetzt, Linux-Nachweis nach drei Ansätzen blockiert
 

@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
 - **Aktiver Schritt:** 3.2 `[BLOCKIERT]`, [Blocker #002](blockers.md): Linux-Pixelnachweis nach drei Ansätzen rot. A/ADR-054 umgesetzt und lokal geprüft; keine Beförderung oder Erledigung.
-- **Nächster Schritt:** Klärung für isolierte Linux-Canvas-Diagnose in 3.2; kein vierter Reparaturversuch ohne Auflösung des Stopps. Frischer macOS-Einstieg und C5 samt Kantenkorrektur nachgewiesen; Linux-Abnahme sperrt Abschluss/Merge. 3.11 wartet, Grafik-Abnahme 3.1b-N1 offen.
+- **Nächster Schritt:** [Begrenzte Canvas-Diagnose](research/3.2-linux-canvas-diagnose.md) abgeschlossen; Freigabe für Option A (Software-WebGL2 im Linux-E2E und klarer Startfehler ohne WebGL2) einholen. Keine CI-/Renderer-Umstellung ohne Entscheidung. Linux-Nachweis sperrt 3.2/Merge, 3.11 wartet; Grafik-Abnahme 3.1b-N1 offen.
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 4 / 10 über ADR-045 bis ADR-054; neue Ursachenreflexion zu ADR-054 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
@@ -255,6 +255,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 - **Status:** `[BLOCKIERT]` – 2026-11-06, [Blocker #002](blockers.md): Linux-Pixelabnahme nach drei gezielten Ansätzen rot (`b0dcd4d`); Stopp, keine Erledigung/Beförderung und kein Merge. Historische A1–A6 aus dem [Abschlussabgleich](research/3.2-abschlussabgleich.md) nachgebessert; neue Plattform-Nachweislücke bleibt.
 - **Nachbesserung:** [Paket A vom 2026-11-06](research/3.2-nachbesserungsentwurf.md) ausdrücklich freigegeben, [ADR-054](decisions/ADR-054.md). [Ursachen/Prävention](research/3.2-ursachenanalyse.md) vor Code geprüft. C1–C5 mit ihren Testsignalen und Pflichtfällen gelten vollständig; Format 6/Protokoll 3, räumliche Phasen, Bedienzeit und sichtbare Lektion. Keine neue Schritt-ID oder Geduld-/Feinweg-Erweiterung.
+- **Begrenzte Diagnose 2026-11-06:** Canvaspfad lokal rot mit Renderer-Ausnahme bereits vor Pixelinjektion; derselbe WebGL-Nutzerweg grün. Testsignal vor Lauf erfasst; keine Linux-Hardware-/Leistungsabnahme daraus. [Befund und unabhängig bewertete Optionen](research/3.2-linux-canvas-diagnose.md); keine CI-Schleife oder Produktkorrektur, BLOCKIERT bis Entscheidung und echten Linux-Nachweisen.
 - **Zwischenstand/Nachweismatrix:** [C1–C5-Nachweise](research/3.2-nachbesserung-nachweise.md): Format 6/Port 3, räumlicher Fluss/FIFO/Bedienzeit, lokale 302 Rust-/537 TS-Tests, vier Electron-E2Es, Kausalvergleich/Last und frischer macOS-`npm start` grün. C5-1 aktuelle Diagonalecken/Treppen in `9c34292` korrigiert/nachgeprüft, C5-2 Matrix synchronisiert. Linux zeigt in der Pixelgegenprobe trotz Zoom22 keine Änderung an den Messpunkten; Ursache offen, drei Ansätze/Artefakte im Blocker. PR #53 bleibt Entwurf.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1

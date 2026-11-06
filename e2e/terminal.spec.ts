@@ -17,6 +17,11 @@ for (const language of ["de", "en"]) {
     });
     try {
       const window = await app.firstWindow();
+      const pageErrors = new Set<string>();
+      window.on("pageerror", (error) => {
+        if (!pageErrors.has(error.message)) console.log("terminal page error", error.stack);
+        pageErrors.add(error.message);
+      });
       await expect(window.locator("#root")).toHaveAttribute("data-ready", "true");
       // Change language using the real settings form; no console or private game API.
       await window.locator("#settings-button").click();
@@ -171,6 +176,11 @@ for (const language of ["de", "en"]) {
       await expect(terminal).toContainText(de ? "Aktive Reisen: 80" : "Active journeys: 80");
       await expect(terminal).not.toContainText(de ? "Lektion geschafft" : "Lesson complete");
       await expect(window.locator("#log")).not.toContainText("dropped world section");
+      console.log(
+        "terminal graphics",
+        (await window.locator("#hud").innerText()).split("\n").at(-1),
+      );
+      expect([...pageErrors]).toEqual([]);
       if (!de) {
         // Reproduce a changed window viewport after camera focus. The camera keeps its
         // world origin; canvas size alone no longer identifies the world centre.
@@ -320,6 +330,7 @@ for (const language of ["de", "en"]) {
           )
           .toEqual([false, false, false, false, false, false]);
       }
+      expect([...pageErrors]).toEqual([]);
     } catch (error) {
       const window = await app.firstWindow();
       await window.screenshot({ path: test.info().outputPath("terminal-failure.png") });
