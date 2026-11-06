@@ -484,7 +484,7 @@ Erster unabhängiger Bestandsabgleich am 2026-11-05, Basis `b16167c`, ADR-050. U
 |---|---|---|
 | Takt & Weltzustand | 2026-11-05, N3 auf `9bba166` | ursprüngliche Reihenfolge ohne weitere gefundene Abweichung; mitbetroffener Personen-Hash/Restore K2 in N3 korrigiert und nachgeprüft |
 | Welt & Bau | 2026-11-05, N3 auf `9bba166` | FIFO-Verantwortung K4 durch ADR-051 bestätigt, Stationsvalidierung ergänzt; [N3-Nachweise](research/q.10-n3-umsetzung.md) |
-| Personen | 2026-11-05, N3 auf `9bba166`, Main `468bc32` | K1/K2 korrigiert, K3 ausdrücklich nach 5.4 verschoben, K4 bestätigt; unabhängige Nachprüfung und volle CI grün. Bleibt VORLÄUFIG bis 3.2-Abschlussabgleich; [N3-Nachweise](research/q.10-n3-umsetzung.md) |
+| Personen | 2026-11-05, Abschlussabgleich auf `18176a6` | N3-Korrekturen nachgewiesen; [3.2-Abgleich](research/3.2-abschlussabgleich.md) findet hohen A1 (Stationswechsel) und mittlere A2–A6. VORLÄUFIG, keine Beförderung; Blocker #002 |
 | Brücke | 2026-11-05, `b16167c`; N2-Gegenstellenabgleich auf `a95e47d` | D1 ergänzt; P1–P4 am Hauptprozess durch N2 korrigiert. Rust-Brückencode unverändert; N5-Portannahme durch ADR-053 auf `c295ebb` korrigiert und nachgeprüft |
 | Plattform | 2026-11-05, N2 auf `a95e47d`; N5 auf `c295ebb` | P1–P4 nach ADR-052 korrigiert; [Nachweise](research/q.10-n2-umsetzung.md), unabhängige Sicherheitsnachprüfung und volle CI grün. [N5](research/q.10-n5-umsetzung.md): Portannahme nach ADR-053 korrigiert, unabhängige Prüfung und volle CI grün; native Fehlerfolgen nur statisch, keine neue Beförderung |
 | Inhalte & Mods (Lader) | 2026-11-05, `b16167c` | D2/D3 niedrig, Q.10-N4; P4-Empfangsgrenzen durch N2 auf `a95e47d` korrigiert |
@@ -492,6 +492,8 @@ Erster unabhängiger Bestandsabgleich am 2026-11-05, Basis `b16167c`, ADR-050. U
 | Grafik-Pipeline | 2026-11-05, `b16167c` | im benannten statischen Umfang keine weitere Abweichung gefunden |
 
 Weitere vorläufige Fachmodule werden bei ihrer Umsetzung und spätestens an der nächsten Phasengrenze abgeglichen; für die oben geprüften Bestandteile spätestens nach zwei Phasengrenzen oder bis 2027-05-05. Frühere bestandene Tests ersetzen diesen Abgleich nicht.
+
+Abschlussabgleich 3.2 am 2026-11-05 auf `18176a6`: Personen, Welt & Bau, Wegfindung, Takt, Spielfeld und Oberfläche in beide Richtungen einschließlich Aufrufstellen geprüft; isolierte Fehlerprobe durch Astra bestanden. Grundlegende Zuständigkeit/Leserichtung ohne neue gefundene Abweichung, aber hoher Personen-Zustandsfehler und mittlere Queue-/Diagnose-/Lektionsbefunde sperren den Abschluss. [Umfang, Einzelbefunde und Nachweise](research/3.2-abschlussabgleich.md); keine neue Beförderung oder Rückstufung bestehender belastbarer Grundsatzentscheidungen durch diesen Bericht.
 
 <!-- ANCHOR:tooling-inventar -->
 ## 10. Tooling-Inventar
