@@ -17,12 +17,19 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt. 3.2 ist implementiert/gemergt, aber hoher A1 und mittlere A2–A6 sperren Abschluss/Beförderung, Blocker #002 aktiv. Personen bleibt VORLÄUFIG. Der konkrete 3.2-Nachbesserungsentwurf ist am 2026-11-06 unabhängig bewertet: Empfehlung A mit Format 6/Port-Protokoll 3, Freigabe offen. Kein neuer ADR oder Produktcode. N2/N3/N5 bleiben in ihrem begrenzten Korrekturumfang erledigt. Nächster Schritt: A/B entscheiden, danach bei A ADR/Reflexion vor Umsetzung und Nachweisen. 3.11 wartet; Grafik-Abnahme 3.1b-N1 bleibt offen. Frühere Phasen und Oktober-Details stehen im verlinkten Archiv.
+Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt. Hoher A1 und mittlere A2–A6 sperren Abschluss/Beförderung von 3.2, Blocker #002 aktiv, Personen VORLÄUFIG. Nachbesserung A am 2026-11-06 ausdrücklich freigegeben: ADR-054, Ursachen/Prävention vor Code unabhängig gegengeprüft. Nächster Checkpoint C1/C2: Format-/Vertragsmodell und räumliche Stationsmechanik samt Nachweisen. Noch keine Produktkorrektur durch die Reflexion. N2/N3/N5 bleiben in ihrem begrenzten Umfang erledigt. 3.11 wartet; Grafik-Abnahme 3.1b-N1 offen. Frühere Details im verlinkten Archiv.
 
 ---
 
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
+
+### 2026-11-06 14:00 – [SESSIONSTART] – Freigegebene Nachbesserung A: Ursachen zuerst
+
+- **Stand-Prüfung:** Commit `04bec65`, Branch `docs/3-2-nachbesserungsentwurf`, sauber und Remote identisch; Remote-main `15bf6d9`, PR #53 offen einschließlich geprüfter Entwurfsinformation, bisherige Kopf-CI/Security grün. Keine vorhandene Produktkorrektur überschreiben; denselben PR weiterführen.
+- **Auftrag/Freigabe:** Projektinhaber gibt A ausdrücklich zur Umsetzung frei; davor Ursachen, übersehene Prüfsignale, Konsequenzen und Prävention untersuchen. 3.2 bleibt einziger aktiver Schritt; vor Produktcode Reflexion und reaktiven ADR dokumentieren.
+- **Pflichtlektüre:** Projektkontext vollständig, letzter Abschluss, Fahrplanstand/Phase/offene Schritte und 3.2/3.11, Architektur 1/2/9 einschließlich gezielter Nachlese, Decisions A/C, aktive Blocker und Requirements-Übersicht gelesen. Entwurf und tatsächliche Personenmechanik vertieft.
+- **Modell/Delegation:** Codex laut Laufzeit; genaue Hauptmodellklasse und Kontextgröße unbestimmbar. Unabhängige nur lesende Ursachenprüfung an neue Instanz `gpt-6-astra` mit hoher Denktiefe ohne Gesprächsverlauf delegiert; Verfügbarkeit aus Werkzeugdeklaration, keine gemeinsamen Änderungen. Keine Abschlussabnahme dadurch behauptet.
 
 ### 2026-11-06 (Europe/Berlin) – [SESSIONENDE] – 3.2-Nachbesserungsentwurf vorgelegt
 

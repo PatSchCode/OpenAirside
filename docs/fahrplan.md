@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-11-05 (ADR-053: Portvalidierung Option A nachgewiesen)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
-- **Aktiver Schritt:** keiner; 3.2-Nachbesserungsentwurf für A1–A6 ausgearbeitet und unabhängig bewertet, Umsetzung wartet auf Freigabe. Blocker #002 und bisherige Reifegrade bleiben bestehen.
-- **Nächster Schritt:** [konkretes Paket A/B](research/3.2-nachbesserungsentwurf.md) entscheiden; A umfasst Format 6/Port-Protokoll 3 und vollständige Minimalfluss-Nachweise. 3.11 wartet. Grafik-Abnahme 3.1b-N1 bleibt offen.
+- **Aktiver Schritt:** 3.2, Nachbesserung A freigegeben (ADR-054); Ursachen und Prävention vor Code unabhängig gegengeprüft. Blocker #002 und bisherige Reifegrade bleiben bestehen.
+- **Nächster Schritt:** C1/C2 des [freigegebenen Pakets A](research/3.2-nachbesserungsentwurf.md): Format-/Vertragsbruch und räumliche Stationsmechanik mit negativen und positiven Nachweisen. 3.11 wartet. Grafik-Abnahme 3.1b-N1 bleibt offen.
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 3 / 10 über ADR-044 bis ADR-053; Reflexion zu ADR-051 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
@@ -254,7 +254,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 #### 3.2: Kleines Terminal im laufenden Betrieb erweitern (erste Lektion)
 
 - **Status:** `[IN ARBEIT]` – Abschlussabgleich 2026-11-05 auf `18176a6`: hoher Stationswechselbefund A1 sowie mittlere A2–A6 (FIFO vor Zulassung, Warteflächen, Diagnose und Lektionsweg/Nachweise), [Blocker #002](blockers.md). Keine Beförderung; [Bericht/Gegenproben](research/3.2-abschlussabgleich.md). PR #47 auf `b16167c` und N2/N3/N5 haben grüne CI in ihrem jeweiligen Umfang, keine Gesamtabnahme.
-- **Nachbesserung:** [Entwurf vom 2026-11-06](research/3.2-nachbesserungsentwurf.md), noch nicht freigegeben: Format 6, Port-Protokoll 3, Bedienzeit statt throughput, räumliche Phasen/Tickets/Reservierungen, ehrliche Diagnose und sichtbarer Lektionsweg. Keine neue Phase-3-Schritt-ID, keine Geduld-/Feinweg-Erweiterung.
+- **Nachbesserung:** [Paket A vom 2026-11-06](research/3.2-nachbesserungsentwurf.md) ausdrücklich freigegeben, [ADR-054](decisions/ADR-054.md). [Ursachen/Prävention](research/3.2-ursachenanalyse.md) vor Code geprüft. C1–C5 mit ihren Testsignalen und Pflichtfällen gelten vollständig; Format 6/Protokoll 3, räumliche Phasen, Bedienzeit und sichtbare Lektion. Keine neue Schritt-ID oder Geduld-/Feinweg-Erweiterung.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
@@ -852,6 +852,13 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 - **Maßnahme im freigegebenen Paket:** vollständige Zustandsmatrix mit positiven Kontrollen, atomarer Ablehnung und mehrstufiger Fortsetzung; Überlauf und Last nachweisen. Keine neue CI oder Methodik.
 - **5.4-Landeplatz:** deterministisch gespeicherte Bedürfnisse/Geduld, nachvollziehbare Wartezeitwirkung, sichtbare Erschöpfungsreaktion mit Diagnose, sichere Route-/Queue-Übergänge, identische Save/Load-Fortsetzung; Tests für Schwellen, Reaktion und Erholung. Konkrete Werte und Reaktionen vor Umsetzung entscheiden. FR-016 bleibt offen.
 - **Freigabe:** Option A durch Projektinhaber am 2026-11-05; N2 getrennt.
+
+### Ergänzung Reaktiv-Quote (2026-11-06, ADR-054; Reflexion vor Code)
+
+- **Befund/Freigabe:** A freigegeben; 4/10 reaktiv (045–054), gesamt 21/54. Neues Kern-/Datenmodellmuster verlangt eigene Reflexion, nicht nur Verweis auf ADR-051.
+- **Ursachen/Folgen:** [vollständige historische Analyse](research/3.2-ursachenanalyse.md), unabhängig nur lesend gegengeprüft. Unvollständiger Zielwechsel, Ticket als Platznachweis und verkürzte Wirkungsabnahme; falsche Reiseabschlüsse und unsichtbarer Vorstau sind belegt.
+- **Maßnahmen:** C1–C5 des freigegebenen Pakets mit positions-/zeitbezogenen Übergangsinvarianten, Vorstau-FIFO, tatsächlicher Reservierung, Paarvergleich und sichtbarem DE/EN-Nutzerweg. Jede Zusage benötigt ausführbaren Nachweis; kein stiller Descope im Implementierungsdiff. N3 bleibt nur im damaligen lokalen Umfang erledigt.
+- **Grenzen:** keine neue CI/Methodik, keine vorweggenommene Messung oder Beförderung. Produktabnahme bleibt offen, 3.11 abhängig.
 
 <!-- ANCHOR:parallelisierbarkeit -->
 ## Parallelisierbarkeit
