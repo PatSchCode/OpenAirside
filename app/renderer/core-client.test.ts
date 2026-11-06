@@ -68,7 +68,7 @@ describe("CoreClient", () => {
 
   it("numbers commands per session and restarts them on a new session", () => {
     const { client, sent, handlers } = setup();
-    client.handle({ type: "welcome", protocol: 1, core, session: 2 });
+    client.handle({ type: "welcome", protocol: PROTOCOL, core, session: 2 });
     expect(handlers.welcome).toHaveBeenCalledWith(core, 2);
     expect(client.send({ kind: "setSpeed", speed: "x3" })).toBe(1);
     expect(client.send({ kind: "skipNight" })).toBe(2);
@@ -86,7 +86,7 @@ describe("CoreClient", () => {
 
   it("keeps one frame request in flight and acknowledges with the next", () => {
     const { client, sent, handlers, advance } = setup();
-    client.handle({ type: "welcome", protocol: 1, core, session: 1 });
+    client.handle({ type: "welcome", protocol: PROTOCOL, core, session: 1 });
     expect(client.requestFrame({ floor: 0 })).toBe(true);
     expect(client.requestFrame({ floor: 0 })).toBe(false);
     client.handle({
@@ -113,7 +113,7 @@ describe("CoreClient", () => {
 
   it("acknowledges the world revision of a processed frame, per session", () => {
     const { client, sent, handlers } = setup();
-    client.handle({ type: "welcome", protocol: 2, core, session: 1 });
+    client.handle({ type: "welcome", protocol: PROTOCOL, core, session: 1 });
     const frame = (session: number, revision: number): void => {
       client.handle({
         type: "frame",
@@ -151,7 +151,7 @@ describe("CoreClient", () => {
 
   it("acknowledges events that come without a frame and counts gaps", () => {
     const { client, sent, handlers } = setup();
-    client.handle({ type: "welcome", protocol: 1, core, session: 1 });
+    client.handle({ type: "welcome", protocol: PROTOCOL, core, session: 1 });
     client.handle({ type: "events", session: 1, events: [record(1), record(3)] });
     expect(sent.at(-1)).toEqual({ type: "eventsAck", session: 1, seq: 3 });
     expect(client.gaps).toBe(1);
@@ -167,6 +167,18 @@ describe("CoreClient", () => {
     const { client, handlers } = setup();
     client.handle({ type: "incompatible", protocol: 2 });
     expect(handlers.incompatible).toHaveBeenCalledWith(2);
+  });
+
+  it.each([2, 4])("rejects a welcome of incompatible protocol %s", (protocol) => {
+    const { client, handlers } = setup();
+    client.start();
+    client.handle({ type: "welcome", protocol, session: 1, core });
+    expect(handlers.incompatible).toHaveBeenCalledWith(protocol);
+    expect(handlers.welcome).not.toHaveBeenCalled();
+    client.handle({ type: "sessionStarted", session: 9, tick: 0 });
+    expect(client.send({ kind: "skipNight" })).toBe(0);
+    expect(client.query({ kind: "terminalStations" })).toBe(0);
+    expect(client.requestFrame({})).toBe(false);
   });
 
   it.each([
@@ -188,7 +200,7 @@ describe("CoreClient", () => {
 
   it("drops frames with a broken buffer", () => {
     const { client, handlers } = setup();
-    client.handle({ type: "welcome", protocol: 1, core, session: 1 });
+    client.handle({ type: "welcome", protocol: PROTOCOL, core, session: 1 });
     client.handle({ type: "frame", session: 1, tick: 1, events: [], buf: new ArrayBuffer(4) });
     expect(handlers.dropped).toHaveBeenCalledWith("frame: tooShort");
     expect(handlers.frame).not.toHaveBeenCalled();
@@ -206,7 +218,7 @@ describe("CoreClient", () => {
       window: { offset: 0, limit: 5 },
     };
     expect(client.query(table)).toBe(0);
-    client.handle({ type: "welcome", protocol: 1, core, session: 1 });
+    client.handle({ type: "welcome", protocol: PROTOCOL, core, session: 1 });
     expect(client.query(table)).toBe(1);
     expect(client.query(table)).toBe(0);
     expect(client.query({ kind: "dictionary", table: "debugPersons" })).toBe(2);
@@ -238,14 +250,38 @@ describe("CoreClient", () => {
         kind: "checkIn",
         target: 0,
         queued: 3,
+        backlog: 2,
+        serving: 0,
+        leaving: 1,
+        completed: 0,
+        maxWaitingTicks: 4,
+        blocked: false,
+        serviceCell: { x: 5, y: 6, floor: 0 },
         served: 1,
         waitingTicks: 5,
         capacity: 16,
-        throughput: 1,
+        serviceTicks: 1,
       },
     ];
     client.handle({ type: "queryResult", session: 1, id: 7, terminalStations });
     expect(handlers.queryResult).toHaveBeenLastCalledWith(7, { terminalStations });
+    for (const invalid of [
+      { kind: { toString: null } },
+      { serviceTicks: 0 },
+      { backlog: 200001 },
+      { maxWaitingTicks: 0x100000000 },
+      { serving: 1, leaving: 1 },
+      { waitingTicks: Number.MAX_SAFE_INTEGER },
+      { serviceCell: { x: 5, y: 6, floor: 3 } },
+    ]) {
+      client.handle({
+        type: "queryResult",
+        session: 1,
+        id: 7,
+        terminalStations: [{ ...terminalStations[0], ...invalid }],
+      });
+      expect(handlers.queryResult).toHaveBeenLastCalledWith(7, {});
+    }
     client.handle({ type: "queryResult", session: 1, id: 7, catalog: [1] });
     expect(handlers.queryResult).toHaveBeenLastCalledWith(7, {});
     client.handle({ type: "queryError", session: 1, id: 3, code: "unknownTable", textKey: "x" });
@@ -273,8 +309,8 @@ describe("CoreClient", () => {
     };
     client.handle({ type: "coreStats", session: 1, tick: 9, stats });
     expect(handlers.stats).not.toHaveBeenCalled();
-    expect(handlers.dropped).toHaveBeenLastCalledWith("coreStats");
-    client.handle({ type: "welcome", protocol: 1, core, session: 1 });
+    expect(handlers.dropped).toHaveBeenLastCalledWith("beforeHandshake");
+    client.handle({ type: "welcome", protocol: PROTOCOL, core, session: 1 });
     client.handle({ type: "coreStats", session: 1, tick: 9, stats });
     expect(handlers.stats).toHaveBeenLastCalledWith(9, stats);
     const withoutRecompute: Partial<typeof stats> = { ...stats };

@@ -86,6 +86,8 @@ pub enum SimulationError {
     NoThreads,
     /// The thread pool could not be created.
     ThreadPool(String),
+    /// A constructed world breaks a format-6 station/person invariant.
+    InvalidState(&'static str),
 }
 
 impl fmt::Display for SimulationError {
@@ -93,6 +95,7 @@ impl fmt::Display for SimulationError {
         match self {
             Self::NoThreads => write!(f, "the simulation needs at least one thread"),
             Self::ThreadPool(err) => write!(f, "cannot create the thread pool: {err}"),
+            Self::InvalidState(check) => write!(f, "invalidState ({check})"),
         }
     }
 }
@@ -152,10 +155,14 @@ impl Simulation {
     /// # Errors
     ///
     /// Fails if a thread count is 0 or a thread pool cannot be created.
+    /// Also rejects invalid station/person states before creating the session.
     pub fn with_world(config: SimulationConfig, mut world: World) -> Result<Self, SimulationError> {
         if config.threads == 0 || config.background_threads == 0 {
             return Err(SimulationError::NoThreads);
         }
+        world
+            .validate_passengers()
+            .map_err(SimulationError::InvalidState)?;
         let build = |threads: usize, name: &'static str| {
             rayon::ThreadPoolBuilder::new()
                 .num_threads(threads)
@@ -220,15 +227,33 @@ impl Simulation {
     /// discarded.
     pub fn restart(&mut self) {
         let world = World::open_hall(self.config.map, self.config.persons, self.config.seed);
-        self.restart_with_world(world);
+        self.restart_with_world(world)
+            .expect("open hall factory preserves world invariants");
     }
 
     /// Like [`Simulation::restart`], with the given world (new game or a
     /// loaded save game).
-    pub fn restart_with_world(&mut self, mut world: World) {
+    pub fn restart_with_world(&mut self, mut world: World) -> Result<(), Reason> {
+        if let Err(check) = world.validate_passengers() {
+            let mut reason =
+                savegame::error(savegame::code::INVALID_STATE).with_text("check", check);
+            reason.text_key = "notice.invalidState".into();
+            self.events.push(
+                self.tick,
+                Event::Notice {
+                    severity: Severity::Alert,
+                    code: reason.code.clone(),
+                    text_key: reason.text_key.clone(),
+                    params: reason.params.clone(),
+                    about: None,
+                },
+            );
+            return Err(reason);
+        }
         world.reset_adoption(self.config.adoption);
         world.rebuild_fields_now(&self.background);
         self.restart_with_world_prepared(world);
+        Ok(())
     }
 
     /// Like [`Simulation::restart_with_world`] for a world whose flow
@@ -323,8 +348,8 @@ impl Simulation {
             .ok_or_else(|| {
                 savegame::error(savegame::code::INVALID_ARGUMENT).with_text("field", "map")
             })?;
+        self.restart_with_world(World::new_game(map))?;
         self.config.map = map;
-        self.restart_with_world(World::new_game(map));
         Ok(())
     }
 
@@ -643,10 +668,13 @@ impl Simulation {
                 built.map(drop).map_err(|r| refusal(r, Some(&ty.name)))
             }
             Command::Demolish { area } => self.world.demolish(*area).map_err(|r| refusal(r, None)),
-            Command::SetStationThroughput { target, throughput } => self
+            Command::SetStationServiceTicks {
+                target,
+                service_ticks,
+            } => self
                 .world
                 .build_mut()
-                .set_station_throughput(*target, *throughput)
+                .set_station_service_ticks(*target, *service_ticks)
                 .map_err(|_| rejection(code::INVALID_ARGUMENT)),
             Command::Debug { action } => self.debug(action),
         }

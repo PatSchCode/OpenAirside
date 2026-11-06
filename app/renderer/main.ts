@@ -91,18 +91,20 @@ async function start(): Promise<void> {
     }
     terminalBox.hidden = false;
     const bottleneck = stations.reduce((worst, station) =>
-      station.queued > worst.queued ? station : worst,
+      station.backlog + station.queued > worst.backlog + worst.queued ? station : worst,
     );
     const rows = stations.map(
       (station) =>
-        `${station.kind}: queue ${String(station.queued)}, wait ${String(station.waitingTicks)} ticks, served ${String(station.served)}/${String(station.throughput)}`,
+        `${station.kind} #${String(station.target)}: backlog ${String(station.backlog)}, queue ${String(station.queued)}, max wait ${String(station.maxWaitingTicks)} ticks, service ${String(station.serviceTicks)} ticks${station.blocked ? ", BLOCKED" : ""}`,
     );
     terminalBox.textContent = [
       "Terminal flow",
       ...rows,
-      bottleneck.queued > 0
-        ? `Lesson 1: ${bottleneck.kind} is the bottleneck. Increase its throughput to shorten the queue.`
-        : "Lesson 1: no station is currently congested.",
+      stations.some((station) => station.blocked)
+        ? "Terminal route blocked. Clear the blocked station path."
+        : bottleneck.backlog + bottleneck.queued > 0
+          ? `Lesson 1: ${bottleneck.kind} has waiting passengers. A shorter service time can reduce its queue.`
+          : "Lesson 1: no station is currently congested.",
     ].join("\n");
   };
 

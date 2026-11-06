@@ -17,12 +17,26 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt. 3.2 bleibt IN ARBEIT, Blocker #002 aktiv, Personen VORLÄUFIG. Nachbesserung A ausdrücklich freigegeben: ADR-054, Ursachen/Prävention vor Code unabhängig geprüft. A1-Zielwechsel/COMPLETE isoliert nachgebessert, lokaler Rust-/Coverage-Nachweis grün; kein Gesamtabschluss. A2 erneut rot, A3–A6 offen. Nächster Checkpoint C1/C2: Format-/Vertragsmodell und räumliche Stationsmechanik samt Nachweisen. N2/N3/N5 bleiben im begrenzten Umfang erledigt. 3.11 wartet; Grafik-Abnahme 3.1b-N1 offen. Frühere Details im Archiv.
+Phase 3 läuft. 3.2 bleibt IN ARBEIT, Personen VORLÄUFIG, Blocker #002 aktiv. Freigegebenes A/ADR-054: C1/C2 mit Format 6/Port 3, räumlichem Stationsfluss, Eintritts-FIFO, Bedienzeit und vollständigem Snapshot implementiert. Lokale Tests, Kausalvergleich, Last und unabhängiger enger Abgleich grün; Commit/CI nachführen. Nächster Checkpoint C3: sichtbare lokalisierte Lektion, danach übrige C4/C5. Kein Gesamtabschluss oder Merge; 3.11 wartet. N2/N3/N5 bleiben im begrenzten Umfang erledigt, Grafik-Abnahme 3.1b-N1 offen.
 
 ---
 
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
+
+### 2026-11-06 16:47 – [BEOBACHTUNG] – C1/C2 lokal verifiziert, Commit vorbereitet
+
+- **Umfang:** Format-/Vertragsform und zugehörige Mechanik gemeinsam, da nicht unabhängig nutzbar. [Nachweise/Matrix](research/3.2-nachbesserung-nachweise.md): Übergänge, Reservierungen/FIFO, alle Phasen und aktive Bau-Blockaden über 4.000 Folgeticks, Erzeugungs-/Ladeablehnung. Keine neue Modulbeziehung oder Entscheidung.
+- **Belege:** voller finaler Rust-Workspace 300 grün, manueller Lasttest regulär ignoriert und separat Release-grün; Lines gesamt 97,71 %, Kern 97,87 %, Personen 95,02 %, Station 96,36 %. TS531/81,30 %, Clippy, Build, E2E2 nach finalem Rendererbau und Audits grün. Kausalvergleich 5.610→3.510 Warteticks, Security frei nach765→465 Ticks. M3-Pro-Last200k Mittel0,887/p991,108ms, tatsächlicher Überlauf5,351ms.
+- **Gegenprüfung:** eine neue nur lesende Astra-Instanz, hohe Denktiefe, ohne Gesprächsverlauf; Fehlerprobe erkannt, vier Produktbefunde und mittlere Blockade-Testlücke vor Commit korrigiert/nachgeprüft. Kein eigener Prüfertest oder Gesamtabgleich. Primäre Klasse/Kontextgröße weiter unbestimmbar laut Laufzeitkontext.
+- **Stand:** 37 Dateien gestagt geprüft; aktiver Hook grün, kein Bypass. Commit/Push/CI jetzt nachführen; C3–C5 und Schritt3.2 offen. Keine Pause/Freigabe des bereits beschlossenen A angefragt.
+
+### 2026-11-06 15:28 – [SESSIONSTART] – Freigegebener Format-/Stationsumbau C1/C2
+
+- **Stand-Prüfung:** `65e9afe`, Branch `docs/3-2-nachbesserungsentwurf`, sauber und identisch mit origin; Remote-main `15bf6d9`. Ein offener PR #53, Entwurf, gleicher Kopf; kein Überschreiben oder doppelter Beginn. Letzter Kopf CI/Security grün, keine ungeprüften Remote-Teile.
+- **Auftrag/Freigabe:** A unter ADR-054 fortsetzen; Ursachen/Prävention und A1-Teilkorrektur vorhanden. Jetzt C1/C2: Format 6/Port 3, räumliche Phasen, FIFO/Reservierungen und Bedienzeit. Alle Pflichtfälle/Testsignale des Pakets bleiben verbindlich, 3.2 einziger aktiver Schritt.
+- **Pflichtlektüre:** Kontext vollständig, letzter Abschluss und jüngere Einträge, Fahrplanstand/Phase/offene Schritte und 3.2/3.11 vollständig, Architektur 1/2/9, Decisions A/C, aktive Blocker, Requirements-Übersicht; ADR-054 und freigegebenes Paket einschließlich gezielter Nachlese abgeschnittener Ausgabe. Keine neue Freigabe nötig.
+- **Modell/Quelle:** Codex gemäß Laufzeitkontext; genaue Hauptmodellklasse/Kontextgröße unbestimmbar. Keine Delegation zum Sessionstart. Reifegrade bleiben unverändert; Blocker #002 aktiv.
 
 ### 2026-11-06 14:35 – [SESSIONENDE] – Ursachenreflexion und geprüfter A1-Teilcheckpoint
 

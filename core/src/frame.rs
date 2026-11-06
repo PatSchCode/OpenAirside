@@ -46,7 +46,7 @@ use crate::build::grid::floor_index;
 use crate::build::target::TerminalStationKind;
 use crate::datapack::Catalog;
 use crate::display::{WorldSender, WorldView};
-use crate::geometry::MapSize;
+use crate::geometry::{CellPos, MapSize};
 use crate::time::Tick;
 use crate::world::World;
 
@@ -158,14 +158,30 @@ pub struct TerminalStationPoint {
     pub target: u8,
     /// Current queue length.
     pub queued: u32,
+    /// At the entry without a reserved queue place.
+    pub backlog: u32,
+    /// Physically being served (0 or 1).
+    pub serving: u32,
+    /// Retaining the service place while departing.
+    pub leaving: u32,
+    /// Completed terminal routes at this station.
+    pub completed: u32,
+    /// Position of the single service place.
+    pub service_cell: CellPos,
+    /// Largest wait among backlog and queued, in ticks.
+    pub max_waiting_ticks: u32,
+    /// A required station edge or approaching route is blocked.
+    pub blocked: bool,
     /// Passengers served in the latest tick.
     pub served: u16,
-    /// Sum of waiting time of the current queue, in simulation ticks.
+    /// Sum over backlog and queue. At most MAX_PERSONS * u32::MAX, hence
+    /// exactly representable as a JavaScript integer on the wire.
+    #[cfg_attr(feature = "ts", ts(type = "number"))]
     pub waiting_ticks: u64,
     /// Maximum concurrent queue capacity.
     pub capacity: u16,
-    /// Maximum service throughput per tick.
-    pub throughput: u16,
+    /// Full simulation ticks required for a new service.
+    pub service_ticks: u16,
 }
 
 /// Visible state of one tick, captured by the simulation thread.
@@ -221,22 +237,7 @@ impl Snapshot {
             });
         });
         self.terminal_stations.clear();
-        self.terminal_stations
-            .extend(
-                world
-                    .build()
-                    .stations()
-                    .iter()
-                    .map(|station| TerminalStationPoint {
-                        kind: station.kind,
-                        target: station.target,
-                        queued: world.persons().queued_for(station.target),
-                        served: world.persons().served_last_tick(station.target),
-                        waiting_ticks: world.persons().waiting_ticks_for(station.target),
-                        capacity: station.capacity,
-                        throughput: station.throughput,
-                    }),
-            );
+        self.terminal_stations = world.persons().station_points(world.build());
     }
 
     /// Content of the session of the snapshot; empty before the first

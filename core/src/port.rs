@@ -19,7 +19,7 @@ use crate::time::Tick;
 
 /// Protocol version of the port (S-1, S-2, S-3, S-7); raised by every
 /// non-additive change.
-pub const PROTOCOL: u32 = 2;
+pub const PROTOCOL: u32 = 3;
 /// Largest message to the core in bytes of its JSON form.
 pub const MAX_MESSAGE_BYTES: usize = 1 << 20;
 
@@ -450,16 +450,18 @@ mod tests {
 
     #[test]
     fn incompatible_hello_closes_the_port() {
-        let mut port = Port::new();
-        assert_eq!(
-            port.receive(ClientMessage::Hello { protocol: 99 }, 1, core_info()),
-            Action::Reply(ServerMessage::Incompatible { protocol: PROTOCOL })
-        );
-        assert_eq!(port.state(), PortState::Closed);
-        assert_eq!(
-            port.receive(ClientMessage::Hello { protocol: PROTOCOL }, 1, core_info()),
-            Action::Drop(Dropped::OutOfOrder)
-        );
+        for protocol in [2, 99] {
+            let mut port = Port::new();
+            assert_eq!(
+                port.receive(ClientMessage::Hello { protocol }, 1, core_info()),
+                Action::Reply(ServerMessage::Incompatible { protocol: PROTOCOL })
+            );
+            assert_eq!(port.state(), PortState::Closed);
+            assert_eq!(
+                port.receive(ClientMessage::Hello { protocol: PROTOCOL }, 1, core_info()),
+                Action::Drop(Dropped::OutOfOrder)
+            );
+        }
     }
 
     #[test]

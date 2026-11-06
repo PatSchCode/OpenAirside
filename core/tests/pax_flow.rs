@@ -61,7 +61,7 @@ fn first_arrival_completion_is_at_the_exit_and_stays_there() {
         .iter()
         .find(|station| station.kind == TerminalStationKind::Exit)
         .unwrap();
-    let expected = world.build().targets()[usize::from(exit.target)].cells[0];
+    let expected = exit.service_cell;
     let mut first = None;
     let mut rebuilt_after_completion = false;
     for tick in 0..TICKS_PER_GAME_HOUR {

@@ -5,6 +5,7 @@
       "id": "de",
       "name": "Deutsch",
       "texts": {
+        "notice.invalidState": "Die Terminalwelt enthält einen ungültigen Zustand ({check}).",
         "command.rejected.areaTooLarge": "Die Fläche ist zu groß (höchstens {max} × {max} Zellen).",
         "command.rejected.blocked": "{object} kann dort nicht gebaut werden: Die Fläche ist schon belegt.",
         "command.rejected.floorLocked": "Gebaut werden kann vorerst nur im Erdgeschoss.",

@@ -18,7 +18,7 @@ import type { TerminalStationPoint } from "../src/generated/TerminalStationPoint
 import { type Frame, readFrame } from "./frame-reader.js";
 
 /** Protocol version of this renderer (core/src/port.rs `PROTOCOL`). */
-export const PROTOCOL = 2;
+export const PROTOCOL = 3;
 /** A frame request without answer for this long is given up. */
 export const FRAME_TIMEOUT_MS = 1000;
 
@@ -109,12 +109,42 @@ function isTerminalStations(value: unknown): value is TerminalStationPoint[] {
       (station) =>
         isRecord(station) &&
         typeof station.kind === "string" &&
+        ["checkIn", "security", "gate", "exit"].includes(station.kind) &&
         isCount(station.target) &&
+        station.target < 255 &&
         isCount(station.queued) &&
+        isCount(station.backlog) &&
+        station.backlog <= 200000 &&
+        isCount(station.serving) &&
+        station.serving <= 1 &&
+        isCount(station.leaving) &&
+        station.leaving <= 1 &&
+        isCount(station.completed) &&
+        station.completed <= 200000 &&
+        isCount(station.maxWaitingTicks) &&
+        station.maxWaitingTicks <= 0xffffffff &&
+        typeof station.blocked === "boolean" &&
+        isRecord(station.serviceCell) &&
+        isCount(station.serviceCell.x) &&
+        station.serviceCell.x <= 65535 &&
+        isCount(station.serviceCell.y) &&
+        station.serviceCell.y <= 65535 &&
+        typeof station.serviceCell.floor === "number" &&
+        Number.isInteger(station.serviceCell.floor) &&
+        station.serviceCell.floor >= -2 &&
+        station.serviceCell.floor <= 2 &&
         isCount(station.served) &&
+        station.served <= 1 &&
         isCount(station.waitingTicks) &&
+        station.waitingTicks <= 200000 * 0xffffffff &&
         isCount(station.capacity) &&
-        isCount(station.throughput),
+        station.capacity >= 1 &&
+        station.capacity <= 256 &&
+        station.queued <= station.capacity &&
+        station.serving + station.leaving <= 1 &&
+        isCount(station.serviceTicks) &&
+        station.serviceTicks > 0 &&
+        station.serviceTicks <= 65535,
     )
   );
 }
@@ -215,9 +245,23 @@ export class CoreClient {
       this.handlers.dropped("unreadable");
       return;
     }
+    if (this.#session === 0 && data.type !== "welcome" && data.type !== "incompatible") {
+      this.handlers.dropped("beforeHandshake");
+      return;
+    }
     switch (data.type) {
       case "welcome":
-        if (isCount(data.session) && isRecord(data.core)) {
+        if (isCount(data.protocol) && data.protocol !== PROTOCOL) {
+          this.#begin(0);
+          this.handlers.incompatible(data.protocol);
+          return;
+        }
+        if (
+          data.protocol === PROTOCOL &&
+          isCount(data.session) &&
+          data.session > 0 &&
+          isRecord(data.core)
+        ) {
           this.#begin(data.session);
           this.handlers.welcome(data.core as unknown as CoreInfo, data.session);
           return;

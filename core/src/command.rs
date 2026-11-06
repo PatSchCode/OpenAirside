@@ -27,7 +27,7 @@ pub const COMMAND_KINDS: [&str; 7] = [
     "build",
     "buildArea",
     "demolish",
-    "setStationThroughput",
+    "setStationServiceTicks",
     "debug",
 ];
 
@@ -68,8 +68,8 @@ pub enum Command {
         /// Covered area.
         area: CellRect,
     },
-    /// Changes the service throughput of an existing terminal station (ADR-049).
-    SetStationThroughput { target: u8, throughput: u16 },
+    /// Changes the duration of future services at an existing station (ADR-054).
+    SetStationServiceTicks { target: u8, service_ticks: u16 },
     /// Debug action of the console (FR-009, META-15).
     Debug {
         /// What to do.
@@ -193,8 +193,8 @@ pub fn rejection(code: &str) -> Reason {
 pub fn validate(command: &Command, map: MapSize) -> Result<(), Reason> {
     match command {
         Command::SetSpeed { .. } | Command::SkipNight {} => Ok(()),
-        Command::SetStationThroughput { throughput, .. } if *throughput > 0 => Ok(()),
-        Command::SetStationThroughput { .. } => Err(rejection(code::INVALID_ARGUMENT)),
+        Command::SetStationServiceTicks { service_ticks, .. } if *service_ticks > 0 => Ok(()),
+        Command::SetStationServiceTicks { .. } => Err(rejection(code::INVALID_ARGUMENT)),
         Command::Build {
             object,
             at,

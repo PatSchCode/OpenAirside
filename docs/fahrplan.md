@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-11-05 (ADR-053: Portvalidierung Option A nachgewiesen)
+- **Stand vom:** 2026-11-06 (ADR-054: Nachbesserung A, C1/C2 in Umsetzung)
 - **Laufende Phase:** Phase 3 – Vertikaler Schnitt „Kleiner Flughafen“; Phase 2 abgeschlossen am 2026-10-19 (ADR-036, archiviert in [`docs/archiv/fahrplan-phase-2.md`](archiv/fahrplan-phase-2.md))
 - **Phasentyp:** UMSETZUNG (mit Entwurfs- und Erkundungsschritten 3.7, 3.8, 3.11, 3.12, 3.13, Phasentyp-Kontext ERKUNDUNG)
 - **Aktiver Schritt:** 3.2, Nachbesserung A freigegeben (ADR-054); Ursachen und Prävention vor Code unabhängig gegengeprüft. Blocker #002 und bisherige Reifegrade bleiben bestehen.
-- **Nächster Schritt:** C1/C2 des [freigegebenen Pakets A](research/3.2-nachbesserungsentwurf.md): Format-/Vertragsbruch und räumliche Stationsmechanik mit negativen und positiven Nachweisen. 3.11 wartet. Grafik-Abnahme 3.1b-N1 bleibt offen.
+- **Nächster Schritt:** C3 des [freigegebenen Pakets A](research/3.2-nachbesserungsentwurf.md): sichtbare lokalisierte Lektion; danach verbleibende C4-E2E/frischer Einstieg und C5-Gesamtabgleich. C1/C2 mit lokalen Kernnachweisen, Commit/CI im selben PR nachführen. 3.11 wartet; Grafik-Abnahme 3.1b-N1 offen.
 - **Offene Entscheidungen:** neue CI-Prüfungen nur nach eigener Freigabe (Q.10-N1). Reaktiv-Quote 4 / 10 über ADR-045 bis ADR-054; neue Ursachenreflexion zu ADR-054 vor Code durchgeführt.
 
 <!-- ANCHOR:phasen-typen -->
@@ -255,7 +255,7 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 - **Status:** `[IN ARBEIT]` – Abschlussabgleich 2026-11-05 auf `18176a6`: hoher Stationswechselbefund A1 sowie mittlere A2–A6 (FIFO vor Zulassung, Warteflächen, Diagnose und Lektionsweg/Nachweise), [Blocker #002](blockers.md). Keine Beförderung; [Bericht/Gegenproben](research/3.2-abschlussabgleich.md). PR #47 auf `b16167c` und N2/N3/N5 haben grüne CI in ihrem jeweiligen Umfang, keine Gesamtabnahme.
 - **Nachbesserung:** [Paket A vom 2026-11-06](research/3.2-nachbesserungsentwurf.md) ausdrücklich freigegeben, [ADR-054](decisions/ADR-054.md). [Ursachen/Prävention](research/3.2-ursachenanalyse.md) vor Code geprüft. C1–C5 mit ihren Testsignalen und Pflichtfällen gelten vollständig; Format 6/Protokoll 3, räumliche Phasen, Bedienzeit und sichtbare Lektion. Keine neue Schritt-ID oder Geduld-/Feinweg-Erweiterung.
-- **Zwischenstand/Nachweismatrix:** [A1-Zielwechsel und COMPLETE-Sperre](research/3.2-nachbesserung-nachweise.md) isoliert vor dem Modellumbau korrigiert, einschließlich Feldneuaufbau. Teilnachweis, kein A1-/3.2-Gesamtabschluss; A2 erneut rot, C1–C5 verbleiben offen.
+- **Zwischenstand/Nachweismatrix:** [C1/C2](research/3.2-nachbesserung-nachweise.md) implementiert: Format 6/Port 3, räumliche Phasen/FIFO/Bedienzeit, Lade-/Erzeugungsvalidierung, vollständiger Snapshot. Lokale Übergangs-/Fortsetzungs-/Negativnachweise sowie Kausalvergleich und Last grün. Commit/CI nachführen; C3–C5 und 3.2-Gesamtabschluss offen, keine Beförderung.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1
 - **Freigabepflichtig:** ja, Vorlage vor dem Code nach Maßnahme (13) (`docs/research/3.2-vorlage.md`); neue Mechaniken berühren S-1, S-2 und S-7 (Overlays, Bauphasen)
