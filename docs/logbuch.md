@@ -24,6 +24,14 @@ Phase 3 läuft. 3.1 einschließlich Bauaufträgen ist erledigt. 3.2 bleibt IN AR
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-11-06 14:35 – [SESSIONENDE] – Ursachenreflexion und geprüfter A1-Teilcheckpoint
+
+- **Dauer/Arbeit:** etwa 35 Minuten ab Sessionmarke 14:00. Ursachen/Prüfblindstellen und Folgerisiken anhand Code/Git untersucht; A nach ausdrücklicher Freigabe in ADR-054 festgehalten, neue Reflexion vor Code. Anschließend isolierten Zielwechsel-/COMPLETE-Fehler einschließlich Feldneuaufbau korrigiert; [Matrix](research/3.2-nachbesserung-nachweise.md).
+- **Ergebnis/Nachweise:** `5034f88` Reflexion/ADR und `40d2ac9` Produktcheckpoint mit aktiven Hooks committed/gepusht. [CI 42225912535](https://github.com/PatSchCode/OpenAirside/actions/runs/42225912535) auf `40d2ac9`: alle 18 Jobs erfolgreich; [Security 42225912363](https://github.com/PatSchCode/OpenAirside/actions/runs/42225912363) ebenfalls abgeschlossen/grün. Lokale 294 Rusttests grün; Lines gesamt 97,89 %, Kern 98,07 %, Personen 98,54 %. A2 nach A1 erneut isoliert rot (Tick 20: 0 statt 58 Wartende), temporäre eigene Probe entfernt.
+- **Offen/nächster Schritt:** Gesamtpaket A nicht abgeschlossen, kein A1-Gesamtnachweis oder Format-/Protokollumbau. C1/C2 implementieren: Format 6/Port 3 und getrennte räumliche Phasen/Tickets/Reservierungen/Bedienzeiten, danach C3–C5. A2–A6, Blocker #002 und Personen VORLÄUFIG bleiben; 3.11 wartet. PR #53 bleibt Entwurf, kein Merge.
+- **Konsistenz:** README/Changelog, ADRs/Register/Quote 4/10 bzw. 21/54, Fahrplan, Anforderungen/Teilabdeckung, Reifegrade und Blocker geprüft; 130 lokale Verweise grün. Unicode-Budgets eingehalten, aktive Architektur-/Regelbudgets über 80 % weiter mit Q.10-N1 und dessen eigener CI-Freigabe. Log unter 800 Zeilen. Ablaufregister ohne neu fällige Maßnahme; bekannter Runner-Hinweis unverändert. Frischer Einstieg erst beim betroffenen C4; isolierter Bugfix ändert keinen Installations-/Bedienpfad.
+- **Modell-/Commitbilanz:** Hauptklasse und Kontextgröße unbestimmbar, Quelle Laufzeitkontext; zwei unabhängige nur lesende Astra-Instanzen (`gpt-6-astra`, hohe Denktiefe), ohne Gesprächsverlauf: Ursachen und enger Produktdiff, keine eigene Test-/Gesamtabnahme. Keine gemeinsame Dateibearbeitung. Dieser Abschlussvermerk ist gegenüber dem beobachteten Produktkopf noch uncommitted; nach Hook als reinen Nachweiscommit im selben PR nachführen, dessen Kopf gesondert beobachten.
+
 ### 2026-11-06 14:28 – [BEOBACHTUNG] – Ursachen geklärt und A1-Zwischenkorrektur lokal nachgewiesen
 
 - **Ursachen/Freigabe:** [Historie und Prävention](research/3.2-ursachenanalyse.md), vor Produktcode unabhängig geprüft; A in ADR-054 beschlossen, Dokumentationscheckpoint `5034f88` mit aktiven Hooks. Reaktivquote 4/10 bzw. 21/54, neue Reflexion vor Code. Historisch abgeschwächte Abnahme nicht als genehmigten Descope behandeln.
