@@ -313,7 +313,9 @@ async function start(): Promise<void> {
     wantedLanguage = code;
     languageCall += 1;
     const call = languageCall;
-    const { primary, fallback } = await loadTexts(api?.lang, code);
+    // Before the core handshake the platform's pack language list is still empty.
+    // Bundled texts cover this phase; welcome reloads the actual pack texts.
+    const { primary, fallback } = await loadTexts(client?.session ? api?.lang : undefined, code);
     if (call !== languageCall) return;
     document.documentElement.lang = code;
     root.dataset.language = code;

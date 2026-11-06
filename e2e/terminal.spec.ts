@@ -244,23 +244,56 @@ for (const language of ["de", "en"]) {
           return out;
         };
         await expect(window.locator("#root")).toHaveAttribute("data-render-fixture", "0");
+        // The marker means CPU delivery, not GPU presentation. Let the Pixi ticker draw
+        // the empty reference, then wait for the actual pixel result after each change.
+        await window.evaluate(
+          () =>
+            new Promise<void>((resolve) => {
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  resolve();
+                });
+              });
+            }),
+        );
         const empty = await images();
         await window.evaluate(() =>
           globalThis.dispatchEvent(new CustomEvent("terminal-render-fixture", { detail: 1 })),
         );
         await expect(window.locator("#root")).toHaveAttribute("data-render-fixture", "1");
-        const mixed = await images();
-        for (let i = 0; i < 6; i += 1) {
-          expect(mixed[i]?.equals(empty[i] ?? Buffer.alloc(0))).toBe(i === 1 || i === 3);
-        }
+        const mask = async (): Promise<boolean[]> =>
+          (await images()).map((image, i) => image.equals(empty[i] ?? Buffer.alloc(0)));
+        await expect
+          .poll(
+            async () => {
+              const pixels = await mask();
+              console.log("terminal rendered mixed pixel mask", pixels, bounds);
+              return pixels;
+            },
+            { message: "actual rendered passenger visibility" },
+          )
+          .toEqual([false, true, false, true, false, false]);
         await window.evaluate(() =>
           globalThis.dispatchEvent(new CustomEvent("terminal-render-fixture", { detail: 2 })),
         );
         await expect(window.locator("#root")).toHaveAttribute("data-render-fixture", "2");
-        const reused = await images();
-        for (let i = 0; i < 6; i += 1)
-          expect(reused[i]?.equals(empty[i] ?? Buffer.alloc(0))).toBe(false);
+        await expect
+          .poll(
+            async () => {
+              const pixels = await mask();
+              console.log("terminal rendered reused pixel mask", pixels);
+              return pixels;
+            },
+            { message: "actual rendered pool reuse" },
+          )
+          .toEqual([false, false, false, false, false, false]);
       }
+    } catch (error) {
+      const window = await app.firstWindow();
+      await test
+        .info()
+        .attach("terminal-failure", { body: await window.screenshot(), contentType: "image/png" });
+      throw error;
     } finally {
       await app.close();
     }
