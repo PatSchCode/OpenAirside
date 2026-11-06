@@ -109,7 +109,28 @@
         "ui.settings.language": "Language",
         "ui.settings.open": "Settings",
         "ui.settings.saved": "Settings saved.",
-        "ui.settings.title": "Settings"
+        "ui.settings.title": "Settings",
+        "ui.terminal.title": "First terminal lesson",
+        "ui.terminal.intro": "Start a small terminal with 40 departures and 40 arrivals.",
+        "ui.terminal.start": "Start first terminal lesson",
+        "ui.terminal.restart": "Restart lesson",
+        "ui.terminal.resume": "Start / Resume",
+        "ui.terminal.pause": "Pause",
+        "ui.terminal.fast": "Fast forward (3×)",
+        "ui.terminal.upgrade": "Speed up security service",
+        "ui.terminal.pending": "Request pending – waiting for confirmation and current session data.",
+        "ui.terminal.observe": "Watch the stations. The gate may be busiest initially. Wait until arrivals finish and a backlog forms at security.",
+        "ui.terminal.observed": "All arrivals have finished; at least eight people are waiting at security. Reduce its service time from 10 to 3⅓ seconds per person.",
+        "ui.terminal.upgraded": "Change confirmed. Shorter service applies to newly starting checks; watch actual waiting passengers and completed journeys.",
+        "ui.terminal.complete": "Lesson complete: 40 departures and 40 arrivals fully finished; no active journey remains.",
+        "ui.terminal.counts": "Departures: {departures}/40 · Arrivals: {arrivals}/40 · Active journeys: {active}",
+        "ui.terminal.station": "{name}: {waiting} waiting ({backlog} before the line); longest wait {wait} s; service {service} s/person.",
+        "ui.terminal.blocked": "Route blocked – check station access.",
+        "ui.terminal.disconnected": "Core disconnected. Please try again.",
+        "ui.terminal.checkIn": "Check-in",
+        "ui.terminal.security": "Security",
+        "ui.terminal.gate": "Gate",
+        "ui.terminal.exit": "Exit"
       }
     }
   ]

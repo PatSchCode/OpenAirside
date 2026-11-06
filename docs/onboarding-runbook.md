@@ -101,6 +101,8 @@ npm start
 
 **Erwartetes Ergebnis:** Der erste Lauf baut den Rust-Kern und die Brücke (`app/native/openairside-bridge.node`, einige Minuten), dann die Grafik-Atlanten und das Programmsymbol (`npm run build:assets`: `app/renderer/public/atlas/`, `app/renderer/atlas/atlas.json`, `build/icon.png`), dann den Hauptprozess (`app/dist/main`) und die Oberfläche (`app/dist/renderer`). Es öffnet sich das Fenster „OpenAirside" mit leerer Karte und dem Debug-Panel oben links (Leistungsanzeige, Protokoll, Konsole; `help` zeigt die Befehle). Unter Linux als root oder in Containern ist `--no-sandbox` nötig (`npx electron . --no-sandbox`, Abschnitt 4).
 
+**Erste Terminallektion (3.2):** Im Spielfenster oben rechts „Erste Terminallektion starten“ wählen, dann „Start / Fortsetzen“. „Pause“ hält die Simulation an; „Zeitraffer (3×)“ beschleunigt. Nach vollständiger Abfertigung der Ankünfte und mindestens acht Wartenden an der Sicherheitskontrolle wird „Kontrolle schneller bedienen“ verfügbar. Die bestätigte Änderung gilt für neue Bedienungen; erst 40 abgeschlossene Abflüge und 40 Ankünfte ohne aktive Reise bedeuten Erfolg. „Lektion neu starten“ setzt zurück. Deutsch/Englisch sind im Einstellungsdialog wechselbar. Keine Konsoleneingabe erforderlich.
+
 Mit dem Referenz-Terminal aus Spike 1.5 (768² × 5 in einer Karte 2048², 10.000 Personen) starten:
 
 ```bash

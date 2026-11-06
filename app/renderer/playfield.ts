@@ -401,8 +401,11 @@ export class Playfield {
         particle.x = p.x;
         particle.y = p.y;
         const tint = p.group === GROUP_WORKER ? WORKER_TINT : PERSON_TINT;
-        if (particle.tint !== tint) {
+        // Keep S-1 counts; hide only terminal passengers after actual completion.
+        const alpha = (p.group === 1 || p.group === 2) && p.state === 2 ? 0 : 1;
+        if (particle.tint !== tint || particle.alpha !== alpha) {
           particle.tint = tint;
+          particle.alpha = alpha;
           recoloured = true;
         }
       }

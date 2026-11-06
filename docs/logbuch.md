@@ -17,7 +17,7 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-Phase 3 läuft. 3.2 bleibt IN ARBEIT, Personen VORLÄUFIG, Blocker #002 aktiv. Freigegebenes A/ADR-054: C1/C2 mit Format 6/Port 3, räumlichem Stationsfluss, Eintritts-FIFO, Bedienzeit und vollständigem Snapshot implementiert. Lokale Tests, Kausalvergleich, Last und unabhängiger enger Abgleich grün; Commit/CI nachführen. Nächster Checkpoint C3: sichtbare lokalisierte Lektion, danach übrige C4/C5. Kein Gesamtabschluss oder Merge; 3.11 wartet. N2/N3/N5 bleiben im begrenzten Umfang erledigt, Grafik-Abnahme 3.1b-N1 offen.
+Phase 3 läuft. 3.2 bleibt IN ARBEIT, Personen VORLÄUFIG, Blocker #002 aktiv. A/ADR-054: C1/C2 auf `4fc649c` committed/gepusht, CI (18 Jobs)/Security grün. C3 sichtbar lokalisiert implementiert: 537 TS-Tests/82,22 % Lines und vier Electron-E2Es einschließlich DE/EN-Ablehnung/Fremdantwort/Pixi-Pixel grün. Zweite frische Astra-Prüfung fand Sitzungsfehler und zwei Nachweislücken, vor Commit korrigiert/ergänzt; engen Abschluss nachführen. Nächster Checkpoint C4: frischer Einstieg, danach C5. Kein Gesamtabschluss/Merge; 3.11 wartet. N2/N3/N5 begrenzt erledigt, Grafik-Abnahme 3.1b-N1 offen.
 
 ---
 

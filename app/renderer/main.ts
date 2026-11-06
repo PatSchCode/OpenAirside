@@ -11,7 +11,7 @@
 import type { CatalogEntry } from "../src/generated/CatalogEntry.js";
 import type { PackReport } from "../src/generated/PackReport.js";
 import type { TickStats } from "../src/generated/TickStats.js";
-import type { TerminalStationPoint } from "../src/generated/TerminalStationPoint.js";
+import { TerminalPanel } from "./terminal-panel.js";
 import { BuildPanel } from "./build-panel.js";
 import { BuildTool } from "./build-tool.js";
 import { type ClientHandlers, CoreClient } from "./core-client.js";
@@ -83,30 +83,7 @@ async function start(): Promise<void> {
   let terminalQuery = 0;
   let terminalQueryAt = Number.NEGATIVE_INFINITY;
 
-  const showTerminal = (stations: readonly TerminalStationPoint[]): void => {
-    if (terminalBox === null) return;
-    if (stations.length === 0) {
-      terminalBox.hidden = true;
-      return;
-    }
-    terminalBox.hidden = false;
-    const bottleneck = stations.reduce((worst, station) =>
-      station.backlog + station.queued > worst.backlog + worst.queued ? station : worst,
-    );
-    const rows = stations.map(
-      (station) =>
-        `${station.kind} #${String(station.target)}: backlog ${String(station.backlog)}, queue ${String(station.queued)}, max wait ${String(station.maxWaitingTicks)} ticks, service ${String(station.serviceTicks)} ticks${station.blocked ? ", BLOCKED" : ""}`,
-    );
-    terminalBox.textContent = [
-      "Terminal flow",
-      ...rows,
-      stations.some((station) => station.blocked)
-        ? "Terminal route blocked. Clear the blocked station path."
-        : bottleneck.backlog + bottleneck.queued > 0
-          ? `Lesson 1: ${bottleneck.kind} has waiting passengers. A shorter service time can reduce its queue.`
-          : "Lesson 1: no station is currently congested.",
-    ].join("\n");
-  };
+  let terminalPanel: TerminalPanel | undefined;
 
   // Build tool (step 3.1b): pointer gestures become build commands with a provisional drawing (S-2).
   const tool = new BuildTool({
@@ -142,6 +119,7 @@ async function start(): Promise<void> {
 
   const handlers: ClientHandlers = {
     welcome: (core, session) => {
+      terminalPanel?.lesson.reset(session, false);
       root.dataset.session = String(session);
       write(`core ${core.name} ${core.version}, session ${String(session)}`);
       catalogSession = 0;
@@ -156,6 +134,7 @@ async function start(): Promise<void> {
       write(`incompatible core (protocol ${String(protocol)}) – please reinstall the game`);
     },
     sessionStarted: (session, at) => {
+      terminalPanel?.lesson.reset(session);
       root.dataset.session = String(session);
       write(`session ${String(session)} at tick ${String(at)}`);
       catalogSession = 0;
@@ -172,10 +151,12 @@ async function start(): Promise<void> {
           case "commandAccepted":
             write(`#${String(event.id)} ok (tick ${String(event.tick)})`);
             tool.accepted(event.id, event.tick);
+            terminalPanel?.lesson.accepted(session, event.id);
             break;
           case "commandRejected":
             write(`#${String(event.id)} rejected: ${event.reason.code}`);
             tool.rejected(event.id);
+            terminalPanel?.lesson.rejected(session, event.id, event.reason.textKey);
             // S-2: the player gets the reason with the name of the object ({ key } parameter).
             buildPanel?.showHint(i18n.reason(event.reason));
             break;
@@ -186,6 +167,7 @@ async function start(): Promise<void> {
             lag = "";
             break;
           case "speedChanged":
+            terminalPanel?.lesson.speedChanged(session, event.speed);
             write(`speed ${event.speed}${event.reason === undefined ? "" : ` (${event.reason})`}`);
             break;
           default:
@@ -196,6 +178,7 @@ async function start(): Promise<void> {
     frame: (frame) => {
       tick = frame.header.tick;
       personsTotal = frame.header.personsTotal;
+      terminalPanel?.lesson.frame(frame.header.session, personsTotal);
       root.dataset.tick = String(tick);
       const drawn = performance.now();
       const world = playfield.show(frame, drawn);
@@ -225,12 +208,15 @@ async function start(): Promise<void> {
         if (answer.catalog !== undefined) {
           catalogSession = catalogFor;
           setCatalog(answer.catalog);
+          terminalPanel?.lesson.catalogReady(catalogSession);
         }
         return;
       }
       if (id === terminalQuery) {
         terminalQuery = 0;
-        if (answer.terminalStations !== undefined) showTerminal(answer.terminalStations);
+        if (answer.terminalStations !== undefined) {
+          terminalPanel?.lesson.snapshot(client?.session ?? 0, answer.terminalStations);
+        }
         return;
       }
       if (answer.dictionary !== undefined) {
@@ -266,6 +252,7 @@ async function start(): Promise<void> {
     },
     queryError: (id, code) => {
       if (id === catalogQuery) catalogQuery = 0;
+      if (id === terminalQuery) terminalQuery = 0;
       queriesSent.delete(id);
       series?.onQuery(performance.now(), id);
       write(`query #${String(id)} failed: ${code}`);
@@ -298,6 +285,27 @@ async function start(): Promise<void> {
   const i18n = new Localizer(FALLBACK_LANGUAGE, undefined, undefined, (key) => {
     void api?.logs.write("debug", `missing text ${key}`).catch(() => undefined);
   });
+  if (terminalBox !== null) {
+    terminalPanel = new TerminalPanel(
+      document,
+      terminalBox,
+      i18n,
+      (command) => client?.send(command) ?? 0,
+      (stations) => {
+        const xs = stations.map((s) => s.serviceCell.x);
+        const ys = stations.map((s) => s.serviceCell.y);
+        playfield.view({
+          kind: "circle",
+          floor: stations[0]?.serviceCell.floor ?? 0,
+          x: (Math.min(...xs) + Math.max(...xs)) / 2,
+          y: (Math.min(...ys) + Math.max(...ys)) / 2,
+          zoom: 22,
+          radius: 0,
+          angle: 0,
+        });
+      },
+    );
+  }
   // Only the latest call applies: texts loading for an earlier language never win.
   let wantedLanguage = FALLBACK_LANGUAGE;
   let languageCall = 0;
@@ -386,6 +394,7 @@ async function start(): Promise<void> {
     }
   };
   api?.onCoreExit((code, restarting) => {
+    terminalPanel?.lesson.reset(0, false);
     write(`core process ended (code ${String(code)})${restarting ? "; restarting" : ""}`);
     void api.logs
       .write("error", `core process ended (code ${String(code)})`)

@@ -252,6 +252,7 @@ Kennungen der Knoten sind eindeutig (ADR-032, K-1: zuvor standen Abfrage und Abf
 - **Nicht-Verantwortung:** keine Spiellogik.
 - **Technologie:** React, Tailwind CSS, TanStack Table (virtualisierte Tabellen)
 - **NFRs:** Aktualisierung höchstens wenige Male pro Sekunde; darf die Bildrate des Spielfelds nicht drücken
+- **3.2 / ADR-054:** `terminal-panel.ts` ergänzt vor 3.6 ein DOM-Panel wie Bau/Einstellungen: DE/EN-Lektion, sitzungsgebundene Ack-/Bereitschaftssteuerung und echte S-7-Zahlen; keine Spielregel. `main.ts` fragt höchstens zweimal pro Sekunde mit einer offenen Anfrage ab und fokussiert nach bestätigtem Neustart/Katalog/Snapshot. `playfield.ts` blendet nur COMPLETE-Gruppen 1/2 aus; Pool/Layout bleiben erhalten. Gesamtabschluss weiter offen.
 - **Große Tabellen** `[BELASTBAR]` seit 2026-10-13 (Spike 1.4, Windows und macOS gemessen): nur virtualisiert (rund 46 Zeilen im DOM); bis 5.000 sortierte Zeilen bei jeder Rate, bis 20.000 bei wenigen Aktualisierungen je Sekunde; Sortierung sehr großer Tabellen nach Entscheidung in 1.7
 
 ### Modul: Audio [VORLÄUFIG]

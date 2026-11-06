@@ -6,7 +6,8 @@ Noch keine veröffentlichte Version. Der Projektstand ist v0.0.0.
 
 ### Korrekturen
 
-- Terminalfluss mit tatsächlichen Warte-/Bedienplätzen, Eintritts-FIFO, Bedienzeit und vollständiger Vorstau-/Blockierdiagnose nachgebessert (3.2 C1/C2, ADR-054; sichtbare Lektion und Gesamtabschluss noch offen). Nicht kompatibel: Weltformat 6 weist Format 5 mit `migrationFailed` ab; Port 3 ersetzt Durchsatz durch `serviceTicks`, S-1-Layout bleibt 2.
+- Sichtbare erste Terminallektion in Deutsch/Englisch: Start, Pause/Fortsetzen, reale Rückstaudiagnose, bestätigte schnellere Kontrolle und Abschluss bei vollständigen 40/40-Reisen. Fertige Passagiere verschwinden aus der Darstellung; gespeicherter Bestand bleibt erhalten (3.2 C3, ADR-054; Gesamtabschluss offen).
+- Terminalfluss mit tatsächlichen Warte-/Bedienplätzen, Eintritts-FIFO, Bedienzeit und vollständiger Vorstau-/Blockierdiagnose nachgebessert (3.2 C1/C2, ADR-054). Nicht kompatibel: Weltformat 6 weist Format 5 mit `migrationFailed` ab; Port 3 ersetzt Durchsatz durch `serviceTicks`, S-1-Layout bleibt 2.
 - Ein Stationswechsel verwendet den alten Ankunftszustand nicht mehr für das neue Ziel; abgeschlossene Passagiere bleiben stehen (3.2, A1-Zwischenkorrektur unter ADR-054). Die übrige Terminalnachbesserung bleibt offen.
 - Die Kern-Host-Verbindung wird nur durch eine ausdrückliche gültige Portübergabe ersetzt; unbekannte oder ungültige Nachrichten mit angehängten Ports erhalten die bestehende Verbindung (Q.10-N5, ADR-053).
 - Unbekannte Kernnachrichten lassen den Kern weiter nutzbar; fehlerhafte Antworten werden nur ihrer tatsächlichen Anfrage zugeordnet und passende Anfragen sofort abgelehnt (Q.10-N2, ADR-052).

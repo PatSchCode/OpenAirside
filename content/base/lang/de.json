@@ -109,7 +109,28 @@
         "ui.settings.language": "Sprache",
         "ui.settings.open": "Einstellungen",
         "ui.settings.saved": "Einstellungen gespeichert.",
-        "ui.settings.title": "Einstellungen"
+        "ui.settings.title": "Einstellungen",
+        "ui.terminal.title": "Erste Terminallektion",
+        "ui.terminal.intro": "Starte ein kleines Terminal mit 40 Abflügen und 40 Ankünften.",
+        "ui.terminal.start": "Erste Terminallektion starten",
+        "ui.terminal.restart": "Lektion neu starten",
+        "ui.terminal.resume": "Start / Fortsetzen",
+        "ui.terminal.pause": "Pause",
+        "ui.terminal.fast": "Zeitraffer (3×)",
+        "ui.terminal.upgrade": "Kontrolle schneller bedienen",
+        "ui.terminal.pending": "Anfrage läuft – Bestätigung und aktuelle Sitzungsdaten abwarten.",
+        "ui.terminal.observe": "Beobachte die Stationen. Anfänglich kann das Gate stärker ausgelastet sein. Warte, bis die Ankünfte abgefertigt sind und sich vor der Kontrolle ein Rückstau bildet.",
+        "ui.terminal.observed": "Alle Ankünfte sind fertig; mindestens acht Personen warten an der Kontrolle. Verkürze dort die Bedienzeit von 10 auf 3⅓ Sekunden je Person.",
+        "ui.terminal.upgraded": "Änderung bestätigt. Die kürzere Zeit gilt für neu beginnende Kontrollen; beobachte die tatsächlichen Wartenden und Reiseabschlüsse.",
+        "ui.terminal.complete": "Lektion geschafft: 40 Abflüge und 40 Ankünfte vollständig abgeschlossen; keine aktive Reise verbleibt.",
+        "ui.terminal.counts": "Abflüge: {departures}/40 · Ankünfte: {arrivals}/40 · Aktive Reisen: {active}",
+        "ui.terminal.station": "{name}: {waiting} wartend (davon {backlog} vor der Linie); längste Wartezeit {wait} s; Bedienung {service} s/Person.",
+        "ui.terminal.blocked": "Weg blockiert – Stationszugang prüfen.",
+        "ui.terminal.disconnected": "Kern nicht verbunden. Bitte erneut versuchen.",
+        "ui.terminal.checkIn": "Check-in",
+        "ui.terminal.security": "Sicherheitskontrolle",
+        "ui.terminal.gate": "Gate",
+        "ui.terminal.exit": "Ausgang"
       }
     }
   ]
